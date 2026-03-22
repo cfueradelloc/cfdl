@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Manifiesto</title>
+    <link rel="icon" type="image/png" href="skills/references/logo/CFDL_favicon.png">
     <style>
         @font-face {
             font-family: 'FuturaStd';
@@ -15,10 +16,10 @@
         }
 
         :root {
-            --bg:     #2e2e30; /* Ebony */
-            --text:   #ddd4cb; /* Mist */
-            --muted:  #8f8f91; /* Smoke */
-            --accent: #e9ad51; /* Citrine */
+            --bg:     #2e2e30;
+            --text:   #ddd4cb;
+            --muted:  #6b6b65;
+            --accent: #e9ad51;
             --rule:   #3e3e40;
         }
 
@@ -52,7 +53,7 @@
 
         /* ── Title block ─────────────────────────────────────────────────────── */
         .title-block {
-            padding: 80px 40px 64px;
+            padding: 72px 40px 48px;
             border-bottom: 1px solid var(--rule);
         }
 
@@ -66,75 +67,120 @@
 
         .title-main {
             font-family: 'MinionPro', serif;
-            font-size: clamp(80px, 16vw, 220px);
-            line-height: 0.88;
+            font-size: clamp(56px, 11vw, 160px);
+            line-height: 0.9;
             font-weight: normal;
             font-style: italic;
             color: var(--text);
+            margin-bottom: 24px;
         }
 
-        /* ── Full-bleed image ────────────────────────────────────────────────── */
-        .img-full {
-            line-height: 0;
+        .title-sub {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(13px, 1.6vw, 18px);
+            font-style: italic;
+            color: var(--muted);
+            max-width: 680px;
+            line-height: 1.5;
         }
 
-        .img-full img {
-            width: 100%;
-            display: block;
-        }
-
-        /* ── Quote ───────────────────────────────────────────────────────────── */
-        .quote-block {
-            padding: 96px 40px;
+        /* ── Language nav ────────────────────────────────────────────────────── */
+        .lang-nav {
+            display: flex;
+            gap: 0;
             border-bottom: 1px solid var(--rule);
         }
 
-        .quote-block blockquote {
-            font-family: 'MinionPro', serif;
-            font-size: clamp(32px, 6vw, 88px);
-            line-height: 1.1;
-            font-style: italic;
-            color: var(--text);
-            max-width: 900px;
+        .lang-btn {
+            padding: 16px 24px;
+            font-size: 9px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: none;
+            border: none;
+            border-right: 1px solid var(--rule);
+            cursor: pointer;
+            transition: color 0.15s, background 0.15s;
         }
 
-        .quote-block.accent blockquote {
+        .lang-btn:last-child { border-right: none; }
+
+        .lang-btn:hover { color: var(--text); }
+
+        .lang-btn.active {
             color: var(--accent);
         }
 
-        .quote-block.right blockquote {
-            margin-left: auto;
-            text-align: right;
+        /* ── Manifesto text ──────────────────────────────────────────────────── */
+        .manifesto-body {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 40px;
         }
 
-        /* ── Image grid — two columns ────────────────────────────────────────── */
-        .img-row {
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+
+        .para-block {
             display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 0 32px;
+            padding: 56px 0;
             border-bottom: 1px solid var(--rule);
         }
 
-        .img-row.split-6-4 { grid-template-columns: 6fr 4fr; }
-        .img-row.split-4-6 { grid-template-columns: 4fr 6fr; }
-        .img-row.split-half { grid-template-columns: 1fr 1fr; }
-
-        .img-row-item {
-            overflow: hidden;
-            line-height: 0;
-            border-right: 1px solid var(--rule);
+        .para-num {
+            font-size: 9px;
+            letter-spacing: 0.16em;
+            color: var(--accent);
+            padding-top: 8px;
+            text-align: right;
         }
 
-        .img-row-item:last-child { border-right: none; }
+        .para-text {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(16px, 1.8vw, 20px);
+            line-height: 1.7;
+            color: var(--text);
+        }
 
-        .img-row-item img {
+        /* Lede — first paragraph larger */
+        .lede-marker + .para-text {
+            font-size: clamp(20px, 2.6vw, 30px);
+            line-height: 1.5;
+        }
+
+        /* ── Full-bleed image ────────────────────────────────────────────────── */
+        .img-break {
+            line-height: 0;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+        }
+
+        .img-break img {
+            width: 100%;
+            display: block;
+        }
+
+        .img-break-pair {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            border-top: 1px solid var(--rule);
+            border-bottom: 1px solid var(--rule);
+            line-height: 0;
+        }
+
+        .img-break-pair img {
             width: 100%;
             height: 100%;
-            min-height: 440px;
             object-fit: cover;
             display: block;
-            transition: transform 0.8s ease;
         }
 
-        .img-row-item:hover img { transform: scale(1.04); }
+        .img-break-pair > :first-child {
+            border-right: 1px solid var(--rule);
+        }
 
         /* ── Caption strip ───────────────────────────────────────────────────── */
         .caption-strip {
@@ -190,12 +236,12 @@
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 768px) {
             .site-header { padding: 20px 24px; }
-            .title-block { padding: 48px 24px 40px; }
-            .quote-block { padding: 56px 24px; }
-            .img-row { grid-template-columns: 1fr; }
-            .img-row-item { border-right: none; border-bottom: 1px solid var(--rule); }
-            .img-row-item:last-child { border-bottom: none; }
-            .img-row-item img { min-height: 280px; }
+            .title-block { padding: 48px 24px 32px; }
+            .lang-btn { padding: 14px 16px; }
+            .manifesto-body { padding: 0 24px; }
+            .para-block { grid-template-columns: 32px 1fr; gap: 0 16px; padding: 40px 0; }
+            .img-break-pair { grid-template-columns: 1fr; }
+            .img-break-pair > :first-child { border-right: none; border-bottom: 1px solid var(--rule); }
             .caption-strip { padding: 16px 24px; }
             footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
         }
@@ -211,57 +257,351 @@
 <div class="title-block">
     <p class="title-eyebrow">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</p>
     <h1 class="title-main">Mani&shy;fiesto</h1>
+    <p class="title-sub" id="title-sub">Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar</p>
 </div>
 
-<div class="img-full">
-    <img src="skills/references/web/Manifesto_Fuera_De_Lugar_02.png"
-         alt="Manifiesto C.F.D.L." loading="lazy">
-</div>
+<nav class="lang-nav" aria-label="Language selector">
+    <button class="lang-btn active" onclick="setLang('es')">ES</button>
+    <button class="lang-btn" onclick="setLang('ca')">CA</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" onclick="setLang('ast')">AST</button>
+</nav>
 
-<div class="quote-block">
-    <blockquote>"fuera de lugar —<br>siempre en algún<br>otro lugar"</blockquote>
-</div>
-
-<div class="img-row split-6-4">
-    <div class="img-row-item">
-        <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg"
-             alt="" loading="lazy">
+<!-- ─── ES ──────────────────────────────────────────────────────────────────── -->
+<div class="lang-content active" id="lang-es">
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num lede-marker">01</span>
+        <p class="para-text">Escogemos un mundo de ciudades recordadas, siempre en construcción, en terrenos donde no deberían estar. Reivindicamos el exilio y el destierro, la creación como una solicitud de asilo, el viaje como acto frustrante e improductivo. Proponemos viajar, a pesar de todo. Navegar quitándole a la brújula su imán y, así, deambular hasta perder de vista lo inmutable. Crear donde no alcance ninguna raíz.</p>
     </div>
-    <div class="img-row-item">
-        <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg"
-             alt="" loading="lazy">
+    <div class="para-block">
+        <span class="para-num">02</span>
+        <p class="para-text">Defendemos una creación extemporánea, políglota y ubicua, que emana de la cultura del subsuelo. Creemos en una identidad inquieta, de paso hacia la incertidumbre. Y así, al mirar atrás, encontrar un camino personal lleno de maleza, con el trazo desvanecido, imposible de volver a recorrer. Al mirar hacia adelante, la misma maleza. No creamos para averiguar lo que somos sino para dejar de ser quien somos.</p>
     </div>
-</div>
-
-<div class="quote-block accent right">
-    <blockquote>"Navegar quitándole<br>a la brújula su imán"</blockquote>
-</div>
-
-<div class="img-row split-4-6">
-    <div class="img-row-item">
-        <img src="skills/references/web/4a8641190555289.65bca36e5aecd.jpg"
-             alt="" loading="lazy">
-    </div>
-    <div class="img-row-item">
-        <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg"
-             alt="" loading="lazy">
+    <div class="para-block">
+        <span class="para-num">03</span>
+        <p class="para-text">Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal. Frente a la moderación y el ahorro, el dispendio, la condena voluntaria, la libertad perdida a posta: sentir el vértigo, las náuseas, el malestar de asomarse a una garganta sin fondo. La creación como trastorno. Sumirse en los instantes de verdadero pánico: avanzar a favor, y no en contra, de la angustia.</p>
     </div>
 </div>
 
-<div class="quote-block">
-    <blockquote>"Y ante la síntesis,<br>la disgregación"</blockquote>
+<div class="img-break">
+    <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">04</span>
+        <p class="para-text">Invocamos el suicidio creativo como material ligero, como acto rutinario, parte del quehacer cotidiano. La inmadurez como propósito. La prótesis antes que la cura o la rehabilitación. Sin embargo, antes de la prótesis, la fractura profiláctica. Más tarde, resucitar en vida: como contraposición y con la misma ligereza, pero siempre en algún otro lugar.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">05</span>
+        <p class="para-text">Aspiramos al producto deforme, siempre inacabado, de una idea; a la ofuscación abnegada como forma de claridad. Abrazamos nuestros defectos y desterramos la coherencia para crear desde la enajenación, atónitos. Afrontamos el futuro con una esperanza voraz, sobrante, con el ímpetu de las expectativas desmedidas. El pasado lo contemplamos con una nostalgia atroz.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">06</span>
+        <p class="para-text">Nacemos solos y morimos solos: entre un momento y otro, el camino se hace en compañía. No hay creación sin amistad; tampoco hay amistad sin sufrimiento compartido. Sin embargo, por encima de la empatía, promulgamos la opacidad, y apelamos a la tolerancia, no desde la comprensión sino de la aceptación de las zonas oscuras del otro, desde el extrañamiento y la perplejidad.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">07</span>
+        <p class="para-text">Elegimos, entre el individuo y la colectividad, ambas opciones. Definir lo íntimo con pedazos de lo público. La creación como acto grupal, edificando relatos sobre muros derribados. Y así, compartir lo que se crea, sujetos a la inseguridad, al miedo a la opinión ajena, pero también a la necesidad de hacerlo. Formar una descendencia bastarda, desheredada y con traumas. No existe la tradición sin heterodoxia, ni hay modernidad sin memoria. Elegir entre ellas es dudar entre dos infinitos: habitar entre ellos, nuestra única opción.</p>
+    </div>
+</div>
+
+<div class="img-break-pair">
+    <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="" loading="lazy">
+    <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">08</span>
+        <p class="para-text">Tenemos opiniones estéticas inamovibles. Abrazamos, sin embargo, todas las demás. Una fusión más allá de lo mestizo, surgida de la descomposición de las expectativas de lo que pudo ser. El reciclado como fuente de material artístico: el contenedor de materia orgánica como venero creativo. Arte con aquello que el mar le entrega al náufrago. En lo ético, igual que en lo estético, la misma disposición.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">09</span>
+        <p class="para-text">Celebramos el plagio, la copia, la búsqueda promiscua de todo tipo de material creativo. Reivindicamos los lugares comunes como salida y como meta, también como zona de paso: aduanas desde las que atravesar fronteras. Frente a la marca personal, la marca blanca, la copia manufacturada en talleres ilegales. Entendemos la creación desde el travestismo, con la mirada detrás de una máscara, de cientos de ellas.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">10</span>
+        <p class="para-text">Usamos lo atópico, antes que lo utópico o lo distópico. Y ante la síntesis, la disgregación. Creamos para exponer en un museo que nunca llegaremos a visitar: la obra se marchita el día que encuentra su público. Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono. La obra mejora siempre, de cualquiera de las maneras, si está fuera de lugar.</p>
+    </div>
+</div>
+</div>
+
+<!-- ─── CA ──────────────────────────────────────────────────────────────────── -->
+<div class="lang-content" id="lang-ca">
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num lede-marker">01</span>
+        <p class="para-text">Escollim un món de ciutats deslliurades de l'oblit, sempre en construcció, en indrets on no haurien de ser-hi. Reivindiquem l'exili i el desterrament, la creació com a sol·licitud d'asil, el viatge com aquell acte frustrant i improductiu. Malgrat tot, proposem viatjar. Naveguem amb una brúixola sense el seu imant i, així, transitem fins a perdre de vista l'immutable. Creem on no hi arriba cap arrel.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">02</span>
+        <p class="para-text">Defensem una creació extemporània, poliglota i ubiqua, que emana de la cultura del subsol. Creiem en una identitat inquieta, esperonada cap a la incertesa. I així, en mirar enrere, evoquem un camí personal ple de males herbes, amb el traç esvaït, impossible de tornar a recórrer. Quan esguardem cap endavant, la mateixa males herbes. No creem per esbrinar el que som sinó per deixar de ser qui som.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">03</span>
+        <p class="para-text">Cerquem l'extenuació: de la paraula, dels recursos, de l'energia corporal. Davant la moderació i l'estalvi, el dispendi, la condemna voluntària, la llibertat perduda expressament: percebre el vertigen, les nàusees, el malestar d'atansar-se a una gola sense fons. La creació com a trastorn. Sumir-se en els instants de veritable pànic: avançant sempre vers l'angoixa.</p>
+    </div>
+</div>
+
+<div class="img-break">
+    <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">04</span>
+        <p class="para-text">Invoquem el suïcidi creatiu com a material lleuger, com a acte rutinari, part de la tasca quotidiana. La immaduresa com a propòsit. La pròtesi abans que el remei o la rehabilitació. Abans de la pròtesi, però, la fractura profilàctica. Més tard, ressuscitar en vida: com a contraposició i amb la mateixa lleugeresa, però sempre en algun altre lloc.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">05</span>
+        <p class="para-text">Aspirem al producte deforme, sempre incomplet, d'una idea; a l'ofuscació abnegada com a forma de claredat. Abracem els nostres defectes i desterrem la coherència per crear des de l'alienació, atònits. Afrontem el futur amb una esperança voraç, sobrant, amb l'ímpetu de les expectatives desmesurades. El passat el contemplem amb nostàlgia atroç.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">06</span>
+        <p class="para-text">Naixem sols i morim sols: entre un instant i el següent, el camí es fa en companyia. No hi ha creació sense amistat; tampoc no hi ha amistat sense patiment compartit. No obstant, per sobre de l'empatia, promulguem l'opacitat i apel·lem a la tolerància, no des de la comprensió sinó des de l'acceptació de les tenebres de l'altre, des de l'estranyesa i la perplexitat.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">07</span>
+        <p class="para-text">Triem, entre l'individu i la col·lectivitat, les dues opcions. Formulem l'íntim amb retalls d'allò que és públic. La creació com a acte comunal, edificant relats sobre murs enderrocats. I així, compartir el que es creï, subjectes a la inseguretat, a la por a l'opinió aliena, però també a la urgència de fer-ho. Formar una descendència bastarda, desheretada i amb traumes. No hi ha tradició sense heterodòxia, ni tampoc modernitat sense memòria. Escollir entre elles és dubtar entre dos infinits: habitar entre ells, la nostra única alternativa.</p>
+    </div>
+</div>
+
+<div class="img-break-pair">
+    <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="" loading="lazy">
+    <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">08</span>
+        <p class="para-text">Tenim opinions estètiques inamovibles. Adoptem, però, totes les altres. Una fusió més enllà del mestissatge, sorgida de la descomposició de les expectatives del que podia haver estat. El reciclatge com a font de material artístic: el contenidor de matèria orgànica com a brollador creatiu. L'art amb les desferres que reglota el mar al nàufrag. En l'ètica, igual que en l'estètica, la mateixa disposició.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">09</span>
+        <p class="para-text">Celebrem el plagi, la còpia, la cerca promíscua de tot tipus de material creatiu. Reivindiquem els llocs comuns com a sortida i com a meta, també com a zona de pas: duanes des de les quals travessar fronteres. Repudiem la marca personal, abracem la marca blanca, la còpia manufacturada en tallers il·legals. Entenem la creació des del transvestisme, amb la mirada darrere d'una màscara, de centenars d'elles.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">10</span>
+        <p class="para-text">Fem servir l'atòpia, abans que la utopia o el distòpia. I davant la síntesi, la disgregació. Creem per exposar en un museu que mai no arribarem a visitar: l'obra es panseix el dia que troba el seu públic. Construïm pensant en les ruïnes, l'arribada del llapó i l'inevitable abandonament. L'obra millora sempre, de qualsevol manera, si està fora de lloc.</p>
+    </div>
+</div>
+</div>
+
+<!-- ─── EN ──────────────────────────────────────────────────────────────────── -->
+<div class="lang-content" id="lang-en">
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num lede-marker">01</span>
+        <p class="para-text">We choose a world of recalled cities, always in construction, built on unexpected grounds. We claim exile and deportation, creation as a request for asylum, and the journey as a frustrating and unproductive act. We encourage travel, in spite of everything. Navigating, ripping the magnet from the compass, and so wandering until the unyielding is out of sight. Creating where roots cannot reach.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">02</span>
+        <p class="para-text">We defend extemporaneous, polyglot and ubiquitous creations, stemming from an underground culture. We believe in a restless identity, on the way to uncertainty. Looking back, finding each of our paths covered in greenery, its trail faded and impossible to retrace. Looking ahead, that same underbrush. We don't create to figure out who we are, but to discard ourselves altogether.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">03</span>
+        <p class="para-text">We search for consumption: of word, resource and bodily energy. Against moderation and frugality come the squandering, the voluntary sentence, and the freedom intentionally lost: feeling the vertigo and nausea, the unsettling feeling of peeking over a bottomless gorge. Creation as an affliction. Plunging into instants of true panic: moving towards, and not away from, angst.</p>
+    </div>
+</div>
+
+<div class="img-break">
+    <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">04</span>
+        <p class="para-text">We invoke creative suicide as a light task, an everyday act, a part of the mundane. Immaturity as a purpose. Prosthesis before healing or rehabilitation; and before that, the prophylactic fracture. Later on, a living resurrection: still dissenting and lightweight, but always elsewhere.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">05</span>
+        <p class="para-text">We aspire towards the misshapen artifact, eternally unfinished, of an idea; devoted bewilderment as a form of clarity. We embrace our flaws and sacrifice coherence in favor of alienated creation, stunned. We face the future with insatiable hope, overflowing, with the drive of unchecked expectations. We regard the past with appalling nostalgia.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">06</span>
+        <p class="para-text">We are born alone, and so do we expire: between both, the path must be shared. There is no creation without camaraderie; there is also no bond without common suffering. Nonetheless, we promote opaqueness over empathy, and call for tolerance, born not from understanding, but acceptance, of each other's dark corners; born from estrangement and perplexity.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">07</span>
+        <p class="para-text">We, given the choice of individual or collective, choose both. Defining the intimate from fragments of the communal. Creation as a group effort, building stories on top of fallen barriers. And so, we share what is created; we share tied to insecurity and scrutiny from others, but also to an unavoidable need to do so. Nurturing bastard offspring, disowned and traumatized. There is no tradition without heterodoxy, nor modernity without memory. Choosing one or the other is hesitating between two infinites: life in the in-between, our only choice.</p>
+    </div>
+</div>
+
+<div class="img-break-pair">
+    <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="" loading="lazy">
+    <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">08</span>
+        <p class="para-text">We carry steadfast aesthetic opinions. We embrace, however, those who differ. A combination beyond mestizo, sourced from the decay of "what could have been" expectations. Recycling becomes artistic fertilizer: organic waste is a creative spring. Art made from what the sea gifts the castaway. In Ethics, as in Aesthetics, the same disposition.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">09</span>
+        <p class="para-text">We celebrate plagiarism, copycats, the promiscuous endeavor of finding a creative motherlode. We claim commonplaces as an exit strategy, and a goal, and a passageway: customs through which to cross frontiers. In the face of personal branding, the generic, the manufactured copy in illegal shops. We understand creation through drag, looking beyond a mask, beyond hundreds of them.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">10</span>
+        <p class="para-text">We use the atopic before the utopic or dystopic. And against synthesis, disintegration. We create to exhibit in museums we won't visit: the artist's work withers away the day it meets its public. We build because we think of ruins; mold settling in, and the inevitable neglect. The work will always grow better, in any shape or form, if it is out of place.</p>
+    </div>
+</div>
+</div>
+
+<!-- ─── FR ──────────────────────────────────────────────────────────────────── -->
+<div class="lang-content" id="lang-fr">
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num lede-marker">01</span>
+        <p class="para-text">Nous choisissons un monde de villes mémorisées, toujours en construction, sur des terrains où elles ne devraient pas y être. Nous revendiquons l'exile volontaire et involontaire, la création comme demande d'asile, le voyage comme acte frustrant et improductif. Nous proposons de voyager, malgré tout. Naviguer en enlevant l'aimant de la boussole et donc déambuler jusqu'à perdre de vue l'immuable. Créer là où aucune racine n'atteint.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">02</span>
+        <p class="para-text">Nous défendons une création hors du temps polyglotte et ubiquiste, qui émane de la culture du sous-sol. Nous croyons à une identité inquiète, en itinérance vers l'incertitude. Et ainsi, en regardant en arrière, trouver un chemin personnel plein de broussaille, au trait estompé, impossible de parcourir à nouveau. En regardant en avant, la même broussaille. Nous ne créons pas pour découvrir qui nous sommes, mais pour arrêter d'être qui nous sommes.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">03</span>
+        <p class="para-text">Nous cherchons l'épuisement : du mot, des ressources, de l'énergie corporelle. Face à la modération et l'économie, le gaspillage, la condamnation volontaire, la liberté délibérément perdue : sentir le vertige, les nausées, le malaise de se pencher sur une gorge sans fond. La création comme un trouble. Plonger dans de moments de véritable panique : agir pour, et non contre, l'angoisse.</p>
+    </div>
+</div>
+
+<div class="img-break">
+    <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">04</span>
+        <p class="para-text">Nous invoquons le suicide créatif comme du matériel léger, comme acte routinier, faisant partie de l'activité quotidienne. L'immaturité comme but. La prothèse avant la guérison ou la rééducation. Toutefois, avant la prothèse, la fracture prophylactique. Plus tard, ressusciter en vie : comme contrepoint et avec la même légèreté, mais toujours ailleurs.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">05</span>
+        <p class="para-text">Nous aspirons au produit déformé, toujours inachevé, d'une idée ; à la confusion dévouée comme forme de clarté. Nous embrassons nos défauts et bannissons la cohérence pour créer à partir de l'aliénation, ébahis. Nous affrontons l'avenir avec un espoir vorace, débordant, avec la fougue des attentes excessives. Nous regardons le passé avec une atroce nostalgie.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">06</span>
+        <p class="para-text">Nous naissons seuls et nous mourrons seuls : entre un instant et l'autre, la route se fait en compagnie. Il n'y a pas de création sans amitié ; il n'y a pas non plus d'amitié sans souffrance partagée. Cependant, au-delà de l'empathie, nous promulguons l'opacité, et nous appelons à la tolérance, non pas depuis la compréhension mais de l'acceptation des zones obscures de l'autre, depuis l'éloignement et la perplexité.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">07</span>
+        <p class="para-text">Nous choisissons, entre l'individu et le collectif, les deux options. Définir l'intime avec des morceaux du public. La création comme acte de groupe, qui construit des histoires sur des murs effondrés. Et ainsi partager ce qui est créé, soumis à l'insécurité, à la peur de l'avis des autres, mais aussi au besoin de le faire. Élever une descendance bâtarde déshéritée et traumatisée. Il n'y a pas de tradition sans hétérodoxie, ni de modernité sans mémoire. Choisir entre elles, c'est hésiter entre deux infinis : les habiter, notre seule option.</p>
+    </div>
+</div>
+
+<div class="img-break-pair">
+    <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="" loading="lazy">
+    <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">08</span>
+        <p class="para-text">Nous avons des avis esthétiques inamovibles. Nous embrassons, cependant, tous les autres. Une fusion au-delà du métisse, née de la décomposition des attentes de ce qui aurait pu être. Le recyclage comme source de matériel artistique : la poubelle des déchets organiques comme levain créative. L'art crée avec ce que la mer donne au naufragé. Dans l'éthique, comme dans l'esthétique, la même disposition.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">09</span>
+        <p class="para-text">Nous célébrons le plagiat, la copie, la recherche dissolue de toutes sortes de matériaux créatifs. Nous revendiquons les lieux communs comme un départ et un but, mais aussi comme une zone de passage : des douanes par lesquelles franchir des frontières. Face à la marque personnelle, la marque blanche, la copie manufacturée dans des ateliers clandestins. Nous comprenons la création à partir du travestissement, avec le regard derrière un masque, des centaines d'eux.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">10</span>
+        <p class="para-text">Nous utilisons l'atopie, plutôt que l'utopie ou la dystopie. Et face à la synthèse, la disgrégation. Nous créons pour exposer dans un musée que nous ne pourrons jamais visiter : l'œuvre d'art se fane le jour où elle trouve son public. Nous construisons en pensant aux ruines, à l'arrivée de la moisissure et à son inévitable abandon. L'œuvre d'art s'améliore toujours, de toute façon, si elle est malplacée.</p>
+    </div>
+</div>
+</div>
+
+<!-- ─── AST ─────────────────────────────────────────────────────────────────── -->
+<div class="lang-content" id="lang-ast">
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num lede-marker">01</span>
+        <p class="para-text">Escoyemos un mundu de ciudaes recordaes, siempres en construcción, en terrenos onde nun tendríen que tar. Reivindicamos l'esiliu y el destierru, la creación como una solicitú d'asilu, el viaxe como actu frustrante ya improductivu. Proponemos viaxar, con too y con eso. Navegar quitando-y a la brúxula'l so imán y, asina, caleyar hasta perder de vista lo inmutable. Crear onde nun algame nengún raigañu.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">02</span>
+        <p class="para-text">Defendemos una creación estemporánea, políglota y ubicua, que emana de la cultura del sosuelu. Creemos n'una identidá inquieta, de camín escontra la incertidume. Y asina, al mirar tras, atopar un camín personal enllenu broza, col trazu esmorecíu, imposible de volver percorrer. Al mirar escontra alantre, la mesma broza. Nun creamos pa pescanciar lo que somos sinón pa dexar de ser quien somos.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">03</span>
+        <p class="para-text">Buscamos la galdidura: de la pallabra, de los recursos, de la enerxía corporal. Escontra la moderación y l'aforru, l'asuelu, la condena voluntaria, la llibertá perdida a posta: sentir el vértigu, les estomagaes, el malestar d'asomase a un gargüelu ensin fondu. La creación como alloramientu. Sumise nos intres de verdadera llercia: avanzar a favor, y non escontra, de la congoxa.</p>
+    </div>
+</div>
+
+<div class="img-break">
+    <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">04</span>
+        <p class="para-text">Invocamos el suicidiu creativu como material llixero, como actu rutinariu, parte del buizu cotidianu. La inmadurez como propósitu. La prótesis primero que la cura o la rehabilitación. Sicasí, enantes de la prótesis, la quebradura profiláctica. Llueu, resucitar en vida: como contraposición y cola mesma llixereza, pero siempres en dalgún otru llugar.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">05</span>
+        <p class="para-text">Aspiramos al productu deforme, siempres entamanáu, d'una idea; a la ofuscación abnegada como forma de claridá. Abrazamos los nuesos defeutos y esterramos la coherencia pa crear dende la enayenadura, plasmaos. Encaramos el futuru con una esperanza voraz, demasía, col ímpetu de les mires desatamañaes. El pasáu contemplamoslu con una señardá bederre.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">06</span>
+        <p class="para-text">Ñacemos solos y morremos solos: entre un momentu y otru, el camín faese en compaña. Nun hai creación ensin amistá; tampoco hai amistá ensin sufrimientu compartíu. Sicasí, perriba la empatía, promulgamos la opacidá, y apelamos a la tolerancia, non dende la comprensión sinón de l'aceptación de les zones escures del otru, dende'l extrañamientu y la perplexidá.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">07</span>
+        <p class="para-text">Escoyemos, entre l'individuu y la coleutividá, dambes opciones. Definir lo íntimo con cachos de lo público. La creación como andecha, edificando relatos sobre murios baltaos. Y asina, compartir lo que se crea, suxetos a la inseguridá, al mieu a la opinión ayena, pero tamién a la necesidá de faelo. Formar una descendencia bastarda, desheredada y con traumas. Nun esiste la tradición ensin heterodoxa, nin hai modernidá ensin memoria. Escoyer ente elles ye duldar ente dos infinitos: habitar ente ellos, la nuesa única opción.</p>
+    </div>
+</div>
+
+<div class="img-break-pair">
+    <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="" loading="lazy">
+    <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="" loading="lazy">
+</div>
+
+<div class="manifesto-body">
+    <div class="para-block">
+        <span class="para-num">08</span>
+        <p class="para-text">Tenemos opiniones estétiques inamovibles. Abrazamos, sicasí, toles demás. Una fusión más allá de lo mestizo, surdida de la descomposición de les mires de lo que pudo ser. El recicláu como fonte de material artístico: el contenedor de materia orgánico como venero creativu. Arte con aquello que la mar apúrre-y al náufragu. No ético, igual que no estético, la mesma disposición.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">09</span>
+        <p class="para-text">Cellebramos el plaxu, la copia, la busca promiscua de too tipu de material creativo. Reivindicamos los llugares comunes como salida y como meta, tamién como zona de camín: aduanes dende les que travesar fronteres. Frente a la marca personal, la marca blanca, la copia manufacturada en talleres illegales. Entendemos la creación dende'l travestismo, cola mirada detrás d'una mázcara, de cientos d'elles.</p>
+    </div>
+    <div class="para-block">
+        <span class="para-num">10</span>
+        <p class="para-text">Usamos lo atópico, primero que lo utópico o lo distópico. Y énte la síntesis, la disgregación. Creamos pa esponer nun muséu que enxamás vamos llegar visitar: la obra amostálgase'l día qu'atopa'l so públicu. Construyimos pensando nes ruines, na llegada del mugor, y el so inevitable abandonu. La obra ameyora siempres, de cualesquier de les maneres, si ta fuera de sitiu.</p>
+    </div>
+</div>
 </div>
 
 <div class="caption-strip">
-    <span>Manifiesto C.F.D.L. — 2024</span>
+    <span>Manifiesto C.F.D.L. — 2023</span>
     <a href="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf"
-       target="_blank" rel="noopener">Leer PDF ↗</a>
+       target="_blank" rel="noopener">PDF ↗</a>
 </div>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
     <p><a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
 </footer>
+
+<script>
+    const titles = {
+        es:  'Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar',
+        ca:  'Manifest canviant i mai complert del Col·lectiu Fora de Lloc',
+        en:  'Ever-changing and never-accomplished Manifest of the Misplaced Collective',
+        fr:  'Manifeste changeant et jamais accompli du Collectif Malplacé',
+        ast: 'Manifiesto cambiante y nunca cumplíu del Coleutivu Fuera de Llugar'
+    };
+
+    function setLang(lang) {
+        document.querySelectorAll('.lang-content').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.lang-btn').forEach(el => el.classList.remove('active'));
+        document.getElementById('lang-' + lang).classList.add('active');
+        document.querySelector(`[onclick="setLang('${lang}')"]`).classList.add('active');
+        document.getElementById('title-sub').textContent = titles[lang];
+        document.documentElement.lang = lang === 'ast' ? 'ast' : lang;
+    }
+</script>
 
 </body>
 </html>
