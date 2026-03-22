@@ -15,60 +15,52 @@
         }
 
         :root {
-            --bg:      #fafaf8;
-            --text:    #0f0f0e;
-            --muted:   #6b6b65;
-            --border:  #e5e4df;
-            --accent:  #ffb923;
+            --bg:     #fafaf8;
+            --ink:    #0f0f0e;
+            --muted:  #6b6b65;
+            --border: #e5e4df;
+            --accent: #ffb923;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
+        html { scroll-behavior: smooth; }
+
         body {
             font-family: 'FuturaStd', sans-serif;
             background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            color: var(--ink);
         }
 
-        /* ── Header ─────────────────────────────────────────────────────────── */
-        header {
-            padding: 64px 64px 32px;
+        /* ── Nav ─────────────────────────────────────────────────────────────── */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            height: 48px;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: space-between;
+            padding: 0 40px;
+            background: var(--bg);
             border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
+            mix-blend-mode: normal;
         }
 
-        .header-left h1 {
-            font-family: 'FuturaStd', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.18em;
+        .nav-brand {
+            font-size: 10px;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--text);
-            margin-bottom: 6px;
+            color: var(--ink);
+            text-decoration: none;
         }
 
-        .header-left p {
-            font-family: 'MinionPro', serif;
-            font-size: 32px;
-            line-height: 1.15;
-            color: var(--text);
-            font-weight: normal;
-        }
-
-        .header-right {
-            text-align: right;
+        .nav-links {
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
+            gap: 32px;
         }
 
-        .header-right a {
+        .nav-links a {
             font-size: 10px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -77,85 +69,243 @@
             transition: color 0.15s;
         }
 
-        .header-right a:hover { color: var(--text); }
+        .nav-links a:hover { color: var(--ink); }
 
-        /* ── Main content ────────────────────────────────────────────────────── */
-        .content {
-            display: flex;
-            flex: 1;
-            min-height: 0;
-        }
-
-        /* ── PDF column ──────────────────────────────────────────────────────── */
-        .pdf-col {
-            width: 420px;
-            flex-shrink: 0;
-            border-right: 1px solid var(--border);
+        /* ── Hero ────────────────────────────────────────────────────────────── */
+        .hero {
+            padding-top: 48px;
+            height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: flex-end;
+            padding-left: 40px;
+            padding-right: 40px;
+            padding-bottom: 56px;
+            border-bottom: 1px solid var(--border);
+            position: relative;
         }
 
-        .col-label {
-            padding: 20px 32px;
+        .hero-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(72px, 14vw, 200px);
+            line-height: 0.9;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--ink);
+            margin-bottom: 48px;
+        }
+
+        .hero-bottom {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .hero-desc {
+            font-family: 'MinionPro', serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--muted);
+            max-width: 380px;
+            font-style: italic;
+        }
+
+        .hero-cta {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid var(--ink);
+            padding-bottom: 2px;
+            transition: color 0.15s, border-color 0.15s;
+        }
+
+        .hero-cta:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ── Full-bleed image ────────────────────────────────────────────────── */
+        .img-full {
+            width: 100%;
+            display: block;
+            line-height: 0;
+        }
+
+        .img-full img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* ── Editorial row: text + image ─────────────────────────────────────── */
+        .editorial-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .editorial-row.reverse { direction: rtl; }
+        .editorial-row.reverse > * { direction: ltr; }
+
+        .editorial-text {
+            padding: 80px 56px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .editorial-row.reverse .editorial-text {
+            border-right: none;
+            border-left: 1px solid var(--border);
+        }
+
+        .editorial-quote {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(22px, 3vw, 40px);
+            line-height: 1.25;
+            font-style: italic;
+            color: var(--ink);
+            margin-bottom: 24px;
+        }
+
+        .editorial-attr {
             font-size: 9px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
+        }
+
+        .editorial-img {
+            overflow: hidden;
+            min-height: 480px;
+        }
+
+        .editorial-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.6s ease;
+        }
+
+        .editorial-img:hover img {
+            transform: scale(1.03);
+        }
+
+        /* ── Two images side by side ─────────────────────────────────────────── */
+        .img-pair {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             border-bottom: 1px solid var(--border);
         }
 
-        .pdf-embed {
-            flex: 1;
-            min-height: 600px;
+        .img-pair-item {
+            overflow: hidden;
+            line-height: 0;
+            border-right: 1px solid var(--border);
         }
 
-        .pdf-embed object,
-        .pdf-embed iframe {
+        .img-pair-item:last-child { border-right: none; }
+
+        .img-pair-item img {
             width: 100%;
             height: 100%;
-            min-height: 600px;
-            border: none;
+            min-height: 360px;
+            object-fit: cover;
             display: block;
+            transition: transform 0.6s ease;
         }
 
-        /* ── Images column ───────────────────────────────────────────────────── */
-        .images-col {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
+        .img-pair-item:hover img { transform: scale(1.03); }
+
+        /* ── Dark quote band ─────────────────────────────────────────────────── */
+        .quote-band {
+            background: var(--ink);
+            padding: 100px 40px;
+            border-bottom: 1px solid #222;
         }
 
-        .image-gallery {
-            padding: 32px;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
+        .quote-band blockquote {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(28px, 5vw, 72px);
+            line-height: 1.15;
+            font-style: italic;
+            color: var(--bg);
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
         }
 
-        .gallery-item {
-            border: 1px solid var(--border);
-            overflow: hidden;
-        }
-
-        .gallery-item img {
-            width: 100%;
+        .quote-band cite {
             display: block;
+            margin-top: 40px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-style: normal;
+            text-align: center;
+        }
+
+        /* ── Read section ────────────────────────────────────────────────────── */
+        .read-section {
+            padding: 80px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .read-label {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(28px, 4vw, 56px);
+            font-weight: normal;
+            font-style: italic;
+            color: var(--ink);
+        }
+
+        .read-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink);
+            text-decoration: none;
+            border: 1px solid var(--ink);
+            padding: 14px 24px;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .read-link:hover {
+            background: var(--ink);
+            color: var(--bg);
         }
 
         /* ── Footer ──────────────────────────────────────────────────────────── */
         footer {
-            padding: 40px 64px;
+            padding: 32px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
-            flex-shrink: 0;
         }
 
         footer p {
             font-size: 9px;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
         }
@@ -166,76 +316,125 @@
             transition: color 0.15s;
         }
 
-        footer a:hover { color: var(--text); }
+        footer a:hover { color: var(--ink); }
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
-        @media (max-width: 700px) {
-            header { padding: 40px 24px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
-            .content { flex-direction: column; }
-            .pdf-col { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
-            .pdf-embed { min-height: 400px; }
-            .pdf-embed object,
-            .pdf-embed iframe { min-height: 400px; }
-            .image-gallery { padding: 24px; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+        @media (max-width: 768px) {
+            nav { padding: 0 24px; }
+            .hero { padding: 96px 24px 40px; }
+            .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+
+            .editorial-row { grid-template-columns: 1fr; direction: ltr; }
+            .editorial-row.reverse { direction: ltr; }
+            .editorial-text { padding: 48px 24px; border-right: none; border-bottom: 1px solid var(--border); }
+            .editorial-row.reverse .editorial-text { border-left: none; border-bottom: 1px solid var(--border); }
+            .editorial-img { min-height: 280px; }
+
+            .img-pair { grid-template-columns: 1fr; }
+            .img-pair-item { border-right: none; border-bottom: 1px solid var(--border); }
+            .img-pair-item img { min-height: 260px; }
+
+            .quote-band { padding: 64px 24px; }
+            .read-section { padding: 56px 24px; flex-direction: column; align-items: flex-start; gap: 32px; }
+            footer { padding: 24px; flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-left">
-        <h1>C.F.D.L.</h1>
-        <p>Manifiesto</p>
-    </div>
-    <div class="header-right">
+<!-- Nav -->
+<nav>
+    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <div class="nav-links">
         <a href="index.html">← Archivo</a>
         <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
     </div>
-</header>
+</nav>
 
-<div class="content">
-
-    <div class="pdf-col">
-        <div class="col-label">Texto</div>
-        <div class="pdf-embed">
-            <object data="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf" type="application/pdf">
-                <iframe src="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf">
-                    <p>
-                        Tu navegador no puede mostrar el PDF.
-                        <a href="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf">Descárgalo aquí.</a>
-                    </p>
-                </iframe>
-            </object>
-        </div>
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-label">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</div>
+    <div class="hero-title">Mani&shy;fiesto</div>
+    <div class="hero-bottom">
+        <p class="hero-desc">
+            Un texto sobre el desplazamiento, la deriva y la pertenencia.
+            Las piezas generativas nacen de aquí.
+        </p>
+        <a class="hero-cta" href="#leer">Leer el manifiesto ↓</a>
     </div>
+</section>
 
-    <div class="images-col">
-        <div class="col-label">Imágenes</div>
-        <div class="image-gallery">
-            <div class="gallery-item">
-                <img src="skills/references/web/Manifesto_Fuera_De_Lugar_02.png" alt="Manifiesto C.F.D.L.">
-            </div>
-            <div class="gallery-item">
-                <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="Referencia visual C.F.D.L.">
-            </div>
-            <div class="gallery-item">
-                <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="Referencia visual C.F.D.L.">
-            </div>
-            <div class="gallery-item">
-                <img src="skills/references/web/4a8641190555289.65bca36e5aecd.jpg" alt="Referencia visual C.F.D.L.">
-            </div>
-            <div class="gallery-item">
-                <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="Referencia visual C.F.D.L.">
-            </div>
-        </div>
+<!-- Full-bleed image 1 -->
+<div class="img-full">
+    <img src="skills/references/web/Manifesto_Fuera_De_Lugar_02.png"
+         alt="Manifiesto C.F.D.L."
+         loading="lazy">
+</div>
+
+<!-- Editorial: quote + image -->
+<div class="editorial-row">
+    <div class="editorial-text">
+        <p class="editorial-quote">"fuera de lugar — siempre en algún otro lugar"</p>
+        <span class="editorial-attr">Manifiesto C.F.D.L.</span>
     </div>
+    <div class="editorial-img">
+        <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg"
+             alt="Referencia visual C.F.D.L."
+             loading="lazy">
+    </div>
+</div>
 
+<!-- Two images -->
+<div class="img-pair">
+    <div class="img-pair-item">
+        <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg"
+             alt="Referencia visual C.F.D.L."
+             loading="lazy">
+    </div>
+    <div class="img-pair-item">
+        <img src="skills/references/web/4a8641190555289.65bca36e5aecd.jpg"
+             alt="Referencia visual C.F.D.L."
+             loading="lazy">
+    </div>
+</div>
+
+<!-- Editorial: image + quote (reversed) -->
+<div class="editorial-row reverse">
+    <div class="editorial-text">
+        <p class="editorial-quote">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</p>
+        <span class="editorial-attr">Manifiesto C.F.D.L.</span>
+    </div>
+    <div class="editorial-img">
+        <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg"
+             alt="Referencia visual C.F.D.L."
+             loading="lazy">
+    </div>
+</div>
+
+<!-- Dark quote band -->
+<div class="quote-band">
+    <blockquote>
+        "Y ante la síntesis, la disgregación"
+        <cite>Manifiesto C.F.D.L.</cite>
+    </blockquote>
+</div>
+
+<!-- Read section -->
+<div class="read-section" id="leer">
+    <p class="read-label">Leer el manifiesto completo</p>
+    <a class="read-link"
+       href="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf"
+       target="_blank" rel="noopener">
+        Abrir PDF ↗
+    </a>
 </div>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
-    <p><a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a> · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
+    <p>
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a>
+        · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
+    </p>
 </footer>
 
 </body>
