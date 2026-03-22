@@ -16,10 +16,10 @@
         }
 
         :root {
-            --bg:     #e4d3c3; /* China White */
+            --bg:     #ddd4cb; /* Mist */
             --text:   #2e2e30; /* Ebony */
             --muted:  #8f8f91; /* Smoke */
-            --border: #d4c4b4;
+            --border: #cec8c2;
             --accent: #e9ad51; /* Citrine */
         }
 
@@ -81,20 +81,22 @@
             justify-content: space-between;
             padding: 0 48px;
             border-bottom: 1px solid var(--border);
+            border-left: 3px solid transparent;
             text-decoration: none;
             color: var(--text);
-            transition: background 0.15s;
+            transition: background 0.15s, border-color 0.15s;
         }
 
         .nav-item:last-child { border-bottom: none; }
 
         .nav-item:hover {
-            background: #dac9b8;
+            background: #d4cec8;
+            border-left-color: var(--accent);
         }
 
         .nav-item:hover .nav-arrow {
             transform: translateX(6px);
-            color: var(--text);
+            color: var(--accent);
         }
 
         .nav-item-label {
@@ -106,9 +108,12 @@
 
         .nav-arrow {
             font-size: 20px;
-            color: var(--muted);
-            transition: transform 0.15s, color 0.15s;
+            color: var(--accent);
+            opacity: 0.55;
+            transition: transform 0.15s, color 0.15s, opacity 0.15s;
         }
+
+        .nav-item:hover .nav-arrow { opacity: 1; }
 
         /* ── Footer ──────────────────────────────────────────────────────────── */
         footer {

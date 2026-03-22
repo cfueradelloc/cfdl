@@ -92,7 +92,7 @@
         }
 
         .lang-btn {
-            padding: 16px 24px;
+            padding: 14px 24px 16px;
             font-size: 9px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
@@ -100,8 +100,9 @@
             background: none;
             border: none;
             border-right: 1px solid var(--rule);
+            border-top: 2px solid transparent;
             cursor: pointer;
-            transition: color 0.15s, background 0.15s;
+            transition: color 0.15s, border-color 0.15s;
         }
 
         .lang-btn:last-child { border-right: none; }
@@ -110,6 +111,7 @@
 
         .lang-btn.active {
             color: var(--accent);
+            border-top-color: var(--accent);
         }
 
         /* ── Manifesto text ──────────────────────────────────────────────────── */
@@ -140,8 +142,8 @@
 
         .para-text {
             font-family: 'MinionPro', serif;
-            font-size: clamp(16px, 1.8vw, 20px);
-            line-height: 1.7;
+            font-size: clamp(17px, 1.9vw, 22px);
+            line-height: 1.72;
             color: var(--text);
         }
 
@@ -161,11 +163,14 @@
         .img-break img {
             width: 100%;
             display: block;
+            max-height: 62vh;
+            object-fit: cover;
         }
 
         .img-break-pair {
             display: grid;
             grid-template-columns: 6fr 4fr;
+            height: 46vh;
             border-top: 1px solid var(--rule);
             border-bottom: 1px solid var(--rule);
             line-height: 0;
@@ -240,7 +245,8 @@
             .lang-btn { padding: 14px 16px; }
             .manifesto-body { padding: 0 24px; }
             .para-block { grid-template-columns: 32px 1fr; gap: 0 16px; padding: 40px 0; }
-            .img-break-pair { grid-template-columns: 1fr; }
+            .img-break-pair { grid-template-columns: 1fr; height: auto; }
+            .img-break-pair img { max-height: 52vw; }
             .img-break-pair > :first-child { border-right: none; border-bottom: 1px solid var(--rule); }
             .caption-strip { padding: 16px 24px; }
             footer { padding: 20px 24px; flex-direction: column; gap: 8px; }

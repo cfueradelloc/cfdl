@@ -70,8 +70,12 @@
             transition: color 0.15s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active { color: var(--text); }
+        .nav-links a:hover { color: var(--text); }
+        .nav-links a.active {
+            color: var(--text);
+            border-bottom: 1px solid var(--text);
+            padding-bottom: 1px;
+        }
 
         .hero {
             padding-top: 48px;
@@ -147,7 +151,6 @@
 <nav>
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
-        <a href="index.html">Archivo</a>
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html" class="active">Eventos</a>
         <a href="proyectos.html">Proyectos</a>
