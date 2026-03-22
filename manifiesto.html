@@ -15,11 +15,12 @@
         }
 
         :root {
-            --bg:     #fafaf8;
-            --ink:    #0f0f0e;
-            --muted:  #6b6b65;
-            --border: #e5e4df;
-            --accent: #ffb923;
+            --bg:      #ddd4cb;
+            --surface: #ded9d6;
+            --text:    #2e2e30;
+            --muted:   #8f8f91;
+            --border:  #dad5d5;
+            --accent:  #e9ad51;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,7 +30,7 @@
         body {
             font-family: 'FuturaStd', sans-serif;
             background: var(--bg);
-            color: var(--ink);
+            color: var(--text);
         }
 
         /* ── Nav ─────────────────────────────────────────────────────────────── */
@@ -51,7 +52,7 @@
             font-size: 10px;
             letter-spacing: 0.2em;
             text-transform: uppercase;
-            color: var(--ink);
+            color: var(--text);
             text-decoration: none;
         }
 
@@ -69,7 +70,7 @@
             transition: color 0.15s;
         }
 
-        .nav-links a:hover { color: var(--ink); }
+        .nav-links a:hover { color: var(--text); }
 
         /* ── Hero ────────────────────────────────────────────────────────────── */
         .hero {
@@ -99,7 +100,7 @@
             line-height: 0.9;
             font-weight: normal;
             font-style: italic;
-            color: var(--ink);
+            color: var(--text);
             margin-bottom: 48px;
         }
 
@@ -122,9 +123,9 @@
             font-size: 10px;
             letter-spacing: 0.14em;
             text-transform: uppercase;
-            color: var(--ink);
+            color: var(--text);
             text-decoration: none;
-            border-bottom: 1px solid var(--ink);
+            border-bottom: 1px solid var(--text);
             padding-bottom: 2px;
             transition: color 0.15s, border-color 0.15s;
         }
@@ -175,7 +176,7 @@
             font-size: clamp(22px, 3vw, 40px);
             line-height: 1.25;
             font-style: italic;
-            color: var(--ink);
+            color: var(--text);
             margin-bottom: 24px;
         }
 
@@ -231,7 +232,7 @@
 
         /* ── Dark quote band ─────────────────────────────────────────────────── */
         .quote-band {
-            background: var(--ink);
+            background: var(--text);
             padding: 100px 40px;
             border-bottom: 1px solid #222;
         }
@@ -273,7 +274,7 @@
             font-size: clamp(28px, 4vw, 56px);
             font-weight: normal;
             font-style: italic;
-            color: var(--ink);
+            color: var(--text);
         }
 
         .read-link {
@@ -283,15 +284,15 @@
             font-size: 10px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--ink);
+            color: var(--text);
             text-decoration: none;
-            border: 1px solid var(--ink);
+            border: 1px solid var(--text);
             padding: 14px 24px;
             transition: background 0.2s, color 0.2s;
         }
 
         .read-link:hover {
-            background: var(--ink);
+            background: var(--text);
             color: var(--bg);
         }
 
@@ -316,7 +317,7 @@
             transition: color 0.15s;
         }
 
-        footer a:hover { color: var(--ink); }
+        footer a:hover { color: var(--text); }
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 768px) {
@@ -346,7 +347,10 @@
 <nav>
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
-        <a href="index.html">← Archivo</a>
+        <a href="index.html">Archivo</a>
+        <a href="manifiesto.html">Manifiesto</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="proyectos.html">Proyectos</a>
         <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
     </div>
 </nav>

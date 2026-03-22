@@ -16,12 +16,12 @@
         }
 
         :root {
-            --bg:      #fafaf8;
-            --surface: #ffffff;
-            --text:    #0f0f0e;
-            --muted:   #6b6b65;
-            --border:  #e5e4df;
-            --accent:  #ffb923;
+            --bg:      #ddd4cb;
+            --surface: #ded9d6;
+            --text:    #2e2e30;
+            --muted:   #8f8f91;
+            --border:  #dad5d5;
+            --accent:  #e9ad51;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -175,7 +175,7 @@
             gap: 5px;
         }
         .palette-btn:hover { background: var(--bg); }
-        .palette-btn.active { border-color: var(--text); background: var(--text); color: #fafaf8; }
+        .palette-btn.active { border-color: var(--text); background: var(--text); color: var(--bg); }
 
         .palette-dots { display: flex; gap: 3px; }
         .palette-dots span { width: 8px; height: 8px; border-radius: 50%; }
@@ -213,10 +213,10 @@
             width: 100%;
             font-family: 'FuturaStd', sans-serif;
         }
-        .button:hover { background: #2a2a28; transform: translateY(-1px); }
+        .button:hover { background: #3e3535; transform: translateY(-1px); }
         .button:active { transform: translateY(0); }
         .button.accent { background: var(--accent); color: var(--text); }
-        .button.accent:hover { background: #e6a710; transform: translateY(-1px); }
+        .button.accent:hover { background: #c9943f; transform: translateY(-1px); }
         .button.outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
         .button.outline:hover { background: var(--bg); transform: none; }
 

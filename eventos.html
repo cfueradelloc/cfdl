@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.F.D.L. — Eventos</title>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #ddd4cb; /* Mist */
+            --surface: #ded9d6; /* Vellum White */
+            --text:    #2e2e30; /* Ebony */
+            --muted:   #8f8f91; /* Smoke */
+            --border:  #dad5d5; /* Natural */
+            --accent:  #e9ad51; /* Citrine */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-brand {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--text); }
+
+        .hero {
+            padding-top: 48px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding-left: 40px;
+            padding-right: 40px;
+            padding-bottom: 56px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-label {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        .hero-title {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(72px, 14vw, 200px);
+            line-height: 0.9;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--text);
+            margin-bottom: 48px;
+        }
+
+        .hero-desc {
+            font-family: 'MinionPro', serif;
+            font-size: 15px;
+            line-height: 1.6;
+            color: var(--muted);
+            max-width: 380px;
+            font-style: italic;
+        }
+
+        footer {
+            padding: 32px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        footer a:hover { color: var(--text); }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 24px; }
+            .hero { padding: 96px 24px 40px; }
+            footer { padding: 24px; flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <div class="nav-links">
+        <a href="index.html">Archivo</a>
+        <a href="manifiesto.html">Manifiesto</a>
+        <a href="eventos.html" class="active">Eventos</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div class="hero-label">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</div>
+    <div class="hero-title">Eventos</div>
+    <p class="hero-desc">Próximamente.</p>
+</section>
+
+<footer>
+    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <p>
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a>
+        · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
+    </p>
+</footer>
+
+</body>
+</html>

@@ -15,11 +15,12 @@
         }
 
         :root {
-            --bg:      #fafaf8;
-            --text:    #0f0f0e;
-            --muted:   #6b6b65;
-            --border:  #e5e4df;
-            --accent:  #ffb923;
+            --bg:      #ddd4cb;
+            --surface: #ded9d6;
+            --text:    #2e2e30;
+            --muted:   #8f8f91;
+            --border:  #dad5d5;
+            --accent:  #e9ad51;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -59,11 +60,10 @@
         }
 
         .header-right {
-            text-align: right;
             display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 8px;
+            flex-direction: row;
+            align-items: center;
+            gap: 32px;
         }
 
         .header-right a {
@@ -113,7 +113,7 @@
         }
 
         .piece-link:hover {
-            background: #f4f3ef;
+            background: #d4cec8;
         }
 
         .piece-link:hover .piece-arrow {
@@ -220,7 +220,9 @@
         <p>Archivo Generativo</p>
     </div>
     <div class="header-right">
-        <a href="manifiesto.html">Manifiesto →</a>
+        <a href="manifiesto.html">Manifiesto</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="proyectos.html">Proyectos</a>
         <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
     </div>
 </header>
