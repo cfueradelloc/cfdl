@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brújula sin su imán — C.F.D.L.</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --surface: #ffffff;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-family: 'MinionPro', serif;
+            font-size: 22px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .cfdl-tag {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sidebar .subtitle {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .control-section { margin-bottom: 32px; }
+
+        .control-section h3 {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .seed-input {
+            width: 100%;
+            background: var(--bg);
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            color: var(--text);
+        }
+        .seed-input:focus { outline: none; border-color: var(--accent); }
+
+        .seed-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .control-group { margin-bottom: 20px; }
+
+        .control-group label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .slider-container { display: flex; align-items: center; gap: 10px; }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .value-display {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 48px;
+            text-align: right;
+        }
+
+        .palette-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        .palette-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 8px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .palette-btn:hover { background: var(--bg); }
+        .palette-btn.active { border-color: var(--text); background: var(--text); color: #fafaf8; }
+
+        .palette-dots { display: flex; gap: 3px; }
+        .palette-dots span { width: 8px; height: 8px; border-radius: 50%; }
+
+        .layer-btns { display: flex; gap: 6px; }
+
+        .layer-btn {
+            flex: 1;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px 4px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+        .layer-btn.active { border-color: var(--text); color: var(--text); }
+
+        .button {
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.15s ease;
+            width: 100%;
+            font-family: 'FuturaStd', sans-serif;
+        }
+        .button:hover { background: #2a2a28; transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+        .button.accent { background: var(--accent); color: var(--text); }
+        .button.accent:hover { background: #e6a710; transform: translateY(-1px); }
+        .button.outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+        .button.outline:hover { background: var(--bg); transform: none; }
+
+        .button-row { display: flex; gap: 8px; }
+        .button-row .button { flex: 1; }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #canvas-container {
+            width: 100%;
+            max-width: 900px;   /* square canvas → square display */
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #0a0a09;
+        }
+
+        #canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            aspect-ratio: 1;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="sidebar">
+        <div class="cfdl-tag">C.F.D.L.</div>
+        <h1>Brújula sin su imán</h1>
+        <div class="subtitle">
+            "Navegar quitándole a la brújula su imán — deambular hasta perder de vista lo inmutable."
+        </div>
+
+        <div class="control-section">
+            <h3>Seed</h3>
+            <input type="number" id="seed-input" class="seed-input" value="42" onchange="updateSeed()">
+            <div class="seed-controls">
+                <button class="button outline" onclick="previousSeed()">← Prev</button>
+                <button class="button outline" onclick="nextSeed()">Next →</button>
+            </div>
+            <button class="button accent" onclick="randomSeedAndUpdate()">↻ Random</button>
+        </div>
+
+        <div class="control-section">
+            <h3>Paleta</h3>
+            <div class="palette-grid" id="palette-grid"></div>
+        </div>
+
+        <div class="control-section">
+            <h3>Capas</h3>
+            <div class="layer-btns">
+                <button class="layer-btn active" data-layer="0" onclick="toggleLayer(0)">Campo</button>
+                <button class="layer-btn active" data-layer="1" onclick="toggleLayer(1)">Brújulas</button>
+                <button class="layer-btn active" data-layer="2" onclick="toggleLayer(2)">Pulsos</button>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Parámetros</h3>
+
+            <div class="control-group">
+                <label>Polos</label>
+                <div class="slider-container">
+                    <input type="range" id="poles" min="1" max="4" step="1" value="2"
+                           oninput="updateParam('poles', parseInt(this.value))">
+                    <span class="value-display" id="poles-value">2</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Deriva</label>
+                <div class="slider-container">
+                    <input type="range" id="drift" min="0.05" max="2.0" step="0.05" value="0.4"
+                           oninput="updateParam('drift', parseFloat(this.value))">
+                    <span class="value-display" id="drift-value">0.4</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Densidad</label>
+                <div class="slider-container">
+                    <input type="range" id="density" min="0.3" max="2.0" step="0.1" value="1.0"
+                           oninput="updateParam('density', parseFloat(this.value))">
+                    <span class="value-display" id="density-value">1.0</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Persistencia traza</label>
+                <div class="slider-container">
+                    <input type="range" id="decay" min="1" max="20" step="1" value="6"
+                           oninput="updateParam('decay', parseInt(this.value))">
+                    <span class="value-display" id="decay-value">6</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Respuesta brújula</label>
+                <div class="slider-container">
+                    <input type="range" id="needleEase" min="0.005" max="0.08" step="0.005" value="0.018"
+                           oninput="updateParam('needleEase', parseFloat(this.value))">
+                    <span class="value-display" id="needleEase-value">0.018</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Acciones</h3>
+            <div class="button-row">
+                <button class="button" onclick="resetParameters()">Reset</button>
+                <button class="button outline" onclick="downloadCanvas()">Guardar PNG</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="canvas-area">
+        <div id="canvas-container">
+            <div class="loading">Generando campo...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ─── PALETTES ────────────────────────────────────────────────────────────────
+const PALETTES = {
+    nocturno: {
+        name: 'Nocturno',
+        bg:      [10, 10, 9],
+        col:     [220, 216, 208],   // warm white — field lines far from magnet
+        acc:     [255, 185, 35],    // amber — field lines near magnet
+        dim:     [65, 63, 58],      // needle south arm, pivot
+        needle:  [200, 196, 188],   // needle body
+        pulse:   [255, 185, 35],    // pulse rings
+        dots:    ['#1a2e3d','#4a6880','#ffb923','#ffd25a'],
+    },
+    salvia: {
+        name: 'Salvia',
+        bg:      [6, 12, 8],
+        col:     [180, 210, 200],
+        acc:     [255, 210, 90],
+        dim:     [50, 75, 60],
+        needle:  [160, 200, 185],
+        pulse:   [255, 210, 90],
+        dots:    ['#1a2e3d','#7d9e92','#ffd25a','#fff4d6'],
+    },
+    calida: {
+        name: 'Cálida',
+        bg:      [12, 7, 0],
+        col:     [200, 155, 80],
+        acc:     [255, 244, 214],
+        dim:     [80, 50, 10],
+        needle:  [192, 140, 70],
+        pulse:   [255, 185, 35],
+        dots:    ['#6b4200','#c07d00','#ffd25a','#fff4d6'],
+    },
+    fria: {
+        name: 'Fría',
+        bg:      [5, 8, 12],
+        col:     [160, 185, 210],
+        acc:     [232, 237, 240],
+        dim:     [40, 55, 75],
+        needle:  [140, 170, 200],
+        pulse:   [232, 237, 240],
+        dots:    ['#1a2e3d','#4a6880','#e8edf0','#7d9e92'],
+    },
+};
+
+// ─── PARAMETERS ──────────────────────────────────────────────────────────────
+let params = {
+    seed:       42,
+    poles:      2,
+    drift:      0.4,
+    density:    1.0,
+    decay:      6,
+    needleEase: 0.018,
+    palette:    'nocturno',
+};
+const DEFAULT_PARAMS = { ...params };
+
+// ─── LAYER VISIBILITY ─────────────────────────────────────────────────────────
+let layerVisible = [true, true, true]; // campo, brújulas, pulsos
+
+// ─── FIELD GRID (precomputed each frame for performance) ──────────────────────
+const GRID_RES = 52;
+let fieldGrid = [];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let magnets        = [];
+let fieldParticles = [];
+let needles        = [];
+let pulses         = [];
+
+const BASE_PARTICLES = 9000;
+
+// ─── P5 SETUP ────────────────────────────────────────────────────────────────
+function setup() {
+    const canvas = createCanvas(1100, 1100);
+    canvas.parent('canvas-container');
+    document.querySelector('.loading').style.display = 'none';
+    colorMode(RGB, 255);
+    initializeSystem();
+}
+
+function initializeSystem() {
+    randomSeed(params.seed);
+    noiseSeed(params.seed);
+
+    const bg = PALETTES[params.palette].bg;
+    background(bg[0], bg[1], bg[2]);
+
+    // Create wandering magnets
+    magnets = [];
+    for (let i = 0; i < params.poles; i++) {
+        magnets.push(new WanderingMagnet(i));
+    }
+
+    // Create field-following particles
+    const count = floor(BASE_PARTICLES * params.density);
+    fieldParticles = Array.from({ length: count }, () => new FieldParticle());
+
+    // Compass needles on a jittered grid
+    needles = buildNeedleGrid();
+
+    pulses = [];
+
+    // Initialize field grid
+    initFieldGrid();
+}
+
+function initFieldGrid() {
+    const N = GRID_RES + 1;
+    fieldGrid = new Array(N);
+    for (let i = 0; i < N; i++) fieldGrid[i] = new Array(N);
+}
+
+// ─── DRAW ────────────────────────────────────────────────────────────────────
+function draw() {
+    const pal = PALETTES[params.palette];
+    const bg  = pal.bg;
+
+    // Fade veil — lets traces accumulate
+    noStroke();
+    fill(bg[0], bg[1], bg[2], params.decay);
+    rect(0, 0, width, height);
+
+    // Update magnets and precompute field grid
+    for (const m of magnets) m.update();
+    precomputeFieldGrid();
+
+    // Layers back to front
+    if (layerVisible[2]) updatePulses(pal);
+    if (layerVisible[1]) updateNeedles(pal);
+    if (layerVisible[0]) updateFieldParticles(pal);
+
+    // Magnet indicators (always shown — very subtle)
+    drawMagnetIndicators(pal);
+
+    drawWatermark(pal);
+}
+
+// ─── WANDERING MAGNET ────────────────────────────────────────────────────────
+// A magnetic dipole that wanders via Perlin noise.
+// The field it generates is a classical 2D dipole field.
+class WanderingMagnet {
+    constructor(idx) {
+        // Unique noise offsets per magnet so they wander independently
+        this.nx = random(1000);
+        this.ny = random(1000);
+        this.nt = random(1000);
+        // Stagger starting positions so multiple magnets don't clump at start
+        this.phase = idx * (TWO_PI / max(params.poles, 1));
+
+        this.x     = width  * 0.5;
+        this.y     = height * 0.5;
+        this.theta = 0; // dipole moment direction
+        this.strength = 0.8 + random(0.4);
+
+        // For pulse timing
+        this.nextPulse = floor(random(120, 380));
+        this.pulseCount = 0;
+    }
+
+    update() {
+        const t = frameCount * 0.007 * params.drift;
+
+        // Wander position within inner 70% of canvas
+        this.x     = width  * (0.15 + 0.70 * noise(t + this.phase, this.nx));
+        this.y     = height * (0.15 + 0.70 * noise(t + this.phase, this.ny));
+        // Slowly rotate the dipole moment (gives the "axis drifting" effect)
+        this.theta = noise(t * 0.6, this.nt) * TWO_PI * 3;
+
+        // Emit periodic pulses
+        this.nextPulse--;
+        if (this.nextPulse <= 0) {
+            pulses.push(new FieldPulse(this.x, this.y));
+            this.nextPulse = floor(random(200, 500) / params.drift);
+        }
+    }
+
+    // Magnetic dipole field at world position (x, y)
+    // Returns normalized velocity and raw magnitude for coloring
+    fieldAt(x, y) {
+        const rx = x - this.x;
+        const ry = y - this.y;
+        const r2 = rx * rx + ry * ry;
+
+        if (r2 < 64) return { vx: 0, vy: 0, mag: 99 }; // singularity guard
+
+        const r   = sqrt(r2);
+        const rhx = rx / r;
+        const rhy = ry / r;
+
+        // Dipole moment unit vector
+        const mx = cos(this.theta);
+        const my = sin(this.theta);
+
+        // m · r̂
+        const mdr = mx * rhx + my * rhy;
+
+        // B = (3(m·r̂)r̂ − m) / r³
+        const r3 = r2 * r;
+        const bx = (3 * mdr * rhx - mx) * this.strength / r3;
+        const by = (3 * mdr * rhy - my) * this.strength / r3;
+
+        return { vx: bx, vy: by, mag: sqrt(bx * bx + by * by) };
+    }
+}
+
+// ─── FIELD GRID ───────────────────────────────────────────────────────────────
+// Precomputed every frame. Avoids per-particle field computations.
+function precomputeFieldGrid() {
+    const N = GRID_RES + 1;
+    for (let gy = 0; gy < N; gy++) {
+        for (let gx = 0; gx < N; gx++) {
+            const x = (gx / GRID_RES) * width;
+            const y = (gy / GRID_RES) * height;
+
+            let bx = 0, by = 0, maxMag = 0;
+            for (const m of magnets) {
+                const f = m.fieldAt(x, y);
+                bx += f.vx;
+                by += f.vy;
+                if (f.mag > maxMag) maxMag = f.mag;
+            }
+            // Store normalized direction + raw magnitude for color
+            const mag = sqrt(bx * bx + by * by);
+            fieldGrid[gy][gx] = {
+                vx:  mag > 0 ? bx / mag : 0,
+                vy:  mag > 0 ? by / mag : 0,
+                mag: mag,
+            };
+        }
+    }
+}
+
+// Bilinear sample of the precomputed field grid
+function sampleField(x, y) {
+    const gxf = constrain((x / width)  * GRID_RES, 0, GRID_RES);
+    const gyf = constrain((y / height) * GRID_RES, 0, GRID_RES);
+    const ix  = floor(gxf), iy = floor(gyf);
+    const fx  = gxf - ix,   fy = gyf - iy;
+    const ix1 = min(ix + 1, GRID_RES), iy1 = min(iy + 1, GRID_RES);
+
+    const vx = lerp(
+        lerp(fieldGrid[iy][ix].vx,  fieldGrid[iy][ix1].vx,  fx),
+        lerp(fieldGrid[iy1][ix].vx, fieldGrid[iy1][ix1].vx, fx), fy
+    );
+    const vy = lerp(
+        lerp(fieldGrid[iy][ix].vy,  fieldGrid[iy][ix1].vy,  fx),
+        lerp(fieldGrid[iy1][ix].vy, fieldGrid[iy1][ix1].vy, fx), fy
+    );
+    const mag = lerp(
+        lerp(fieldGrid[iy][ix].mag,  fieldGrid[iy][ix1].mag,  fx),
+        lerp(fieldGrid[iy1][ix].mag, fieldGrid[iy1][ix1].mag, fx), fy
+    );
+    return { vx, vy, mag };
+}
+
+// ─── FIELD PARTICLES ─────────────────────────────────────────────────────────
+// Trace the magnetic field lines. Color encodes field strength.
+class FieldParticle {
+    constructor() { this.reset(true); }
+
+    reset(first = false) {
+        // Mixed birth: some on edges (trace long field lines into canvas),
+        // some interior (fill dense regions near magnets)
+        if (first || random() < 0.45) {
+            const edge = floor(random(4));
+            if      (edge === 0) { this.x = random(width);  this.y = 0; }
+            else if (edge === 1) { this.x = random(width);  this.y = height; }
+            else if (edge === 2) { this.x = 0;              this.y = random(height); }
+            else                 { this.x = width;          this.y = random(height); }
+        } else {
+            this.x = random(width);
+            this.y = random(height);
+        }
+
+        this.age    = floor(random(0, 40)); // stagger births
+        this.maxAge = random(80, 400);
+        this.w      = random(0.3, 1.0);
+        // Random polarity: follow field or follow reverse (traces both directions)
+        this.polarity = random() < 0.5 ? 1 : -1;
+    }
+
+    update() {
+        const f   = sampleField(this.x, this.y);
+        const spd = (0.6 + random(0.4)) * 1.4; // per-frame pixel advance
+
+        if (f.mag > 0.00001) {
+            this.x += f.vx * spd * this.polarity;
+            this.y += f.vy * spd * this.polarity;
+        } else {
+            // Vanishingly weak field — drift randomly
+            this.x += random(-0.5, 0.5);
+            this.y += random(-0.5, 0.5);
+        }
+
+        this.fieldMag = min(1, f.mag * 18000); // normalized for color
+        this.age++;
+
+        if (this.age > this.maxAge ||
+            this.x < -4 || this.x > width + 4 ||
+            this.y < -4 || this.y > height + 4) {
+            this.reset();
+        }
+    }
+
+    display(pal) {
+        const life = 1 - this.age / this.maxAge;
+        const fm   = this.fieldMag; // 0 = far from magnet, 1 = near magnet
+
+        // Alpha: dim far away, bright near magnet
+        const alpha = life * (10 + fm * 90);
+        if (alpha < 1) return;
+
+        // Color: interpolate dim → primary → accent with field strength
+        let cr, cg, cb;
+        if (fm < 0.4) {
+            const t = fm / 0.4;
+            cr = lerp(pal.dim[0], pal.col[0], t);
+            cg = lerp(pal.dim[1], pal.col[1], t);
+            cb = lerp(pal.dim[2], pal.col[2], t);
+        } else {
+            const t = (fm - 0.4) / 0.6;
+            cr = lerp(pal.col[0], pal.acc[0], t);
+            cg = lerp(pal.col[1], pal.acc[1], t);
+            cb = lerp(pal.col[2], pal.acc[2], t);
+        }
+
+        stroke(cr, cg, cb, alpha);
+        strokeWeight(this.w);
+        point(this.x, this.y);
+    }
+}
+
+function updateFieldParticles(pal) {
+    for (const p of fieldParticles) { p.update(); p.display(pal); }
+}
+
+// ─── COMPASS NEEDLES ─────────────────────────────────────────────────────────
+// A sparse grid of needles that slowly rotate to align with the local field.
+// Because the field keeps moving, they perpetually lag — never settling.
+class CompassNeedle {
+    constructor(x, y) {
+        this.x     = x;
+        this.y     = y;
+        this.angle = random(TWO_PI); // start disoriented
+        this.len   = random(10, 18);
+        this.alpha = random(50, 120);
+        this.w     = random(0.5, 0.9);
+    }
+
+    update() {
+        const f = sampleField(this.x, this.y);
+
+        let targetAngle;
+        if (f.mag > 0.00001) {
+            targetAngle = atan2(f.vy, f.vx);
+        } else {
+            // No field — spin freely, like a compass without a magnet
+            targetAngle = this.angle + 0.008 * params.drift;
+        }
+
+        // Angular shortest-path interpolation
+        let diff = targetAngle - this.angle;
+        while (diff >  PI) diff -= TWO_PI;
+        while (diff < -PI) diff += TWO_PI;
+
+        // Easing: slow = perpetual confusion, fast = resolves but still lags
+        this.angle += diff * params.needleEase;
+    }
+
+    display(pal) {
+        push();
+        translate(this.x, this.y);
+        rotate(this.angle);
+
+        // North arm: accent color (the direction you're chasing)
+        stroke(pal.acc[0], pal.acc[1], pal.acc[2], this.alpha);
+        strokeWeight(this.w);
+        line(0, 0, this.len, 0);
+
+        // South arm: dim
+        stroke(pal.dim[0], pal.dim[1], pal.dim[2], this.alpha * 0.55);
+        line(0, 0, -this.len * 0.65, 0);
+
+        // Pivot dot
+        noStroke();
+        fill(pal.needle[0], pal.needle[1], pal.needle[2], this.alpha * 0.5);
+        circle(0, 0, 2.2);
+
+        // North cap dot — marks the seeking end
+        fill(pal.acc[0], pal.acc[1], pal.acc[2], this.alpha * 0.9);
+        circle(this.len + 1.5, 0, 2.5);
+
+        pop();
+    }
+}
+
+function buildNeedleGrid() {
+    const result = [];
+    const cols = 11, rows = 11;
+    const cw = width / cols, ch = height / rows;
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            // Skip positions very close to canvas corners — less interesting there
+            if ((r === 0 || r === rows-1) && (c === 0 || c === cols-1)) continue;
+            const x = (c + random(0.25, 0.75)) * cw;
+            const y = (r + random(0.25, 0.75)) * ch;
+            result.push(new CompassNeedle(x, y));
+        }
+    }
+    return result;
+}
+
+function updateNeedles(pal) {
+    for (const n of needles) { n.update(); n.display(pal); }
+}
+
+// ─── FIELD PULSES ─────────────────────────────────────────────────────────────
+// Expanding rings emitted periodically by each magnet.
+// Like a magnetic pulse propagating outward.
+class FieldPulse {
+    constructor(x, y) {
+        this.x     = x;
+        this.y     = y;
+        this.r     = 8;
+        this.maxR  = random(80, 220);
+        this.alpha = random(55, 100);
+    }
+
+    update() {
+        this.r     += 1.8;
+        this.alpha *= 0.965;
+    }
+
+    isDead() { return this.r > this.maxR || this.alpha < 1; }
+
+    display(pal) {
+        noFill();
+        stroke(pal.pulse[0], pal.pulse[1], pal.pulse[2], this.alpha);
+        strokeWeight(0.5);
+        circle(this.x, this.y, this.r * 2);
+    }
+}
+
+function updatePulses(pal) {
+    for (const p of pulses) { p.update(); p.display(pal); }
+    pulses = pulses.filter(p => !p.isDead());
+}
+
+// ─── MAGNET INDICATORS ────────────────────────────────────────────────────────
+// Very faint crosshair at each magnet's position — shows where the phantom
+// source is, but barely. You can almost locate it.
+function drawMagnetIndicators(pal) {
+    for (const m of magnets) {
+        // Dipole axis — faint line showing moment direction
+        const len = 20;
+        const a   = m.theta;
+        stroke(pal.acc[0], pal.acc[1], pal.acc[2], 22);
+        strokeWeight(0.6);
+        noFill();
+        line(m.x + cos(a)*len, m.y + sin(a)*len,
+             m.x - cos(a)*len, m.y - sin(a)*len);
+
+        // Pivot dot
+        fill(pal.acc[0], pal.acc[1], pal.acc[2], 30);
+        noStroke();
+        circle(m.x, m.y, 3.5);
+    }
+}
+
+// ─── WATERMARK ───────────────────────────────────────────────────────────────
+function drawWatermark(pal) {
+    const bg = pal.bg;
+    // Draw on top of everything with bg color at high alpha to "punch" the text
+    // (ensure readability regardless of what's underneath)
+    noStroke();
+    textFont('FuturaStd');
+    textSize(9.5);
+    textAlign(RIGHT, BOTTOM);
+    fill(pal.col[0], pal.col[1], pal.col[2], 28);
+    text('cfdl.site  —  Navegar quitándole a la brújula su imán', width - 18, height - 14);
+}
+
+// ─── PALETTE UI ──────────────────────────────────────────────────────────────
+function buildPaletteUI() {
+    const grid = document.getElementById('palette-grid');
+    grid.innerHTML = '';
+    Object.entries(PALETTES).forEach(([key, pal]) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn' + (params.palette === key ? ' active' : '');
+        btn.dataset.key = key;
+        const dotsHTML = pal.dots.map(c => `<span style="background:${c}"></span>`).join('');
+        btn.innerHTML = `<div class="palette-dots">${dotsHTML}</div><span>${pal.name}</span>`;
+        btn.addEventListener('click', () => setPalette(key));
+        grid.appendChild(btn);
+    });
+}
+
+function setPalette(key) {
+    params.palette = key;
+    document.querySelectorAll('.palette-btn').forEach(btn =>
+        btn.classList.toggle('active', btn.dataset.key === key));
+    initializeSystem();
+}
+
+// ─── LAYER TOGGLES ───────────────────────────────────────────────────────────
+function toggleLayer(idx) {
+    layerVisible[idx] = !layerVisible[idx];
+    document.querySelector(`.layer-btn[data-layer="${idx}"]`)
+        .classList.toggle('active', layerVisible[idx]);
+}
+
+// ─── PARAMETER HANDLERS ──────────────────────────────────────────────────────
+function updateParam(name, value) {
+    params[name] = value;
+    document.getElementById(name + '-value').textContent = value;
+
+    if (name === 'poles' || name === 'density') {
+        initializeSystem();
+    }
+}
+
+function updateSeedDisplay() {
+    document.getElementById('seed-input').value = params.seed;
+}
+
+function updateSeed() {
+    const val = parseInt(document.getElementById('seed-input').value);
+    if (val && val > 0) { params.seed = val; initializeSystem(); }
+    else updateSeedDisplay();
+}
+
+function previousSeed() {
+    params.seed = Math.max(1, params.seed - 1);
+    updateSeedDisplay(); initializeSystem();
+}
+
+function nextSeed() {
+    params.seed++;
+    updateSeedDisplay(); initializeSystem();
+}
+
+function randomSeedAndUpdate() {
+    params.seed = Math.floor(Math.random() * 999999) + 1;
+    updateSeedDisplay(); initializeSystem();
+}
+
+function resetParameters() {
+    params       = { ...DEFAULT_PARAMS };
+    layerVisible = [true, true, true];
+    document.querySelectorAll('.layer-btn').forEach(btn => btn.classList.add('active'));
+    ['poles','drift','density','decay','needleEase'].forEach(id => {
+        document.getElementById(id).value = params[id];
+        document.getElementById(id + '-value').textContent = params[id];
+    });
+    updateSeedDisplay();
+    buildPaletteUI();
+    initializeSystem();
+}
+
+function downloadCanvas() {
+    saveCanvas('brujula-cfdl-' + params.seed, 'png');
+}
+
+window.addEventListener('load', () => {
+    buildPaletteUI();
+    updateSeedDisplay();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>La llegada del moho — C.F.D.L.</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --surface: #ffffff;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-family: 'MinionPro', serif;
+            font-size: 22px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .cfdl-tag {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sidebar .subtitle {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 36px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .control-section { margin-bottom: 32px; }
+
+        .control-section h3 {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .seed-controls {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .seed-display {
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: var(--text);
+            padding: 8px 0;
+        }
+
+        .control-group { margin-bottom: 20px; }
+
+        .control-group label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .slider-container { display: flex; align-items: center; gap: 10px; }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .value-display {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 32px;
+            text-align: right;
+        }
+
+        /* Preset buttons — 2×2 grid */
+        .preset-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+        }
+
+        .preset-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 9px 8px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-align: center;
+        }
+
+        .preset-btn:hover { border-color: var(--text); color: var(--text); }
+        .preset-btn.active { border-color: var(--text); background: var(--text); color: var(--bg); }
+
+        /* Palette buttons */
+        .palette-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        .palette-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 8px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .palette-btn:hover { background: var(--bg); }
+        .palette-btn.active { border-color: var(--text); background: var(--text); color: #fafaf8; }
+        .palette-btn.active .palette-dots span { opacity: 0.7; }
+
+        .palette-dots { display: flex; gap: 3px; }
+        .palette-dots span { width: 8px; height: 8px; border-radius: 50%; }
+
+        /* Toggle */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .toggle-label {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            text-transform: uppercase;
+        }
+
+        .toggle { position: relative; width: 32px; height: 16px; flex-shrink: 0; }
+        .toggle input { opacity: 0; width: 0; height: 0; }
+        .tog-track {
+            position: absolute; inset: 0;
+            background: var(--border); border-radius: 16px; cursor: pointer;
+            transition: background 0.15s;
+        }
+        .tog-track:before {
+            content: ''; position: absolute;
+            width: 12px; height: 12px; left: 2px; bottom: 2px;
+            background: white; border-radius: 50%; transition: transform 0.15s;
+        }
+        .toggle input:checked + .tog-track { background: var(--accent); }
+        .toggle input:checked + .tog-track:before { transform: translateX(16px); }
+
+        /* Action buttons */
+        .button {
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.15s ease;
+            width: 100%;
+            font-family: 'FuturaStd', sans-serif;
+        }
+        .button:hover { background: #2a2a28; transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+        .button.outline {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .button.outline:hover { background: var(--bg); transform: none; }
+
+        .button-row { display: flex; gap: 8px; }
+        .button-row .button { flex: 1; }
+
+        /* Canvas area */
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #canvas-container {
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #0a0a09;
+        }
+
+        #canvas-container canvas {
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="cfdl-tag">C.F.D.L.</div>
+        <h1>La llegada<br>del moho</h1>
+        <p class="subtitle">
+            "Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono."
+        </p>
+
+        <!-- Seed -->
+        <div class="control-section">
+            <h3>Semilla</h3>
+            <div class="seed-controls">
+                <button class="button outline" onclick="changeSeed(-1)">←</button>
+                <span class="seed-display" id="seedDisp">001</span>
+                <button class="button outline" onclick="changeSeed(+1)">→</button>
+            </div>
+        </div>
+
+        <!-- Pattern preset -->
+        <div class="control-section">
+            <h3>Patrón</h3>
+            <div class="preset-grid" id="presetGrid">
+                <button class="preset-btn active" data-key="liquen"  onclick="setPreset('liquen')">Liquen</button>
+                <button class="preset-btn"        data-key="coral"   onclick="setPreset('coral')">Coral</button>
+                <button class="preset-btn"        data-key="manchas" onclick="setPreset('manchas')">Manchas</button>
+                <button class="preset-btn"        data-key="micelio" onclick="setPreset('micelio')">Micelio</button>
+            </div>
+        </div>
+
+        <!-- Palette -->
+        <div class="control-section">
+            <h3>Paleta</h3>
+            <div class="palette-grid" id="paletteGrid"></div>
+        </div>
+
+        <!-- Simulation params -->
+        <div class="control-section">
+            <h3>Simulación</h3>
+
+            <div class="control-group">
+                <label>Velocidad</label>
+                <div class="slider-container">
+                    <input type="range" id="speedSlider" min="1" max="12" step="1" value="5"
+                        oninput="params.speed=+this.value; document.getElementById('speedVal').textContent=this.value">
+                    <span class="value-display" id="speedVal">5</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Esporas</label>
+                <div class="slider-container">
+                    <input type="range" id="sporeSlider" min="2" max="40" step="1" value="8"
+                        oninput="params.numSpores=+this.value; document.getElementById('sporeVal').textContent=this.value; resetSim()">
+                    <span class="value-display" id="sporeVal">8</span>
+                </div>
+            </div>
+
+            <div class="toggle-row">
+                <span class="toggle-label">Lluvia de esporas</span>
+                <label class="toggle">
+                    <input type="checkbox" checked onchange="params.sporeRain=this.checked">
+                    <span class="tog-track"></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="control-section">
+            <h3>Acciones</h3>
+            <div class="button-row">
+                <button class="button" onclick="resetSim()">Reiniciar</button>
+                <button class="button outline" onclick="doSave()">Guardar PNG</button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="canvas-area">
+        <div id="canvas-container">
+            <div id="sketch"></div>
+        </div>
+    </main>
+</div>
+
+<script>
+// ─── FONTS ─────────────────────────────────────────────────────────────────
+let fontsReady = false;
+Promise.all([
+    new FontFace('FuturaStd', 'url(../skills/references/typography/FuturaStd-Book.otf)').load(),
+    new FontFace('MinionPro',  'url(../skills/references/typography/MinionPro-Regular.otf)').load(),
+]).then(fs => { fs.forEach(f => document.fonts.add(f)); fontsReady = true; })
+  .catch(() => { fontsReady = true; });
+setTimeout(() => { fontsReady = true; }, 5000);
+
+// ─── PALETTE DEFINITIONS ───────────────────────────────────────────────────
+// Each palette: gradient stops mapping V concentration [0..~0.5] → RGB color.
+// Stop[0] is background (V=0), stop[4] is the hottest mold concentration.
+const PALETTES = {
+    nocturno: {
+        name: 'Nocturno',
+        dots: ['#1a2e3d','#4a6880','#7d9e92','#ffb923'],
+        stops: [
+            [0.000, [10,  10,  9  ]],   // near-black background
+            [0.060, [26,  46,  61 ]],   // Medianoche — first traces
+            [0.180, [74,  104, 128]],   // Pizarra — growing edge
+            [0.330, [125, 158, 146]],   // Salvia — dense mass
+            [0.480, [255, 185, 35 ]],   // Citrina — hotspot
+        ],
+    },
+    salvia: {
+        name: 'Salvia',
+        dots: ['#1a2e3d','#7d9e92','#e8edf0','#ffd25a'],
+        stops: [
+            [0.000, [6,   13,  10 ]],
+            [0.060, [26,  46,  61 ]],
+            [0.180, [125, 158, 146]],
+            [0.330, [232, 237, 240]],
+            [0.480, [255, 210, 90 ]],
+        ],
+    },
+    calida: {
+        name: 'Cálida',
+        dots: ['#6b4200','#c07d00','#ffd25a','#fff4d6'],
+        stops: [
+            [0.000, [13,  8,   0  ]],
+            [0.060, [107, 66,  0  ]],   // Resina
+            [0.180, [192, 125, 0  ]],   // Azafrán
+            [0.330, [255, 210, 90 ]],   // Sol
+            [0.480, [255, 244, 214]],   // Cera
+        ],
+    },
+    fria: {
+        name: 'Fría',
+        dots: ['#1a2e3d','#4a6880','#bdd5e8','#e8f0f8'],
+        stops: [
+            [0.000, [6,   9,   13 ]],
+            [0.060, [26,  46,  61 ]],
+            [0.180, [74,  104, 128]],
+            [0.330, [189, 213, 232]],
+            [0.480, [232, 240, 248]],
+        ],
+    },
+};
+
+// ─── REACTION-DIFFUSION PRESETS ────────────────────────────────────────────
+// F = feed rate (U replenishment), K = kill rate (V decay)
+// These F/K pairs produce visually distinct pattern types in Gray-Scott.
+const PRESETS = {
+    liquen:  { F: 0.030, K: 0.057 }, // labyrinthine maze — lichen on rock
+    coral:   { F: 0.058, K: 0.065 }, // branching coral / solitons
+    manchas: { F: 0.035, K: 0.065 }, // self-replicating spots / mitosis
+    micelio: { F: 0.040, K: 0.060 }, // active worm-like filaments / mycelium
+};
+
+// ─── SIMULATION CONSTANTS ──────────────────────────────────────────────────
+const SW = 400, SH = 400;       // simulation grid dimensions
+const Du = 0.20, Dv = 0.10;     // diffusion coefficients (ratio 2:1 is canonical)
+const LUT_N   = 2048;           // color lookup table entries
+const LUT_VMAX = 0.55;          // V values above this are clamped to hotspot color
+
+// ─── GLOBAL STATE ──────────────────────────────────────────────────────────
+let params = {
+    seed:      1,
+    palette:   'nocturno',
+    preset:    'liquen',
+    F:         PRESETS.liquen.F,
+    K:         PRESETS.liquen.K,
+    numSpores: 8,
+    speed:     5,
+    sporeRain: true,
+};
+
+let uGrid, vGrid, uNext, vNext; // Float32Array simulation buffers
+let colorLUT = new Uint8Array(LUT_N * 3);
+let simImg;      // p5 image object for pixel rendering
+let pSketch;     // p5 instance reference
+let frame = 0;
+
+// ─── COLOR LOOKUP TABLE ────────────────────────────────────────────────────
+// Precompute color for every possible V value — avoids per-pixel branching.
+function buildLUT() {
+    const stops = PALETTES[params.palette].stops;
+    const n = stops.length;
+    for (let i = 0; i < LUT_N; i++) {
+        const v = (i / LUT_N) * LUT_VMAX;
+        let r = stops[0][1][0], g = stops[0][1][1], b = stops[0][1][2];
+        for (let s = 0; s < n - 1; s++) {
+            const v0 = stops[s][0], v1 = stops[s+1][0];
+            if (v >= v0 && v < v1) {
+                const t  = (v - v0) / (v1 - v0);
+                const c0 = stops[s][1], c1 = stops[s+1][1];
+                r = (c0[0] + (c1[0] - c0[0]) * t) | 0;
+                g = (c0[1] + (c1[1] - c0[1]) * t) | 0;
+                b = (c0[2] + (c1[2] - c0[2]) * t) | 0;
+                break;
+            }
+        }
+        if (v >= stops[n-1][0]) {
+            r = stops[n-1][1][0]; g = stops[n-1][1][1]; b = stops[n-1][1][2];
+        }
+        colorLUT[i*3]   = r;
+        colorLUT[i*3+1] = g;
+        colorLUT[i*3+2] = b;
+    }
+}
+
+// ─── GRID INITIALIZATION ───────────────────────────────────────────────────
+function initGrids() {
+    uGrid = new Float32Array(SW * SH).fill(1.0);
+    vGrid = new Float32Array(SW * SH).fill(0.0);
+    uNext = new Float32Array(SW * SH);
+    vNext = new Float32Array(SW * SH);
+    seedSpores();
+    frame = 0;
+    // Warm-up: run 100 steps silently so patterns are already forming at first draw
+    for (let i = 0; i < 100; i++) stepGS();
+}
+
+function seedSpores() {
+    // Deterministic LCG keyed to params.seed
+    let r = (params.seed * 1664525 + 1013904223) >>> 0;
+    const rng = () => { r = (r * 1664525 + 1013904223) >>> 0; return r / 4294967295; };
+    for (let s = 0; s < params.numSpores; s++) {
+        const cx  = Math.floor(rng() * (SW - 24)) + 12;
+        const cy  = Math.floor(rng() * (SH - 24)) + 12;
+        const rad = Math.floor(rng() * 5) + 3;
+        for (let dy = -rad; dy <= rad; dy++) {
+            for (let dx = -rad; dx <= rad; dx++) {
+                if (dx*dx + dy*dy <= rad*rad) {
+                    const x = (cx + dx + SW) % SW;
+                    const y = (cy + dy + SH) % SH;
+                    const idx = y * SW + x;
+                    vGrid[idx] = 0.5 + rng() * 0.04;
+                    uGrid[idx] = 0.25;
+                }
+            }
+        }
+    }
+}
+
+// ─── GRAY-SCOTT STEP ───────────────────────────────────────────────────────
+// dU/dt = Du·∇²U − U·V² + F·(1−U)
+// dV/dt = Dv·∇²V + U·V² − (F+K)·V
+// Laplacian kernel: corners=0.05, edges=0.20, center=−1.0 (normalized)
+function stepGS() {
+    const F = params.F, K = params.K;
+    for (let y = 0; y < SH; y++) {
+        const ym = ((y - 1 + SH) % SH) * SW;
+        const yc = y * SW;
+        const yp = ((y + 1) % SH) * SW;
+        for (let x = 0; x < SW; x++) {
+            const xm = (x - 1 + SW) % SW;
+            const xp = (x + 1) % SW;
+            const i  = yc + x;
+            const u  = uGrid[i], v = vGrid[i];
+
+            const lapU =
+                0.05 * uGrid[ym + xm] + 0.20 * uGrid[ym + x] + 0.05 * uGrid[ym + xp] +
+                0.20 * uGrid[yc + xm] - 1.00 * u              + 0.20 * uGrid[yc + xp] +
+                0.05 * uGrid[yp + xm] + 0.20 * uGrid[yp + x] + 0.05 * uGrid[yp + xp];
+
+            const lapV =
+                0.05 * vGrid[ym + xm] + 0.20 * vGrid[ym + x] + 0.05 * vGrid[ym + xp] +
+                0.20 * vGrid[yc + xm] - 1.00 * v              + 0.20 * vGrid[yc + xp] +
+                0.05 * vGrid[yp + xm] + 0.20 * vGrid[yp + x] + 0.05 * vGrid[yp + xp];
+
+            const uvv = u * v * v;
+            let nu = u + Du * lapU - uvv + F * (1.0 - u);
+            let nv = v + Dv * lapV + uvv - (F + K) * v;
+
+            uNext[i] = nu < 0 ? 0 : nu > 1 ? 1 : nu;
+            vNext[i] = nv < 0 ? 0 : nv > 1 ? 1 : nv;
+        }
+    }
+    // swap buffers
+    let t  = uGrid; uGrid = uNext; uNext = t;
+        t  = vGrid; vGrid = vNext; vNext = t;
+}
+
+// ─── PIXEL RENDER ──────────────────────────────────────────────────────────
+function renderSim() {
+    simImg.loadPixels();
+    const pix   = simImg.pixels;
+    const scale = LUT_N / LUT_VMAX;
+    const LMAX  = LUT_N - 1;
+    for (let i = 0, pi = 0; i < SW * SH; i++, pi += 4) {
+        let li = vGrid[i] * scale | 0;
+        if (li > LMAX) li = LMAX;
+        const ci   = li * 3;
+        pix[pi]   = colorLUT[ci];
+        pix[pi+1] = colorLUT[ci + 1];
+        pix[pi+2] = colorLUT[ci + 2];
+        pix[pi+3] = 255;
+    }
+    simImg.updatePixels();
+}
+
+// ─── CONTROL HANDLERS ──────────────────────────────────────────────────────
+function changeSeed(delta) {
+    params.seed = Math.max(1, Math.min(999, params.seed + delta));
+    document.getElementById('seedDisp').textContent = String(params.seed).padStart(3, '0');
+    resetSim();
+}
+
+function setPreset(key) {
+    params.preset = key;
+    params.F = PRESETS[key].F;
+    params.K = PRESETS[key].K;
+    document.querySelectorAll('#presetGrid .preset-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.key === key));
+    resetSim();
+}
+
+function setPalette(key) {
+    params.palette = key;
+    buildLUT();
+    document.querySelectorAll('#paletteGrid .palette-btn').forEach(b =>
+        b.classList.toggle('active', b.dataset.key === key));
+    // no grid reset — just recolor
+}
+
+function resetSim() { initGrids(); }
+function doSave()   { if (pSketch) pSketch.saveCanvas('moho', 'png'); }
+
+// ─── BUILD PALETTE BUTTONS ─────────────────────────────────────────────────
+(function buildPaletteGrid() {
+    const container = document.getElementById('paletteGrid');
+    Object.entries(PALETTES).forEach(([key, pal]) => {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn' + (key === params.palette ? ' active' : '');
+        btn.dataset.key = key;
+        btn.onclick = () => setPalette(key);
+
+        const dotsHtml = pal.dots.map(c =>
+            `<span style="background:${c}"></span>`).join('');
+
+        btn.innerHTML = `<div class="palette-dots">${dotsHtml}</div>${pal.name}`;
+        container.appendChild(btn);
+    });
+})();
+
+// ─── P5 SKETCH ─────────────────────────────────────────────────────────────
+new p5(function(p) {
+    pSketch = p;
+
+    p.setup = function() {
+        const availW = window.innerWidth  - 280 - 80;
+        const availH = window.innerHeight - 48;
+        const sz = Math.max(Math.min(availW, availH, 900), 380);
+
+        const cnv = p.createCanvas(sz, sz);
+        cnv.parent('sketch');
+
+        // Update container size to match canvas
+        document.getElementById('canvas-container').style.width  = sz + 'px';
+        document.getElementById('canvas-container').style.height = sz + 'px';
+
+        p.drawingContext.imageSmoothingEnabled = true;
+        p.drawingContext.imageSmoothingQuality = 'high';
+
+        simImg = p.createImage(SW, SH);
+        buildLUT();
+        initGrids();
+    };
+
+    p.draw = function() {
+        if (!fontsReady) { p.background(10); return; }
+
+        // Step the reaction-diffusion
+        for (let s = 0; s < params.speed; s++) stepGS();
+        frame++;
+
+        // Spore rain: occasional tiny new seed lands at random
+        if (params.sporeRain && frame % 110 === 0) {
+            const cx = Math.floor(Math.random() * (SW - 20)) + 10;
+            const cy = Math.floor(Math.random() * (SH - 20)) + 10;
+            for (let dy = -2; dy <= 2; dy++) {
+                for (let dx = -2; dx <= 2; dx++) {
+                    if (dx*dx + dy*dy <= 4) {
+                        const idx = ((cy+dy+SH)%SH)*SW + ((cx+dx+SW)%SW);
+                        vGrid[idx] = 0.5; uGrid[idx] = 0.25;
+                    }
+                }
+            }
+        }
+
+        // Render simulation to pixel image, upscale to canvas
+        renderSim();
+        p.image(simImg, 0, 0, p.width, p.height);
+
+        // Vignette: radial gradient darkening edges
+        const bg = PALETTES[params.palette].stops[0][1];
+        const grd = p.drawingContext.createRadialGradient(
+            p.width/2, p.height/2, p.width * 0.25,
+            p.width/2, p.height/2, p.width * 0.78
+        );
+        grd.addColorStop(0, `rgba(${bg[0]},${bg[1]},${bg[2]},0)`);
+        grd.addColorStop(1, `rgba(${bg[0]},${bg[1]},${bg[2]},0.62)`);
+        p.drawingContext.save();
+        p.drawingContext.fillStyle = grd;
+        p.drawingContext.fillRect(0, 0, p.width, p.height);
+        p.drawingContext.restore();
+
+        // Watermark — faint title at bottom-left
+        const wc = PALETTES[params.palette].stops[3][1];
+        p.push();
+        p.textFont('MinionPro');
+        p.textSize(10);
+        p.textAlign(p.LEFT, p.BOTTOM);
+        p.noStroke();
+        p.fill(wc[0], wc[1], wc[2], 65);
+        p.text('la llegada del moho', 16, p.height - 14);
+        p.pop();
+    };
+});
+</script>
+</body>
+</html>

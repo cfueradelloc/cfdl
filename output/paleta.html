@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paleta — C.F.D.L.</title>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --surface: #ffffff;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .cfdl-tag {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sidebar h1 {
+            font-family: 'MinionPro', serif;
+            font-size: 22px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .sidebar .subtitle {
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .control-section { margin-bottom: 32px; }
+
+        .control-section h3 {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .preset-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .preset-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 12px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text);
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.15s ease, border-color 0.15s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preset-btn:hover { background: var(--bg); }
+
+        .preset-btn.active {
+            border-color: var(--text);
+            background: var(--text);
+            color: var(--surface);
+        }
+
+        .preset-dots {
+            display: flex;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .preset-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .button {
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.15s ease;
+            width: 100%;
+            font-family: 'FuturaStd', sans-serif;
+        }
+
+        .button:hover { background: #2a2a28; transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+
+        .button.outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .button.outline:hover { background: var(--bg); transform: none; }
+
+        .info-block {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 16px;
+        }
+
+        .info-block p {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        .info-block strong {
+            color: var(--text);
+            font-weight: normal;
+            letter-spacing: 0.04em;
+        }
+
+        /* ── MAIN AREA ── */
+        .main-area {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Full palette strip */
+        .full-palette {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+        }
+
+        .section-label {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+
+        .swatches-row {
+            display: grid;
+            grid-template-columns: repeat(9, 1fr);
+            gap: 8px;
+        }
+
+        .swatch-card {
+            cursor: pointer;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 2px solid transparent;
+            transition: border-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .swatch-card:hover { transform: translateY(-2px); }
+
+        .swatch-card.selected { border-color: var(--text); }
+
+        .swatch-card.dimmed { opacity: 0.22; }
+
+        .swatch-color {
+            height: 80px;
+            width: 100%;
+            transition: height 0.3s ease;
+        }
+
+        .swatch-info {
+            padding: 8px 6px;
+            background: var(--surface);
+        }
+
+        .swatch-name {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            display: block;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .swatch-hex {
+            font-family: 'Courier New', monospace;
+            font-size: 9px;
+            color: var(--muted);
+            display: block;
+        }
+
+        .swatch-card.is-anchor .swatch-name::after {
+            content: ' ·';
+            color: var(--accent);
+        }
+
+        /* Active selection preview */
+        .preview-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+        }
+
+        .preview-bar {
+            display: flex;
+            height: 64px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .preview-bar-segment {
+            flex: 1;
+            transition: background 0.4s ease;
+        }
+
+        .preview-combos {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .combo-card {
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .combo-preview {
+            height: 48px;
+            display: flex;
+        }
+
+        .combo-preview div { flex: 1; }
+
+        .combo-label {
+            padding: 8px 10px;
+            background: var(--surface);
+            font-size: 9px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+
+        /* Color detail panel */
+        .detail-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 24px;
+            display: none;
+        }
+
+        .detail-panel.visible { display: block; }
+
+        .detail-inner {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+
+        .detail-swatch {
+            width: 96px;
+            height: 96px;
+            border-radius: 4px;
+            flex-shrink: 0;
+            border: 1px solid var(--border);
+        }
+
+        .detail-info { flex: 1; }
+
+        .detail-name {
+            font-family: 'MinionPro', serif;
+            font-size: 28px;
+            font-weight: normal;
+            margin-bottom: 4px;
+        }
+
+        .detail-meta {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .detail-values {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .detail-value {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: border-color 0.15s ease;
+        }
+
+        .detail-value:hover { border-color: var(--accent); }
+
+        .detail-value label {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .detail-value span {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: var(--text);
+        }
+
+        .copy-hint {
+            font-size: 9px;
+            color: var(--muted);
+            margin-top: 8px;
+            letter-spacing: 0.06em;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: var(--text);
+            color: var(--surface);
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 700px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .swatches-row { grid-template-columns: repeat(3, 1fr); }
+            .preview-combos { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+        <div class="cfdl-tag">C.F.D.L.</div>
+        <h1>Paleta</h1>
+        <div class="subtitle">9 colores. Cálidos hacia Medianoche — con Citrina como ancla.</div>
+
+        <div class="control-section">
+            <h3>Combinaciones</h3>
+            <div class="preset-list" id="preset-list"></div>
+        </div>
+
+        <div class="control-section">
+            <h3>Selección</h3>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+                <button class="button outline" onclick="selectAll()">Todas</button>
+                <button class="button outline" onclick="selectNone()">Ninguna</button>
+                <button class="button outline" onclick="selectWarm()">Cálidas</button>
+                <button class="button outline" onclick="selectCold()">Frías</button>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Info</h3>
+            <div class="info-block">
+                <p>Haz clic en un color para ver sus valores.<br><br>
+                <strong>Clic en Hex / RGB</strong> copia el valor al portapapeles.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN -->
+    <div class="main-area">
+
+        <!-- Full palette -->
+        <div class="full-palette">
+            <div class="section-label">Paleta completa</div>
+            <div class="swatches-row" id="swatches-row"></div>
+        </div>
+
+        <!-- Active preview -->
+        <div class="preview-section">
+            <div class="section-label">Selección activa</div>
+            <div class="preview-bar" id="preview-bar"></div>
+            <div class="section-label" style="margin-top:8px;">Combinaciones de referencia</div>
+            <div class="preview-combos" id="preview-combos"></div>
+        </div>
+
+        <!-- Detail panel -->
+        <div class="detail-panel" id="detail-panel">
+            <div class="section-label">Color</div>
+            <div class="detail-inner">
+                <div class="detail-swatch" id="detail-swatch"></div>
+                <div class="detail-info">
+                    <div class="detail-name" id="detail-name"></div>
+                    <div class="detail-meta" id="detail-meta"></div>
+                    <div class="detail-values" id="detail-values"></div>
+                    <div class="copy-hint">Clic sobre cualquier valor para copiar</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────────────────
+
+const PALETTE = [
+    { id: 'cera',        name: 'Cera',        hex: '#fff4d6', rgb: [255, 244, 214], temp: 'cálida',  anchor: false },
+    { id: 'sol',         name: 'Sol',         hex: '#ffd25a', rgb: [255, 210, 90],  temp: 'cálida',  anchor: false },
+    { id: 'citrina',     name: 'Citrina',     hex: '#ffb923', rgb: [255, 185, 35],  temp: 'ancla',   anchor: true  },
+    { id: 'azafran',     name: 'Azafrán',     hex: '#c07d00', rgb: [192, 125, 0],   temp: 'cálida',  anchor: false },
+    { id: 'resina',      name: 'Resina',      hex: '#6b4200', rgb: [107, 66, 0],    temp: 'cálida',  anchor: false },
+    { id: 'niebla',      name: 'Niebla',      hex: '#e8edf0', rgb: [232, 237, 240], temp: 'fría',    anchor: false },
+    { id: 'salvia',      name: 'Salvia',      hex: '#7d9e92', rgb: [125, 158, 146], temp: 'fría',    anchor: false },
+    { id: 'pizarra',     name: 'Pizarra',     hex: '#4a6880', rgb: [74, 104, 128],  temp: 'fría',    anchor: false },
+    { id: 'medianoche',  name: 'Medianoche',  hex: '#1a2e3d', rgb: [26, 46, 61],    temp: 'fría',    anchor: false },
+];
+
+const PRESETS = [
+    {
+        name: 'Editorial',
+        desc: 'frío, limpio, acento de color',
+        ids: ['niebla', 'citrina', 'medianoche'],
+    },
+    {
+        name: 'Cálida',
+        desc: 'pergamino, ámbar, profundidad',
+        ids: ['cera', 'azafran', 'resina'],
+    },
+    {
+        name: 'Contraste',
+        desc: 'complementario dividido',
+        ids: ['citrina', 'pizarra', 'medianoche'],
+    },
+    {
+        name: 'Terrosa',
+        desc: 'naturaleza, pigmento',
+        ids: ['salvia', 'resina', 'sol'],
+    },
+    {
+        name: 'Completa cálida',
+        desc: 'toda la escala ámbar',
+        ids: ['cera', 'sol', 'citrina', 'azafran', 'resina'],
+    },
+    {
+        name: 'Completa fría',
+        desc: 'niebla a medianoche',
+        ids: ['niebla', 'salvia', 'pizarra', 'medianoche'],
+    },
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+
+let selected = new Set(PALETTE.map(c => c.id));
+let activePreset = null;
+let activeDetail = null;
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+
+function hexById(id) { return PALETTE.find(c => c.id === id).hex; }
+function byId(id)    { return PALETTE.find(c => c.id === id); }
+
+function renderSwatches() {
+    const row = document.getElementById('swatches-row');
+    row.innerHTML = '';
+    PALETTE.forEach(color => {
+        const isSelected = selected.has(color.id);
+        const card = document.createElement('div');
+        card.className = 'swatch-card' +
+            (isSelected ? ' selected' : ' dimmed') +
+            (color.anchor ? ' is-anchor' : '');
+        card.dataset.id = color.id;
+
+        card.innerHTML = `
+            <div class="swatch-color" style="background:${color.hex}"></div>
+            <div class="swatch-info">
+                <span class="swatch-name">${color.name}</span>
+                <span class="swatch-hex">${color.hex}</span>
+            </div>`;
+
+        card.addEventListener('click', () => toggleSwatch(color.id, card));
+        row.appendChild(card);
+    });
+}
+
+function toggleSwatch(id, card) {
+    // If clicking the same color that's already in detail view, just toggle selection
+    if (selected.has(id)) {
+        // Don't deselect if it's the only one
+        if (selected.size > 1) {
+            selected.delete(id);
+            card.classList.remove('selected');
+            card.classList.add('dimmed');
+        }
+    } else {
+        selected.add(id);
+        card.classList.add('selected');
+        card.classList.remove('dimmed');
+    }
+    // Also show detail
+    showDetail(id);
+    activePreset = null;
+    highlightPreset(null);
+    renderPreviewBar();
+}
+
+function renderPreviewBar() {
+    const bar = document.getElementById('preview-bar');
+    const colors = PALETTE.filter(c => selected.has(c.id));
+    bar.innerHTML = colors.map(c =>
+        `<div class="preview-bar-segment" style="background:${c.hex}"></div>`
+    ).join('');
+}
+
+function renderPresetList() {
+    const list = document.getElementById('preset-list');
+    list.innerHTML = '';
+    PRESETS.forEach((preset, idx) => {
+        const btn = document.createElement('button');
+        btn.className = 'preset-btn';
+        btn.dataset.preset = idx;
+
+        const dots = preset.ids.map(id =>
+            `<span class="preset-dot" style="background:${hexById(id)}"></span>`
+        ).join('');
+
+        btn.innerHTML = `
+            <span class="preset-dots">${dots}</span>
+            <span>${preset.name}</span>`;
+
+        btn.title = preset.desc;
+
+        btn.addEventListener('click', () => applyPreset(idx));
+        list.appendChild(btn);
+    });
+}
+
+function applyPreset(idx) {
+    activePreset = idx;
+    selected = new Set(PRESETS[idx].ids);
+    highlightPreset(idx);
+    renderSwatches();
+    renderPreviewBar();
+    hideDetail();
+}
+
+function highlightPreset(idx) {
+    document.querySelectorAll('.preset-btn').forEach((btn, i) => {
+        btn.classList.toggle('active', i === idx);
+    });
+}
+
+function renderCombos() {
+    const container = document.getElementById('preview-combos');
+    container.innerHTML = '';
+    PRESETS.slice(0, 3).forEach(preset => {
+        const card = document.createElement('div');
+        card.className = 'combo-card';
+
+        const swatches = preset.ids.map(id =>
+            `<div style="background:${hexById(id)}"></div>`
+        ).join('');
+
+        card.innerHTML = `
+            <div class="combo-preview">${swatches}</div>
+            <div class="combo-label">${preset.name} — ${preset.desc}</div>`;
+
+        container.appendChild(card);
+    });
+}
+
+// ─── DETAIL ───────────────────────────────────────────────────────────────────
+
+function hexToRgbString(hex) {
+    const r = parseInt(hex.slice(1,3),16);
+    const g = parseInt(hex.slice(3,5),16);
+    const b = parseInt(hex.slice(5,7),16);
+    return `rgb(${r}, ${g}, ${b})`;
+}
+
+function hexToCss(hex) {
+    return hex.toUpperCase();
+}
+
+function showDetail(id) {
+    const color = byId(id);
+    activeDetail = id;
+
+    document.getElementById('detail-swatch').style.background = color.hex;
+    document.getElementById('detail-name').textContent = color.name;
+    document.getElementById('detail-meta').textContent =
+        color.temp + (color.anchor ? ' · ancla de marca' : '');
+
+    const [r, g, b] = color.rgb;
+
+    document.getElementById('detail-values').innerHTML = `
+        <div class="detail-value" onclick="copyText('${color.hex.toUpperCase()}')">
+            <label>Hex</label>
+            <span>${color.hex.toUpperCase()}</span>
+        </div>
+        <div class="detail-value" onclick="copyText('rgb(${r}, ${g}, ${b})')">
+            <label>RGB</label>
+            <span>rgb(${r}, ${g}, ${b})</span>
+        </div>
+        <div class="detail-value" onclick="copyText('${r} ${g} ${b}')">
+            <label>R · G · B</label>
+            <span>${r} · ${g} · ${b}</span>
+        </div>`;
+
+    document.getElementById('detail-panel').classList.add('visible');
+}
+
+function hideDetail() {
+    document.getElementById('detail-panel').classList.remove('visible');
+    activeDetail = null;
+}
+
+// ─── COPY ─────────────────────────────────────────────────────────────────────
+
+function copyText(text) {
+    navigator.clipboard.writeText(text).then(() => {
+        showToast('Copiado: ' + text);
+    }).catch(() => {
+        showToast(text);
+    });
+}
+
+function showToast(msg) {
+    const toast = document.getElementById('toast');
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+}
+
+// ─── FILTER SHORTCUTS ─────────────────────────────────────────────────────────
+
+function selectAll() {
+    selected = new Set(PALETTE.map(c => c.id));
+    activePreset = null;
+    highlightPreset(null);
+    renderSwatches();
+    renderPreviewBar();
+}
+
+function selectNone() {
+    // Always keep anchor selected
+    selected = new Set(['citrina']);
+    activePreset = null;
+    highlightPreset(null);
+    renderSwatches();
+    renderPreviewBar();
+}
+
+function selectWarm() {
+    selected = new Set(PALETTE.filter(c => c.temp === 'cálida' || c.anchor).map(c => c.id));
+    activePreset = null;
+    highlightPreset(null);
+    renderSwatches();
+    renderPreviewBar();
+}
+
+function selectCold() {
+    selected = new Set(PALETTE.filter(c => c.temp === 'fría' || c.anchor).map(c => c.id));
+    activePreset = null;
+    highlightPreset(null);
+    renderSwatches();
+    renderPreviewBar();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+renderPresetList();
+renderSwatches();
+renderPreviewBar();
+renderCombos();
+</script>
+</body>
+</html>

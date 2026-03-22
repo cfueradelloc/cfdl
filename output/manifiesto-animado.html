@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manifiesto Animado — C.F.D.L.</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --surface: #ffffff;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .cfdl-tag {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sidebar h1 {
+            font-family: 'MinionPro', serif;
+            font-size: 19px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .sidebar .subtitle {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 40px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .control-section { margin-bottom: 32px; }
+
+        .control-section h3 {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .seed-input {
+            width: 100%;
+            background: var(--bg);
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            margin-bottom: 8px;
+            border: 1px solid var(--border);
+            text-align: center;
+            color: var(--text);
+        }
+        .seed-input:focus { outline: none; border-color: var(--accent); }
+
+        .seed-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .control-group { margin-bottom: 20px; }
+
+        .control-group label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .value-display {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 36px;
+            text-align: right;
+        }
+
+        .toggle-group { display: flex; gap: 6px; }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 9px 6px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: transparent;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .toggle-btn.active { background: var(--text); color: var(--surface); border-color: var(--text); }
+        .toggle-btn:hover:not(.active) { background: var(--bg); }
+
+        .button {
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            cursor: pointer;
+            transition: background 0.15s ease, transform 0.15s ease;
+            width: 100%;
+            font-family: 'FuturaStd', sans-serif;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .button:hover { background: #2a2a28; transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+
+        .button.outline {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .button.outline:hover { background: var(--bg); transform: none; }
+
+        .button.accent { background: var(--accent); color: var(--text); }
+        .button.accent:hover { background: #e6a710; transform: translateY(-1px); }
+
+        .button-row { display: flex; gap: 8px; }
+        .button-row .button { flex: 1; }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #canvas-container {
+            width: 100%;
+            max-width: 1000px;
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        #canvas-container canvas {
+            display: block;
+            width: 100% !important;
+            height: auto !important;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            font-size: 12px;
+            color: var(--muted);
+            background: #0a0a09;
+        }
+
+        @media (max-width: 600px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <div class="sidebar">
+        <div class="cfdl-tag">C.F.D.L.</div>
+        <h1>Manifiesto cambiante y nunca cumplido</h1>
+        <div class="subtitle">Primera edición, Octubre 2023</div>
+
+        <div class="control-section">
+            <h3>Seed</h3>
+            <input type="number" id="seed-input" class="seed-input" value="2023" onchange="updateSeed()">
+            <div class="seed-controls">
+                <button class="button outline" onclick="previousSeed()">← Prev</button>
+                <button class="button outline" onclick="nextSeed()">Next →</button>
+            </div>
+            <button class="button accent" onclick="randomSeedAndUpdate()">↻ Random</button>
+        </div>
+
+        <div class="control-section">
+            <h3>Modo</h3>
+            <div class="toggle-group">
+                <button class="toggle-btn active" id="btn-dark"  onclick="setMode('dark')">Oscuro</button>
+                <button class="toggle-btn"        id="btn-amber" onclick="setMode('amber')">Ámbar</button>
+                <button class="toggle-btn"        id="btn-light" onclick="setMode('light')">Claro</button>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Idioma</h3>
+            <div class="toggle-group">
+                <button class="toggle-btn"        id="btn-es"   onclick="setLang('es')">ES</button>
+                <button class="toggle-btn active" id="btn-both" onclick="setLang('both')">ES+CA</button>
+                <button class="toggle-btn"        id="btn-ca"   onclick="setLang('ca')">CA</button>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Parámetros</h3>
+
+            <div class="control-group">
+                <label>Velocidad</label>
+                <div class="slider-container">
+                    <input type="range" id="speed" min="0.1" max="2.0" step="0.1" value="0.5"
+                           oninput="updateParam('speed', parseFloat(this.value))">
+                    <span class="value-display" id="speed-value">0.5</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Concurrencia</label>
+                <div class="slider-container">
+                    <input type="range" id="maxMedio" min="3" max="16" step="1" value="7"
+                           oninput="updateParam('maxMedio', parseInt(this.value))">
+                    <span class="value-display" id="maxMedio-value">7</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Inversión</label>
+                <div class="slider-container">
+                    <input type="range" id="inversion" min="0" max="1" step="0.05" value="0.2"
+                           oninput="updateParam('inversion', parseFloat(this.value))">
+                    <span class="value-display" id="inversion-value">0.2</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Escala</label>
+                <div class="slider-container">
+                    <input type="range" id="textScale" min="0.5" max="2.0" step="0.05" value="1.0"
+                           oninput="updateParam('textScale', parseFloat(this.value))">
+                    <span class="value-display" id="textScale-value">1.0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Acciones</h3>
+            <div class="button-row">
+                <button class="button" onclick="resetParameters()">Reset</button>
+                <button class="button outline" onclick="saveCanvas('manifiesto-cfdl', 'png')">PNG</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="canvas-area">
+        <div id="canvas-container">
+            <div class="loading">Cargando fuentes...</div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ─── FONT LOADING ─────────────────────────────────────────────────────────────
+// FontFace API loads fonts explicitly before p5 starts drawing text.
+// CSS @font-face handles the sidebar; this registers them with the Canvas API.
+let fontsReady = false;
+
+Promise.all([
+    new FontFace('FuturaStd', 'url(../skills/references/typography/FuturaStd-Book.otf)').load(),
+    new FontFace('MinionPro', 'url(../skills/references/typography/MinionPro-Regular.otf)').load(),
+]).then(fonts => {
+    fonts.forEach(f => document.fonts.add(f));
+    fontsReady = true;
+}).catch(() => {
+    fontsReady = true; // degrade gracefully
+});
+setTimeout(() => { fontsReady = true; }, 5000); // hard fallback after 5s
+
+// ─── PHRASE CONTENT ───────────────────────────────────────────────────────────
+
+// Macro: single declarative statements — displayed huge, nearly static
+const MACRO_ES = [
+    'fuera de lugar',
+    'La inmadurez\ncomo propósito',
+    'desterramos\nla coherencia',
+    'promulgamos\nla opacidad',
+    'siempre en\nalgún otro lugar',
+    'Abrazamos\nnuestros defectos',
+    'Celebramos\nel plagio',
+    'La prótesis\nantes que la cura',
+    'Colectivo\nFuera de Lugar',
+];
+
+const MACRO_CA = [
+    'fora de lloc',
+    'La immaduresa\ncom a propòsit',
+    'desterrem\nla coherència',
+    'promulguem\nl\'opacitat',
+    'sempre en\nalgun altre lloc',
+    'Abracem\nels defectes',
+    'Col·lectiu\nFora de Lloc',
+];
+
+// Medio: manifesto body — medium size, left-aligned, main content layer
+const MEDIO_ES = [
+    'ciudades recordadas,\nsiempre en construcción',
+    'en terrenos donde\nno deberían estar',
+    'Reivindicamos el exilio\ny el destierro',
+    'la creación como\nuna solicitud de asilo',
+    'el viaje como acto\nfrustrante e improductivo',
+    'Proponemos viajar,\na pesar de todo',
+    'Navegar quitándole\na la brújula su imán',
+    'deambular hasta perder\nde vista lo inmutable',
+    'Creemos en una\nidentidad inquieta',
+    'de paso hacia\nla incertidumbre',
+    'al mirar atrás,\nencuentrar un camino\nlleno de maleza',
+    'con el trazo desvanecido,\nimposible de volver\na recorrer',
+    'Al mirar hacia adelante,\nla misma maleza',
+    'No creamos para averiguar\nlo que somos',
+    'sino para dejar de ser\nquien somos',
+    'Buscamos la extenuación:\nde la palabra,\nde los recursos',
+    'de la energía corporal',
+    'el dispendio,\nla condena voluntaria',
+    'sentir el vértigo,\nlas náuseas',
+    'Invocamos el suicidio\ncreativo como material ligero',
+    'como acto rutinario,\nparte del quehacer cotidiano',
+    'antes de la prótesis,\nla fractura profiláctica',
+    'Aspiramos al producto deforme,\nsiempre inacabado',
+    'la ofuscación abnegada\ncomo forma de claridad',
+    'No hay creación\nsin amistad',
+    'tampoco hay amistad\nsin sufrimiento compartido',
+    'desde el extrañamiento\ny la perplejidad',
+    'Reivindicamos\nlos lugares comunes',
+    'Frente a la marca personal,\nla marca blanca',
+    'Y ante la síntesis,\nla disgregación',
+    'Construimos pensando\nen las ruinas',
+    'la llegada del moho,\ny su inevitable abandono',
+    'La obra mejora siempre,\nsi está fuera de lugar',
+];
+
+const MEDIO_CA = [
+    'ciutats deslliurades de l\'oblit,\nsempre en construcció',
+    'en indrets on no\nhaurien de ser-hi',
+    'Reivindiquem l\'exili\ni el desterrament',
+    'la creació com a\nsol·licitud d\'asil',
+    'el viatge com a quell\nacte frustrant i improductiu',
+    'Malgrat tot,\nproposem viatjar',
+    'Naveguem amb una\nbrúixola sense el seu imant',
+    'transitem fins a perdre\nde vista l\'immutable',
+    'Creiem en una\nidentitat inquieta',
+    'en mirar enrere,\nevoquem un camí ple\nde males herbes',
+    'amb el traç esvaït,\nimpossible de tornar\na recórrer',
+    'No creem per esbrinar\nel que som',
+    'sinó per deixar\nde ser qui som',
+    'Cerquem l\'extenuació:\nde la paraula',
+    'Abracem els nostres\ndefectes',
+    'No hi ha creació\nsense amistat',
+    'tampoc no hi ha amistat\nsense patiment compartit',
+    'Celebrem el plagi,\nla còpia',
+    'Construïm pensant\nen les ruïnes',
+    'l\'inevitable\nabandonament',
+    'L\'obra millora sempre,\nsi està fora de lloc',
+];
+
+// Micro: tiny tracked uppercase fragments — texture layer
+const MICRO = [
+    'FUERA DE LUGAR', 'FORA DE LLOC', 'COLECTIVO', 'COL·LECTIU',
+    'EXILIO', 'DESTIERRO', 'MALEZA', 'RUINES', 'CONSTRUCCIÓ',
+    'PLAGIO', 'CÒPIA', 'OPACITAT', 'OPACIDAD', 'IDENTITAT INQUIETA',
+    'SEMPRE INACABAT', 'SIEMPRE INACABADO', 'MARCA BLANCA',
+    'SUICIDIO CREATIVO', 'COHERÈNCIA', 'COHERENCIA',
+    'EXTENUACIÓN', 'INMADURESA', 'INMADUREZ', 'DISPENDI', 'RUINAS',
+    'FUERA DE LUGAR', 'FORA DE LLOC',
+];
+
+// ─── MODES ───────────────────────────────────────────────────────────────────
+const MODES = {
+    dark: {
+        bg:      [10, 10, 9],
+        col:     [234, 230, 220],   // warm white — primary text
+        acc:     [255, 185, 35],    // amber — accent text
+        dim:     [85, 83, 76],      // micro fragments
+        lineAcc: [255, 185, 35],    // amber structural lines
+        lineDim: [58, 56, 52],      // gray structural lines
+        wmarkA:  32,
+    },
+    amber: {
+        bg:      [255, 185, 35],
+        col:     [14, 9, 0],
+        acc:     [107, 66, 0],
+        dim:     [130, 90, 10],
+        lineAcc: [107, 66, 0],
+        lineDim: [180, 120, 15],
+        wmarkA:  55,
+    },
+    light: {
+        bg:      [250, 250, 248],
+        col:     [14, 14, 13],
+        acc:     [192, 125, 0],
+        dim:     [160, 156, 148],
+        lineAcc: [192, 125, 0],
+        lineDim: [204, 200, 192],
+        wmarkA:  45,
+    },
+};
+
+// ─── PARAMETERS ──────────────────────────────────────────────────────────────
+let params = {
+    seed:      2023,
+    speed:     0.5,
+    maxMedio:  7,
+    inversion: 0.2,   // probability a macro phrase appears inverted (PI)
+    textScale: 1.0,
+    lang:      'both',
+    mode:      'dark',
+};
+const DEFAULT_PARAMS = { ...params };
+
+// ─── POOLS ───────────────────────────────────────────────────────────────────
+let macroPool = [], medioPool = [];
+
+function buildPools() {
+    const l = params.lang;
+    macroPool = l === 'es' ? [...MACRO_ES]
+              : l === 'ca' ? [...MACRO_CA]
+              : [...MACRO_ES, ...MACRO_CA];
+    medioPool = l === 'es' ? [...MEDIO_ES]
+              : l === 'ca' ? [...MEDIO_CA]
+              : [...MEDIO_ES, ...MEDIO_CA];
+}
+
+// ─── ACTIVE ELEMENTS ─────────────────────────────────────────────────────────
+let ghostLines = [];
+let macros     = [];
+let medios     = [];
+let micros     = [];
+
+// ─── P5 SETUP ────────────────────────────────────────────────────────────────
+function setup() {
+    const canvas = createCanvas(1200, 900);
+    canvas.parent('canvas-container');
+    document.querySelector('.loading').style.display = 'none';
+    colorMode(RGB, 255);
+    buildPools();
+    randomSeed(params.seed);
+    noiseSeed(params.seed);
+}
+
+function draw() {
+    if (!fontsReady) return;
+
+    const M = MODES[params.mode];
+    background(M.bg[0], M.bg[1], M.bg[2]);
+
+    // Draw layers back to front
+    updateGhostLines(M);
+    updateMicros(M);
+    updateMedios(M);
+    updateMacros(M);
+    drawWatermark(M);
+}
+
+// ─── GHOST LINES ─────────────────────────────────────────────────────────────
+// Thin structural rules — vertical and horizontal, barely visible, very slow.
+class GhostLine {
+    constructor() {
+        this.isVert = random() < 0.55;
+
+        if (this.isVert) {
+            this.x1 = random(width * 0.10, width * 0.90);
+            this.y1 = random(height * 0.03, height * 0.30);
+            this.x2 = this.x1 + random(-2, 2);
+            this.y2 = this.y1 + random(height * 0.35, height * 0.80);
+        } else {
+            this.y1 = random(height * 0.08, height * 0.92);
+            this.x1 = random(width  * 0.04, width  * 0.45);
+            this.x2 = this.x1 + random(width * 0.12, width * 0.55);
+            this.y2 = this.y1;
+        }
+
+        this.isAccent  = random() < 0.35;
+        this.maxAlpha  = random(14, 42);
+        this.alpha     = 0;
+        this.phase     = 'in';
+        this.holdFrames = random(800, 2200);
+        this.heldFor   = 0;
+        this.fadeSpd   = random(0.2, 0.5);
+        // Imperceptibly slow drift
+        this.dx = random(-0.005, 0.005);
+        this.dy = random(-0.003, 0.003);
+
+        // Optional tick caps on short horizontal lines
+        this.hasTicks  = !this.isVert && (this.x2 - this.x1) > 80 && random() < 0.5;
+    }
+
+    update() {
+        this.x1 += this.dx; this.x2 += this.dx;
+        this.y1 += this.dy; this.y2 += this.dy;
+
+        if (this.phase === 'in') {
+            this.alpha = min(this.maxAlpha, this.alpha + this.fadeSpd);
+            if (this.alpha >= this.maxAlpha) this.phase = 'hold';
+        } else if (this.phase === 'hold') {
+            if (++this.heldFor > this.holdFrames) this.phase = 'out';
+        } else {
+            this.alpha = max(0, this.alpha - this.fadeSpd * 0.4);
+        }
+    }
+
+    isDead() { return this.phase === 'out' && this.alpha <= 0; }
+
+    display(M) {
+        const c = this.isAccent ? M.lineAcc : M.lineDim;
+        stroke(c[0], c[1], c[2], this.alpha);
+        strokeWeight(0.6);
+        noFill();
+        line(this.x1, this.y1, this.x2, this.y2);
+        if (this.hasTicks) {
+            const tick = 4;
+            line(this.x1, this.y1 - tick, this.x1, this.y1 + tick);
+            line(this.x2, this.y2 - tick, this.x2, this.y2 + tick);
+        }
+    }
+}
+
+function updateGhostLines(M) {
+    while (ghostLines.length < 5) ghostLines.push(new GhostLine());
+    for (const g of ghostLines) { g.update(); g.display(M); }
+    ghostLines = ghostLines.filter(g => !g.isDead());
+}
+
+// ─── BASE PHRASE ─────────────────────────────────────────────────────────────
+class Phrase {
+    constructor({ text, font, size, align, speedMul, holdMin, holdMax, maxAlpha, angle, x, y }) {
+        this.text      = text;
+        this.font      = font;
+        this.size      = size * params.textScale;
+        this.align     = align; // 'left' | 'center'
+        this.speedMul  = speedMul;
+        this.angle     = angle;
+
+        this.x = x !== undefined ? x : random(width  * 0.05, width  * 0.75);
+        this.y = y !== undefined ? y : random(height * 0.06, height * 0.94);
+
+        // Each phrase gets its own noise offset and a gentle base velocity
+        this.noiseOff = random(2000);
+        this.vxBase   = random(-0.3, 0.3);
+        this.vyBase   = random(-0.15, 0.15);
+
+        this.alpha     = 0;
+        this.maxAlpha  = maxAlpha;
+        this.phase     = 'in';
+        this.holdFrames = random(holdMin, holdMax);
+        this.heldFor   = 0;
+        this.fadeSpd   = random(0.8, 1.8);
+    }
+
+    update() {
+        const s     = 0.0014;
+        const angle = noise(this.x * s, this.y * s, this.noiseOff) * TWO_PI * 2;
+        const spd   = params.speed * this.speedMul;
+
+        // Blend noise direction with gentle base velocity
+        this.x += (cos(angle) * 0.40 + this.vxBase * 0.60) * spd;
+        this.y += (sin(angle) * 0.20 + this.vyBase * 0.60) * spd;
+
+        if (this.phase === 'in') {
+            this.alpha = min(this.maxAlpha, this.alpha + this.fadeSpd * 2.2);
+            if (this.alpha >= this.maxAlpha) this.phase = 'hold';
+        } else if (this.phase === 'hold') {
+            if (++this.heldFor > this.holdFrames) this.phase = 'out';
+        } else {
+            this.alpha = max(0, this.alpha - this.fadeSpd * 1.0);
+        }
+    }
+
+    isDead() { return this.phase === 'out' && this.alpha <= 0; }
+
+    draw(r, g, b, extraFn) {
+        if (this.alpha < 1) return;
+        push();
+        translate(this.x, this.y);
+        rotate(this.angle);
+        textFont(this.font);
+        textStyle(NORMAL);
+        textSize(this.size);
+        textLeading(this.size * 1.24);
+        noStroke();
+        fill(r, g, b, this.alpha);
+        if (this.align === 'center') {
+            textAlign(CENTER, CENTER);
+            text(this.text, 0, 0);
+        } else {
+            textAlign(LEFT, CENTER);
+            text(this.text, 0, 0);
+        }
+        if (extraFn) extraFn.call(this);
+        pop();
+    }
+}
+
+// ─── MACRO PHRASES ───────────────────────────────────────────────────────────
+// Enormous statements. Nearly static. Can bleed off canvas edges.
+// 0° or PI rotation. MinionPro. Center-aligned. Amber or white.
+class MacroPhrase extends Phrase {
+    constructor() {
+        const txt   = macroPool[floor(random(macroPool.length))];
+        const sz    = random(62, 92);
+        const angle = random() < params.inversion ? PI : 0;
+
+        // Spawn in the compositional center zone, allow edge bleed
+        const x = random(width * 0.10, width * 0.90);
+        const y = random(height * 0.18, height * 0.82);
+
+        super({
+            text: txt, font: 'MinionPro', size: sz,
+            align: 'center', speedMul: 0.16,
+            holdMin: 500, holdMax: 1100,
+            maxAlpha: random(200, 235),
+            angle, x, y,
+        });
+
+        this.isAccent = random() < 0.40; // 40% amber, 60% primary white
+    }
+
+    update() { super.update(); }
+
+    display(M) {
+        const c = this.isAccent ? M.acc : M.col;
+        this.draw(c[0], c[1], c[2]);
+    }
+}
+
+function updateMacros(M) {
+    while (macros.length < 2) macros.push(new MacroPhrase());
+    for (const m of macros) { m.update(); m.display(M); }
+    macros = macros.filter(m => !m.isDead());
+}
+
+// ─── MEDIO PHRASES ───────────────────────────────────────────────────────────
+// The main content layer. Left-aligned, MinionPro, 0° always.
+// Spawns from left-biased positions so text flows inward from the left.
+class MedioPhrase extends Phrase {
+    constructor() {
+        const txt = medioPool[floor(random(medioPool.length))];
+        const sz  = random(16, 26);
+        // Left-biased spawn: text starts at x and flows right
+        const x   = random(width * 0.03, width * 0.62);
+        const y   = random(height * 0.06, height * 0.94);
+
+        super({
+            text: txt, font: 'MinionPro', size: sz,
+            align: 'left', speedMul: 0.60,
+            holdMin: 180, holdMax: 420,
+            maxAlpha: random(155, 205),
+            angle: 0, x, y,
+        });
+
+        this.isAccent = random() < 0.10;
+    }
+
+    display(M) {
+        const c = this.isAccent ? M.acc : M.col;
+        this.draw(c[0], c[1], c[2]);
+    }
+}
+
+function updateMedios(M) {
+    while (medios.length < params.maxMedio) medios.push(new MedioPhrase());
+    for (const m of medios) { m.update(); m.display(M); }
+    medios = medios.filter(m => !m.isDead());
+}
+
+// ─── MICRO FRAGMENTS ─────────────────────────────────────────────────────────
+// Tiny uppercase tracked text. Background texture layer. FuturaStd.
+// Sweep mostly horizontally. Very dim.
+class MicroFragment extends Phrase {
+    constructor() {
+        const txt = MICRO[floor(random(MICRO.length))];
+        const sz  = random(8.5, 11.5);
+        // Sweeps: horizontal direction chosen at birth
+        const dir = random() < 0.5 ? 1 : -1; // left or right sweep
+
+        super({
+            text: txt, font: 'FuturaStd', size: sz,
+            align: 'left', speedMul: 1.5,
+            holdMin: 100, holdMax: 280,
+            maxAlpha: random(40, 75),
+            angle: 0,
+            x: random(width * 0.03, width * 0.85),
+            y: random(height * 0.04, height * 0.96),
+        });
+
+        // Override velocities: strongly horizontal
+        this.vxBase = dir * random(0.4, 0.8);
+        this.vyBase = random(-0.08, 0.08);
+        this._tracking = random(1.8, 3.2); // extra letter spacing in px
+    }
+
+    display(M) {
+        if (this.alpha < 1) return;
+        push();
+        translate(this.x, this.y);
+        rotate(this.angle);
+        textFont('FuturaStd');
+        textStyle(NORMAL);
+        textSize(this.size);
+        textAlign(LEFT, CENTER);
+        noStroke();
+        fill(M.dim[0], M.dim[1], M.dim[2], this.alpha);
+
+        // Manual letter-spacing via char-by-char rendering
+        let cx = 0;
+        for (let i = 0; i < this.text.length; i++) {
+            text(this.text[i], cx, 0);
+            cx += textWidth(this.text[i]) + this._tracking;
+        }
+        pop();
+    }
+}
+
+function updateMicros(M) {
+    const target = max(3, floor(params.maxMedio * 0.55));
+    while (micros.length < target) micros.push(new MicroFragment());
+    for (const m of micros) { m.update(); m.display(M); }
+    micros = micros.filter(m => !m.isDead());
+}
+
+// ─── WATERMARK ───────────────────────────────────────────────────────────────
+function drawWatermark(M) {
+    textFont('FuturaStd');
+    textStyle(NORMAL);
+    textSize(9.5);
+    textAlign(RIGHT, BOTTOM);
+    noStroke();
+
+    // Use col color at wmarkA alpha
+    fill(M.col[0], M.col[1], M.col[2], M.wmarkA);
+    text('cfdl.site  —  Primera edición, Octubre 2023', width - 18, height - 14);
+}
+
+// ─── CONTROLS ────────────────────────────────────────────────────────────────
+function setMode(m) {
+    params.mode = m;
+    ['dark','amber','light'].forEach(id =>
+        document.getElementById('btn-' + id).classList.toggle('active', id === m)
+    );
+}
+
+function setLang(l) {
+    params.lang = l;
+    ['es','ca','both'].forEach(id =>
+        document.getElementById('btn-' + id).classList.toggle('active', id === l)
+    );
+    buildPools();
+    macros = []; medios = []; micros = [];
+}
+
+function updateParam(name, value) {
+    params[name] = value;
+    document.getElementById(name + '-value').textContent = value;
+    if (name === 'maxMedio') {
+        while (medios.length > params.maxMedio) medios.pop();
+    }
+}
+
+function updateSeedDisplay() {
+    document.getElementById('seed-input').value = params.seed;
+}
+
+function _resetState() {
+    randomSeed(params.seed);
+    noiseSeed(params.seed);
+    macros = []; medios = []; micros = []; ghostLines = [];
+}
+
+function updateSeed() {
+    const val = parseInt(document.getElementById('seed-input').value);
+    if (val && val > 0) { params.seed = val; _resetState(); }
+    else updateSeedDisplay();
+}
+
+function previousSeed() {
+    params.seed = Math.max(1, params.seed - 1);
+    updateSeedDisplay(); _resetState();
+}
+
+function nextSeed() {
+    params.seed++;
+    updateSeedDisplay(); _resetState();
+}
+
+function randomSeedAndUpdate() {
+    params.seed = Math.floor(Math.random() * 999999) + 1;
+    updateSeedDisplay(); _resetState();
+}
+
+function resetParameters() {
+    params = { ...DEFAULT_PARAMS };
+    ['dark','amber','light'].forEach(id =>
+        document.getElementById('btn-' + id).classList.toggle('active', id === params.mode));
+    ['es','ca','both'].forEach(id =>
+        document.getElementById('btn-' + id).classList.toggle('active', id === params.lang));
+    ['speed','maxMedio','inversion','textScale'].forEach(id => {
+        document.getElementById(id).value = params[id];
+        document.getElementById(id + '-value').textContent = params[id];
+    });
+    buildPools();
+    updateSeedDisplay();
+    _resetState();
+}
+
+window.addEventListener('load', updateSeedDisplay);
+</script>
+</body>
+</html>

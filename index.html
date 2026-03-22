@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.F.D.L. — Archivo Generativo</title>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── Header ─────────────────────────────────────────────────────────── */
+        header {
+            padding: 64px 64px 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 32px;
+        }
+
+        .header-left h1 {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .header-left p {
+            font-family: 'MinionPro', serif;
+            font-size: 32px;
+            line-height: 1.15;
+            color: var(--text);
+            font-weight: normal;
+        }
+
+        .header-right {
+            text-align: right;
+        }
+
+        .header-right a {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .header-right a:hover { color: var(--text); }
+
+        /* ── Intro ───────────────────────────────────────────────────────────── */
+        .intro {
+            padding: 48px 64px;
+            max-width: 620px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro p {
+            font-family: 'MinionPro', serif;
+            font-size: 16px;
+            line-height: 1.7;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* ── Piece list ──────────────────────────────────────────────────────── */
+        .piece-list {
+            list-style: none;
+        }
+
+        .piece-item {
+            border-bottom: 1px solid var(--border);
+        }
+
+        .piece-link {
+            display: grid;
+            grid-template-columns: 48px 1fr auto;
+            align-items: start;
+            gap: 0 32px;
+            padding: 36px 64px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.15s;
+        }
+
+        .piece-link:hover {
+            background: #f4f3ef;
+        }
+
+        .piece-link:hover .piece-arrow {
+            transform: translateX(4px);
+            color: var(--text);
+        }
+
+        .piece-num {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            padding-top: 5px;
+        }
+
+        .piece-body {}
+
+        .piece-title {
+            font-family: 'MinionPro', serif;
+            font-size: 22px;
+            font-weight: normal;
+            line-height: 1.25;
+            margin-bottom: 6px;
+        }
+
+        .piece-fragment {
+            font-family: 'MinionPro', serif;
+            font-size: 13px;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .piece-desc {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .piece-tag {
+            display: inline-block;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 2px 7px;
+            border-radius: 2px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .piece-arrow {
+            font-size: 18px;
+            color: var(--muted);
+            padding-top: 4px;
+            transition: transform 0.15s, color 0.15s;
+            align-self: center;
+        }
+
+        /* Accent bar on hover */
+        .piece-item:hover-bar {
+            border-left: 3px solid var(--accent);
+        }
+
+        /* ── Footer ──────────────────────────────────────────────────────────── */
+        footer {
+            padding: 40px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        footer p {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        footer a:hover { color: var(--text); }
+
+        /* ── Responsive ──────────────────────────────────────────────────────── */
+        @media (max-width: 700px) {
+            header { padding: 40px 24px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+            .intro { padding: 32px 24px; }
+            .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <h1>C.F.D.L.</h1>
+        <p>Archivo Generativo</p>
+    </div>
+    <div class="header-right">
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
+    </div>
+</header>
+
+<div class="intro">
+    <p>
+        Piezas generativas producidas a partir del manifiesto de C.F.D.L.
+        Cada archivo es una interpretación visual de un fragmento —
+        sistemas que crecen, se fracturan, derivan y se pierden.
+    </p>
+</div>
+
+<ul class="piece-list">
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/manifiesto-animado.html">
+            <span class="piece-num">01</span>
+            <div class="piece-body">
+                <div class="piece-title">Manifiesto animado</div>
+                <div class="piece-fragment">"fuera de lugar — siempre en algún otro lugar"</div>
+                <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/maleza.html">
+            <span class="piece-num">02</span>
+            <div class="piece-body">
+                <div class="piece-title">Maleza</div>
+                <div class="piece-fragment">"al mirar atrás, encontrar un camino lleno de maleza"</div>
+                <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/brujula.html">
+            <span class="piece-num">03</span>
+            <div class="piece-body">
+                <div class="piece-title">Brújula sin su imán</div>
+                <div class="piece-fragment">"Navegar quitándole a la brújula su imán"</div>
+                <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/moho.html">
+            <span class="piece-num">04</span>
+            <div class="piece-body">
+                <div class="piece-title">La llegada del moho</div>
+                <div class="piece-fragment">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</div>
+                <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/disgregacion.html">
+            <span class="piece-num">05</span>
+            <div class="piece-body">
+                <div class="piece-title">Ante la síntesis, la disgregación</div>
+                <div class="piece-fragment">"Y ante la síntesis, la disgregación"</div>
+                <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/paleta.html">
+            <span class="piece-num">06</span>
+            <div class="piece-body">
+                <div class="piece-title">Paleta cromática<span class="piece-tag">Referencia</span></div>
+                <div class="piece-fragment">"9 colores — de Cera a Medianoche"</div>
+                <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+</ul>
+
+<footer>
+    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <p><a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a> · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
+</footer>
+
+</body>
+</html>
