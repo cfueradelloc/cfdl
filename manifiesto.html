@@ -108,6 +108,30 @@
             line-height: 1.5;
         }
 
+        /* ── Order bar ───────────────────────────────────────────────────────── */
+        .order-bar {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 40px;
+            border-bottom: 1px solid var(--rule);
+        }
+
+        #shuffle-btn {
+            padding: 12px 0;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: color 0.15s;
+        }
+
+        #shuffle-btn:hover { color: var(--text); }
+        #shuffle-btn.active { color: var(--accent); }
+
         /* ── Language nav ────────────────────────────────────────────────────── */
         .lang-nav {
             display: flex;
@@ -340,6 +364,10 @@
     <button class="lang-btn" onclick="setLang('ast')">AST</button>
     <button class="lang-btn" onclick="setLang('pt')">PT</button>
 </nav>
+
+<div class="order-bar">
+    <button id="shuffle-btn" onclick="toggleShuffle()">Aleatorio</button>
+</div>
 
 <!-- ─── ES ──────────────────────────────────────────────────────────────────── -->
 <div class="lang-content active" id="lang-es">
@@ -703,6 +731,46 @@
         pt:  'Manifesto Mutante e Nunca Cumprido do Coletivo Fora do Lugar'
     };
 
+    // Flatten multiple .manifesto-body containers into one per language
+    // so paragraphs can be freely shuffled as a flat list
+    document.querySelectorAll('.lang-content').forEach(lang => {
+        const bodies = [...lang.querySelectorAll(':scope > .manifesto-body')];
+        if (bodies.length <= 1) return;
+        const target = bodies[0];
+        bodies.slice(1).forEach(body => {
+            while (body.firstChild) target.appendChild(body.firstChild);
+            body.remove();
+        });
+    });
+
+    let isShuffled = false;
+
+    function toggleShuffle() {
+        const btn = document.getElementById('shuffle-btn');
+        const lang = document.querySelector('.lang-content.active');
+        const body = lang.querySelector('.manifesto-body');
+        const blocks = [...body.querySelectorAll('.para-block')];
+
+        if (!isShuffled) {
+            for (let i = blocks.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [blocks[i], blocks[j]] = [blocks[j], blocks[i]];
+            }
+            isShuffled = true;
+            btn.textContent = 'Restablecer';
+            btn.classList.add('active');
+        } else {
+            blocks.sort((a, b) =>
+                parseInt(a.querySelector('.para-num').textContent) -
+                parseInt(b.querySelector('.para-num').textContent)
+            );
+            isShuffled = false;
+            btn.textContent = 'Aleatorio';
+            btn.classList.remove('active');
+        }
+        blocks.forEach(b => body.appendChild(b));
+    }
+
     // Slideshow
     (function() {
         const slides = document.querySelectorAll('.slide');
@@ -736,6 +804,8 @@
         document.getElementById('title-sub').textContent = titles[lang];
         document.getElementById('title-word').innerHTML = titleWords[lang];
         document.documentElement.lang = lang === 'ast' ? 'ast' : lang;
+        // Reset shuffle state on language switch
+        if (isShuffled) toggleShuffle();
     }
 </script>
 
