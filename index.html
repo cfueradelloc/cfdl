@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C.F.D.L. — Archivo Generativo</title>
+    <title>C.F.D.L.</title>
     <style>
         @font-face {
             font-family: 'FuturaStd';
@@ -15,12 +15,11 @@
         }
 
         :root {
-            --bg:      #ddd4cb;
-            --surface: #ded9d6;
-            --text:    #2e2e30;
-            --muted:   #8f8f91;
-            --border:  #dad5d5;
-            --accent:  #e9ad51;
+            --bg:     #e4d3c3; /* China White */
+            --text:   #2e2e30; /* Ebony */
+            --muted:  #8f8f91; /* Smoke */
+            --border: #d4c4b4;
+            --accent: #e9ad51; /* Citrine */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -30,172 +29,100 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-        }
-
-        /* ── Header ─────────────────────────────────────────────────────────── */
-        header {
-            padding: 64px 64px 0;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 32px;
-        }
-
-        .header-left h1 {
-            font-family: 'FuturaStd', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--text);
-            margin-bottom: 6px;
-        }
-
-        .header-left p {
-            font-family: 'MinionPro', serif;
-            font-size: 32px;
-            line-height: 1.15;
-            color: var(--text);
-            font-weight: normal;
-        }
-
-        .header-right {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            gap: 32px;
-        }
-
-        .header-right a {
-            font-size: 10px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .header-right a:hover { color: var(--text); }
-
-        /* ── Intro ───────────────────────────────────────────────────────────── */
-        .intro {
-            padding: 48px 64px;
-            max-width: 620px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .intro p {
-            font-family: 'MinionPro', serif;
-            font-size: 16px;
-            line-height: 1.7;
-            color: var(--muted);
-            font-style: italic;
-        }
-
-        /* ── Piece list ──────────────────────────────────────────────────────── */
-        .piece-list {
-            list-style: none;
-        }
-
-        .piece-item {
-            border-bottom: 1px solid var(--border);
-        }
-
-        .piece-link {
             display: grid;
-            grid-template-columns: 48px 1fr auto;
-            align-items: start;
-            gap: 0 32px;
-            padding: 36px 64px;
+            grid-template-rows: 1fr auto;
+        }
+
+        /* ── Main ────────────────────────────────────────────────────────────── */
+        main {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: calc(100vh - 56px);
+        }
+
+        /* ── Left: branding ──────────────────────────────────────────────────── */
+        .brand-col {
+            border-right: 1px solid var(--border);
+            padding: 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .brand-top {
+            font-size: 9px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .brand-name {
+            font-family: 'MinionPro', serif;
+            font-size: clamp(64px, 11vw, 160px);
+            line-height: 0.9;
+            font-weight: normal;
+            font-style: italic;
+            color: var(--text);
+            align-self: flex-end;
+        }
+
+        /* ── Right: nav sections ─────────────────────────────────────────────── */
+        .nav-col {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-item {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 48px;
+            border-bottom: 1px solid var(--border);
             text-decoration: none;
-            color: inherit;
+            color: var(--text);
             transition: background 0.15s;
         }
 
-        .piece-link:hover {
-            background: #d4cec8;
+        .nav-item:last-child { border-bottom: none; }
+
+        .nav-item:hover {
+            background: #dac9b8;
         }
 
-        .piece-link:hover .piece-arrow {
-            transform: translateX(4px);
+        .nav-item:hover .nav-arrow {
+            transform: translateX(6px);
             color: var(--text);
         }
 
-        .piece-num {
-            font-size: 10px;
-            letter-spacing: 0.1em;
-            color: var(--muted);
-            padding-top: 5px;
-        }
-
-        .piece-body {}
-
-        .piece-title {
+        .nav-item-label {
             font-family: 'MinionPro', serif;
-            font-size: 22px;
+            font-size: clamp(28px, 4vw, 52px);
             font-weight: normal;
-            line-height: 1.25;
-            margin-bottom: 6px;
-        }
-
-        .piece-fragment {
-            font-family: 'MinionPro', serif;
-            font-size: 13px;
             font-style: italic;
-            color: var(--muted);
-            margin-bottom: 10px;
-            line-height: 1.5;
         }
 
-        .piece-desc {
-            font-size: 10px;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+        .nav-arrow {
+            font-size: 20px;
             color: var(--muted);
-        }
-
-        .piece-tag {
-            display: inline-block;
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 2px 7px;
-            border-radius: 2px;
-            margin-left: 10px;
-            vertical-align: middle;
-        }
-
-        .piece-arrow {
-            font-size: 18px;
-            color: var(--muted);
-            padding-top: 4px;
             transition: transform 0.15s, color 0.15s;
-            align-self: center;
-        }
-
-        /* Accent bar on hover */
-        .piece-item:hover-bar {
-            border-left: 3px solid var(--accent);
         }
 
         /* ── Footer ──────────────────────────────────────────────────────────── */
         footer {
-            padding: 40px 64px;
+            height: 56px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 0 48px;
+            border-top: 1px solid var(--border);
         }
 
-        footer p {
+        footer p, footer a {
             font-size: 9px;
-            letter-spacing: 0.1em;
+            letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--muted);
-        }
-
-        footer a {
             color: var(--muted);
             text-decoration: none;
             transition: color 0.15s;
@@ -205,115 +132,46 @@
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 700px) {
-            header { padding: 40px 24px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
-            .intro { padding: 32px 24px; }
-            .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+            main { grid-template-columns: 1fr; min-height: auto; }
+            .brand-col { border-right: none; border-bottom: 1px solid var(--border); padding: 32px 24px; min-height: 40vh; }
+            .nav-item { padding: 0 24px; }
+            footer { padding: 0 24px; }
         }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="header-left">
-        <h1>C.F.D.L.</h1>
-        <p>Archivo Generativo</p>
+<main>
+    <div class="brand-col">
+        <div class="brand-top">
+            Colectivo Fuera de Lugar<br>
+            Col·lectiu Fora de Lloc
+        </div>
+        <div class="brand-name">C.F.D.L.</div>
     </div>
-    <div class="header-right">
-        <a href="manifiesto.html">Manifiesto</a>
-        <a href="eventos.html">Eventos</a>
-        <a href="proyectos.html">Proyectos</a>
-        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
-    </div>
-</header>
 
-<div class="intro">
-    <p>
-        Piezas generativas producidas a partir del manifiesto de C.F.D.L.
-        Cada archivo es una interpretación visual de un fragmento —
-        sistemas que crecen, se fracturan, derivan y se pierden.
-    </p>
-</div>
-
-<ul class="piece-list">
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/manifiesto-animado.html">
-            <span class="piece-num">01</span>
-            <div class="piece-body">
-                <div class="piece-title">Manifiesto animado</div>
-                <div class="piece-fragment">"fuera de lugar — siempre en algún otro lugar"</div>
-                <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
-            </div>
-            <span class="piece-arrow">→</span>
+    <nav class="nav-col">
+        <a class="nav-item" href="manifiesto.html">
+            <span class="nav-item-label">Manifiesto</span>
+            <span class="nav-arrow">→</span>
         </a>
-    </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/maleza.html">
-            <span class="piece-num">02</span>
-            <div class="piece-body">
-                <div class="piece-title">Maleza</div>
-                <div class="piece-fragment">"al mirar atrás, encontrar un camino lleno de maleza"</div>
-                <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
-            </div>
-            <span class="piece-arrow">→</span>
+        <a class="nav-item" href="eventos.html">
+            <span class="nav-item-label">Eventos</span>
+            <span class="nav-arrow">→</span>
         </a>
-    </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/brujula.html">
-            <span class="piece-num">03</span>
-            <div class="piece-body">
-                <div class="piece-title">Brújula sin su imán</div>
-                <div class="piece-fragment">"Navegar quitándole a la brújula su imán"</div>
-                <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
-            </div>
-            <span class="piece-arrow">→</span>
+        <a class="nav-item" href="proyectos.html">
+            <span class="nav-item-label">Proyectos</span>
+            <span class="nav-arrow">→</span>
         </a>
-    </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/moho.html">
-            <span class="piece-num">04</span>
-            <div class="piece-body">
-                <div class="piece-title">La llegada del moho</div>
-                <div class="piece-fragment">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</div>
-                <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
-            </div>
-            <span class="piece-arrow">→</span>
-        </a>
-    </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/disgregacion.html">
-            <span class="piece-num">05</span>
-            <div class="piece-body">
-                <div class="piece-title">Ante la síntesis, la disgregación</div>
-                <div class="piece-fragment">"Y ante la síntesis, la disgregación"</div>
-                <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
-            </div>
-            <span class="piece-arrow">→</span>
-        </a>
-    </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/paleta.html">
-            <span class="piece-num">06</span>
-            <div class="piece-body">
-                <div class="piece-title">Paleta cromática<span class="piece-tag">Referencia</span></div>
-                <div class="piece-fragment">"9 colores — de Cera a Medianoche"</div>
-                <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
-            </div>
-            <span class="piece-arrow">→</span>
-        </a>
-    </li>
-
-</ul>
+    </nav>
+</main>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
-    <p><a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a> · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
+    <p>
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a>
+        · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
+    </p>
 </footer>
 
 </body>

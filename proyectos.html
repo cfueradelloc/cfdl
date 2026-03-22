@@ -30,13 +30,12 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
+        /* ── Nav ─────────────────────────────────────────────────────────────── */
         nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
+            position: sticky;
+            top: 0;
             z-index: 100;
             height: 48px;
             display: flex;
@@ -72,56 +71,130 @@
         .nav-links a:hover,
         .nav-links a.active { color: var(--text); }
 
-        .hero {
-            padding-top: 48px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding-left: 40px;
-            padding-right: 40px;
-            padding-bottom: 56px;
+        /* ── Header ──────────────────────────────────────────────────────────── */
+        header {
+            padding: 64px 64px 32px;
             border-bottom: 1px solid var(--border);
         }
 
-        .hero-label {
-            font-size: 10px;
-            letter-spacing: 0.2em;
+        header h1 {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 24px;
+            margin-bottom: 6px;
         }
 
-        .hero-title {
+        header p.section-title {
             font-family: 'MinionPro', serif;
-            font-size: clamp(72px, 14vw, 200px);
-            line-height: 0.9;
-            font-weight: normal;
-            font-style: italic;
+            font-size: 32px;
+            line-height: 1.15;
             color: var(--text);
-            margin-bottom: 48px;
+            font-weight: normal;
         }
 
-        .hero-desc {
+        /* ── Intro ───────────────────────────────────────────────────────────── */
+        .intro {
+            padding: 48px 64px;
+            max-width: 620px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .intro p {
             font-family: 'MinionPro', serif;
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.7;
             color: var(--muted);
-            max-width: 380px;
             font-style: italic;
         }
 
+        /* ── Piece list ──────────────────────────────────────────────────────── */
+        .piece-list { list-style: none; }
+
+        .piece-item { border-bottom: 1px solid var(--border); }
+
+        .piece-link {
+            display: grid;
+            grid-template-columns: 48px 1fr auto;
+            align-items: start;
+            gap: 0 32px;
+            padding: 36px 64px;
+            text-decoration: none;
+            color: inherit;
+            transition: background 0.15s;
+        }
+
+        .piece-link:hover { background: #d4cec8; }
+
+        .piece-link:hover .piece-arrow {
+            transform: translateX(4px);
+            color: var(--text);
+        }
+
+        .piece-num {
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            padding-top: 5px;
+        }
+
+        .piece-title {
+            font-family: 'MinionPro', serif;
+            font-size: 22px;
+            font-weight: normal;
+            line-height: 1.25;
+            margin-bottom: 6px;
+        }
+
+        .piece-fragment {
+            font-family: 'MinionPro', serif;
+            font-size: 13px;
+            font-style: italic;
+            color: var(--muted);
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .piece-desc {
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .piece-tag {
+            display: inline-block;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border: 1px solid var(--border);
+            padding: 2px 7px;
+            border-radius: 2px;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .piece-arrow {
+            font-size: 18px;
+            color: var(--muted);
+            padding-top: 4px;
+            transition: transform 0.15s, color 0.15s;
+            align-self: center;
+        }
+
+        /* ── Footer ──────────────────────────────────────────────────────────── */
         footer {
-            padding: 32px 40px;
+            padding: 40px 64px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-top: 1px solid var(--border);
         }
 
         footer p {
             font-size: 9px;
-            letter-spacing: 0.12em;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
         }
@@ -134,10 +207,13 @@
 
         footer a:hover { color: var(--text); }
 
-        @media (max-width: 768px) {
+        /* ── Responsive ──────────────────────────────────────────────────────── */
+        @media (max-width: 700px) {
             nav { padding: 0 24px; }
-            .hero { padding: 96px 24px 40px; }
-            footer { padding: 24px; flex-direction: column; gap: 10px; }
+            header { padding: 40px 24px 24px; }
+            .intro { padding: 32px 24px; }
+            .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
@@ -146,7 +222,6 @@
 <nav>
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
-        <a href="index.html">Archivo</a>
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
         <a href="proyectos.html" class="active">Proyectos</a>
@@ -154,11 +229,94 @@
     </div>
 </nav>
 
-<section class="hero">
-    <div class="hero-label">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</div>
-    <div class="hero-title">Proyectos</div>
-    <p class="hero-desc">Próximamente.</p>
-</section>
+<header>
+    <h1>C.F.D.L.</h1>
+    <p class="section-title">Archivo Generativo</p>
+</header>
+
+<div class="intro">
+    <p>
+        Piezas generativas producidas a partir del manifiesto de C.F.D.L.
+        Cada archivo es una interpretación visual de un fragmento —
+        sistemas que crecen, se fracturan, derivan y se pierden.
+    </p>
+</div>
+
+<ul class="piece-list">
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/manifiesto-animado.html">
+            <span class="piece-num">01</span>
+            <div class="piece-body">
+                <div class="piece-title">Manifiesto animado</div>
+                <div class="piece-fragment">"fuera de lugar — siempre en algún otro lugar"</div>
+                <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/maleza.html">
+            <span class="piece-num">02</span>
+            <div class="piece-body">
+                <div class="piece-title">Maleza</div>
+                <div class="piece-fragment">"al mirar atrás, encontrar un camino lleno de maleza"</div>
+                <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/brujula.html">
+            <span class="piece-num">03</span>
+            <div class="piece-body">
+                <div class="piece-title">Brújula sin su imán</div>
+                <div class="piece-fragment">"Navegar quitándole a la brújula su imán"</div>
+                <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/moho.html">
+            <span class="piece-num">04</span>
+            <div class="piece-body">
+                <div class="piece-title">La llegada del moho</div>
+                <div class="piece-fragment">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</div>
+                <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/disgregacion.html">
+            <span class="piece-num">05</span>
+            <div class="piece-body">
+                <div class="piece-title">Ante la síntesis, la disgregación</div>
+                <div class="piece-fragment">"Y ante la síntesis, la disgregación"</div>
+                <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+    <li class="piece-item">
+        <a class="piece-link" href="output/paleta.html">
+            <span class="piece-num">06</span>
+            <div class="piece-body">
+                <div class="piece-title">Paleta cromática<span class="piece-tag">Referencia</span></div>
+                <div class="piece-fragment">"9 colores — de Cera a Medianoche"</div>
+                <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
+            </div>
+            <span class="piece-arrow">→</span>
+        </a>
+    </li>
+
+</ul>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
