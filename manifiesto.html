@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.F.D.L. — Manifiesto</title>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #fafaf8;
+            --text:    #0f0f0e;
+            --muted:   #6b6b65;
+            --border:  #e5e4df;
+            --accent:  #ffb923;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ── Header ─────────────────────────────────────────────────────────── */
+        header {
+            padding: 64px 64px 32px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .header-left h1 {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 6px;
+        }
+
+        .header-left p {
+            font-family: 'MinionPro', serif;
+            font-size: 32px;
+            line-height: 1.15;
+            color: var(--text);
+            font-weight: normal;
+        }
+
+        .header-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .header-right a {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .header-right a:hover { color: var(--text); }
+
+        /* ── Main content ────────────────────────────────────────────────────── */
+        .content {
+            display: flex;
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* ── PDF column ──────────────────────────────────────────────────────── */
+        .pdf-col {
+            width: 420px;
+            flex-shrink: 0;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .col-label {
+            padding: 20px 32px;
+            font-size: 9px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pdf-embed {
+            flex: 1;
+            min-height: 600px;
+        }
+
+        .pdf-embed object,
+        .pdf-embed iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 600px;
+            border: none;
+            display: block;
+        }
+
+        /* ── Images column ───────────────────────────────────────────────────── */
+        .images-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .image-gallery {
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .gallery-item {
+            border: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            display: block;
+        }
+
+        /* ── Footer ──────────────────────────────────────────────────────────── */
+        footer {
+            padding: 40px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        footer p {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        footer a:hover { color: var(--text); }
+
+        /* ── Responsive ──────────────────────────────────────────────────────── */
+        @media (max-width: 700px) {
+            header { padding: 40px 24px 24px; flex-direction: column; gap: 16px; align-items: flex-start; }
+            .content { flex-direction: column; }
+            .pdf-col { width: 100%; border-right: none; border-bottom: 1px solid var(--border); }
+            .pdf-embed { min-height: 400px; }
+            .pdf-embed object,
+            .pdf-embed iframe { min-height: 400px; }
+            .image-gallery { padding: 24px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="header-left">
+        <h1>C.F.D.L.</h1>
+        <p>Manifiesto</p>
+    </div>
+    <div class="header-right">
+        <a href="index.html">← Archivo</a>
+        <a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site ↗</a>
+    </div>
+</header>
+
+<div class="content">
+
+    <div class="pdf-col">
+        <div class="col-label">Texto</div>
+        <div class="pdf-embed">
+            <object data="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf" type="application/pdf">
+                <iframe src="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf">
+                    <p>
+                        Tu navegador no puede mostrar el PDF.
+                        <a href="skills/references/manifest/Manifesto_Fuera_De_Lugar.pdf">Descárgalo aquí.</a>
+                    </p>
+                </iframe>
+            </object>
+        </div>
+    </div>
+
+    <div class="images-col">
+        <div class="col-label">Imágenes</div>
+        <div class="image-gallery">
+            <div class="gallery-item">
+                <img src="skills/references/web/Manifesto_Fuera_De_Lugar_02.png" alt="Manifiesto C.F.D.L.">
+            </div>
+            <div class="gallery-item">
+                <img src="skills/references/web/ab53dd190555289.65bca36ed3f59.jpg" alt="Referencia visual C.F.D.L.">
+            </div>
+            <div class="gallery-item">
+                <img src="skills/references/web/cca50c190555289.65bca36e5bc86.jpg" alt="Referencia visual C.F.D.L.">
+            </div>
+            <div class="gallery-item">
+                <img src="skills/references/web/4a8641190555289.65bca36e5aecd.jpg" alt="Referencia visual C.F.D.L.">
+            </div>
+            <div class="gallery-item">
+                <img src="skills/references/web/5b9f2f190555289.65bca36ed4ee3.jpg" alt="Referencia visual C.F.D.L.">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <p><a href="https://cfdl.site" target="_blank" rel="noopener">cfdl.site</a> · <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
+</footer>
+
+</body>
+</html>
