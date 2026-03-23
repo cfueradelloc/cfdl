@@ -416,9 +416,12 @@ const buildSketch = (p) => {
     }
 
     function initCanvas() {
-        const cont = document.getElementById('canvas-container');
-        W = cont.clientWidth  || 800;
-        H = cont.clientHeight || 600;
+        const availW = window.innerWidth  - 280 - 80;
+        const availH = window.innerHeight - 48;
+        const sz = Math.max(Math.min(availW, availH, 900), 380);
+        W = sz; H = sz;
+        document.getElementById('canvas-container').style.width  = sz + 'px';
+        document.getElementById('canvas-container').style.height = sz + 'px';
         CX = W / 2;
         CY = H / 2;
         R  = Math.min(W, H) * 0.45;
