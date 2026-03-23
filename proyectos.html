@@ -100,21 +100,14 @@
             font-weight: normal;
         }
 
-        /* ── Intro ───────────────────────────────────────────────────────────── */
-        .intro {
-            padding: 48px 64px;
-            max-width: 100%;
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .intro p {
+        header p.section-subtitle {
             font-family: 'MinionPro', serif;
-            font-size: 16px;
+            font-size: 14px;
             line-height: 1.7;
-            color: var(--muted);
+            color: #7870b8;
             font-style: italic;
-            max-width: 560px;
+            margin-top: 12px;
+            max-width: 520px;
         }
 
         /* ── Piece list ──────────────────────────────────────────────────────── */
@@ -229,7 +222,6 @@
         @media (max-width: 700px) {
             nav { padding: 0 24px; }
             header { padding: 40px 24px 24px; }
-            .intro { padding: 32px 24px; }
             .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
             footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
         }
@@ -250,15 +242,10 @@
 <header>
     <h1>C.F.D.L.</h1>
     <p class="section-title">Archivo Generativo</p>
-</header>
-
-<div class="intro">
-    <p>
-        Piezas generativas producidas a partir del manifiesto de C.F.D.L.
+    <p class="section-subtitle">Piezas generativas producidas a partir del manifiesto de C.F.D.L.
         Cada archivo es una interpretación visual de un fragmento —
-        sistemas que crecen, se fracturan, derivan y se pierden.
-    </p>
-</div>
+        sistemas que crecen, se fracturan, derivan y se pierden.</p>
+</header>
 
 <ul class="piece-list">
 
