@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Candy Pink background -->
+  <rect width="32" height="32" fill="#f8ccce"/>
+  <!-- Sapphire C — top bar, left bar, bottom bar -->
+  <rect x="10" y="5"  width="15" height="5" fill="#332f8a" rx="1"/>
+  <rect x="5"  y="5"  width="5"  height="22" fill="#332f8a" rx="1"/>
+  <rect x="10" y="22" width="15" height="5" fill="#332f8a" rx="1"/>
+  <!-- Factory Yellow accent dot -->
+  <circle cx="26" cy="6" r="3" fill="#fde700"/>
+</svg>
