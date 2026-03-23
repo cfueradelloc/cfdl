@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C.F.D.L. — Galería</title>
+    <link rel="icon" type="image/svg+xml" href="skills/references/logo/CFDL_favicon.svg">
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #f8ccce;
+            --surface: #bbabd5;
+            --text:    #332f8a;
+            --muted:   #857c75;
+            --border:  #c8b8d8;
+            --accent:  #fde700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* ── Nav ─────────────────────────────────────────────────────────────── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-brand {
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        .nav-links a:hover { color: var(--text); }
+
+        .nav-links a.active {
+            color: var(--text);
+            border-bottom: 1px solid var(--text);
+            padding-bottom: 1px;
+        }
+
+        /* ── Header ──────────────────────────────────────────────────────────── */
+        header {
+            padding: 64px 64px 32px;
+            background: var(--text);
+            border-bottom: 1px solid #5552b8;
+        }
+
+        header h1 {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #7870b8;
+            margin-bottom: 6px;
+        }
+
+        header p.section-title {
+            font-family: 'MinionPro', serif;
+            font-size: 32px;
+            line-height: 1.15;
+            color: var(--bg);
+            font-weight: normal;
+        }
+
+        header p.section-subtitle {
+            font-family: 'MinionPro', serif;
+            font-size: 14px;
+            line-height: 1.7;
+            color: #7870b8;
+            font-style: italic;
+            margin-top: 12px;
+        }
+
+        /* ── Masonry grid ─────────────────────────────────────────────────────── */
+        .gallery {
+            columns: 3;
+            column-gap: 8px;
+            padding: 24px;
+        }
+
+        .gallery figure {
+            break-inside: avoid;
+            margin-bottom: 8px;
+        }
+
+        .gallery figure img {
+            width: 100%;
+            display: block;
+        }
+
+        .gallery figure figcaption {
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            padding: 6px 2px 0;
+        }
+
+        /* ── Footer ──────────────────────────────────────────────────────────── */
+        footer {
+            padding: 40px 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--text);
+            border-top: 1px solid #5552b8;
+        }
+
+        footer p {
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #7870b8;
+        }
+
+        footer a {
+            color: #7870b8;
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+
+        footer a:hover { color: var(--bg); }
+
+        /* ── Responsive ──────────────────────────────────────────────────────── */
+        @media (max-width: 900px) {
+            .gallery { columns: 2; }
+        }
+
+        @media (max-width: 500px) {
+            nav { padding: 0 24px; }
+            .nav-links { gap: 16px; }
+            header { padding: 40px 24px 24px; }
+            .gallery { columns: 1; padding: 16px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 8px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <div class="nav-links">
+        <a href="manifiesto.html">Manifiesto</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="galeria.html" class="active">Galería</a>
+        <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
+    </div>
+</nav>
+
+<header>
+    <h1>C.F.D.L.</h1>
+    <p class="section-title">Galería</p>
+    <p class="section-subtitle">En voz alta — charlas y encuentros</p>
+</header>
+
+<div class="gallery">
+
+    <figure>
+        <img src="gallery/envozalta-promo-1.jpg" alt="En voz alta">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-promo-2.jpg" alt="En voz alta">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-promo-3.jpg" alt="En voz alta">
+    </figure>
+
+    <figure>
+        <img src="gallery/envozalta-angela-1.jpg" alt="Ángela Mallén">
+        <figcaption>Ángela Mallén</figcaption>
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-2.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-3.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-4.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-5.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-6.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-7.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-8.jpg" alt="Ángela Mallén">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-angela-9.jpg" alt="Ángela Mallén">
+    </figure>
+
+    <figure>
+        <img src="gallery/envozalta-pablo-1.jpg" alt="Pablo Martín">
+        <figcaption>Pablo Martín</figcaption>
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-pablo-2.jpg" alt="Pablo Martín">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-pablo-3.jpg" alt="Pablo Martín">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-pablo-4.jpg" alt="Pablo Martín">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-pablo-5.jpg" alt="Pablo Martín">
+    </figure>
+
+    <figure>
+        <img src="gallery/envozalta-ana-1.jpg" alt="Ana Griott">
+        <figcaption>Ana Griott</figcaption>
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-ana-2.jpg" alt="Ana Griott">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-ana-3.jpg" alt="Ana Griott">
+    </figure>
+    <figure>
+        <img src="gallery/envozalta-ana-4.jpg" alt="Ana Griott">
+    </figure>
+
+</div>
+
+<footer>
+    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <p>
+        <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
+    </p>
+</footer>
+
+</body>
+</html>
