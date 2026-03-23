@@ -164,7 +164,7 @@
             text-align: right;
         }
 
-        .toggle-group { display: flex; gap: 6px; }
+        .toggle-group { display: flex; flex-wrap: wrap; gap: 6px; }
 
         .toggle-btn {
             flex: 1;
@@ -284,9 +284,13 @@
         <div class="control-section">
             <h3>Idioma</h3>
             <div class="toggle-group">
-                <button class="toggle-btn"        id="btn-es"   onclick="setLang('es')">ES</button>
-                <button class="toggle-btn active" id="btn-both" onclick="setLang('both')">ES+CA</button>
-                <button class="toggle-btn"        id="btn-ca"   onclick="setLang('ca')">CA</button>
+                <button class="toggle-btn"        id="btn-es"  onclick="setLang('es')">ES</button>
+                <button class="toggle-btn"        id="btn-ca"  onclick="setLang('ca')">CA</button>
+                <button class="toggle-btn"        id="btn-en"  onclick="setLang('en')">EN</button>
+                <button class="toggle-btn"        id="btn-fr"  onclick="setLang('fr')">FR</button>
+                <button class="toggle-btn"        id="btn-ast" onclick="setLang('ast')">AST</button>
+                <button class="toggle-btn"        id="btn-pt"  onclick="setLang('pt')">PT</button>
+                <button class="toggle-btn active" id="btn-all" onclick="setLang('all')">Todas</button>
             </div>
         </div>
 
@@ -449,15 +453,185 @@ const MEDIO_CA = [
     'L\'obra millora sempre,\nsi està fora de lloc',
 ];
 
+const MACRO_EN = [
+    'out of place',
+    'Immaturity\nas a purpose',
+    'we discard\ncoherence',
+    'we promote\nopaqueness',
+    'always\nelsewhere',
+    'We embrace\nour flaws',
+    'We celebrate\nplagiarism',
+    'Prosthesis\nbefore healing',
+];
+
+const MEDIO_EN = [
+    'recalled cities,\nalways in construction',
+    'built on\nunexpected grounds',
+    'We claim exile\nand deportation',
+    'creation as a\nrequest for asylum',
+    'the journey as a\nfrustrating act',
+    'We encourage travel,\nin spite of everything',
+    'ripping the magnet\nfrom the compass',
+    'wandering until the\nunyielding is out of sight',
+    'We believe in\na restless identity',
+    'on the way\nto uncertainty',
+    'finding each path\ncovered in greenery',
+    'its trail faded and\nimpossible to retrace',
+    'We don\'t create\nto figure out who we are',
+    'but to discard\nourselves altogether',
+    'We search\nfor consumption',
+    'of word, resource\nand bodily energy',
+    'feeling the vertigo\nand nausea',
+    'Plunging into instants\nof true panic',
+    'creative suicide\nas a light task',
+    'before that,\nthe prophylactic fracture',
+    'We aspire towards\nthe misshapen artifact',
+    'There is no creation\nwithout camaraderie',
+    'no bond without\ncommon suffering',
+    'And against synthesis,\ndisintegration',
+    'We build because\nwe think of ruins',
+    'The work grows better,\nif it is out of place',
+];
+
+const MACRO_FR = [
+    'hors de sa place',
+    'L\'immaturité\ncomme but',
+    'nous bannissons\nla cohérence',
+    'nous promulguons\nl\'opacité',
+    'toujours\nailleurs',
+    'Nous embrassons\nnos défauts',
+    'Nous célébrons\nle plagiat',
+    'La prothèse\navant la guérison',
+];
+
+const MEDIO_FR = [
+    'villes mémorisées,\ntoujours en construction',
+    'sur des terrains où\nelles ne devraient pas y être',
+    'Nous revendiquons\nl\'exil volontaire',
+    'la création comme\ndemande d\'asile',
+    'le voyage comme\nacte frustrant',
+    'Nous proposons\nde voyager, malgré tout',
+    'en enlevant l\'aimant\nde la boussole',
+    'déambuler jusqu\'à perdre\nde vue l\'immuable',
+    'Nous croyons à\nune identité inquiète',
+    'en itinérance\nvers l\'incertitude',
+    'trouver un chemin personnel\nplein de broussaille',
+    'le trait estompé,\nimpossible de parcourir',
+    'Nous ne créons pas\npour découvrir qui nous sommes',
+    'mais pour arrêter\nd\'être qui nous sommes',
+    'Nous cherchons\nl\'épuisement',
+    'Face à la modération,\nle gaspillage',
+    'sentir le vertige,\nles nausées',
+    'Plonger dans des moments\nde véritable panique',
+    'le suicide créatif\ncomme matériel léger',
+    'avant la prothèse,\nla fracture prophylactique',
+    'Nous aspirons\nau produit déformé',
+    'Il n\'y a pas\nde création sans amitié',
+    'pas d\'amitié sans\nsouffrance partagée',
+    'Nous célébrons\nle plagiat, la copie',
+    'Et face à la synthèse,\nla disgrégation',
+    'Nous construisons\nen pensant aux ruines',
+    'L\'œuvre s\'améliore\nsi elle est malplacée',
+];
+
+const MACRO_AST = [
+    'fuera de sitiu',
+    'La inmadurez\ncomo propósitu',
+    'esterramos\nla coherencia',
+    'promulgamos\nla opacidá',
+    'siempres en\ndalgún otru llugar',
+    'Abrazamos\nlos nuesos defeutos',
+    'Cellebramos\nel plaxu',
+    'La prótesis\nprimero que la cura',
+];
+
+const MEDIO_AST = [
+    'ciudaes recordaes,\nsiempres en construcción',
+    'en terrenos onde\nnun tendríen que tar',
+    'Reivindicamos\nl\'esiliu y el destierru',
+    'la creación como\nsolicitú d\'asilu',
+    'el viaxe como\nactu frustrante',
+    'Proponemos viaxar,\ncon too y con eso',
+    'quitando-y a la brúxula\nel so imán',
+    'caleyar hasta perder\nde vista lo inmutable',
+    'Creemos n\'una\nidentidá inquieta',
+    'de camín escontra\nla incertidume',
+    'atopar un camín personal\nenlenu broza',
+    'col trazu esmorecíu,\nimposible de volver percorrer',
+    'Nun creamos pa pescanciar\nlo que somos',
+    'sinón pa dexar de ser\nquien somos',
+    'Buscamos la galdidura:\nde la pallabra',
+    'de los recursos,\nde la enerxía corporal',
+    'sentir el vértigu,\nles estomagaes',
+    'Sumise nos intres\nde verdadera llercia',
+    'el suicidiu creativu\ncomo material llixero',
+    'enantes de la prótesis,\nla quebradura profiláctica',
+    'Aspiramos al productu deforme,\nsiempres entamanáu',
+    'Nun hai creación\nensin amistá',
+    'tampoco hai amistá\nensin sufrimientu compartíu',
+    'Cellebramos el plaxu,\nla copia',
+    'Y énte la síntesis,\nla disgregación',
+    'Construyimos pensando\nnes ruines',
+    'La obra ameyora siempres,\nsi ta fuera de sitiu',
+];
+
+const MACRO_PT = [
+    'fora do lugar',
+    'A imaturidade\ncomo propósito',
+    'banimos\na coerência',
+    'promulgamos\na opacidade',
+    'sempre em\nqualquer noutro lugar',
+    'Abraçamos\nos nossos defeitos',
+    'Celebramos\no plágio',
+    'A prótese\nantes que a cura',
+];
+
+const MEDIO_PT = [
+    'cidades recordadas,\nsempre em construção',
+    'em terrenos onde\nnão deviam estar',
+    'Reivindicamos\no exílio e o desterro',
+    'a criação como\num pedido de asilo',
+    'a viagem como\nato frustrante',
+    'Propomos viajar,\napesar de tudo',
+    'roubando à bússola\no seu íman',
+    'deambular até perder\nde vista o imutável',
+    'Cremos numa\nidentidade inquieta',
+    'a caminho\naté à incerteza',
+    'encontrar um caminho pessoal\ncheio de malícia',
+    'com um traço desvanecido,\nimpossível de voltar a percorrer',
+    'Não criamos para averiguar\no que somos',
+    'se não para deixar de ser\nquem somos',
+    'Procuramos a exaustão:\nda palavra',
+    'dos recursos,\nda energia corporal',
+    'sentir a vertigem,\nas náuseas',
+    'Afundar-se nos instantes\nde verdadeiro pânico',
+    'o suicídio criativo\ncomo material leve',
+    'antes da prótese,\na fratura profiláctica',
+    'Aspiramos ao produto disforme,\nsempre inacabado',
+    'Não há criação\nsem amizade',
+    'também não há amizade\nsem sofrimento partilhado',
+    'Celebramos o plágio,\na cópia',
+    'E perante a síntese,\na disgregação',
+    'Construímos pensando\nnas ruínas',
+    'A obra melhora sempre,\nse está fora do seu lugar',
+];
+
 // Micro: tiny tracked uppercase fragments — texture layer
 const MICRO = [
-    'FUERA DE LUGAR', 'FORA DE LLOC', 'COLECTIVO', 'COL·LECTIU',
-    'EXILIO', 'DESTIERRO', 'MALEZA', 'RUINES', 'CONSTRUCCIÓ',
-    'PLAGIO', 'CÒPIA', 'OPACITAT', 'OPACIDAD', 'IDENTITAT INQUIETA',
-    'SEMPRE INACABAT', 'SIEMPRE INACABADO', 'MARCA BLANCA',
-    'SUICIDIO CREATIVO', 'COHERÈNCIA', 'COHERENCIA',
-    'EXTENUACIÓN', 'INMADURESA', 'INMADUREZ', 'DISPENDI', 'RUINAS',
-    'FUERA DE LUGAR', 'FORA DE LLOC',
+    'FUERA DE LUGAR', 'FORA DE LLOC', 'OUT OF PLACE', 'HORS DE SA PLACE',
+    'FUERA DE SITIU', 'FORA DO LUGAR',
+    'COLECTIVO', 'COL·LECTIU', 'COLLECTIVE', 'COLLECTIF',
+    'EXILIO', 'DESTIERRO', 'EXILE', 'EXIL', 'DESTERRU', 'EXÍLIO',
+    'MALEZA', 'RUINES', 'UNDERBRUSH', 'BROUSSAILLE', 'BROZA', 'MALÍCIA',
+    'PLAGIO', 'CÒPIA', 'PLAGIARISM', 'PLAGIAT', 'PLAXU', 'PLÁGIO',
+    'OPACITAT', 'OPACIDAD', 'OPAQUENESS', 'OPACITÉ', 'OPACIDÁ', 'OPACIDADE',
+    'IDENTITAT INQUIETA', 'IDENTIDAD INQUIETA', 'RESTLESS IDENTITY',
+    'SEMPRE INACABAT', 'SIEMPRE INACABADO', 'ALWAYS UNFINISHED',
+    'MARCA BLANCA', 'GENERIC', 'MARQUE BLANCHE',
+    'SUICIDIO CREATIVO', 'CREATIVE SUICIDE', 'SUICIDE CRÉATIF',
+    'COHERÈNCIA', 'COHERENCIA', 'COHERENCE', 'COHÉRENCE',
+    'EXTENUACIÓN', 'INMADURESA', 'INMADUREZ', 'IMMATURITY', 'IMMATURITÉ',
+    'FUERA DE LUGAR', 'FORA DE LLOC', 'OUT OF PLACE',
 ];
 
 // ─── MODES ───────────────────────────────────────────────────────────────────
@@ -498,7 +672,7 @@ let params = {
     maxMedio:  7,
     inversion: 0.2,   // probability a macro phrase appears inverted (PI)
     textScale: 1.0,
-    lang:      'both',
+    lang:      'all',
     mode:      'dark',
 };
 const DEFAULT_PARAMS = { ...params };
@@ -508,12 +682,15 @@ let macroPool = [], medioPool = [];
 
 function buildPools() {
     const l = params.lang;
-    macroPool = l === 'es' ? [...MACRO_ES]
-              : l === 'ca' ? [...MACRO_CA]
-              : [...MACRO_ES, ...MACRO_CA];
-    medioPool = l === 'es' ? [...MEDIO_ES]
-              : l === 'ca' ? [...MEDIO_CA]
-              : [...MEDIO_ES, ...MEDIO_CA];
+    if (l === 'all') {
+        macroPool = [...MACRO_ES, ...MACRO_CA, ...MACRO_EN, ...MACRO_FR, ...MACRO_AST, ...MACRO_PT];
+        medioPool = [...MEDIO_ES, ...MEDIO_CA, ...MEDIO_EN, ...MEDIO_FR, ...MEDIO_AST, ...MEDIO_PT];
+    } else {
+        const MACRO = { es: MACRO_ES, ca: MACRO_CA, en: MACRO_EN, fr: MACRO_FR, ast: MACRO_AST, pt: MACRO_PT };
+        const MEDIO = { es: MEDIO_ES, ca: MEDIO_CA, en: MEDIO_EN, fr: MEDIO_FR, ast: MEDIO_AST, pt: MEDIO_PT };
+        macroPool = [...MACRO[l]];
+        medioPool = [...MEDIO[l]];
+    }
 }
 
 // ─── ACTIVE ELEMENTS ─────────────────────────────────────────────────────────
@@ -836,7 +1013,7 @@ function setMode(m) {
 
 function setLang(l) {
     params.lang = l;
-    ['es','ca','both'].forEach(id =>
+    ['es','ca','en','fr','ast','pt','all'].forEach(id =>
         document.getElementById('btn-' + id).classList.toggle('active', id === l)
     );
     buildPools();
