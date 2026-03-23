@@ -424,7 +424,7 @@
     <div class="sidebar">
         <div class="cfdl-tag">C.F.D.L.</div>
         <h1>Paleta</h1>
-        <div class="subtitle">9 colores. Cálidos hacia Medianoche — con Citrina como ancla.</div>
+        <div class="subtitle">9 colores. De Amarillo a Zafiro — con Fábrica como ancla.</div>
 
         <div class="control-section">
             <h3>Combinaciones</h3>
@@ -490,47 +490,47 @@
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 
 const PALETTE = [
-    { id: 'cera',        name: 'Cera',        hex: '#fff4d6', rgb: [255, 244, 214], temp: 'cálida',  anchor: false },
-    { id: 'sol',         name: 'Sol',         hex: '#ffd25a', rgb: [255, 210, 90],  temp: 'cálida',  anchor: false },
-    { id: 'citrina',     name: 'Citrina',     hex: '#ffb923', rgb: [255, 185, 35],  temp: 'ancla',   anchor: true  },
-    { id: 'azafran',     name: 'Azafrán',     hex: '#c07d00', rgb: [192, 125, 0],   temp: 'cálida',  anchor: false },
-    { id: 'resina',      name: 'Resina',      hex: '#6b4200', rgb: [107, 66, 0],    temp: 'cálida',  anchor: false },
-    { id: 'niebla',      name: 'Niebla',      hex: '#e8edf0', rgb: [232, 237, 240], temp: 'fría',    anchor: false },
-    { id: 'salvia',      name: 'Salvia',      hex: '#7d9e92', rgb: [125, 158, 146], temp: 'fría',    anchor: false },
-    { id: 'pizarra',     name: 'Pizarra',     hex: '#4a6880', rgb: [74, 104, 128],  temp: 'fría',    anchor: false },
-    { id: 'medianoche',  name: 'Medianoche',  hex: '#1a2e3d', rgb: [26, 46, 61],    temp: 'fría',    anchor: false },
+    { id: 'amarillo',    name: 'Amarillo',    hex: '#fdf264', rgb: [253, 242, 100], temp: 'cálida',  anchor: false },
+    { id: 'fabrica',     name: 'Fábrica',     hex: '#fde700', rgb: [253, 231, 0],   temp: 'ancla',   anchor: true  },
+    { id: 'ocre',        name: 'Ocre',        hex: '#c8b900', rgb: [200, 185, 0],   temp: 'cálida',  anchor: false },
+    { id: 'caramelo',    name: 'Caramelo',    hex: '#f8ccce', rgb: [248, 204, 206], temp: 'cálida',  anchor: false },
+    { id: 'violeta',     name: 'Violeta',     hex: '#dcd5ef', rgb: [220, 213, 239], temp: 'fría',    anchor: false },
+    { id: 'lavanda',     name: 'Lavanda',     hex: '#bbabd5', rgb: [187, 171, 213], temp: 'fría',    anchor: false },
+    { id: 'amatista',    name: 'Amatista',    hex: '#8c82c3', rgb: [140, 130, 195], temp: 'fría',    anchor: false },
+    { id: 'zafiro2',     name: 'Zafiro claro',hex: '#504b9b', rgb: [80, 75, 155],   temp: 'fría',    anchor: false },
+    { id: 'zafiro',      name: 'Zafiro',      hex: '#332f8a', rgb: [51, 47, 138],   temp: 'fría',    anchor: false },
 ];
 
 const PRESETS = [
     {
         name: 'Editorial',
-        desc: 'frío, limpio, acento de color',
-        ids: ['niebla', 'citrina', 'medianoche'],
+        desc: 'contraste nítido, acento amarillo',
+        ids: ['violeta', 'fabrica', 'zafiro'],
     },
     {
-        name: 'Cálida',
-        desc: 'pergamino, ámbar, profundidad',
-        ids: ['cera', 'azafran', 'resina'],
+        name: 'Rosa y Violeta',
+        desc: 'caramelo, lavanda, profundidad',
+        ids: ['caramelo', 'lavanda', 'zafiro'],
     },
     {
         name: 'Contraste',
         desc: 'complementario dividido',
-        ids: ['citrina', 'pizarra', 'medianoche'],
+        ids: ['fabrica', 'zafiro2', 'zafiro'],
     },
     {
-        name: 'Terrosa',
-        desc: 'naturaleza, pigmento',
-        ids: ['salvia', 'resina', 'sol'],
+        name: 'Pastel',
+        desc: 'suave, luminoso, moderno',
+        ids: ['caramelo', 'violeta', 'amarillo'],
     },
     {
-        name: 'Completa cálida',
-        desc: 'toda la escala ámbar',
-        ids: ['cera', 'sol', 'citrina', 'azafran', 'resina'],
+        name: 'Escala cálida',
+        desc: 'toda la escala amarilla',
+        ids: ['amarillo', 'fabrica', 'ocre', 'caramelo'],
     },
     {
-        name: 'Completa fría',
-        desc: 'niebla a medianoche',
-        ids: ['niebla', 'salvia', 'pizarra', 'medianoche'],
+        name: 'Escala fría',
+        desc: 'violeta a zafiro',
+        ids: ['violeta', 'lavanda', 'amatista', 'zafiro2', 'zafiro'],
     },
 ];
 
