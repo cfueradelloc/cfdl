@@ -80,7 +80,8 @@
         /* ── Header ──────────────────────────────────────────────────────────── */
         header {
             padding: 64px 64px 32px;
-            border-bottom: 1px solid var(--border);
+            background: var(--text);
+            border-bottom: 1px solid #3e3e40;
         }
 
         header h1 {
@@ -88,7 +89,7 @@
             font-size: 11px;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: #6b6b65;
             margin-bottom: 6px;
         }
 
@@ -96,7 +97,7 @@
             font-family: 'MinionPro', serif;
             font-size: 32px;
             line-height: 1.15;
-            color: var(--text);
+            color: var(--bg);
             font-weight: normal;
         }
 
@@ -121,6 +122,14 @@
             height: 1px;
             background: var(--border);
         }
+
+        .section-label.dark {
+            background: var(--text);
+            border-bottom-color: #3e3e40;
+        }
+
+        .section-label.dark span { color: #6b6b65; }
+        .section-label.dark .label-line { background: #3e3e40; }
 
         /* ── Event list ──────────────────────────────────────────────────────── */
         .event-list { list-style: none; }
@@ -184,22 +193,24 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: var(--text);
+            border-top: 1px solid #3e3e40;
         }
 
         footer p {
             font-size: 9px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--muted);
+            color: #6b6b65;
         }
 
         footer a {
-            color: var(--muted);
+            color: #6b6b65;
             text-decoration: none;
             transition: color 0.15s;
         }
 
-        footer a:hover { color: var(--text); }
+        footer a:hover { color: var(--bg); }
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 700px) {
@@ -209,7 +220,7 @@
             .section-label { padding: 16px 24px; }
             .event-item { padding: 22px 24px; grid-template-columns: 72px 1fr; gap: 0 16px; }
             .event-type { display: none; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
+            footer { padding: 32px 24px; flex-direction: column; gap: 8px; text-align: center; }
         }
     </style>
 </head>
@@ -231,7 +242,7 @@
 </header>
 
 <!-- Próximos -->
-<div class="section-label">
+<div class="section-label dark">
     <span>Próximos</span>
     <div class="label-line"></div>
 </div>
