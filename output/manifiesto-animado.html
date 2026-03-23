@@ -86,27 +86,6 @@
             text-transform: uppercase;
         }
 
-        .seed-input {
-            width: 100%;
-            background: var(--bg);
-            padding: 10px 12px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin-bottom: 8px;
-            border: 1px solid var(--border);
-            text-align: center;
-            color: var(--text);
-        }
-        .seed-input:focus { outline: none; border-color: var(--accent); }
-
-        .seed-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
         .control-group { margin-bottom: 20px; }
 
         .control-group label {
@@ -261,16 +240,6 @@
         <div class="cfdl-tag">C.F.D.L.</div>
         <h1>Manifiesto cambiante y nunca cumplido</h1>
         <div class="subtitle">Primera edición, Octubre 2023</div>
-
-        <div class="control-section">
-            <h3>Seed</h3>
-            <input type="number" id="seed-input" class="seed-input" value="2023" onchange="updateSeed()">
-            <div class="seed-controls">
-                <button class="button outline" onclick="previousSeed()">← Prev</button>
-                <button class="button outline" onclick="nextSeed()">Next →</button>
-            </div>
-            <button class="button accent" onclick="randomSeedAndUpdate()">↻ Random</button>
-        </div>
 
         <div class="control-section">
             <h3>Modo</h3>
@@ -667,7 +636,7 @@ const MODES = {
 
 // ─── PARAMETERS ──────────────────────────────────────────────────────────────
 let params = {
-    seed:      2023,
+    seed:      Math.floor(Math.random() * 999999) + 1,
     speed:     0.5,
     maxMedio:  7,
     inversion: 0.2,   // probability a macro phrase appears inverted (PI)
@@ -1028,35 +997,10 @@ function updateParam(name, value) {
     }
 }
 
-function updateSeedDisplay() {
-    document.getElementById('seed-input').value = params.seed;
-}
-
 function _resetState() {
     randomSeed(params.seed);
     noiseSeed(params.seed);
     macros = []; medios = []; micros = []; ghostLines = [];
-}
-
-function updateSeed() {
-    const val = parseInt(document.getElementById('seed-input').value);
-    if (val && val > 0) { params.seed = val; _resetState(); }
-    else updateSeedDisplay();
-}
-
-function previousSeed() {
-    params.seed = Math.max(1, params.seed - 1);
-    updateSeedDisplay(); _resetState();
-}
-
-function nextSeed() {
-    params.seed++;
-    updateSeedDisplay(); _resetState();
-}
-
-function randomSeedAndUpdate() {
-    params.seed = Math.floor(Math.random() * 999999) + 1;
-    updateSeedDisplay(); _resetState();
 }
 
 function resetParameters() {
@@ -1070,11 +1014,9 @@ function resetParameters() {
         document.getElementById(id + '-value').textContent = params[id];
     });
     buildPools();
-    updateSeedDisplay();
     _resetState();
 }
 
-window.addEventListener('load', updateSeedDisplay);
 </script>
 </body>
 </html>

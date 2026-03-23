@@ -86,21 +86,6 @@
             text-transform: uppercase;
         }
 
-        .seed-controls {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .seed-display {
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: var(--text);
-            padding: 8px 0;
-        }
-
         .control-group { margin-bottom: 20px; }
 
         .control-group label {
@@ -254,15 +239,6 @@
         <div class="phase-indicator">
             <span class="phase-dot"></span>
             <span id="phaseLabel">convergiendo</span>
-        </div>
-
-        <div class="control-section">
-            <h3>Semilla</h3>
-            <div class="seed-controls">
-                <button class="button outline" onclick="changeSeed(-1)">←</button>
-                <span class="seed-display" id="seedDisp">001</span>
-                <button class="button outline" onclick="changeSeed(+1)">→</button>
-            </div>
         </div>
 
         <div class="control-section">
@@ -423,7 +399,7 @@ function getPhase(f) {
 
 // ─── STATE ─────────────────────────────────────────────────────────────────
 let params = {
-    seed:     1,
+    seed:     Math.floor(Math.random() * 999999) + 1,
     palette:  'nocturno',
     nFrags:   8,
     nParticles: 5000,
@@ -647,12 +623,6 @@ function initPiece(w, h) {
 }
 
 // ─── CONTROL HANDLERS ───────────────────────────────────────────────────────
-function changeSeed(delta) {
-    params.seed = Math.max(1, Math.min(999, params.seed + delta));
-    document.getElementById('seedDisp').textContent = String(params.seed).padStart(3, '0');
-    if (pSketch) initPiece(pSketch.width, pSketch.height);
-}
-
 function setNFrags(n) {
     params.nFrags = n;
     document.getElementById('nFragsVal').textContent = n;

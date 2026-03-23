@@ -86,21 +86,6 @@
             text-transform: uppercase;
         }
 
-        .seed-controls {
-            display: grid;
-            grid-template-columns: 1fr auto 1fr;
-            gap: 6px;
-            align-items: center;
-        }
-
-        .seed-display {
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: var(--text);
-            padding: 8px 0;
-        }
-
         .control-group { margin-bottom: 20px; }
 
         .control-group label {
@@ -295,16 +280,6 @@
             "Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono."
         </p>
 
-        <!-- Seed -->
-        <div class="control-section">
-            <h3>Semilla</h3>
-            <div class="seed-controls">
-                <button class="button outline" onclick="changeSeed(-1)">←</button>
-                <span class="seed-display" id="seedDisp">001</span>
-                <button class="button outline" onclick="changeSeed(+1)">→</button>
-            </div>
-        </div>
-
         <!-- Pattern preset -->
         <div class="control-section">
             <h3>Patrón</h3>
@@ -448,7 +423,7 @@ const LUT_VMAX = 0.55;          // V values above this are clamped to hotspot co
 
 // ─── GLOBAL STATE ──────────────────────────────────────────────────────────
 let params = {
-    seed:      1,
+    seed:      Math.floor(Math.random() * 999999) + 1,
     palette:   'nocturno',
     preset:    'liquen',
     F:         PRESETS.liquen.F,
@@ -584,12 +559,6 @@ function renderSim() {
 }
 
 // ─── CONTROL HANDLERS ──────────────────────────────────────────────────────
-function changeSeed(delta) {
-    params.seed = Math.max(1, Math.min(999, params.seed + delta));
-    document.getElementById('seedDisp').textContent = String(params.seed).padStart(3, '0');
-    resetSim();
-}
-
 function setPreset(key) {
     params.preset = key;
     params.F = PRESETS[key].F;

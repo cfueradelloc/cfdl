@@ -86,28 +86,6 @@
             text-transform: uppercase;
         }
 
-        .seed-input {
-            width: 100%;
-            background: var(--bg);
-            padding: 10px 12px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            margin-bottom: 8px;
-            border: 1px solid var(--border);
-            text-align: center;
-            color: var(--text);
-        }
-
-        .seed-input:focus { outline: none; border-color: var(--accent); }
-
-        .seed-controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
         .control-group { margin-bottom: 20px; }
 
         .control-group label {
@@ -308,17 +286,6 @@
             "al mirar atrás, encontrar un camino personal lleno de maleza, con el trazo desvanecido, imposible de volver a recorrer."
         </div>
 
-        <!-- Seed -->
-        <div class="control-section">
-            <h3>Seed</h3>
-            <input type="number" id="seed-input" class="seed-input" value="12345" onchange="updateSeed()">
-            <div class="seed-controls">
-                <button class="button outline" onclick="previousSeed()">← Prev</button>
-                <button class="button outline" onclick="nextSeed()">Next →</button>
-            </div>
-            <button class="button accent" onclick="randomSeedAndUpdate()">↻ Random</button>
-        </div>
-
         <!-- Palette -->
         <div class="control-section">
             <h3>Paleta</h3>
@@ -448,7 +415,7 @@ const PALETTES = {
 
 // ─── PARAMETERS ──────────────────────────────────────────────────────────────
 let params = {
-    seed:       12345,
+    seed:       Math.floor(Math.random() * 999999) + 1,
     density:    1.0,
     speed:      1.0,
     noiseScale: 0.004,
@@ -628,7 +595,6 @@ function draw() {
         params.seed++;
         randomSeed(params.seed);
         noiseSeed(params.seed);
-        document.getElementById('seed-input').value = params.seed;
 
         precomputeGrids();
         for (const p of particles) { p.reset(); }
@@ -832,31 +798,6 @@ function updateParam(name, value) {
     }
 }
 
-function updateSeedDisplay() {
-    document.getElementById('seed-input').value = params.seed;
-}
-
-function updateSeed() {
-    const val = parseInt(document.getElementById('seed-input').value);
-    if (val && val > 0) { params.seed = val; initializeSystem(); }
-    else updateSeedDisplay();
-}
-
-function previousSeed() {
-    params.seed = Math.max(1, params.seed - 1);
-    updateSeedDisplay(); initializeSystem();
-}
-
-function nextSeed() {
-    params.seed++;
-    updateSeedDisplay(); initializeSystem();
-}
-
-function randomSeedAndUpdate() {
-    params.seed = Math.floor(Math.random() * 999999) + 1;
-    updateSeedDisplay(); initializeSystem();
-}
-
 function resetParameters() {
     params        = { ...DEFAULT_PARAMS };
     layerVisible  = [true, true, true];
@@ -868,7 +809,6 @@ function resetParameters() {
         document.getElementById(id + '-value').textContent = params[id];
     });
 
-    updateSeedDisplay();
     buildPaletteUI();
     initializeSystem();
 }
@@ -880,7 +820,6 @@ function downloadCanvas() {
 // ─── INIT UI ─────────────────────────────────────────────────────────────────
 window.addEventListener('load', () => {
     buildPaletteUI();
-    updateSeedDisplay();
 });
 </script>
 </body>
