@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garganta sin fondo — C.F.D.L.</title>
+    <link rel="icon" type="image/svg+xml" href="../skills/references/logo/CFDL_favicon.svg">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'FuturaStd';
+            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+        }
+        @font-face {
+            font-family: 'MinionPro';
+            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+        }
+
+        :root {
+            --bg:      #f8ccce;
+            --surface: #bbabd5;
+            --text:    #332f8a;
+            --muted:   #857c75;
+            --border:  #c8b8d8;
+            --accent:  #fde700;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'FuturaStd', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            color: var(--text);
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding: 24px;
+            gap: 24px;
+        }
+
+        .sidebar {
+            width: 280px;
+            flex-shrink: 0;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            border-radius: 4px;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-family: 'MinionPro', serif;
+            font-size: 20px;
+            font-weight: normal;
+            color: var(--text);
+            margin-bottom: 4px;
+            line-height: 1.25;
+        }
+
+        .cfdl-tag {
+            font-size: 10px;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .sidebar .subtitle {
+            color: var(--muted);
+            font-size: 11px;
+            margin-bottom: 36px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .control-section { margin-bottom: 32px; }
+
+        .control-section h3 {
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .control-group { margin-bottom: 20px; }
+
+        .control-group label {
+            display: block;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .slider-container { display: flex; align-items: center; gap: 10px; }
+
+        .slider-container input[type="range"] {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            border-radius: 1px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+        .slider-container input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+        }
+
+        .value-display {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            min-width: 24px;
+            text-align: right;
+        }
+
+        .palette-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+
+        .palette-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 10px 8px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.15s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+        .palette-btn:hover { background: var(--bg); }
+        .palette-btn.active { border-color: var(--text); background: var(--text); color: var(--bg); }
+
+        .palette-dots { display: flex; gap: 3px; }
+        .palette-dots span { width: 8px; height: 8px; border-radius: 50%; }
+
+        .phase-indicator {
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+        .phase-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            animation: pdot 3.5s ease-in-out infinite;
+        }
+        @keyframes pdot { 0%,100%{opacity:1} 50%{opacity:0.15} }
+
+        .button {
+            background: var(--text);
+            color: var(--surface);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 4px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.15s;
+            width: 100%;
+            font-family: 'FuturaStd', sans-serif;
+        }
+        .button:hover { background: #28247a; transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+        .button.outline {
+            background: transparent; color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .button.outline:hover { background: var(--bg); transform: none; }
+
+        .button-row { display: flex; gap: 8px; }
+        .button-row .button { flex: 1; }
+
+        .canvas-area {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        #canvas-container {
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: #0c0a23;
+        }
+
+        #canvas-container canvas { display: block; }
+
+        @media (max-width: 700px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <aside class="sidebar">
+        <div class="cfdl-tag">C.F.D.L.</div>
+        <h1>Garganta<br>sin fondo</h1>
+        <p class="subtitle">
+            "el malestar de asomarse<br>a una garganta sin fondo."
+        </p>
+
+        <div class="phase-indicator">
+            <span class="phase-dot"></span>
+            <span id="phaseLabel">cayendo</span>
+        </div>
+
+        <div class="control-section">
+            <h3>Parámetros</h3>
+
+            <div class="control-group">
+                <label>Partículas</label>
+                <div class="slider-container">
+                    <input type="range" id="densitySlider" min="500" max="6000" step="500" value="2500"
+                        oninput="setDensity(+this.value)">
+                    <span class="value-display" id="densityVal">2.5k</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Velocidad</label>
+                <div class="slider-container">
+                    <input type="range" id="speedSlider" min="0.2" max="3.0" step="0.1" value="1.0"
+                        oninput="params.speed=+this.value; document.getElementById('speedVal').textContent=this.value.toFixed(1)">
+                    <span class="value-display" id="speedVal">1.0</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label>Espiral</label>
+                <div class="slider-container">
+                    <input type="range" id="pullSlider" min="0.2" max="3.0" step="0.1" value="1.0"
+                        oninput="params.pull=+this.value; document.getElementById('pullVal').textContent=this.value.toFixed(1)">
+                    <span class="value-display" id="pullVal">1.0</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>Paleta</h3>
+            <div class="palette-grid" id="paletteGrid"></div>
+        </div>
+
+        <div class="control-section">
+            <h3>Acciones</h3>
+            <div class="button-row">
+                <button class="button" onclick="resetPiece()">Reiniciar</button>
+                <button class="button outline" onclick="doSave()">Guardar PNG</button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="canvas-area">
+        <div id="canvas-container">
+            <div id="sketch"></div>
+        </div>
+    </main>
+</div>
+
+<script>
+// ─── PALETTES ───────────────────────────────────────────────────────────────
+const PALETTES = {
+    nocturno: {
+        name: 'Nocturno', bg: [12, 10, 35],
+        cols: [
+            [80,  75,  155], [140, 130, 195], [187, 171, 213],
+            [51,  47,  138], [110, 100, 175], [220, 210, 235],
+        ],
+        accent: [253, 231, 0],
+        dots: ['#332f8a','#504b9b','#8c82c3','#fde700'],
+    },
+    salvia: {
+        name: 'Salvia', bg: [20, 8, 25],
+        cols: [
+            [140, 130, 195], [187, 171, 213], [220, 210, 235],
+            [248, 204, 206], [80,  75,  155], [200, 190, 215],
+        ],
+        accent: [253, 242, 100],
+        dots: ['#14081 9','#8c82c3','#dcd5ef','#fdf264'],
+    },
+    calida: {
+        name: 'Cálida', bg: [30, 24, 0],
+        cols: [
+            [160, 140, 0  ], [200, 185, 0  ], [253, 231, 0  ],
+            [253, 242, 100], [248, 204, 206], [180, 160, 80 ],
+        ],
+        accent: [248, 204, 206],
+        dots: ['#64590c','#c8b900','#fde700','#f8ccce'],
+    },
+    fria: {
+        name: 'Fría', bg: [8, 6, 30],
+        cols: [
+            [51,  47,  138], [80,  75,  155], [140, 130, 195],
+            [187, 171, 213], [220, 210, 235], [60,  55,  160],
+        ],
+        accent: [220, 210, 235],
+        dots: ['#332f8a','#504b9b','#bbabd5','#dcd5ef'],
+    },
+};
+
+// ─── STATE ──────────────────────────────────────────────────────────────────
+let params = {
+    seed:       Math.floor(Math.random() * 999999) + 1,
+    palette:    'nocturno',
+    nParticles: 2500,
+    speed:      1.0,
+    pull:       1.0,
+};
+
+// ─── PHASE LABEL CYCLE ──────────────────────────────────────────────────────
+const PHASE_LABELS = ['asomándose', 'cayendo', 'cayendo', 'en el abismo', 'sin fondo'];
+let phaseIdx = 0;
+setInterval(() => {
+    phaseIdx = (phaseIdx + 1) % PHASE_LABELS.length;
+    document.getElementById('phaseLabel').textContent = PHASE_LABELS[phaseIdx];
+}, 4200);
+
+// ─── SKETCH ─────────────────────────────────────────────────────────────────
+let sketchInstance = null;
+
+const buildSketch = (p) => {
+    let particles = [];
+    let W, H, CX, CY, R;
+
+    class Particle {
+        constructor(fromEdge) {
+            this.spawn(fromEdge);
+        }
+
+        spawn(fromEdge) {
+            const pal = PALETTES[params.palette];
+            this.angle = p.random(p.TWO_PI);
+            this.r = fromEdge
+                ? R * p.random(0.88, 1.0)
+                : R * p.random(0.05, 1.0);
+            const c = pal.cols[Math.floor(p.random(pal.cols.length))];
+            this.r0 = c;
+            this.g0 = c;
+            this.col = c;
+            this.isAccent = p.random() < 0.04;
+            this.baseSize = p.random(1.0, 2.8);
+            // Slight per-particle pull variation creates arm structure
+            this.pullMod = p.random(0.7, 1.3);
+        }
+
+        update() {
+            const spd = params.speed;
+            const pull = params.pull * this.pullMod;
+            const norm = R / Math.max(this.r, 1);
+
+            // Angular velocity: faster as radius shrinks
+            const omega = 0.012 * spd * Math.pow(norm, 0.65);
+            this.angle += omega;
+
+            // Radial inward pull: accelerates toward center
+            const radPull = 0.055 * spd * pull * Math.pow(norm, 0.5);
+            this.r -= radPull;
+
+            // Respawn at outer ring when swallowed by the void
+            if (this.r < R * 0.04) {
+                this.spawn(true);
+            }
+        }
+
+        draw() {
+            const x = CX + this.r * Math.cos(this.angle);
+            const y = CY + this.r * Math.sin(this.angle);
+
+            // t: 1 at edge, 0 at center
+            const t = Math.min(this.r / R, 1.0);
+            const alpha = 255 * Math.pow(t, 0.25);
+            const sz = this.baseSize * (0.35 + 0.65 * Math.pow(t, 0.4));
+
+            const pal = PALETTES[params.palette];
+            const col = this.isAccent ? pal.accent : this.col;
+
+            p.noStroke();
+            p.fill(col[0], col[1], col[2], alpha);
+            p.ellipse(x, y, sz, sz);
+        }
+    }
+
+    function initCanvas() {
+        const cont = document.getElementById('canvas-container');
+        W = cont.clientWidth  || 800;
+        H = cont.clientHeight || 600;
+        CX = W / 2;
+        CY = H / 2;
+        R  = Math.min(W, H) * 0.45;
+    }
+
+    p.setup = () => {
+        initCanvas();
+        const cnv = p.createCanvas(W, H);
+        cnv.parent('sketch');
+        p.randomSeed(params.seed);
+        const pal = PALETTES[params.palette];
+        p.background(pal.bg[0], pal.bg[1], pal.bg[2]);
+        particles = Array.from({ length: params.nParticles }, () => new Particle(false));
+    };
+
+    p.draw = () => {
+        const pal = PALETTES[params.palette];
+
+        // Fade trail — semi-transparent bg wash
+        p.noStroke();
+        p.fill(pal.bg[0], pal.bg[1], pal.bg[2], 22);
+        p.rect(0, 0, W, H);
+
+        // Update and draw particles
+        for (const pt of particles) {
+            pt.update();
+            pt.draw();
+        }
+
+        // Center void — radial gradient darkening the abyss core
+        const ctx = p.drawingContext;
+        const voidR = R * 0.22;
+        const grad = ctx.createRadialGradient(CX, CY, 0, CX, CY, voidR);
+        grad.addColorStop(0,   `rgba(${pal.bg[0]},${pal.bg[1]},${pal.bg[2]},1.0)`);
+        grad.addColorStop(0.55,`rgba(${pal.bg[0]},${pal.bg[1]},${pal.bg[2]},0.75)`);
+        grad.addColorStop(1,   `rgba(${pal.bg[0]},${pal.bg[1]},${pal.bg[2]},0.0)`);
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(CX, CY, voidR, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Subtle outer vignette — darkens edge of gorge
+        const edgeGrad = ctx.createRadialGradient(CX, CY, R * 0.7, CX, CY, R * 1.1);
+        edgeGrad.addColorStop(0, `rgba(${pal.bg[0]},${pal.bg[1]},${pal.bg[2]},0.0)`);
+        edgeGrad.addColorStop(1, `rgba(${pal.bg[0]},${pal.bg[1]},${pal.bg[2]},0.85)`);
+        ctx.fillStyle = edgeGrad;
+        ctx.beginPath();
+        ctx.rect(0, 0, W, H);
+        ctx.fill();
+    };
+
+    p.windowResized = () => {
+        initCanvas();
+        p.resizeCanvas(W, H);
+        const pal = PALETTES[params.palette];
+        p.background(pal.bg[0], pal.bg[1], pal.bg[2]);
+        particles = Array.from({ length: params.nParticles }, () => new Particle(false));
+    };
+
+    p.getParticles = () => particles;
+    p.getR        = () => R;
+    p.getCX       = () => CX;
+    p.getCY       = () => CY;
+    p.getWH       = () => ({ W, H });
+};
+
+// ─── PALETTE UI ─────────────────────────────────────────────────────────────
+function buildPaletteUI() {
+    const grid = document.getElementById('paletteGrid');
+    grid.innerHTML = '';
+    for (const [id, pal] of Object.entries(PALETTES)) {
+        const btn = document.createElement('button');
+        btn.className = 'palette-btn' + (id === params.palette ? ' active' : '');
+        btn.setAttribute('data-id', id);
+
+        const dotsDiv = document.createElement('div');
+        dotsDiv.className = 'palette-dots';
+        pal.dots.forEach(hex => {
+            const s = document.createElement('span');
+            s.style.background = hex;
+            dotsDiv.appendChild(s);
+        });
+
+        btn.appendChild(dotsDiv);
+        btn.appendChild(document.createTextNode(pal.name));
+        btn.onclick = () => setPalette(id);
+        grid.appendChild(btn);
+    }
+}
+
+function setPalette(id) {
+    params.palette = id;
+    document.querySelectorAll('.palette-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-id') === id);
+    });
+    // Repaint background immediately then let sketch continue
+    if (sketchInstance) {
+        const pal = PALETTES[id];
+        sketchInstance.background(pal.bg[0], pal.bg[1], pal.bg[2]);
+        // Respawn all particles so they pick up new palette colors
+        const pts = sketchInstance.getParticles();
+        const R   = sketchInstance.getR();
+        pts.forEach(pt => pt.spawn(false));
+    }
+}
+
+// ─── CONTROLS ───────────────────────────────────────────────────────────────
+function setDensity(n) {
+    params.nParticles = n;
+    const label = n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
+    document.getElementById('densityVal').textContent = label;
+    if (sketchInstance) {
+        const pts = sketchInstance.getParticles();
+        // Rebuild particle array to new count
+        const { W, H } = sketchInstance.getWH();
+        const R = sketchInstance.getR();
+        // Assign new pool — rebuild happens via resetPiece
+        resetPiece();
+    }
+}
+
+function resetPiece() {
+    if (sketchInstance) {
+        sketchInstance.remove();
+        sketchInstance = null;
+    }
+    params.seed = Math.floor(Math.random() * 999999) + 1;
+    sketchInstance = new p5(buildSketch, document.getElementById('sketch'));
+}
+
+function doSave() {
+    if (sketchInstance) sketchInstance.save('garganta-sin-fondo.png');
+}
+
+// ─── INIT ────────────────────────────────────────────────────────────────────
+buildPaletteUI();
+sketchInstance = new p5(buildSketch, document.getElementById('sketch'));
+</script>
+</body>
+</html>
