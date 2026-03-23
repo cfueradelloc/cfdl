@@ -103,7 +103,7 @@
 
         /* ── Section label ───────────────────────────────────────────────────── */
         .section-label {
-            padding: 20px 64px;
+            padding: 14px 64px;
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
@@ -115,6 +115,7 @@
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--muted);
+            white-space: nowrap;
         }
 
         .section-label .label-line {
@@ -123,46 +124,57 @@
             background: var(--border);
         }
 
-        .section-label.dark {
-            background: var(--text);
-            border-bottom-color: #3e3e40;
-        }
-
-        .section-label.dark span { color: #6b6b65; }
-        .section-label.dark .label-line { background: #3e3e40; }
-
         /* ── Event list ──────────────────────────────────────────────────────── */
         .event-list { list-style: none; }
 
         .event-item {
             display: grid;
-            grid-template-columns: 96px 1fr auto;
-            align-items: start;
+            grid-template-columns: 72px 1fr auto;
+            align-items: center;
             gap: 0 32px;
-            padding: 28px 64px;
+            padding: 24px 64px;
             border-bottom: 1px solid var(--border);
+            border-left: 3px solid transparent;
         }
 
-        .event-item.past {
-            opacity: 0.55;
+        .event-item:not(.past) {
+            border-left-color: var(--accent);
+            padding-left: 61px;
         }
 
-        .event-date {
-            font-size: 10px;
-            letter-spacing: 0.08em;
+        .event-month {
+            display: block;
+            font-family: 'MinionPro', serif;
+            font-size: 18px;
+            font-style: italic;
+            font-weight: normal;
+            line-height: 1.1;
             color: var(--muted);
-            padding-top: 4px;
-            text-transform: uppercase;
         }
+
+        .event-year {
+            display: block;
+            font-size: 9px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0.7;
+            margin-top: 3px;
+        }
+
+        .event-item:not(.past) .event-month { color: var(--accent); }
+        .event-item:not(.past) .event-year  { color: var(--accent); }
 
         .event-title {
             font-family: 'MinionPro', serif;
-            font-size: 20px;
+            font-size: 22px;
             font-weight: normal;
             font-style: italic;
             line-height: 1.25;
             margin-bottom: 5px;
         }
+
+        .event-item.past .event-title { color: var(--muted); }
 
         .event-meta {
             font-size: 10px;
@@ -176,15 +188,18 @@
             font-size: 9px;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 3px 8px;
+            padding: 4px 9px;
             white-space: nowrap;
             align-self: center;
+            border: 1px solid var(--border);
+            color: var(--muted);
         }
 
-        .event-item:not(.past) .event-date {
-            color: var(--accent);
+        .event-item:not(.past) .event-type {
+            background: var(--accent);
+            color: var(--text);
+            border-color: var(--accent);
+            font-weight: normal;
         }
 
         /* ── Footer ──────────────────────────────────────────────────────────── */
@@ -217,8 +232,9 @@
             nav { padding: 0 24px; }
             .nav-links { gap: 16px; }
             header { padding: 40px 24px 24px; }
-            .section-label { padding: 16px 24px; }
-            .event-item { padding: 22px 24px; grid-template-columns: 72px 1fr; gap: 0 16px; }
+            .section-label { padding: 12px 24px; }
+            .event-item { padding: 20px 24px; grid-template-columns: 56px 1fr; gap: 0 16px; border-left-width: 0; }
+            .event-item:not(.past) { padding-left: 24px; }
             .event-type { display: none; }
             footer { padding: 32px 24px; flex-direction: column; gap: 8px; text-align: center; }
         }
@@ -242,7 +258,7 @@
 </header>
 
 <!-- Próximos -->
-<div class="section-label dark">
+<div class="section-label">
     <span>Próximos</span>
     <div class="label-line"></div>
 </div>
@@ -250,7 +266,10 @@
 <ul class="event-list">
 
     <li class="event-item">
-        <div class="event-date">Abr 2026</div>
+        <div class="event-date">
+            <span class="event-month">Abr</span>
+            <span class="event-year">2026</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Crear donde no alcance ninguna raíz</div>
             <div class="event-meta">Exposición colectiva — Sala d'Art Jove, Barcelona</div>
@@ -259,7 +278,10 @@
     </li>
 
     <li class="event-item">
-        <div class="event-date">May 2026</div>
+        <div class="event-date">
+            <span class="event-month">May</span>
+            <span class="event-year">2026</span>
+        </div>
         <div class="event-info">
             <div class="event-title">La fractura profiláctica</div>
             <div class="event-meta">Performance — Teatro del Barrio, Madrid</div>
@@ -268,7 +290,10 @@
     </li>
 
     <li class="event-item">
-        <div class="event-date">Jun 2026</div>
+        <div class="event-date">
+            <span class="event-month">Jun</span>
+            <span class="event-year">2026</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Maleza — taller de creació generativa</div>
             <div class="event-meta">Taller — CCCB, Barcelona</div>
@@ -277,7 +302,10 @@
     </li>
 
     <li class="event-item">
-        <div class="event-date">Sep 2026</div>
+        <div class="event-date">
+            <span class="event-month">Sep</span>
+            <span class="event-year">2026</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Residència C.F.D.L.</div>
             <div class="event-meta">Residencia de creación — Hangar, Barcelona</div>
@@ -296,7 +324,10 @@
 <ul class="event-list">
 
     <li class="event-item past">
-        <div class="event-date">Nov 2025</div>
+        <div class="event-date">
+            <span class="event-month">Nov</span>
+            <span class="event-year">2025</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Ante la síntesis, la disgregación</div>
             <div class="event-meta">Exposición — Arts Santa Mònica, Barcelona</div>
@@ -305,7 +336,10 @@
     </li>
 
     <li class="event-item past">
-        <div class="event-date">Sep 2025</div>
+        <div class="event-date">
+            <span class="event-month">Sep</span>
+            <span class="event-year">2025</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Brújula sin imán</div>
             <div class="event-meta">Intervención site-specific — Jardines del Retiro, Madrid</div>
@@ -314,7 +348,10 @@
     </li>
 
     <li class="event-item past">
-        <div class="event-date">Jun 2025</div>
+        <div class="event-date">
+            <span class="event-month">Jun</span>
+            <span class="event-year">2025</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Fuera de lugar — siempre en algún otro lugar</div>
             <div class="event-meta">Presentación del Manifiesto — Mercat de Flors, Barcelona</div>
@@ -323,7 +360,10 @@
     </li>
 
     <li class="event-item past">
-        <div class="event-date">Mar 2025</div>
+        <div class="event-date">
+            <span class="event-month">Mar</span>
+            <span class="event-year">2025</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Atopia</div>
             <div class="event-meta">Encuentro de colectivos — La Casa Encendida, Madrid</div>
@@ -332,7 +372,10 @@
     </li>
 
     <li class="event-item past">
-        <div class="event-date">Oct 2024</div>
+        <div class="event-date">
+            <span class="event-month">Oct</span>
+            <span class="event-year">2024</span>
+        </div>
         <div class="event-info">
             <div class="event-title">La llegada del moho</div>
             <div class="event-meta">Screening + performance — Fundació Antoni Tàpies, Barcelona</div>
@@ -341,7 +384,10 @@
     </li>
 
     <li class="event-item past">
-        <div class="event-date">Abr 2024</div>
+        <div class="event-date">
+            <span class="event-month">Abr</span>
+            <span class="event-year">2024</span>
+        </div>
         <div class="event-info">
             <div class="event-title">Nostalgia atroz</div>
             <div class="event-meta">Exposición de fotografía — Fundació Joan Miró, Barcelona</div>
