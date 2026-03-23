@@ -752,6 +752,9 @@
         const blocks = [...body.querySelectorAll('.para-block')];
 
         if (!isShuffled) {
+            // Remove lede enlargement before shuffling
+            const lede = body.querySelector('.lede-marker');
+            if (lede) lede.classList.remove('lede-marker');
             for (let i = blocks.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [blocks[i], blocks[j]] = [blocks[j], blocks[i]];
@@ -764,6 +767,8 @@
                 parseInt(a.querySelector('.para-num').textContent) -
                 parseInt(b.querySelector('.para-num').textContent)
             );
+            // Restore lede enlargement to paragraph 01
+            blocks[0].querySelector('.para-num').classList.add('lede-marker');
             isShuffled = false;
             btn.textContent = 'Aleatorio';
             btn.classList.remove('active');
