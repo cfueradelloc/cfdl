@@ -1,102 +1,65 @@
 # Calendario de eventos — C.F.D.L. (Colectivo Fuera de Lugar)
 
-> Recopilado a partir de la carpeta `Eventos/` del Google Drive del colectivo (documentos
-> «Actividad», dosieres y carteles). El perfil de Instagram
-> [@cfueradelloc](https://www.instagram.com/cfueradelloc/) requiere inicio de sesión y no
-> pudo leerse automáticamente, así que esta versión se basa en los archivos locales.
-> Las fechas marcadas con ⚠️ están **por confirmar** (año o día no documentado con certeza).
+Lista cronológica de eventos del colectivo. Fuente principal: el perfil de Instagram
+[@cfueradelloc](https://www.instagram.com/cfueradelloc/), complementado con la carpeta `Eventos/`
+del Drive. Coordinación general de los ciclos: **Rosauro Varo Cobos** (Colectivo Fuera de Lugar).
 
 ---
 
-## 1. Calendario cronológico
+## 2025
 
-### 2025 — Verano
-| Fecha | Evento | Ciclo | Lugar |
-|-------|--------|-------|-------|
-| Verano 2025 ⚠️ | **Welcome Summer Festival 2025** — recital «El Bowie» (Gonzalo) | Música / escena | — |
+**19 jun · Welcome Summer Festival** — Valladolid
+- *19:30* — Lectura y charla con el poeta **Gonzalo Sánchez-Terán**, moderada por Rosauro Varo Cobos. Poesía, literatura y conexiones con África. — *La Perecquiana*. Entrada libre hasta completar aforo.
+- *21:30* — Recital poético y musical con la poeta **María Sotelo** y el productor **JAM3S**. — *The Bowie Bar*.
 
-### 2025 — Otoño · *En voz alta: el autor ante sus textos* (La Perecquiana, Valladolid)
-| Fecha | Evento | Lugar |
-|-------|--------|-------|
-| Jue 8 oct | **Ana Griott** (Ana Cristina Herreros) — narración oral | Librería La Perecquiana |
-| Jue 13 nov | **Pablo Martín Sánchez** | Librería La Perecquiana |
-| Vie 12 dic | **Ángela Mallén** | Librería La Perecquiana |
+**8 oct · En voz alta — Ana Griott** *(miércoles, 19:30)* — La Perecquiana
+La escritora habla de su obra y lee en voz alta fragmentos de sus textos. → ciclo *En voz alta*.
 
-> ⚠️ Año (2025) inferido del artículo «ciclo recién terminado» y de las fotos publicadas; confirmar.
+**13 nov · En voz alta — Pablo Martín Sánchez** *(jueves, 19:30)* — La Perecquiana
+Presenta su obra más reciente, *Fricciones* (Acantilado, 2024). → ciclo *En voz alta*.
 
-### 2025–2026 — Clubes de lectura (sesiones periódicas)
-| Periodo | Evento | Ciclo | Lugar |
-|---------|--------|-------|-------|
-| Oct 2025 – Jun 2026 · 2.º martes de mes, 19:00 | **Libros del Baobab** — letras africanas | Club de lectura | Librería El Rincón de Morla |
-| Feb 2026 – Jul 2026 · 3.er jueves de mes, 19:00 | **14.4** — literatura y miradas sobre África | Club de lectura | Librería La Perecquiana (Valladolid) + Observatorio Estudios Africanos, UVA |
-
-### 2025–2026 — *El Almíbar 12 «Noches íntimas»* (Córdoba) — programación flamenca con **Almíbar Off** (poesía) de C.F.D.L.
-| Fecha | Artistas |
-|-------|----------|
-| 18 oct | Enrique el Extremeño, Juan José Amador y Ñoño Santiago |
-| 23 oct | Gregorio Moya y José Tomás |
-| 21 nov | Alfonso Losa, Ismael de la Rosa y Fran Vinuesa |
-| 29 nov | Habichuela Nieto |
-| 19 dic | Patricia Guerrero, Sergio el Colorao, José Fermín y El Indio |
-| 09 ene | José Valencia, Jesús Méndez, David Palomar y Juan Requena |
-| 23 ene | Fuensanta la Moneta, Jeromo Segura y Rafael Rodríguez «El Cabeza» |
-| 06 feb | Ezequiel Benítez y Paco León |
-| 20 feb | Rafael de Utrera y Dani de Morón |
-| 14 mar | El Amir |
-| 20 mar | Joaquín Grilo, Carmen Grilo, Manuel Moneo y Francis Gómez |
-| 10 abr | Miguel el Rubio, El Pulga, Manuel de la Nina y David Caro |
-| 24 abr | Lucía Álvarez «La Piñona», Manuel Pajares, El Mati y Ramón Amador |
-| 08 may | Alba Molina y Benito Bernal |
-
-> **Almíbar Off** es la programación paralela de poesía que coordina C.F.D.L. (p. ej. Miriam Reyes, con Rosauro Varo). Fechas concretas del *Off* ⚠️ por confirmar.
-
-### 2026 — Primavera · *La Magistral* (Ciclo de conferencias, La Perecquiana, Valladolid, 19:30)
-| Fecha ⚠️ | Conferencia | Ponente |
-|----------|-------------|---------|
-| 13 mar | «This wound that I'm speaking of»: una aproximación a la figura de Jesús en la obra de Leonard Cohen | Jorge Onecha |
-| 10 abr | Publicar de otra manera: libros de artista, fotolibros y fanzines | Marta Álvarez |
-| 15 may | La crónica del fuego: el periodismo y la literatura ante la catástrofe natural y política | Juan Navarro |
-
-> ⚠️ Las tres fechas (13 mar / 10 abr / 15 may) están documentadas; la **asignación fecha↔ponente** y el **año** son tentativos.
-
-### 2026 — Mayo
-| Fecha | Evento | Ciclo | Lugar |
-|-------|--------|-------|-------|
-| Jue 14 may 2026 | **Equinoccio Sound V** (Gameboyz, Autoreverse, Beni Jung, Candela Paos, Frankydrama, K[alma] b2b Huma, Sarcophago…) | Música / escena | Next Clubbing |
-
-### Sin fecha documentada (proyecciones de cine)
-| Evento | Ciclo | Lugar |
-|--------|-------|-------|
-| **«Lorca en la Habana»** (documental) ⚠️ | Cines Casablanca | Cines Casablanca (Sala 1) |
-| **«Cien Libros Juntos»** ⚠️ | Cines Casablanca | Cines Casablanca |
-| **«Banel & Adama»** (proyección) ⚠️ | Salut, Drets, Acció | Cinemes Girona |
+**12 dic · En voz alta — Ángela Mallén** *(viernes, 19:30)* — La Perecquiana
+Cierre del ciclo: lectura de sus textos, susurros y atmósferas. → ciclo *En voz alta*.
 
 ---
 
-## 2. Por ciclo
+## 2026
 
-### 📚 Clubes de lectura y conferencias literarias
-- **La Magistral** — Ciclo de conferencias. *La Perecquiana* (Valladolid). 3 sesiones: Jorge Onecha, Marta Álvarez, Juan Navarro (mar–may, 19:30).
-- **En voz alta: el autor ante sus textos** — Ciclo de lecturas otoñales presentado por Rosauro Varo Cobos. *La Perecquiana*. Ana Griott, Pablo Martín Sánchez, Ángela Mallén (oct–dic).
-- **14.4** — Club de lectura sobre miradas y literatura de África. *La Perecquiana* + *Observatorio de Estudios Africanos (UVA)*. Coordinan Rosauro Varo Cobos y Pablo Arconada Ledesma. 3.er jueves de mes (feb–jul 2026); incluye la visita de **Alfonso Armada** (~27–29 ene 2026) con la charla «¿Se puede contar África?».
-- **Libros del Baobab** — Club de lectura de letras africanas (editorial «Libros de las malas compañías»). *Librería El Rincón de Morla*. 2.º martes de mes (oct 2025 – jun 2026).
+**20 ene · 14.4 — Charla de presentación: «¿Se puede contar África?»** *(martes, 19:30)* — La Perecquiana
+Con el periodista y escritor **Alfonso Armada**, sobre su relación con el continente africano y los estereotipos que llegan desde los medios. Apertura del club de lectura *14.4*.
 
-### 🎶 Música y escena
-- **Equinoccio Sound** — Festival de música electrónica/escena (edición V el 14 may 2026, Next Clubbing). C.F.D.L. colabora.
-- **Welcome Summer Festival 2025** — Recital «El Bowie» (Gonzalo).
+**2 feb · Cine a la Carta: *Lorca en La Habana* (2025)** — Cinemes Casablanca, Valladolid
+Proyección y coloquio. Documental de José Antonio Torres y Antonio Manuel sobre la estancia de Federico García Lorca en Cuba en 1930. Coloquio posterior con Rosauro Varo Cobos y el colectivo.
 
-### 🌙 Flamenco + poesía (Córdoba)
-- **El Almíbar / Almíbar Off** — «Noches íntimas» (Almíbar & Rincón). C.F.D.L. coordina la programación *Off* de poesía dentro del ciclo flamenco (14 sesiones, oct–may).
+**13 mar · La Magistral — Jorge Onecha** *(viernes, 19:30)* — La Perecquiana
+*«This wound that I'm speaking of»: una aproximación a la figura de Jesús en la obra de Leonard Cohen.* Liturgia, música y literatura, con protagonismo del vinilo y la lectura en voz alta. → ciclo *La Magistral*.
 
-### 🎬 Cine
-- **Cines Casablanca** — Proyecciones: «Lorca en la Habana» (documental), «Cien Libros Juntos».
-- **Salut, Drets, Acció** — Proyección de «Banel & Adama» en Cinemes Girona.
+**10 abr · La Magistral — Marta Álvarez** *(viernes, 19:30)* — La Perecquiana
+*«Publicar de otra manera: libros de artista, fotolibros y fanzines.»* La autoedición como vía de autonomía creativa y el libro como objeto plástico. → ciclo *La Magistral*.
+
+**~24 abr · Mostra Salut, Drets i Acció (19ª ed.) — coloquio tras *Banel & Adama*** — Cinemes Girona, Barcelona
+Rosauro Varo Cobos participa como ponente junto a Déguène Eufemia Seck (abogada e investigadora): comunidad, tradición y libertad desde el contexto rural senegalés. La Mostra continúa el **29 abr** en la Universitat de Barcelona.
+
+**abr–may · Equinoccio Sound Festival** — Madrid
+El colectivo participa como colaborador en esta edición del festival de música electrónica, aportando una mirada interdisciplinar. *(Fecha exacta no publicada.)*
+
+**15 may · La Magistral — Juan Navarro** *(viernes, 20:00)* — La Perecquiana
+*«La crónica del fuego: el periodismo y la literatura ante la catástrofe natural y política.»* Autor de *Los rescoldos de la culebra* (Libros del K.O.) sobre los incendios de la sierra de la Culebra (2022). → ciclo *La Magistral*.
+
+**hasta 10 jul · 14.4 — sesiones del club** — La Perecquiana
+5 sesiones adicionales del club de lectura *(fechas exactas no publicadas)*, con cierre de temporada en Radial Valladolid con una pinchada de música africana.
 
 ---
 
-## 3. Notas y pendientes de confirmar
-- **Años exactos** de *En voz alta* y *La Magistral* (los días/meses están documentados; el año no aparece explícito en los carteles/docs).
-- **Fechas del *Almíbar Off*** (poesía de C.F.D.L.) dentro del ciclo flamenco.
-- **Fechas de las proyecciones** de Cines Casablanca y Salut, Drets, Acció (solo constan carteles/fotos, sin fecha en los archivos).
-- **Welcome Summer Festival**: el dosier indica 2025, pero falta la fecha concreta del recital.
-- Fuente no consultada: **Instagram @cfueradelloc** (requiere login). Si quieres, puedes pegarme aquí el texto de los posts y completo/contrasto las fechas.
+## Ciclos
+
+- **En voz alta: el autor ante sus textos** — Charlas en las que escritoras y escritores hablan de su obra y leen fragmentos. Moderado por Rosauro Varo Cobos. Con La Perecquiana (Valladolid); sesiones a las 19:30, entrada libre hasta completar aforo.
+- **14.4** — Club de lectura cuyo nombre alude a los 14,4 km que separan Europa de África. Explora la relación de Occidente con el continente africano a través de textos ensayísticos, narrativos, poéticos y visuales. Con La Perecquiana y el Observatorio de Estudios Africanos de la UVa; coordinan Rosauro Varo Cobos y Pablo Arconada Ledesma. 6 sesiones, inscripción previa de 36 €.
+- **La Magistral** — Ciclo de tres conferencias que cruzan la literatura con otras expresiones y fuentes de conocimiento (periodismo, edición alternativa, crónica de catástrofes). Con La Perecquiana; entrada libre hasta completar aforo.
+
+---
+
+## Sin fecha confirmada (en archivo, no datados en Instagram)
+- **El Almíbar / Almíbar Off** — Programación de poesía del colectivo dentro del ciclo flamenco «Noches íntimas» (Almíbar & Rincón, Córdoba).
+- **Libros del Baobab** — Club de lectura de letras africanas (editorial «Libros de las malas compañías»), Librería El Rincón de Morla.
+- **Cien Libros Juntos** — Sesión en Cines/Cinemes Casablanca (Valladolid).

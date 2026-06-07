@@ -28,10 +28,13 @@ The repo root separates **the served website** (`docs/`) from **project material
 
 ### Deployment
 Classic **GitHub Pages**, deploy-from-branch — repo `github.com/cfueradelloc/cfdl`. The Pages
-**source must be set to `/docs`** (Settings → Pages). The whole site lives under `docs/`, all
+**source is set to `/docs`** (Settings → Pages). The whole site lives under `docs/`, all
 links are relative, and `.nojekyll` sits inside `docs/`. If a custom domain (cfdl.site) is used,
 its `CNAME` file also belongs in `docs/`. The site no longer depends on the `skills/` path for any
 asset. If you move folders, update the references and re-run the grep in the verification below.
+
+**Git workflow:** this is a solo project — **commit and push directly to `main`** (no PR/branch
+needed). The user has authorized direct pushes to `main`; pushing publishes the live site via Pages.
 
 ## Source material lives in Google Drive — use the LOCAL synced copy
 
