@@ -22,39 +22,108 @@
     <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        /* ── Masonry grid (page-specific) ──────────────────────────────────── */
+        /* ── Shuffle control (page-specific) ───────────────────────────────── */
+        .gallery-controls {
+            padding: 0 24px 4px;
+        }
+
+        .shuffle-btn {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text);
+            background: transparent;
+            border: 1px solid var(--border);
+            padding: 8px 18px;
+            cursor: pointer;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }
+
+        .shuffle-btn:hover,
+        .shuffle-btn:focus-visible {
+            background: var(--accent);
+            color: var(--text);
+            border-color: var(--accent);
+            outline: none;
+        }
+
+        /* ── Stochastic collage ────────────────────────────────────────────── */
         .gallery {
-            columns: 3;
-            column-gap: 8px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-auto-rows: 150px;
+            grid-auto-flow: dense;
+            gap: 8px;
             padding: 24px;
+            transition: opacity 0.4s ease;
         }
 
         .gallery figure {
-            break-inside: avoid;
-            margin-bottom: 8px;
+            position: relative;
+            margin: 0;
+            overflow: hidden;
+            grid-column: span 1;
+            grid-row: span 1;
+            opacity: 1;
+            transition: opacity 0.8s ease;
         }
+
+        .gallery figure.tall { grid-row: span 2; }
+        .gallery figure.wide { grid-column: span 2; }
+        .gallery figure.big  { grid-column: span 2; grid-row: span 2; }
 
         .gallery figure img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
         .gallery figure figcaption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px 10px 8px;
             font-size: 9px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: var(--muted);
-            padding: 6px 2px 0;
+            color: #fff;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery figure:hover figcaption,
+        .gallery figure:focus-within figcaption { opacity: 1; }
+
+        @media (hover: none) {
+            .gallery figure figcaption { opacity: 1; }
         }
 
         @media (max-width: 900px) {
-            .gallery { columns: 2; }
+            .gallery { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 140px; }
         }
 
         @media (max-width: 500px) {
-            .gallery { columns: 1; padding: 16px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; padding: 16px; }
         }
+
+        @media (prefers-reduced-motion: reduce) {
+            .gallery, .gallery figure, .gallery figure figcaption { transition: none; }
+        }
+
+        /* ── No-JS fallback (simple masonry of all images) ─────────────────── */
+        .gallery-static { columns: 3; column-gap: 8px; padding: 24px; }
+        .gallery-static figure { break-inside: avoid; margin: 0 0 8px; }
+        .gallery-static figure img { width: 100%; height: auto; display: block; }
+        .gallery-static figcaption {
+            font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--muted); padding: 6px 2px 0;
+        }
+        @media (max-width: 900px) { .gallery-static { columns: 2; } }
+        @media (max-width: 500px) { .gallery-static { columns: 1; padding: 16px; } }
     </style>
 </head>
 <body>
@@ -77,88 +146,38 @@
 </header>
 
 <main>
-<div class="gallery">
 
-    <figure>
-        <img src="gallery/envozalta-promo-1.jpg" alt="En voz alta" width="1600" height="1200" decoding="async">
-        <figcaption>entre libros</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-promo-2.jpg" alt="En voz alta" width="675" height="1200" decoding="async">
-        <figcaption>tomando la palabra</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-promo-3.jpg" alt="En voz alta" width="1600" height="1200" decoding="async">
-        <figcaption>sala llena</figcaption>
-    </figure>
-
-    <figure>
-        <img src="gallery/envozalta-angela-1.jpg" alt="Ángela Mallén" width="1152" height="2048" loading="lazy" decoding="async">
-        <figcaption>Ángela Mallén</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-2.jpg" alt="Ángela Mallén" width="1152" height="2048" loading="lazy" decoding="async">
-        <figcaption>en conversación</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-3.jpg" alt="Ángela Mallén" width="1152" height="2048" loading="lazy" decoding="async">
-        <figcaption>pausa</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-4.jpg" alt="Ángela Mallén" width="900" height="1600" loading="lazy" decoding="async">
-        <figcaption>gesticulando</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-5.jpg" alt="Ángela Mallén" width="900" height="1600" loading="lazy" decoding="async">
-        <figcaption>la voz</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-6.jpg" alt="Ángela Mallén" width="900" height="1600" loading="lazy" decoding="async">
-        <figcaption>escucha</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-angela-7.jpg" alt="Ángela Mallén" width="900" height="1600" loading="lazy" decoding="async">
-        <figcaption>desde la sala</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-pablo-1.jpg" alt="Pablo Martín" width="1153" height="2048" loading="lazy" decoding="async">
-        <figcaption>Pablo Martín</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-pablo-2.jpg" alt="Pablo Martín" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>en el sofá verde</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-pablo-3.jpg" alt="Pablo Martín" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>lectura</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-pablo-4.jpg" alt="Pablo Martín" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>la audiencia</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-pablo-5.jpg" alt="Pablo Martín" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>antes de empezar</figcaption>
-    </figure>
-
-    <figure>
-        <img src="gallery/envozalta-ana-1.jpg" alt="Ana Griott" width="1200" height="1600" loading="lazy" decoding="async">
-        <figcaption>Ana Griott</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-ana-2.jpg" alt="Ana Griott" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>sala llena</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-ana-3.jpg" alt="Ana Griott" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>el círculo</figcaption>
-    </figure>
-    <figure>
-        <img src="gallery/envozalta-ana-4.jpg" alt="Ana Griott" width="1600" height="1200" loading="lazy" decoding="async">
-        <figcaption>dos voces</figcaption>
-    </figure>
-
+<div class="gallery-controls">
+    <button type="button" class="shuffle-btn" id="shuffle" hidden aria-label="Barajar las imágenes">barajar</button>
 </div>
+
+<!-- JS fills this with a random subset; the collage reshuffles on reload, on «barajar», and rotates on its own. -->
+<div class="gallery" id="gallery" aria-live="off"></div>
+
+<noscript>
+    <div class="gallery-static">
+        <figure><img src="gallery/envozalta-promo-1.jpg" alt="En voz alta" width="1600" height="1200"><figcaption>entre libros</figcaption></figure>
+        <figure><img src="gallery/envozalta-promo-2.jpg" alt="En voz alta" width="675" height="1200"><figcaption>tomando la palabra</figcaption></figure>
+        <figure><img src="gallery/envozalta-promo-3.jpg" alt="En voz alta" width="1600" height="1200"><figcaption>sala llena</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-1.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>Ángela Mallén</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-2.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>en conversación</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-3.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>pausa</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-4.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>gesticulando</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-5.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>la voz</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-6.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>escucha</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-7.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>desde la sala</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-1.jpg" alt="Pablo Martín" width="1153" height="2048"><figcaption>Pablo Martín</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-2.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>en el sofá verde</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-3.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>lectura</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-4.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>la audiencia</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-5.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>antes de empezar</figcaption></figure>
+        <figure><img src="gallery/envozalta-ana-1.jpg" alt="Ana Griott" width="1200" height="1600"><figcaption>Ana Griott</figcaption></figure>
+        <figure><img src="gallery/envozalta-ana-2.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>sala llena</figcaption></figure>
+        <figure><img src="gallery/envozalta-ana-3.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>el círculo</figcaption></figure>
+        <figure><img src="gallery/envozalta-ana-4.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>dos voces</figcaption></figure>
+    </div>
+</noscript>
+
 </main>
 
 <footer>
@@ -167,6 +186,182 @@
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
     </p>
 </footer>
+
+<script>
+(function () {
+    "use strict";
+
+    // Pool — single place to maintain. Add a photo: drop it in gallery/ and add an entry.
+    var IMAGES = [
+        { src: "gallery/envozalta-promo-1.jpg",  alt: "En voz alta",    cap: "entre libros",      w: 1600, h: 1200 },
+        { src: "gallery/envozalta-promo-2.jpg",  alt: "En voz alta",    cap: "tomando la palabra", w: 675,  h: 1200 },
+        { src: "gallery/envozalta-promo-3.jpg",  alt: "En voz alta",    cap: "sala llena",        w: 1600, h: 1200 },
+        { src: "gallery/envozalta-angela-1.jpg", alt: "Ángela Mallén",  cap: "Ángela Mallén",     w: 1152, h: 2048 },
+        { src: "gallery/envozalta-angela-2.jpg", alt: "Ángela Mallén",  cap: "en conversación",   w: 1152, h: 2048 },
+        { src: "gallery/envozalta-angela-3.jpg", alt: "Ángela Mallén",  cap: "pausa",             w: 1152, h: 2048 },
+        { src: "gallery/envozalta-angela-4.jpg", alt: "Ángela Mallén",  cap: "gesticulando",      w: 900,  h: 1600 },
+        { src: "gallery/envozalta-angela-5.jpg", alt: "Ángela Mallén",  cap: "la voz",            w: 900,  h: 1600 },
+        { src: "gallery/envozalta-angela-6.jpg", alt: "Ángela Mallén",  cap: "escucha",           w: 900,  h: 1600 },
+        { src: "gallery/envozalta-angela-7.jpg", alt: "Ángela Mallén",  cap: "desde la sala",     w: 900,  h: 1600 },
+        { src: "gallery/envozalta-pablo-1.jpg",  alt: "Pablo Martín",   cap: "Pablo Martín",      w: 1153, h: 2048 },
+        { src: "gallery/envozalta-pablo-2.jpg",  alt: "Pablo Martín",   cap: "en el sofá verde",  w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-3.jpg",  alt: "Pablo Martín",   cap: "lectura",           w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-4.jpg",  alt: "Pablo Martín",   cap: "la audiencia",      w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-5.jpg",  alt: "Pablo Martín",   cap: "antes de empezar",  w: 1600, h: 1200 },
+        { src: "gallery/envozalta-ana-1.jpg",    alt: "Ana Griott",     cap: "Ana Griott",        w: 1200, h: 1600 },
+        { src: "gallery/envozalta-ana-2.jpg",    alt: "Ana Griott",     cap: "sala llena",        w: 1600, h: 1200 },
+        { src: "gallery/envozalta-ana-3.jpg",    alt: "Ana Griott",     cap: "el círculo",        w: 1600, h: 1200 },
+        { src: "gallery/envozalta-ana-4.jpg",    alt: "Ana Griott",     cap: "dos voces",         w: 1600, h: 1200 }
+    ];
+
+    var gallery = document.getElementById("gallery");
+    var shuffleBtn = document.getElementById("shuffle");
+    if (!gallery) return;
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var seen = {};            // srcs surfaced since the last pool reset (biases toward unseen)
+    var paused = false;       // pause auto-rotate on hover
+
+    function shuffle(a) {
+        for (var i = a.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var t = a[i]; a[i] = a[j]; a[j] = t;
+        }
+        return a;
+    }
+
+    function layout() {
+        var w = window.innerWidth;
+        if (w <= 500) return { cols: 2, k: 4 };
+        if (w <= 900) return { cols: 3, k: 6 };
+        return { cols: 4, k: 9 };
+    }
+
+    // Pick k images, preferring ones not yet seen so repeated reshuffles cycle through all.
+    function pickSet(k) {
+        var pool = IMAGES.filter(function (im) { return !seen[im.src]; });
+        if (pool.length < k) { seen = {}; pool = IMAGES.slice(); }
+        shuffle(pool);
+        var chosen = pool.slice(0, k);
+        chosen.forEach(function (im) { seen[im.src] = true; });
+        return chosen;
+    }
+
+    // Pick one image not currently displayed (and ideally not recently seen).
+    function pickOne(exclude) {
+        var pool = IMAGES.filter(function (im) { return exclude.indexOf(im.src) === -1 && !seen[im.src]; });
+        if (!pool.length) pool = IMAGES.filter(function (im) { return exclude.indexOf(im.src) === -1; });
+        if (!pool.length) return null;
+        var im = pool[Math.floor(Math.random() * pool.length)];
+        seen[im.src] = true;
+        return im;
+    }
+
+    function sizeClass(im, cols, bigLeft) {
+        var portrait = im.h > im.w * 1.15;
+        var landscape = im.w > im.h * 1.15;
+        var r = Math.random();
+        if (cols >= 4) {
+            if (portrait)  return r < 0.5 ? "tall" : "";
+            if (landscape) return (bigLeft && r < 0.22) ? "big" : (r < 0.55 ? "wide" : "");
+            return (bigLeft && r < 0.3) ? "big" : "";
+        }
+        if (cols === 3) {
+            if (portrait)  return r < 0.45 ? "tall" : "";
+            if (landscape) return r < 0.5 ? "wide" : "";
+            return "";
+        }
+        // 2 columns
+        if (portrait) return r < 0.4 ? "tall" : "";
+        return r < 0.45 ? "wide" : "";
+    }
+
+    function makeFigure(im, cls) {
+        var fig = document.createElement("figure");
+        if (cls) fig.className = cls;
+        fig.dataset.src = im.src;
+        var img = document.createElement("img");
+        img.src = im.src; img.alt = im.alt;
+        img.width = im.w; img.height = im.h;
+        img.loading = "lazy"; img.decoding = "async";
+        var cap = document.createElement("figcaption");
+        cap.textContent = im.cap;
+        fig.appendChild(img);
+        fig.appendChild(cap);
+        return fig;
+    }
+
+    function render(list) {
+        var cols = layout().cols;
+        var bigLeft = 2; // cap oversized tiles per render
+        var frag = document.createDocumentFragment();
+        list.forEach(function (im) {
+            var cls = sizeClass(im, cols, bigLeft > 0);
+            if (cls === "big") bigLeft--;
+            frag.appendChild(makeFigure(im, cls));
+        });
+        gallery.innerHTML = "";
+        gallery.appendChild(frag);
+    }
+
+    function currentSrcs() {
+        return Array.prototype.map.call(gallery.children, function (f) { return f.dataset.src; });
+    }
+
+    // «barajar» — full fresh set with a cross-fade.
+    function reshuffle() {
+        var k = layout().k;
+        if (reduce) { render(pickSet(k)); return; }
+        gallery.style.opacity = "0";
+        window.setTimeout(function () {
+            render(pickSet(k));
+            gallery.style.opacity = "1";
+        }, 400);
+    }
+
+    // Auto-rotate — swap a single tile in place with a slow fade.
+    function swapOne() {
+        if (reduce || paused || document.hidden) return;
+        var figs = gallery.children;
+        if (!figs.length) return;
+        var slot = figs[Math.floor(Math.random() * figs.length)];
+        var im = pickOne(currentSrcs());
+        if (!im) return;
+        slot.style.opacity = "0";
+        window.setTimeout(function () {
+            var img = slot.querySelector("img");
+            var cap = slot.querySelector("figcaption");
+            img.src = im.src; img.alt = im.alt; img.width = im.w; img.height = im.h;
+            cap.textContent = im.cap;
+            slot.dataset.src = im.src;
+            window.requestAnimationFrame(function () { slot.style.opacity = "1"; });
+        }, 850);
+    }
+
+    // Init
+    render(pickSet(layout().k));
+
+    if (shuffleBtn) {
+        shuffleBtn.hidden = false;
+        shuffleBtn.addEventListener("click", reshuffle);
+    }
+
+    gallery.addEventListener("mouseenter", function () { paused = true; });
+    gallery.addEventListener("mouseleave", function () { paused = false; });
+
+    if (!reduce) window.setInterval(swapOne, 6000);
+
+    // Re-render when the breakpoint (column count) changes.
+    var lastCols = layout().cols, t;
+    window.addEventListener("resize", function () {
+        window.clearTimeout(t);
+        t = window.setTimeout(function () {
+            var c = layout().cols;
+            if (c !== lastCols) { lastCols = c; render(pickSet(layout().k)); }
+        }, 200);
+    });
+})();
+</script>
 
 </body>
 </html>
