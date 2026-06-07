@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>C.F.D.L. — marca blanca</title>
+<link rel="stylesheet" href="_shared.css">
+<style>
+  .design-02 .kicker { margin-bottom: 46px; }
+  .design-02 .personal {
+    position: relative; display: inline-block;
+    font-family: var(--serif); font-style: italic;
+    font-size: 40px; color: var(--sapphire); opacity: .5;
+    margin-bottom: 10px;
+  }
+  .design-02 .personal::after {                /* the white-labelling strike */
+    content: ""; position: absolute; left: -8px; right: -8px; top: 52%;
+    height: 6px; background: var(--yellow); transform: rotate(-2deg);
+  }
+  .design-02 .blanca {
+    font-family: var(--serif); font-style: italic;
+    font-size: 108px; line-height: 0.98; color: var(--sapphire);
+  }
+  .design-02 .sign {
+    font-family: var(--sans); text-transform: uppercase;
+    letter-spacing: 0.34em; font-size: 14px; color: var(--sapphire);
+    opacity: .8; margin-top: 40px;
+  }
+</style></head>
+<body>
+<div class="stage">
+  <svg class="tee" viewBox="0 0 640 600" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <defs>
+      <linearGradient id="fold" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0"   stop-color="#000" stop-opacity="0.06"/>
+        <stop offset="0.16" stop-color="#000" stop-opacity="0"/>
+        <stop offset="0.84" stop-color="#000" stop-opacity="0"/>
+        <stop offset="1"   stop-color="#000" stop-opacity="0.06"/>
+      </linearGradient>
+    </defs>
+    <path d="M270,60 L225,72 L70,150 L58,252 L168,272 L196,232 L206,542
+             Q206,556 220,556 L420,556 Q434,556 434,542 L444,232 L472,272
+             L582,252 L570,150 L415,72 L370,60
+             C360,84 342,98 320,98 C298,98 280,84 270,60 Z"
+          fill="#f1ece0" stroke="#d8cfba" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M274,64 C284,86 300,96 320,96 C340,96 356,86 366,64"
+          fill="none" stroke="#d8cfba" stroke-width="3"/>
+    <path d="M206,542 L196,232 L444,232 L434,542 Q434,556 420,556 L220,556 Q206,556 206,542 Z"
+          fill="url(#fold)"/>
+  </svg>
+
+  <div class="print design-02">
+    <div class="personal">marca personal</div>
+    <div class="blanca">marca<br>blanca</div>
+    <div class="sign">Colectivo Fuera de Lugar</div>
+  </div>
+</div>
+</body></html>
