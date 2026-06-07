@@ -144,6 +144,23 @@
             line-height: 1.5;
         }
 
+        /* Scroll reveal — paragraphs ease in as they enter view.
+           Only active when JS adds .reveal-on (and motion is allowed), so
+           no-JS and reduced-motion readers always see the full text. */
+        .reveal-on .para-block {
+            opacity: 0;
+            transform: translateY(18px);
+            transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal-on .para-block.in {
+            opacity: 1;
+            transform: none;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-on .para-block { opacity: 1; transform: none; transition: none; }
+        }
+
 
         /* ── Slideshow ───────────────────────────────────────────────────────── */
         .slideshow {
@@ -654,7 +671,7 @@
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
-    <p><a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a></p>
+    <p><a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a> · <a href="https://github.com/cfueradelloc" target="_blank" rel="noopener">GitHub</a></p>
 </footer>
 
 <script>
@@ -776,6 +793,46 @@
         // Reset shuffle state on language switch
         if (isShuffled) toggleShuffle();
     }
+</script>
+
+<script>
+    // Scroll reveal for manifesto paragraphs — subtle fade + rise on enter.
+    (function () {
+        "use strict";
+        var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+        if (reduce.matches) return;   // leave the text fully visible, no motion
+
+        document.body.classList.add("reveal-on");
+
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add("in");
+                    io.unobserve(e.target);
+                }
+            });
+        }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+
+        // Observe every paragraph (including hidden languages); hidden ones
+        // simply reveal when their language is shown and scrolled into view.
+        document.querySelectorAll(".para-block").forEach(function (b) { io.observe(b); });
+
+        // On a language switch the newly shown paragraphs may already sit in
+        // view (display none→block); nudge an immediate check so they reveal.
+        document.querySelectorAll(".lang-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                window.setTimeout(function () {
+                    var active = document.querySelector(".lang-content.active");
+                    if (!active) return;
+                    var vh = window.innerHeight;
+                    active.querySelectorAll(".para-block:not(.in)").forEach(function (b) {
+                        var r = b.getBoundingClientRect();
+                        if (r.top < vh * 0.92 && r.bottom > 0) { b.classList.add("in"); io.unobserve(b); }
+                    });
+                }, 60);
+            });
+        });
+    })();
 </script>
 
 </body>
