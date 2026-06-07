@@ -57,15 +57,28 @@ Digital hex approximations of the Colorplan paper range. GF Smith does not publi
 | Vermillion | #a1373b |
 | White Frost | #dedfe3 |
 
-## CFDL Active Subset
+## CFDL Active Subset — as shipped on the live site
+
+The live site (and every generative piece in `docs/output/`) uses a **saturated**
+take on the Colorplan tones: brighter, higher-contrast hex than the paper swatches
+above. These exact values are the source of truth — match them, don't soften them.
 
 ```css
 :root {
-    --bg:      #ddd4cb; /* Mist */
-    --surface: #ded9d6; /* Vellum White */
-    --text:    #2e2e30; /* Ebony */
-    --muted:   #8f8f91; /* Smoke */
-    --border:  #dad5d5; /* Natural */
-    --accent:  #e9ad51; /* Citrine */
+    --bg:      #f8ccce; /* Candy Pink   — page background (light pages)   */
+    --surface: #bbabd5; /* Lavender     — sidebars / cards                */
+    --text:    #332f8a; /* Sapphire     — body text, dark bands           */
+    --muted:   #857c75; /* Smoke        — secondary text on light ground  */
+    --border:  #c8b8d8; /* lavender-pink — borders, dividers              */
+    --accent:  #fde700; /* Factory Yellow — interactive accents           */
 }
 ```
+
+The **manifiesto** page inverts this (Sapphire ground, Candy Pink text). On the
+Sapphire dark bands (header/footer, manifiesto body) secondary text is lightened to
+`#b0a8e0` for WCAG contrast. The shared implementation lives in
+`docs/assets/css/base.css` (tokens + `body.theme-dark`) and `docs/assets/css/viewer.css`.
+
+> Earlier docs listed a muted paper subset (Mist / Ebony / Citrine) and an amber
+> editorial palette (`#fafaf8` / `#ffb923`). Neither is shipped — the saturated set
+> above is the real identity.

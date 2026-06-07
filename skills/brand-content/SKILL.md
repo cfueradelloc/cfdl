@@ -9,7 +9,7 @@ description: Generate or rewrite content in C.F.D.L.'s voice and visual identity
 
 **Name:** C.F.D.L. — Colectivo Fuera de Lugar (ES) / Col·lectiu Fora de Lloc (CA)
 
-**Brand color:** #ffb923 (golden amber, RGB 255 185 35)
+**Brand colors (as shipped):** Sapphire `#332f8a` + Candy Pink `#f8ccce` carry the identity; Factory Yellow `#fde700` is the interactive accent. (Saturated Colorplan subset — see *Visual Output Standards* and `references/colorplan.md`.)
 
 **Typography:**
 - Primary: Futura Std Book — `assets/fonts/FuturaStd-Book.otf`
@@ -61,6 +61,10 @@ rewriting any Spanish copy.** The key themes and avoid-list below feed that voic
 
 ## Extended Color Palette
 
+> Note: this amber-centred set is an **alternate/exploration** palette, **not** the
+> shipped site identity (which is Sapphire + Candy Pink + Factory Yellow — see above).
+> Reach for it only when a piece deliberately steps outside the live identity.
+
 A modern, harmonious palette centered on Citrina (#ffb923), spanning warm to cold. Named in Spanish. Use beyond the single brand color when visual work calls for richer tone.
 
 | Nombre | Hex | RGB | Temperatura |
@@ -91,14 +95,22 @@ Inspired by the design language of Frieze, e-flux, Mousse, MoMA, Tate, and MACBA
 
 ### Design tokens
 
+The live identity is a **saturated Colorplan subset** — Candy Pink, Sapphire, Factory
+Yellow. These are the exact tokens shipped on the site and in every `docs/output/` piece;
+the shared source is `docs/assets/css/base.css` (site) and `viewer.css` (pieces).
+
 ```css
---bg:      #fafaf8;   /* warm near-white — page background */
---surface: #ffffff;   /* white — sidebar / card backgrounds */
---text:    #0f0f0e;   /* near-black — all body text */
---muted:   #6b6b65;   /* medium gray — labels, secondary text */
---border:  #e5e4df;   /* subtle warm gray — borders, dividers */
---accent:  #ffb923;   /* C.F.D.L. amber — interactive elements only */
+--bg:      #f8ccce;   /* Candy Pink     — page background (light pages)  */
+--surface: #bbabd5;   /* Lavender       — sidebar / card backgrounds     */
+--text:    #332f8a;   /* Sapphire       — body text, dark bands          */
+--muted:   #857c75;   /* Smoke          — secondary text on light ground */
+--border:  #c8b8d8;   /* lavender-pink  — borders, dividers              */
+--accent:  #fde700;   /* Factory Yellow — interactive accents            */
 ```
+
+The **manifiesto** inverts this (Sapphire ground, Candy Pink text — `body.theme-dark`).
+On Sapphire dark bands, secondary text is lightened to `#b0a8e0` for WCAG contrast.
+See `skills/brand-content/references/colorplan.md` for the full reference palette.
 
 ### Typography
 
@@ -119,13 +131,13 @@ Inspired by the design language of Frieze, e-flux, Mousse, MoMA, Tate, and MACBA
 
 ### Color rules
 
-- `--accent` (#ffb923) appears **only** on interactive elements: slider thumbs, active buttons, focus rings.
-- Never use amber as a background for UI chrome. It may be used as a canvas background when deliberately mirroring the printed manifesto.
+- `--accent` (#fde700, Factory Yellow) appears **only** on interactive/active elements: slider thumbs, active buttons/links, focus rings, the active language tab, hover arrows.
+- Sapphire (`--text`) and Candy Pink (`--bg`) carry the identity; the neon yellow is a punctuation, not a field — never flood large areas with it.
 - No Anthropic palette (orange `#d97757`, blue `#6a9bcc`, green `#788c5d`).
 
 ### Layout & spacing
 
-- Sidebar: white surface, `1px solid var(--border)`, `border-radius: 4px`, no blur, no heavy shadow.
+- Sidebar: `var(--surface)` (Lavender), `1px solid var(--border)`, `border-radius: 4px`, no blur, no heavy shadow.
 - Container padding: 24px. Gap between sidebar and canvas: 24px.
 - Control sections: 32px margin-bottom. Control groups: 20px. Labels: 8px below text.
 - Canvas container: `border-radius: 4px`, `1px solid var(--border)`, no drop shadow.

@@ -1,0 +1,206 @@
+/* ============================================================================
+   C.F.D.L. — base.css
+   Shared chrome for the top-level site pages (index, manifiesto, proyectos,
+   eventos, galeria). No build step: this file is linked directly.
+   NOTE: url() resolves relative to THIS file (docs/assets/css/), so font and
+   asset paths are ../fonts/… etc.
+   ========================================================================== */
+
+/* ── Fonts ─────────────────────────────────────────────────────────────── */
+@font-face {
+    font-family: 'FuturaStd';
+    src: url('../fonts/FuturaStd-Book.otf') format('opentype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'MinionPro';
+    src: url('../fonts/MinionPro-Regular.otf') format('opentype');
+    font-display: swap;
+}
+
+/* ── Reset ─────────────────────────────────────────────────────────────── */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* ── Design tokens ─────────────────────────────────────────────────────── */
+:root {
+    /* Identity palette (light pages) — Candy Pink / Sapphire / Factory Yellow */
+    --bg:      #f8ccce;
+    --surface: #bbabd5;
+    --text:    #332f8a;
+    --muted:   #857c75;
+    --border:  #c8b8d8;
+    --accent:  #fde700;
+
+    /* Dark band (header + footer + any chrome on the Sapphire ground).
+       Invariant across light pages. --band-muted is lightened from the legacy
+       #7870b8 (≈2.5:1) to ≈5:1 on the Sapphire band for legibility. */
+    --band-bg:    #332f8a;
+    --band-fg:    #f8ccce;
+    --band-muted: #b0a8e0;
+    --band-rule:  #5552b8;
+
+    /* Shape & motion */
+    --radius: 3px;
+    --ease:   0.15s;
+}
+
+/* Inverted scheme — opt-in via <body class="theme-dark"> (manifiesto). */
+body.theme-dark {
+    --bg:      #332f8a;
+    --text:    #f8ccce;
+    --muted:   #b0a8e0;   /* lightened from #7870b8 for contrast on Sapphire */
+    --border:  #5552b8;
+    --accent:  #fde700;
+    --rule:    #5552b8;
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────── */
+body {
+    font-family: 'FuturaStd', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+/* ── Nav (shared sticky top bar) ───────────────────────────────────────── */
+.site-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+}
+
+.nav-brand {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-links a {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color var(--ease);
+}
+
+.nav-links a:hover { color: var(--text); }
+
+.nav-links a.active,
+.nav-links a[aria-current="page"] {
+    color: var(--text);
+    border-bottom: 1px solid var(--text);
+    padding-bottom: 1px;
+}
+
+/* ── Header band (section pages) ───────────────────────────────────────── */
+header {
+    padding: 64px 64px 32px;
+    background: var(--band-bg);
+    border-bottom: 1px solid var(--band-rule);
+}
+
+.kicker {
+    font-family: 'FuturaStd', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--band-muted);
+    margin-bottom: 6px;
+}
+
+.section-title {
+    font-family: 'MinionPro', serif;
+    font-size: clamp(26px, 4.5vw, 32px);
+    line-height: 1.15;
+    color: var(--band-fg);
+    font-weight: normal;
+}
+
+.section-subtitle {
+    font-family: 'MinionPro', serif;
+    font-size: clamp(13px, 1.4vw, 14px);
+    line-height: 1.7;
+    color: var(--band-muted);
+    font-style: italic;
+    margin-top: 12px;
+    max-width: 520px;
+}
+
+/* ── Footer band (section pages) ───────────────────────────────────────── */
+footer {
+    padding: 40px 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--band-bg);
+    border-top: 1px solid var(--band-rule);
+}
+
+footer p {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--band-muted);
+}
+
+footer a {
+    color: var(--band-muted);
+    text-decoration: none;
+    transition: color var(--ease);
+}
+
+footer a:hover { color: var(--bg); }
+
+/* ── Accessibility ─────────────────────────────────────────────────────── */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 1px;
+}
+/* Don't show the ring for mouse clicks that land focus on non-interactive-ish
+   targets — :focus-visible already handles this; keep default for inputs. */
+
+/* ── Page-load reveal (gated by reduced-motion below) ──────────────────── */
+@keyframes cfdl-rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: none; }
+}
+.reveal {
+    animation: cfdl-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.reveal-2 { animation-delay: 0.08s; }
+.reveal-3 { animation-delay: 0.16s; }
+
+/* ── Reduced motion ────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+    .reveal, .reveal-2, .reveal-3 { animation: none; }
+}
+
+/* ── Responsive (shared chrome) ────────────────────────────────────────── */
+@media (max-width: 700px) {
+    .site-nav { padding: 0 24px; }
+    .nav-links { gap: 16px; }
+    header { padding: 40px 24px 24px; }
+    footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+}

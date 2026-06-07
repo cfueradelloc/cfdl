@@ -4,78 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Manifiesto</title>
+    <meta name="description" content="Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar — en español, català, English, français, asturianu y português.">
+    <meta name="theme-color" content="#332f8a">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="C.F.D.L.">
+    <meta property="og:title" content="C.F.D.L. — Manifiesto">
+    <meta property="og:description" content="Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar.">
+    <meta property="og:url" content="https://cfdl.site/manifiesto.html">
+    <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C.F.D.L. — Manifiesto">
+    <meta name="twitter:description" content="Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar.">
+    <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        @font-face {
-            font-family: 'FuturaStd';
-            src: url('assets/fonts/FuturaStd-Book.otf') format('opentype');
-        }
-        @font-face {
-            font-family: 'MinionPro';
-            src: url('assets/fonts/MinionPro-Regular.otf') format('opentype');
-        }
-
-        :root {
-            --bg:     #332f8a;
-            --text:   #f8ccce;
-            --muted:  #7870b8;
-            --accent: #fde700;
-            --rule:   #5552b8;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'FuturaStd', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-        }
-
-        /* ── Nav ─────────────────────────────────────────────────────────────── */
-        .site-nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            background: var(--bg);
-            border-bottom: 1px solid var(--rule);
-        }
-
-        .nav-brand {
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            font-size: 10px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-
-        .nav-links a.active {
-            color: var(--text);
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 1px;
-        }
-
-        /* ── Title block ─────────────────────────────────────────────────────── */
+        /* ── Title block (page-specific) ──────────────────────────────────── */
         .title-block {
             padding: 72px 40px 48px;
             border-bottom: 1px solid var(--rule);
@@ -257,10 +204,10 @@
         }
 
         .slide-dot {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            background: rgba(221,212,203,0.35);
+            background: rgba(248,204,206,0.55);
             border: none;
             cursor: pointer;
             padding: 0;
@@ -301,12 +248,14 @@
             border-color: var(--accent);
         }
 
-        /* ── Footer ──────────────────────────────────────────────────────────── */
+        /* ── Footer (transparent, sits on the Sapphire ground) ─────────────── */
         footer {
             padding: 28px 40px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background: transparent;
+            border-top: none;
         }
 
         footer p, footer a {
@@ -325,7 +274,9 @@
             .site-nav { padding: 0 24px; }
             .nav-links { gap: 16px; }
             .title-block { padding: 48px 24px 32px; }
+            .lang-nav { flex-wrap: wrap; }
             .lang-btn { padding: 14px 16px; }
+            #shuffle-btn { margin-left: 0; }
             .manifesto-body { padding: 0 24px; }
             .para-block { grid-template-columns: 32px 1fr; gap: 0 16px; padding: 40px 0; }
             .slideshow { height: 52vw; }
@@ -334,12 +285,12 @@
         }
     </style>
 </head>
-<body>
+<body class="theme-dark">
 
 <nav class="site-nav">
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
-        <a href="manifiesto.html" class="active">Manifiesto</a>
+        <a href="manifiesto.html" class="active" aria-current="page">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
         <a href="proyectos.html">Proyectos</a>
         <a href="galeria.html">Galería</a>
@@ -348,9 +299,9 @@
 </nav>
 
 <div class="title-block">
-    <p class="title-eyebrow">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</p>
-    <h1 class="title-main"><span id="title-word">Mani&shy;fiesto</span></h1>
-    <p class="title-sub" id="title-sub">Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar</p>
+    <p class="title-eyebrow reveal">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</p>
+    <h1 class="title-main reveal reveal-2"><span id="title-word">Mani&shy;fiesto</span></h1>
+    <p class="title-sub reveal reveal-3" id="title-sub">Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar</p>
 </div>
 
 <nav class="lang-nav" aria-label="Language selector">
@@ -676,15 +627,15 @@
 </div>
 
 <!-- ─── Slideshow ──────────────────────────────────────────────────────────── -->
-<div class="slideshow" id="slideshow">
+<div class="slideshow" id="slideshow" tabindex="0" role="group" aria-roledescription="carrusel" aria-label="Imágenes del manifiesto — usa las flechas para navegar">
     <div class="slide active">
-        <img src="assets/images/5b9f2f190555289.65bca36ed4ee3.jpg" alt="">
+        <img src="assets/images/5b9f2f190555289.65bca36ed4ee3.jpg" alt="Sesión del manifiesto C.F.D.L. — imagen 1" decoding="async">
     </div>
     <div class="slide">
-        <img src="assets/images/cca50c190555289.65bca36e5bc86.jpg" alt="">
+        <img src="assets/images/cca50c190555289.65bca36e5bc86.jpg" alt="Sesión del manifiesto C.F.D.L. — imagen 2" loading="lazy" decoding="async">
     </div>
     <div class="slide">
-        <img src="assets/images/ab53dd190555289.65bca36ed3f59.jpg" alt="">
+        <img src="assets/images/ab53dd190555289.65bca36ed3f59.jpg" alt="Sesión del manifiesto C.F.D.L. — imagen 3" loading="lazy" decoding="async">
     </div>
     <button class="slide-btn prev" aria-label="Anterior">&#8592;</button>
     <button class="slide-btn next" aria-label="Siguiente">&#8594;</button>
@@ -770,9 +721,11 @@
 
     // Slideshow
     (function() {
+        const root   = document.getElementById('slideshow');
         const slides = document.querySelectorAll('.slide');
         const dots   = document.querySelectorAll('.slide-dot');
-        let cur = 0, timer;
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+        let cur = 0, timer = null;
 
         function goTo(n) {
             slides[cur].classList.remove('active');
@@ -782,15 +735,34 @@
             dots[cur].classList.add('active');
         }
 
-        function startTimer() {
+        function stop() { clearInterval(timer); timer = null; }
+        function start() {
+            stop();
+            if (reduce.matches) return;          // respect reduced-motion: no auto-advance
             timer = setInterval(() => goTo(cur + 1), 5000);
         }
+        function step(d) { stop(); goTo(cur + d); start(); }
 
-        document.querySelector('.slide-btn.next').addEventListener('click', () => { clearInterval(timer); goTo(cur + 1); startTimer(); });
-        document.querySelector('.slide-btn.prev').addEventListener('click', () => { clearInterval(timer); goTo(cur - 1); startTimer(); });
-        dots.forEach((dot, i) => dot.addEventListener('click', () => { clearInterval(timer); goTo(i); startTimer(); }));
+        document.querySelector('.slide-btn.next').addEventListener('click', () => step(1));
+        document.querySelector('.slide-btn.prev').addEventListener('click', () => step(-1));
+        dots.forEach((dot, i) => dot.addEventListener('click', () => { stop(); goTo(i); start(); }));
 
-        startTimer();
+        // Pause while hovered or keyboard-focused
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+
+        // Arrow-key navigation
+        root.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') { e.preventDefault(); step(1); }
+            else if (e.key === 'ArrowLeft') { e.preventDefault(); step(-1); }
+        });
+
+        // React to a live change in the motion preference
+        reduce.addEventListener('change', start);
+
+        start();
     })();
 
     function setLang(lang) {

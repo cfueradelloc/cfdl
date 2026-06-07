@@ -78,6 +78,12 @@ truth for raw content and assets.
 - Generative-art pieces use **p5.js with seeded randomness** (see the `algorithmic-art`
   skill) and live as self-contained HTML files in `output/`.
 - Keep new pages consistent with the existing plain-HTML, no-build-step approach.
+- **`content/events/calendario-eventos.md` is the single source of truth for events.**
+  `docs/eventos.html` is only a *rendering* of it. When updating the website's events page,
+  **read this markdown first** and derive the page from it — never invent or edit events
+  directly in the HTML. Keep the markdown current (chronological order, full dates, cycle
+  noted per entry); update it **first**, then reflect it into `docs/eventos.html` (one entry
+  per event, with its day; the cycle is a tag, not an entry; full month names).
 
 ## Writing style — C.F.D.L. voice
 

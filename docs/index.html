@@ -3,45 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>C.F.D.L.</title>
+    <title>C.F.D.L. — Colectivo Fuera de Lugar</title>
+    <meta name="description" content="C.F.D.L. — Colectivo Fuera de Lugar / Col·lectiu Fora de Lloc. Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta name="theme-color" content="#332f8a">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="C.F.D.L.">
+    <meta property="og:title" content="C.F.D.L. — Colectivo Fuera de Lugar">
+    <meta property="og:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta property="og:url" content="https://cfdl.site/">
+    <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C.F.D.L. — Colectivo Fuera de Lugar">
+    <meta name="twitter:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        @font-face {
-            font-family: 'FuturaStd';
-            src: url('assets/fonts/FuturaStd-Book.otf') format('opentype');
-        }
-        @font-face {
-            font-family: 'MinionPro';
-            src: url('assets/fonts/MinionPro-Regular.otf') format('opentype');
-        }
-
-        :root {
-            --bg:      #f8ccce; /* Candy Pink */
-            --text:    #332f8a; /* Sapphire */
-            --muted:   #857c75; /* Smoke */
-            --border:  #c8b8d8; /* lavender-pink */
-            --accent:  #fde700; /* Factory Yellow */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        /* index is a bespoke split layout — it consumes base.css tokens/fonts/reset
+           but keeps its own grid, nav, and footer chrome. */
         body {
-            font-family: 'FuturaStd', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
             display: grid;
             grid-template-rows: 1fr auto;
         }
 
-        /* ── Main ────────────────────────────────────────────────────────────── */
+        /* ── Main ──────────────────────────────────────────────────────────── */
         main {
             display: grid;
             grid-template-columns: 1fr 1fr;
             min-height: calc(100vh - 56px);
         }
 
-        /* ── Left: branding ──────────────────────────────────────────────────── */
+        /* ── Left: branding ────────────────────────────────────────────────── */
         .brand-col {
             background: var(--text);
             padding: 48px;
@@ -54,7 +49,7 @@
             font-size: 9px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: #7870b8;
+            color: var(--band-muted);
             line-height: 1.8;
         }
 
@@ -68,7 +63,7 @@
             align-self: flex-end;
         }
 
-        /* ── Right: nav sections ─────────────────────────────────────────────── */
+        /* ── Right: nav sections ───────────────────────────────────────────── */
         .nav-col {
             display: flex;
             flex-direction: column;
@@ -84,7 +79,7 @@
             border-left: 3px solid transparent;
             text-decoration: none;
             color: var(--text);
-            transition: background 0.15s, border-color 0.15s;
+            transition: background var(--ease), border-color var(--ease);
         }
 
         .nav-item:last-child { border-bottom: none; }
@@ -110,12 +105,12 @@
             font-size: 20px;
             color: var(--accent);
             opacity: 0.55;
-            transition: transform 0.15s, color 0.15s, opacity 0.15s;
+            transition: transform var(--ease), color var(--ease), opacity var(--ease);
         }
 
         .nav-item:hover .nav-arrow { opacity: 1; }
 
-        /* ── Footer ──────────────────────────────────────────────────────────── */
+        /* ── Footer (bespoke, fixed-height row) ────────────────────────────── */
         footer {
             height: 56px;
             display: flex;
@@ -123,26 +118,27 @@
             justify-content: space-between;
             padding: 0 48px;
             background: var(--text);
-            border-top: 1px solid #5552b8;
+            border-top: 1px solid var(--band-rule);
         }
 
         footer p, footer a {
             font-size: 9px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
-            color: #7870b8;
+            color: var(--band-muted);
             text-decoration: none;
-            transition: color 0.15s;
+            transition: color var(--ease);
         }
 
         footer a:hover { color: var(--bg); }
 
-        /* ── Responsive ──────────────────────────────────────────────────────── */
+        /* ── Responsive ────────────────────────────────────────────────────── */
         @media (max-width: 700px) {
             main { grid-template-columns: 1fr; min-height: auto; }
-            .brand-col { border-bottom: 1px solid #5552b8; padding: 32px 24px; min-height: 40vh; }
+            .brand-col { border-bottom: 1px solid var(--band-rule); padding: 32px 24px; min-height: 40vh; }
             .nav-item { padding: 0 24px; }
-            footer { padding: 0 24px; }
+            /* hold the footer to a single row — override base.css's column rule */
+            footer { padding: 0 24px; flex-direction: row; gap: 0; text-align: left; }
         }
     </style>
 </head>
@@ -150,29 +146,29 @@
 
 <main>
     <div class="brand-col">
-        <div class="brand-top">
+        <div class="brand-top reveal">
             Colectivo Fuera de Lugar<br>
             Col·lectiu Fora de Lloc
         </div>
-        <div class="brand-name">C.F.D.L.</div>
+        <h1 class="brand-name reveal reveal-2">C.F.D.L.</h1>
     </div>
 
-    <nav class="nav-col">
+    <nav class="nav-col" aria-label="Secciones">
         <a class="nav-item" href="manifiesto.html">
             <span class="nav-item-label">Manifiesto</span>
-            <span class="nav-arrow">→</span>
+            <span class="nav-arrow" aria-hidden="true">→</span>
         </a>
         <a class="nav-item" href="eventos.html">
             <span class="nav-item-label">Eventos</span>
-            <span class="nav-arrow">→</span>
+            <span class="nav-arrow" aria-hidden="true">→</span>
         </a>
         <a class="nav-item" href="proyectos.html">
             <span class="nav-item-label">Proyectos</span>
-            <span class="nav-arrow">→</span>
+            <span class="nav-arrow" aria-hidden="true">→</span>
         </a>
         <a class="nav-item" href="galeria.html">
             <span class="nav-item-label">Galería</span>
-            <span class="nav-arrow">→</span>
+            <span class="nav-arrow" aria-hidden="true">→</span>
         </a>
     </nav>
 </main>

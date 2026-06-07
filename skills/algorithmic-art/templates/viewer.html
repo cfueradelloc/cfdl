@@ -14,6 +14,12 @@
 
     Fonts load from the site's assets/fonts/ — paths below assume the piece lives in output/
     (../assets/fonts/). Adjust the relative prefix if the output location differs.
+
+    SITE INTEGRATION (pieces shipped under docs/output/):
+    • Link the shared chrome:  <link rel="stylesheet" href="../assets/css/viewer.css">
+      (it provides the :focus-visible ring, a prefers-reduced-motion guard, and .back-link).
+    • Give the piece a way home — first element in the sidebar:
+      <a class="back-link" href="../proyectos.html">← Archivo generativo</a>
     The world is your oyster - be creative!
 -->
 <html lang="en">
@@ -26,20 +32,22 @@
         @font-face {
             font-family: 'FuturaStd';
             src: url('../assets/fonts/FuturaStd-Book.otf') format('opentype');
+            font-display: swap;
         }
         @font-face {
             font-family: 'MinionPro';
             src: url('../assets/fonts/MinionPro-Regular.otf') format('opentype');
+            font-display: swap;
         }
 
-        /* C.F.D.L. Design Tokens — GF Smith Colorplan */
+        /* C.F.D.L. Design Tokens — saturated Colorplan subset (matches the live site) */
         :root {
-            --bg:      #f8ccce; /* Mist */
-            --surface: #bbabd5; /* Vellum White */
-            --text:    #332f8a; /* Ebony */
-            --muted:   #857c75; /* Smoke */
-            --border:  #c8b8d8; /* Natural */
-            --accent:  #fde700; /* Citrine */
+            --bg:      #f8ccce; /* Candy Pink    */
+            --surface: #bbabd5; /* Lavender      */
+            --text:    #332f8a; /* Sapphire      */
+            --muted:   #857c75; /* Smoke         */
+            --border:  #c8b8d8; /* lavender-pink */
+            --accent:  #fde700; /* Factory Yellow */
         }
 
         * {

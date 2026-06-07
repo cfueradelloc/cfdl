@@ -4,113 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Proyectos</title>
+    <meta name="description" content="Archivo generativo del C.F.D.L. — interpretaciones visuales del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
+    <meta name="theme-color" content="#332f8a">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="C.F.D.L.">
+    <meta property="og:title" content="C.F.D.L. — Archivo Generativo">
+    <meta property="og:description" content="Piezas generativas producidas a partir del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
+    <meta property="og:url" content="https://cfdl.site/proyectos.html">
+    <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C.F.D.L. — Archivo Generativo">
+    <meta name="twitter:description" content="Piezas generativas producidas a partir del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
+    <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        @font-face {
-            font-family: 'FuturaStd';
-            src: url('assets/fonts/FuturaStd-Book.otf') format('opentype');
-        }
-        @font-face {
-            font-family: 'MinionPro';
-            src: url('assets/fonts/MinionPro-Regular.otf') format('opentype');
-        }
-
-        :root {
-            --bg:      #f8ccce; /* Candy Pink */
-            --surface: #bbabd5; /* Lavender */
-            --text:    #332f8a; /* Sapphire */
-            --muted:   #857c75; /* Smoke */
-            --border:  #c8b8d8; /* lavender-pink */
-            --accent:  #fde700; /* Factory Yellow */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'FuturaStd', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-
-        /* ── Nav ─────────────────────────────────────────────────────────────── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-brand {
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            font-size: 10px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-        .nav-links a.active {
-            color: var(--text);
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 1px;
-        }
-
-        /* ── Header ──────────────────────────────────────────────────────────── */
-        header {
-            padding: 64px 64px 32px;
-            background: var(--text);
-            border-bottom: 1px solid #5552b8;
-        }
-
-        header h1 {
-            font-family: 'FuturaStd', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #7870b8;
-            margin-bottom: 6px;
-        }
-
-        header p.section-title {
-            font-family: 'MinionPro', serif;
-            font-size: 32px;
-            line-height: 1.15;
-            color: var(--bg);
-            font-weight: normal;
-        }
-
-        header p.section-subtitle {
-            font-family: 'MinionPro', serif;
-            font-size: 14px;
-            line-height: 1.7;
-            color: #7870b8;
-            font-style: italic;
-            margin-top: 12px;
-            max-width: 520px;
-        }
-
-        /* ── Piece list ──────────────────────────────────────────────────────── */
+        /* ── Piece list (page-specific) ────────────────────────────────────── */
         .piece-list { list-style: none; }
 
         .piece-item { border-bottom: 1px solid var(--border); }
@@ -124,7 +36,7 @@
             border-left: 3px solid transparent;
             text-decoration: none;
             color: inherit;
-            transition: background 0.15s, border-color 0.15s;
+            transition: background var(--ease), border-color var(--ease);
         }
 
         .piece-link:hover {
@@ -177,7 +89,7 @@
             color: var(--muted);
             border: 1px solid var(--border);
             padding: 2px 7px;
-            border-radius: 2px;
+            border-radius: var(--radius);
             margin-left: 10px;
             vertical-align: middle;
         }
@@ -187,67 +99,39 @@
             color: var(--accent);
             opacity: 0.5;
             padding-top: 4px;
-            transition: transform 0.15s, color 0.15s, opacity 0.15s;
+            transition: transform var(--ease), color var(--ease), opacity var(--ease);
             align-self: center;
         }
 
         .piece-link:hover .piece-arrow { opacity: 1; }
 
-        /* ── Footer ──────────────────────────────────────────────────────────── */
-        footer {
-            padding: 40px 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--text);
-            border-top: 1px solid #5552b8;
-        }
-
-        footer p {
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #7870b8;
-        }
-
-        footer a {
-            color: #7870b8;
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        footer a:hover { color: var(--bg); }
-
-        /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 700px) {
-            nav { padding: 0 24px; }
-            header { padding: 40px 24px 24px; }
             .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
 <body>
 
-<nav>
+<nav class="site-nav">
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
-        <a href="proyectos.html" class="active">Proyectos</a>
+        <a href="proyectos.html" class="active" aria-current="page">Proyectos</a>
         <a href="galeria.html">Galería</a>
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
     </div>
 </nav>
 
 <header>
-    <h1>C.F.D.L.</h1>
-    <p class="section-title">Archivo Generativo</p>
-    <p class="section-subtitle">Piezas generativas producidas a partir del manifiesto de C.F.D.L.
+    <p class="kicker reveal">C.F.D.L.</p>
+    <h1 class="section-title reveal reveal-2">Archivo Generativo</h1>
+    <p class="section-subtitle reveal reveal-3">Piezas generativas producidas a partir del manifiesto de C.F.D.L.
         Cada archivo es una interpretación visual de un fragmento —
         sistemas que crecen, se fracturan, derivan y se pierden.</p>
 </header>
 
+<main>
 <ul class="piece-list">
 
     <li class="piece-item">
@@ -258,7 +142,7 @@
                 <div class="piece-fragment">"fuera de lugar — siempre en algún otro lugar"</div>
                 <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -270,7 +154,7 @@
                 <div class="piece-fragment">"al mirar atrás, encontrar un camino lleno de maleza"</div>
                 <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -282,7 +166,7 @@
                 <div class="piece-fragment">"Navegar quitándole a la brújula su imán"</div>
                 <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -294,7 +178,7 @@
                 <div class="piece-fragment">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</div>
                 <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -306,7 +190,7 @@
                 <div class="piece-fragment">"Y ante la síntesis, la disgregación"</div>
                 <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -318,7 +202,7 @@
                 <div class="piece-fragment">"el malestar de asomarse a una garganta sin fondo"</div>
                 <div class="piece-desc">Vórtice de partículas — espiral sin retorno</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
@@ -330,11 +214,12 @@
                 <div class="piece-fragment">"9 colores — de Cera a Medianoche"</div>
                 <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
             </div>
-            <span class="piece-arrow">→</span>
+            <span class="piece-arrow" aria-hidden="true">→</span>
         </a>
     </li>
 
 </ul>
+</main>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>

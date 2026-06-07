@@ -4,104 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Eventos</title>
+    <meta name="description" content="Agenda del C.F.D.L. — clubes de lectura, recitales, proyecciones y ciclos: lo que ocurre y lo que ya ocurrió, siempre en algún otro lugar.">
+    <meta name="theme-color" content="#332f8a">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="es_ES">
+    <meta property="og:site_name" content="C.F.D.L.">
+    <meta property="og:title" content="C.F.D.L. — Eventos">
+    <meta property="og:description" content="Clubes de lectura, recitales, proyecciones y ciclos: lo que ocurre y lo que ya ocurrió.">
+    <meta property="og:url" content="https://cfdl.site/eventos.html">
+    <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="C.F.D.L. — Eventos">
+    <meta name="twitter:description" content="Clubes de lectura, recitales, proyecciones y ciclos: lo que ocurre y lo que ya ocurrió.">
+    <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
+    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        @font-face {
-            font-family: 'FuturaStd';
-            src: url('assets/fonts/FuturaStd-Book.otf') format('opentype');
-        }
-        @font-face {
-            font-family: 'MinionPro';
-            src: url('assets/fonts/MinionPro-Regular.otf') format('opentype');
-        }
-
-        :root {
-            --bg:      #f8ccce; /* Candy Pink */
-            --surface: #bbabd5; /* Lavender */
-            --text:    #332f8a; /* Sapphire */
-            --muted:   #857c75; /* Smoke */
-            --border:  #c8b8d8; /* lavender-pink */
-            --accent:  #fde700; /* Factory Yellow */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'FuturaStd', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-
-        /* ── Nav ─────────────────────────────────────────────────────────────── */
-        nav {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 40px;
-            background: var(--bg);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav-brand {
-            font-size: 10px;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 32px;
-        }
-
-        .nav-links a {
-            font-size: 10px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        .nav-links a:hover { color: var(--text); }
-
-        .nav-links a.active {
-            color: var(--text);
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 1px;
-        }
-
-        /* ── Header ──────────────────────────────────────────────────────────── */
-        header {
-            padding: 64px 64px 32px;
-            background: var(--text);
-            border-bottom: 1px solid #5552b8;
-        }
-
-        header h1 {
-            font-family: 'FuturaStd', sans-serif;
-            font-size: 11px;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #7870b8;
-            margin-bottom: 6px;
-        }
-
-        header p.section-title {
-            font-family: 'MinionPro', serif;
-            font-size: 32px;
-            line-height: 1.15;
-            color: var(--bg);
-            font-weight: normal;
-        }
-
-        /* ── Section label ───────────────────────────────────────────────────── */
+        /* ── Section label (page-specific) ─────────────────────────────────── */
         .section-label {
             padding: 14px 64px;
             border-bottom: 1px solid var(--border);
@@ -110,8 +31,9 @@
             gap: 16px;
         }
 
-        .section-label span {
+        .section-label h2 {
             font-size: 9px;
+            font-weight: normal;
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--muted);
@@ -124,12 +46,12 @@
             background: var(--border);
         }
 
-        /* ── Event list ──────────────────────────────────────────────────────── */
+        /* ── Event list ────────────────────────────────────────────────────── */
         .event-list { list-style: none; }
 
         .event-item {
             display: grid;
-            grid-template-columns: 72px 1fr auto;
+            grid-template-columns: 92px 1fr auto;
             align-items: center;
             gap: 0 32px;
             padding: 24px 64px;
@@ -202,51 +124,21 @@
             font-weight: normal;
         }
 
-        /* ── Footer ──────────────────────────────────────────────────────────── */
-        footer {
-            padding: 40px 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--text);
-            border-top: 1px solid #5552b8;
-        }
-
-        footer p {
-            font-size: 9px;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #7870b8;
-        }
-
-        footer a {
-            color: #7870b8;
-            text-decoration: none;
-            transition: color 0.15s;
-        }
-
-        footer a:hover { color: var(--bg); }
-
-        /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 700px) {
-            nav { padding: 0 24px; }
-            .nav-links { gap: 16px; }
-            header { padding: 40px 24px 24px; }
             .section-label { padding: 12px 24px; }
-            .event-item { padding: 20px 24px; grid-template-columns: 56px 1fr; gap: 0 16px; border-left-width: 0; }
+            .event-item { padding: 20px 24px; grid-template-columns: 64px 1fr; gap: 0 16px; border-left-width: 0; }
             .event-item:not(.past) { padding-left: 24px; }
             .event-type { display: none; }
-            footer { padding: 32px 24px; flex-direction: column; gap: 8px; text-align: center; }
         }
     </style>
 </head>
 <body>
 
-<nav>
+<nav class="site-nav">
     <a class="nav-brand" href="index.html">C.F.D.L.</a>
     <div class="nav-links">
         <a href="manifiesto.html">Manifiesto</a>
-        <a href="eventos.html" class="active">Eventos</a>
+        <a href="eventos.html" class="active" aria-current="page">Eventos</a>
         <a href="proyectos.html">Proyectos</a>
         <a href="galeria.html">Galería</a>
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
@@ -254,113 +146,191 @@
 </nav>
 
 <header>
-    <h1>C.F.D.L.</h1>
-    <p class="section-title">Eventos</p>
+    <p class="kicker reveal">C.F.D.L.</p>
+    <h1 class="section-title reveal reveal-2">Eventos</h1>
 </header>
 
-<!-- Próximos -->
-<div class="section-label">
-    <span>Próximos</span>
-    <div class="label-line"></div>
-</div>
+<main>
 
-<ul class="event-list">
+<section aria-label="Próximos eventos">
+    <div class="section-label">
+        <h2>Próximos</h2>
+        <div class="label-line"></div>
+    </div>
 
-    <li class="event-item">
-        <div class="event-date">
-            <span class="event-month">Ene–Jul</span>
-            <span class="event-year">2026</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">14.4</div>
-            <div class="event-meta">Club de lectura — La Perecquiana &amp; Observatorio de Estudios Africanos de la UVa, Valladolid · sesiones hasta el 10 de julio</div>
-        </div>
-        <div class="event-type">Club de lectura</div>
-    </li>
+    <ul class="event-list">
 
-</ul>
+        <li class="event-item">
+            <div class="event-date">
+                <span class="event-month">—</span>
+                <span class="event-year">hasta julio 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Sesiones del club</div>
+                <div class="event-meta">Club de lectura — La Perecquiana &amp; Observatorio de Estudios Africanos de la UVa, Valladolid · fechas por anunciar</div>
+            </div>
+            <div class="event-type">14.4</div>
+        </li>
 
-<!-- Pasados -->
-<div class="section-label">
-    <span>Pasados</span>
-    <div class="label-line"></div>
-</div>
+    </ul>
+</section>
 
-<ul class="event-list">
+<section aria-label="Eventos pasados">
+    <div class="section-label">
+        <h2>Pasados</h2>
+        <div class="label-line"></div>
+    </div>
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Mar–May</span>
-            <span class="event-year">2026</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">La magistral</div>
-            <div class="event-meta">Ciclo de conferencias — Librería La Perecquiana, Valladolid</div>
-        </div>
-        <div class="event-type">Conferencias</div>
-    </li>
+    <ul class="event-list">
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Abr–May</span>
-            <span class="event-year">2026</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">Equinoccio Sound</div>
-            <div class="event-meta">Festival de música — colaboración, Madrid</div>
-        </div>
-        <div class="event-type">Festival</div>
-    </li>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">15</span>
+                <span class="event-year">mayo 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Juan Navarro</div>
+                <div class="event-meta">Conferencia — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">La Magistral</div>
+        </li>
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Abr</span>
-            <span class="event-year">2026</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">Salut, Drets, Acció</div>
-            <div class="event-meta">Cine y coloquio — <em>Banel &amp; Adama</em>, Cinemes Girona, Barcelona</div>
-        </div>
-        <div class="event-type">Cine</div>
-    </li>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">—</span>
+                <span class="event-year">abril–mayo 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Equinoccio Sound</div>
+                <div class="event-meta">Festival de música, colaboración — Madrid</div>
+            </div>
+            <div class="event-type">Festival</div>
+        </li>
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Feb</span>
-            <span class="event-year">2026</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">Lorca en La Habana</div>
-            <div class="event-meta">Cine y coloquio — Cinemes Casablanca, Valladolid</div>
-        </div>
-        <div class="event-type">Cine</div>
-    </li>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">24</span>
+                <span class="event-year">abril 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Banel &amp; Adama</div>
+                <div class="event-meta">Cine y coloquio — Cinemes Girona, Barcelona</div>
+            </div>
+            <div class="event-type">Salut, Drets, Acció</div>
+        </li>
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Oct–Dic</span>
-            <span class="event-year">2025</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">En voz alta: el autor ante sus textos</div>
-            <div class="event-meta">Ciclo de lecturas — Librería La Perecquiana, Valladolid</div>
-        </div>
-        <div class="event-type">Lecturas</div>
-    </li>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">10</span>
+                <span class="event-year">abril 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Marta Álvarez</div>
+                <div class="event-meta">Conferencia — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">La Magistral</div>
+        </li>
 
-    <li class="event-item past">
-        <div class="event-date">
-            <span class="event-month">Jun</span>
-            <span class="event-year">2025</span>
-        </div>
-        <div class="event-info">
-            <div class="event-title">Welcome Summer</div>
-            <div class="event-meta">Recital y charla — La Perecquiana &amp; The Bowie Bar, Valladolid</div>
-        </div>
-        <div class="event-type">Recital</div>
-    </li>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">13</span>
+                <span class="event-year">marzo 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Jorge Onecha</div>
+                <div class="event-meta">Conferencia — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">La Magistral</div>
+        </li>
 
-</ul>
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">2</span>
+                <span class="event-year">febrero 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Lorca en La Habana</div>
+                <div class="event-meta">Cine y coloquio — Cinemes Casablanca, Valladolid</div>
+            </div>
+            <div class="event-type">Cine a la carta</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">20</span>
+                <span class="event-year">enero 2026</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Alfonso Armada — «¿Se puede contar África?»</div>
+                <div class="event-meta">Charla de presentación — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">14.4</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">12</span>
+                <span class="event-year">diciembre 2025</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Ángela Mallén</div>
+                <div class="event-meta">Lectura — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">En voz alta</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">13</span>
+                <span class="event-year">noviembre 2025</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Pablo Martín Sánchez</div>
+                <div class="event-meta">Lectura — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">En voz alta</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">8</span>
+                <span class="event-year">octubre 2025</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Ana Griott</div>
+                <div class="event-meta">Lectura — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">En voz alta</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">19</span>
+                <span class="event-year">junio 2025</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">Gonzalo Sánchez-Terán</div>
+                <div class="event-meta">Lectura y charla — Librería La Perecquiana, Valladolid</div>
+            </div>
+            <div class="event-type">Welcome Summer</div>
+        </li>
+
+        <li class="event-item past">
+            <div class="event-date">
+                <span class="event-month">19</span>
+                <span class="event-year">junio 2025</span>
+            </div>
+            <div class="event-info">
+                <div class="event-title">María Sotelo y JAM3S</div>
+                <div class="event-meta">Recital poético-musical — The Bowie Bar, Valladolid</div>
+            </div>
+            <div class="event-type">Welcome Summer</div>
+        </li>
+
+    </ul>
+</section>
+
+</main>
 
 <footer>
     <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>

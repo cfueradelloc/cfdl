@@ -1,0 +1,39 @@
+/* ============================================================================
+   C.F.D.L. — viewer.css
+   Additive shared chrome for the generative pieces in docs/output/.
+   Linked alongside each piece's own inline <style>; it does NOT redefine the
+   layout/:root (those stay inline) — it adds the back-link, focus ring, and a
+   reduced-motion guard. Custom properties (--muted/--text/--accent) resolve
+   from each piece's own :root.
+   ========================================================================== */
+
+/* ── Back to the archive ───────────────────────────────────────────────── */
+.back-link {
+    display: inline-block;
+    font-family: 'FuturaStd', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    margin-bottom: 22px;
+    transition: color 0.15s;
+}
+.back-link:hover,
+.back-link:focus-visible { color: var(--text); }
+
+/* ── Accessibility ─────────────────────────────────────────────────────── */
+:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
