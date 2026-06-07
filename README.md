@@ -1,12 +1,28 @@
-# cfdl-skills
+# cfdl
 
-A collection of Claude Code skills for [C.F.D.L.](https://github.com/cfueradelloc), an arts collective.
+The static website (plain HTML, deployed via GitHub Pages) and Claude Code skills for
+[C.F.D.L.](https://github.com/cfueradelloc) — Colectivo Fuera de Lugar, an arts collective.
 
-## Usage
+## Structure
 
-Skills live in the `skills/` folder. To use them, point Claude Code at this repo's skills directory or copy skills into your project's `.claude/` folder.
+```
+docs/      the deployable website (GitHub Pages serves from /docs)
+  *.html     site pages (index, manifiesto, proyectos, eventos, galeria)
+  assets/    fonts, logo, images, docs — everything the site serves
+  gallery/   published photo series used by galeria.html
+  output/    generative-art pieces (p5.js), one self-contained HTML each
+content/   source of truth for updating the site (events calendar, SOURCES.md)
+skills/    Claude Code skills (one folder + SKILL.md each)
+```
 
-## Available Skills
+The website lives entirely under `docs/`. To update it, edit the source in `content/` and reflect
+it into the relevant page in `docs/`. See `CLAUDE.md` for conventions, deployment, and the link to
+the Drive source material.
+
+## Skills
+
+Skills live in `skills/`. To use them, point Claude Code at this repo's skills directory or
+copy a skill folder into your project's `.claude/skills/`.
 
 | Skill | Command | Description |
 |-------|---------|-------------|

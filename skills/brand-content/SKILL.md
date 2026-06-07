@@ -12,19 +12,19 @@ description: Generate or rewrite content in C.F.D.L.'s voice and visual identity
 **Brand color:** #ffb923 (golden amber, RGB 255 185 35)
 
 **Typography:**
-- Primary: Futura Std Book — `skills/references/typography/FuturaStd-Book.otf`
-- Secondary: Minion Pro Regular — `skills/references/typography/MinionPro-Regular.otf`
+- Primary: Futura Std Book — `assets/fonts/FuturaStd-Book.otf`
+- Secondary: Minion Pro Regular — `assets/fonts/MinionPro-Regular.otf`
 
-When generating any code that renders text (HTML, CSS, p5.js, etc.), always load these fonts via `@font-face` from the paths above (adjust relative path based on output location). Never substitute with system fonts, Google Fonts, or other typefaces. Example:
+The fonts live under the site's `assets/fonts/` folder (the site root is `docs/`). When generating any code that renders text (HTML, CSS, p5.js, etc.), always load these fonts via `@font-face` from those paths (adjust the relative prefix based on output location — e.g. `assets/fonts/…` from a page at the site root, `../assets/fonts/…` from `output/`). Never substitute with system fonts, Google Fonts, or other typefaces. Example (from a page at the site root):
 
 ```css
 @font-face {
     font-family: 'FuturaStd';
-    src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+    src: url('assets/fonts/FuturaStd-Book.otf') format('opentype');
 }
 @font-face {
     font-family: 'MinionPro';
-    src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+    src: url('assets/fonts/MinionPro-Regular.otf') format('opentype');
 }
 ```
 
@@ -38,7 +38,10 @@ Use `FuturaStd` for body text and UI; `MinionPro` for titles and display text.
 
 **Languages:** Spanish and Catalan (default to these; use English only if explicitly requested)
 
-**Voice:** Concise and bold, playful but serious
+**Voice:** Concise and bold, playful but serious. First person plural (*nosotros*),
+declarative, literary, never promotional. **The full writing-style rules are canonical
+in `CLAUDE.md` ("Writing style — C.F.D.L. voice") — read and apply them before writing or
+rewriting any Spanish copy.** The key themes and avoid-list below feed that voice.
 
 **Key themes:**
 - Exile, displacement, being out of place as the ideal condition
@@ -102,11 +105,11 @@ Inspired by the design language of Frieze, e-flux, Mousse, MoMA, Tate, and MACBA
 ```css
 @font-face {
     font-family: 'FuturaStd';
-    src: url('[path]/skills/references/typography/FuturaStd-Book.otf') format('opentype');
+    src: url('[path]/assets/fonts/FuturaStd-Book.otf') format('opentype');
 }
 @font-face {
     font-family: 'MinionPro';
-    src: url('[path]/skills/references/typography/MinionPro-Regular.otf') format('opentype');
+    src: url('[path]/assets/fonts/MinionPro-Regular.otf') format('opentype');
 }
 ```
 
@@ -139,7 +142,10 @@ Inspired by the design language of Frieze, e-flux, Mousse, MoMA, Tate, and MACBA
 
 ### Text content
 
-Using the brand guidelines above, take the content provided by the user and:
+First, read the **"Writing style — C.F.D.L. voice"** section of `CLAUDE.md` — it is the
+canonical source for grammar, register, punctuation (the spaced em dash —), naming
+conventions, caption format, and the motif vocabulary. Then, using those rules plus the
+brand guidelines above, take the content provided by the user and:
 
 1. Rewrite or generate it in C.F.D.L.'s voice — consistent in tone, energy, and language
 2. Keep it concise and purposeful; cut anything that dilutes the message

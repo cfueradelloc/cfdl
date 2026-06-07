@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ante la síntesis, la disgregación — C.F.D.L.</title>
-    <link rel="icon" type="image/svg+xml" href="../skills/references/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../assets/logo/CFDL_favicon.svg">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <style>
         @font-face {
             font-family: 'FuturaStd';
-            src: url('../skills/references/typography/FuturaStd-Book.otf') format('opentype');
+            src: url('../assets/fonts/FuturaStd-Book.otf') format('opentype');
         }
         @font-face {
             font-family: 'MinionPro';
-            src: url('../skills/references/typography/MinionPro-Regular.otf') format('opentype');
+            src: url('../assets/fonts/MinionPro-Regular.otf') format('opentype');
         }
 
         :root {
@@ -297,8 +297,8 @@
 // ─── FONTS ─────────────────────────────────────────────────────────────────
 let fontsReady = false;
 Promise.all([
-    new FontFace('FuturaStd', 'url(../skills/references/typography/FuturaStd-Book.otf)').load(),
-    new FontFace('MinionPro',  'url(../skills/references/typography/MinionPro-Regular.otf)').load(),
+    new FontFace('FuturaStd', 'url(../assets/fonts/FuturaStd-Book.otf)').load(),
+    new FontFace('MinionPro',  'url(../assets/fonts/MinionPro-Regular.otf)').load(),
 ]).then(fs => { fs.forEach(f => document.fonts.add(f)); fontsReady = true; })
   .catch(() => { fontsReady = true; });
 setTimeout(() => { fontsReady = true; }, 5000);

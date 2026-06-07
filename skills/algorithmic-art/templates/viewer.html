@@ -12,7 +12,8 @@
     ✗ The parameters (define what YOUR art needs)
     ✗ The UI controls (match YOUR parameters)
 
-    Fonts load from skills/references/typography/ — adjust relative path as needed.
+    Fonts load from the site's assets/fonts/ — paths below assume the piece lives in output/
+    (../assets/fonts/). Adjust the relative prefix if the output location differs.
     The world is your oyster - be creative!
 -->
 <html lang="en">
@@ -24,11 +25,11 @@
     <style>
         @font-face {
             font-family: 'FuturaStd';
-            src: url('../references/typography/FuturaStd-Book.otf') format('opentype');
+            src: url('../assets/fonts/FuturaStd-Book.otf') format('opentype');
         }
         @font-face {
             font-family: 'MinionPro';
-            src: url('../references/typography/MinionPro-Regular.otf') format('opentype');
+            src: url('../assets/fonts/MinionPro-Regular.otf') format('opentype');
         }
 
         /* C.F.D.L. Design Tokens — GF Smith Colorplan */
