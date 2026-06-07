@@ -1,30 +1,33 @@
-# cfdl
+# C.F.D.L.
 
-The static website (plain HTML, deployed via GitHub Pages) and Claude Code skills for
-[C.F.D.L.](https://github.com/cfueradelloc) — Colectivo Fuera de Lugar, an arts collective.
+**Colectivo Fuera de Lugar** (in Catalan, *Col·lectiu Fora de Lloc*) is an arts collective:
+reading clubs, recitals, film screenings and conferences, alongside a thread of generative art.
+This repository is its website and a couple of Claude Code skills used to build and maintain it.
 
-## Structure
+Website: **https://cfdl.site**
 
-```
-docs/      the deployable website (GitHub Pages serves from /docs)
-  *.html     site pages (index, manifiesto, proyectos, eventos, galeria)
-  assets/    fonts, logo, images, docs — everything the site serves
-  gallery/   published photo series used by galeria.html
-  output/    generative-art pieces (p5.js), one self-contained HTML each
-content/   source of truth for updating the site (events calendar, SOURCES.md)
-skills/    Claude Code skills (one folder + SKILL.md each)
-```
+## The site
 
-The website lives entirely under `docs/`. To update it, edit the source in `content/` and reflect
-it into the relevant page in `docs/`. See `CLAUDE.md` for conventions, deployment, and the link to
-the Drive source material.
+A hand-written static site (plain HTML, no build step), served from `docs/` with GitHub Pages:
+
+- **Manifiesto** — the collective's manifesto, in six languages.
+- **Eventos** — what's coming up and what already happened.
+- **Proyectos** — generative pieces made with p5.js.
+- **Galería** — photographs from the events.
+
+The raw material behind the site (events calendar, source notes) lives in `content/`; the fonts,
+logo and images it serves live in `docs/assets/`.
 
 ## Skills
 
-Skills live in `skills/`. To use them, point Claude Code at this repo's skills directory or
-copy a skill folder into your project's `.claude/skills/`.
+The `skills/` folder holds two Claude Code skills:
 
-| Skill | Command | Description |
-|-------|---------|-------------|
-| Brand Content | `/brand-content` | Generate or rewrite content and convert images to C.F.D.L.'s visual style |
-| Algorithmic Art | `/algorithmic-art` | Create generative art using p5.js with seeded randomness and interactive parameter exploration |
+- **brand-content** — write or rewrite copy in the collective's voice, and convert images to its style.
+- **algorithmic-art** — build generative p5.js pieces with seeded randomness.
+
+To use one, point Claude Code at this `skills/` directory or copy a skill folder into your own
+project's `.claude/skills/`.
+
+## Contributing
+
+Conventions, deployment, and where the source material lives are documented in `CLAUDE.md`.
