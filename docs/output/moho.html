@@ -269,6 +269,31 @@
             display: block;
         }
 
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: opacity 0.4s ease;
+        }
+        .loading::before {
+            content: "";
+            width: 7px; height: 7px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: loading-pulse 1s ease-in-out infinite;
+        }
+        @keyframes loading-pulse {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50%      { opacity: 1;   transform: scale(1.1); }
+        }
+
         @media (max-width: 700px) {
             .container { flex-direction: column; }
             .sidebar { width: 100%; }
@@ -346,6 +371,7 @@
 
     <main class="canvas-area">
         <div id="canvas-container">
+            <div class="loading">Generando moho...</div>
             <div id="sketch"></div>
         </div>
     </main>
@@ -676,6 +702,24 @@ new p5(function(p) {
         p.pop();
     };
 });
+</script>
+
+<script>
+/* Hide the loading placeholder once the sketch canvas has painted. */
+(function () {
+    var el = document.querySelector('.loading');
+    var c  = document.getElementById('canvas-container');
+    if (!el || !c) return;
+    (function check() {
+        var cv = c.querySelector('canvas');
+        if (cv && cv.width > 0) {
+            el.style.opacity = '0';
+            setTimeout(function () { el.style.display = 'none'; }, 400);
+            return;
+        }
+        requestAnimationFrame(check);
+    })();
+})();
 </script>
 </body>
 </html>
