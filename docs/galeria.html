@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Galería</title>
-    <meta name="description" content="En voz alta — charlas y encuentros del C.F.D.L. en imágenes. Fotografía en blanco y negro de las sesiones.">
+    <meta name="description" content="Imágenes de los encuentros, lecturas y proyecciones del C.F.D.L. — En voz alta, La Magistral, Welcome Summer, Banel & Adama, Lorca en La Habana.">
     <meta name="theme-color" content="#332f8a">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
     <meta property="og:title" content="C.F.D.L. — Galería">
-    <meta property="og:description" content="En voz alta — charlas y encuentros del C.F.D.L. en imágenes.">
+    <meta property="og:description" content="Encuentros, lecturas y proyecciones del C.F.D.L. en imágenes.">
     <meta property="og:url" content="https://cfdl.site/galeria.html">
-    <meta property="og:image" content="https://cfdl.site/gallery/envozalta-promo-1.jpg">
+    <meta property="og:image" content="https://cfdl.site/gallery/welcome-summer-2.jpg">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="C.F.D.L. — Galería">
-    <meta name="twitter:description" content="En voz alta — charlas y encuentros del C.F.D.L. en imágenes.">
-    <meta name="twitter:image" content="https://cfdl.site/gallery/envozalta-promo-1.jpg">
+    <meta name="twitter:description" content="Encuentros, lecturas y proyecciones del C.F.D.L. en imágenes.">
+    <meta name="twitter:image" content="https://cfdl.site/gallery/welcome-summer-2.jpg">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
     <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
     <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
@@ -43,11 +43,7 @@
                         border-color var(--ease), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
-        .shuffle-btn svg {
-            width: 18px;
-            height: 18px;
-            display: block;
-        }
+        .shuffle-btn svg { width: 18px; height: 18px; display: block; }
 
         .shuffle-btn:hover,
         .shuffle-btn:focus-visible {
@@ -61,14 +57,14 @@
             .shuffle-btn { top: 40px; right: 24px; width: 38px; height: 38px; }
         }
 
-        /* ── Stochastic collage ────────────────────────────────────────────── */
+        /* ── Stochastic collage — large, generous tiles ────────────────────── */
         .gallery {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-auto-rows: 150px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 320px;
             grid-auto-flow: dense;
-            gap: 8px;
-            padding: 24px;
+            gap: 14px;
+            padding: 32px;
             transition: opacity 0.4s ease;
         }
 
@@ -98,12 +94,12 @@
             left: 0;
             right: 0;
             bottom: 0;
-            padding: 16px 10px 8px;
-            font-size: 9px;
-            letter-spacing: 0.12em;
+            padding: 28px 14px 12px;
+            font-size: 10px;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
             color: #fff;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.62));
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -116,11 +112,11 @@
         }
 
         @media (max-width: 900px) {
-            .gallery { grid-template-columns: repeat(3, 1fr); grid-auto-rows: 140px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 260px; gap: 12px; padding: 20px; }
         }
 
-        @media (max-width: 500px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 130px; padding: 16px; }
+        @media (max-width: 520px) {
+            .gallery { grid-auto-rows: 200px; gap: 10px; padding: 14px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -128,15 +124,15 @@
         }
 
         /* ── No-JS fallback (simple masonry of all images) ─────────────────── */
-        .gallery-static { columns: 3; column-gap: 8px; padding: 24px; }
-        .gallery-static figure { break-inside: avoid; margin: 0 0 8px; }
+        .gallery-static { columns: 3; column-gap: 14px; padding: 32px; }
+        .gallery-static figure { break-inside: avoid; margin: 0 0 14px; }
         .gallery-static figure img { width: 100%; height: auto; display: block; }
         .gallery-static figcaption {
-            font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+            font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
             color: var(--muted); padding: 6px 2px 0;
         }
         @media (max-width: 900px) { .gallery-static { columns: 2; } }
-        @media (max-width: 500px) { .gallery-static { columns: 1; padding: 16px; } }
+        @media (max-width: 520px) { .gallery-static { columns: 1; padding: 16px; } }
     </style>
 </head>
 <body>
@@ -155,7 +151,7 @@
 <header>
     <p class="kicker reveal">C.F.D.L.</p>
     <h1 class="section-title reveal reveal-2">Galería</h1>
-    <p class="section-subtitle reveal reveal-3">En voz alta — charlas y encuentros</p>
+    <p class="section-subtitle reveal reveal-3">Encuentros, lecturas y proyecciones</p>
     <button type="button" class="shuffle-btn reveal reveal-3" id="shuffle" hidden aria-label="Barajar las imágenes" title="Barajar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M16 3h5v5"/>
@@ -174,25 +170,18 @@
 
 <noscript>
     <div class="gallery-static">
-        <figure><img src="gallery/envozalta-promo-1.jpg" alt="En voz alta" width="1600" height="1200"><figcaption>entre libros</figcaption></figure>
-        <figure><img src="gallery/envozalta-promo-2.jpg" alt="En voz alta" width="675" height="1200"><figcaption>tomando la palabra</figcaption></figure>
-        <figure><img src="gallery/envozalta-promo-3.jpg" alt="En voz alta" width="1600" height="1200"><figcaption>sala llena</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-1.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>Ángela Mallén</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-2.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>en conversación</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-3.jpg" alt="Ángela Mallén" width="1152" height="2048"><figcaption>pausa</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-4.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>gesticulando</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-5.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>la voz</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-6.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>escucha</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-7.jpg" alt="Ángela Mallén" width="900" height="1600"><figcaption>desde la sala</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-1.jpg" alt="Pablo Martín" width="1153" height="2048"><figcaption>Pablo Martín</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-2.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>en el sofá verde</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-3.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>lectura</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-4.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>la audiencia</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-5.jpg" alt="Pablo Martín" width="1600" height="1200"><figcaption>antes de empezar</figcaption></figure>
-        <figure><img src="gallery/envozalta-ana-1.jpg" alt="Ana Griott" width="1200" height="1600"><figcaption>Ana Griott</figcaption></figure>
-        <figure><img src="gallery/envozalta-ana-2.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>sala llena</figcaption></figure>
-        <figure><img src="gallery/envozalta-ana-3.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>el círculo</figcaption></figure>
-        <figure><img src="gallery/envozalta-ana-4.jpg" alt="Ana Griott" width="1600" height="1200"><figcaption>dos voces</figcaption></figure>
+        <figure><img src="gallery/banel-adama-1.jpg" alt="Banel & Adama — al micrófono" width="1800" height="1200"><figcaption>al micrófono · Banel &amp; Adama</figcaption></figure>
+        <figure><img src="gallery/banel-adama-3.jpg" alt="Banel & Adama — dos voces" width="1800" height="1200"><figcaption>dos voces · Banel &amp; Adama</figcaption></figure>
+        <figure><img src="gallery/banel-adama-5.jpg" alt="Banel & Adama — sala llena" width="1800" height="1200"><figcaption>sala llena · Banel &amp; Adama</figcaption></figure>
+        <figure><img src="gallery/welcome-summer-2.jpg" alt="Welcome Summer — el círculo" width="1800" height="1012"><figcaption>el círculo · Welcome Summer</figcaption></figure>
+        <figure><img src="gallery/welcome-summer-3.jpg" alt="Welcome Summer — leyendo en el sofá" width="1012" height="1800"><figcaption>leyendo en el sofá · Welcome Summer</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-1.jpg" alt="En voz alta — Ángela Mallén" width="1800" height="1013"><figcaption>Ángela Mallén · En voz alta</figcaption></figure>
+        <figure><img src="gallery/envozalta-angela-2.jpg" alt="En voz alta — en conversación" width="1012" height="1800"><figcaption>en conversación · En voz alta</figcaption></figure>
+        <figure><img src="gallery/envozalta-ana-1.jpg" alt="En voz alta — Ana Griott" width="1200" height="1600"><figcaption>Ana Griott · En voz alta</figcaption></figure>
+        <figure><img src="gallery/envozalta-pablo-3.jpg" alt="En voz alta — Pablo Martín" width="1600" height="1200"><figcaption>Pablo Martín · En voz alta</figcaption></figure>
+        <figure><img src="gallery/magistral-juan-1.jpg" alt="La Magistral — Juan Navarro" width="1200" height="1600"><figcaption>Juan Navarro · La Magistral</figcaption></figure>
+        <figure><img src="gallery/magistral-juan-3.jpg" alt="La Magistral — el público" width="1800" height="1350"><figcaption>el público · La Magistral</figcaption></figure>
+        <figure><img src="gallery/lorca-habana-2.jpg" alt="Lorca en La Habana — ante el cartel" width="1800" height="1350"><figcaption>ante el cartel · Lorca en La Habana</figcaption></figure>
     </div>
 </noscript>
 
@@ -210,26 +199,34 @@
     "use strict";
 
     // Pool — single place to maintain. Add a photo: drop it in gallery/ and add an entry.
+    // cap = short fragment + " · " + the event it comes from.
     var IMAGES = [
-        { src: "gallery/envozalta-promo-1.jpg",  alt: "En voz alta",    cap: "entre libros",      w: 1600, h: 1200 },
-        { src: "gallery/envozalta-promo-2.jpg",  alt: "En voz alta",    cap: "tomando la palabra", w: 675,  h: 1200 },
-        { src: "gallery/envozalta-promo-3.jpg",  alt: "En voz alta",    cap: "sala llena",        w: 1600, h: 1200 },
-        { src: "gallery/envozalta-angela-1.jpg", alt: "Ángela Mallén",  cap: "Ángela Mallén",     w: 1152, h: 2048 },
-        { src: "gallery/envozalta-angela-2.jpg", alt: "Ángela Mallén",  cap: "en conversación",   w: 1152, h: 2048 },
-        { src: "gallery/envozalta-angela-3.jpg", alt: "Ángela Mallén",  cap: "pausa",             w: 1152, h: 2048 },
-        { src: "gallery/envozalta-angela-4.jpg", alt: "Ángela Mallén",  cap: "gesticulando",      w: 900,  h: 1600 },
-        { src: "gallery/envozalta-angela-5.jpg", alt: "Ángela Mallén",  cap: "la voz",            w: 900,  h: 1600 },
-        { src: "gallery/envozalta-angela-6.jpg", alt: "Ángela Mallén",  cap: "escucha",           w: 900,  h: 1600 },
-        { src: "gallery/envozalta-angela-7.jpg", alt: "Ángela Mallén",  cap: "desde la sala",     w: 900,  h: 1600 },
-        { src: "gallery/envozalta-pablo-1.jpg",  alt: "Pablo Martín",   cap: "Pablo Martín",      w: 1153, h: 2048 },
-        { src: "gallery/envozalta-pablo-2.jpg",  alt: "Pablo Martín",   cap: "en el sofá verde",  w: 1600, h: 1200 },
-        { src: "gallery/envozalta-pablo-3.jpg",  alt: "Pablo Martín",   cap: "lectura",           w: 1600, h: 1200 },
-        { src: "gallery/envozalta-pablo-4.jpg",  alt: "Pablo Martín",   cap: "la audiencia",      w: 1600, h: 1200 },
-        { src: "gallery/envozalta-pablo-5.jpg",  alt: "Pablo Martín",   cap: "antes de empezar",  w: 1600, h: 1200 },
-        { src: "gallery/envozalta-ana-1.jpg",    alt: "Ana Griott",     cap: "Ana Griott",        w: 1200, h: 1600 },
-        { src: "gallery/envozalta-ana-2.jpg",    alt: "Ana Griott",     cap: "sala llena",        w: 1600, h: 1200 },
-        { src: "gallery/envozalta-ana-3.jpg",    alt: "Ana Griott",     cap: "el círculo",        w: 1600, h: 1200 },
-        { src: "gallery/envozalta-ana-4.jpg",    alt: "Ana Griott",     cap: "dos voces",         w: 1600, h: 1200 }
+        { src: "gallery/banel-adama-1.jpg",      alt: "Banel & Adama — al micrófono",          cap: "al micrófono · Banel & Adama",        w: 1800, h: 1200 },
+        { src: "gallery/banel-adama-2.jpg",      alt: "Banel & Adama — tomando la palabra",    cap: "tomando la palabra · Banel & Adama",  w: 1800, h: 1200 },
+        { src: "gallery/banel-adama-3.jpg",      alt: "Banel & Adama — dos voces",             cap: "dos voces · Banel & Adama",           w: 1800, h: 1200 },
+        { src: "gallery/banel-adama-4.jpg",      alt: "Banel & Adama — el coloquio",           cap: "el coloquio · Banel & Adama",         w: 1800, h: 1200 },
+        { src: "gallery/banel-adama-5.jpg",      alt: "Banel & Adama — sala llena",            cap: "sala llena · Banel & Adama",          w: 1800, h: 1200 },
+        { src: "gallery/banel-adama-6.jpg",      alt: "Banel & Adama — presentando",           cap: "presentando · Banel & Adama",         w: 1800, h: 1200 },
+        { src: "gallery/welcome-summer-1.jpg",   alt: "Welcome Summer — en la librería",       cap: "en la librería · Welcome Summer",     w: 1800, h: 1012 },
+        { src: "gallery/welcome-summer-2.jpg",   alt: "Welcome Summer — el círculo",           cap: "el círculo · Welcome Summer",         w: 1800, h: 1012 },
+        { src: "gallery/welcome-summer-3.jpg",   alt: "Welcome Summer — leyendo en el sofá",   cap: "leyendo en el sofá · Welcome Summer", w: 1012, h: 1800 },
+        { src: "gallery/envozalta-angela-1.jpg", alt: "En voz alta — Ángela Mallén",           cap: "Ángela Mallén · En voz alta",         w: 1800, h: 1013 },
+        { src: "gallery/envozalta-angela-2.jpg", alt: "En voz alta — en conversación",         cap: "en conversación · En voz alta",       w: 1012, h: 1800 },
+        { src: "gallery/envozalta-angela-3.jpg", alt: "En voz alta — escuchando",              cap: "escuchando · En voz alta",            w: 1800, h: 1484 },
+        { src: "gallery/envozalta-angela-4.jpg", alt: "En voz alta — en la calle",             cap: "en la calle · En voz alta",           w: 1600, h: 900  },
+        { src: "gallery/envozalta-ana-1.jpg",    alt: "En voz alta — Ana Griott",              cap: "Ana Griott · En voz alta",            w: 1200, h: 1600 },
+        { src: "gallery/envozalta-ana-2.jpg",    alt: "En voz alta — el círculo",              cap: "el círculo · En voz alta",            w: 1600, h: 1200 },
+        { src: "gallery/envozalta-ana-3.jpg",    alt: "En voz alta — sala llena",              cap: "sala llena · En voz alta",            w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-1.jpg",  alt: "En voz alta — en el sofá",              cap: "en el sofá · En voz alta",            w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-2.jpg",  alt: "En voz alta — leyendo",                 cap: "leyendo · En voz alta",               w: 1600, h: 1200 },
+        { src: "gallery/envozalta-pablo-3.jpg",  alt: "En voz alta — Pablo Martín",            cap: "Pablo Martín · En voz alta",          w: 1600, h: 1200 },
+        { src: "gallery/envozalta-sala.jpg",     alt: "En voz alta — antes del encuentro",     cap: "antes del encuentro · En voz alta",   w: 1012, h: 1800 },
+        { src: "gallery/magistral-juan-1.jpg",   alt: "La Magistral — Juan Navarro",           cap: "Juan Navarro · La Magistral",         w: 1200, h: 1600 },
+        { src: "gallery/magistral-juan-2.jpg",   alt: "La Magistral — en el sofá",             cap: "en el sofá · La Magistral",           w: 1800, h: 1012 },
+        { src: "gallery/magistral-juan-3.jpg",   alt: "La Magistral — el público",             cap: "el público · La Magistral",           w: 1800, h: 1350 },
+        { src: "gallery/magistral-juan-4.jpg",   alt: "La Magistral — en silencio",            cap: "en silencio · La Magistral",          w: 1337, h: 1776 },
+        { src: "gallery/lorca-habana-1.jpg",     alt: "Lorca en La Habana — a oscuras",        cap: "a oscuras · Lorca en La Habana",      w: 1800, h: 1350 },
+        { src: "gallery/lorca-habana-2.jpg",     alt: "Lorca en La Habana — ante el cartel",   cap: "ante el cartel · Lorca en La Habana", w: 1800, h: 1350 }
     ];
 
     var gallery = document.getElementById("gallery");
@@ -248,11 +245,10 @@
         return a;
     }
 
+    // At least 12 images shown; bigger tiles → fewer columns.
     function layout() {
-        var w = window.innerWidth;
-        if (w <= 500) return { cols: 2, k: 4 };
-        if (w <= 900) return { cols: 3, k: 6 };
-        return { cols: 4, k: 9 };
+        if (window.innerWidth <= 900) return { cols: 2, k: 12 };
+        return { cols: 3, k: 15 };
     }
 
     // Pick k images, preferring ones not yet seen so repeated reshuffles cycle through all.
@@ -275,23 +271,19 @@
         return im;
     }
 
-    function sizeClass(im, cols, bigLeft) {
+    function sizeClass(im, cols, bigOK) {
         var portrait = im.h > im.w * 1.15;
         var landscape = im.w > im.h * 1.15;
         var r = Math.random();
-        if (cols >= 4) {
+        if (cols >= 3) {
             if (portrait)  return r < 0.5 ? "tall" : "";
-            if (landscape) return (bigLeft && r < 0.22) ? "big" : (r < 0.55 ? "wide" : "");
-            return (bigLeft && r < 0.3) ? "big" : "";
-        }
-        if (cols === 3) {
-            if (portrait)  return r < 0.45 ? "tall" : "";
-            if (landscape) return r < 0.5 ? "wide" : "";
-            return "";
+            if (landscape) return (bigOK && r < 0.18) ? "big" : (r < 0.5 ? "wide" : "");
+            return (bigOK && r < 0.22) ? "big" : "";
         }
         // 2 columns
-        if (portrait) return r < 0.4 ? "tall" : "";
-        return r < 0.45 ? "wide" : "";
+        if (portrait)  return r < 0.42 ? "tall" : "";
+        if (landscape) return r < 0.22 ? "wide" : "";
+        return "";
     }
 
     function makeFigure(im, cls) {
