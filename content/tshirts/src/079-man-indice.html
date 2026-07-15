@@ -15,6 +15,20 @@
 .verbs .hi{position:relative;display:inline-block}
 .verbs .hi::after{content:"";display:block;height:2.5px;background:var(--accent);width:100%;margin-top:2px}
 .sigla-grid{display:inline-grid;grid-template-columns:1fr 1fr;gap:0 .16em;font-family:var(--serif);color:var(--ink);line-height:1.04;text-align:center}
+/* balanced sigla monogram: equal fixed cells + centred content -> both rows are
+   identical width (concentric, no drift) and letters align on their centres
+   (C over D, F over L). Periods kept at the font's natural distance (no forced
+   kerning). translateX is a fixed optical-centring correction so the monogram's
+   ink centre lands on the same axis as the name below (the narrow F/L cells
+   would otherwise pull the ink slightly left of centre). Verified by pixel
+   measurement: monogram / name / shirt centreline agree to within ~1px. */
+.sig{display:inline-grid;grid-template-columns:1.0em 1.0em;justify-items:center;column-gap:.06em;row-gap:.08em;font-family:var(--serif);color:var(--ink);line-height:1;transform:translateX(.05em)}
+.sig .cell{white-space:nowrap}
+/* escaped period ("fuera de lugar" variant): the terminal dot renders as the
+   third beat of the period rhythm -- one column-pitch (~.97em) right of its home
+   slot, on the L baseline, where a phantom third column's period would fall.
+   Transform only -> layout slot stays, so the CFDL block remains centred. */
+.sig .esc{display:inline-block;transform:translateX(.97em)}
 .siglacaps{font-family:var(--sans);color:var(--ink)}
 .siglaserif{font-family:var(--serif);color:var(--ink);line-height:1}
 .namecaps{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.24em;color:var(--ink);line-height:1.5}
@@ -55,7 +69,7 @@
 .smear div{font-family:var(--serif);font-style:italic;color:var(--ink)}
 .freedom span{font-family:var(--serif);font-style:italic;color:var(--ink);display:inline-block;margin:0 .12em;vertical-align:middle}
 .pinlabel{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.2em;color:var(--ink)}
-.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt16{margin-top:16px}
 </style></head>
 <body><div class="stage white" style="--ink:#171513;--accent:#e0a23e;--field:#e9ad51;--bar:#171513;--tagcol:#171513">
 <div class="print " style="--pw:185px"><div class="kicker">manifiesto · 01–10</div><div class="indice" style="font-size:8px"><div><span class="n">01</span><span class="t">crear donde no alcance ninguna raíz</span></div><div><span class="n">02</span><span class="t">la misma maleza</span></div><div><span class="n">03</span><span class="t">una garganta sin fondo</span></div><div><span class="n">04</span><span class="t">el suicidio creativo</span></div><div><span class="n">05</span><span class="t">el producto deforme</span></div><div><span class="n">06</span><span class="t">la opacidad</span></div><div><span class="n">07</span><span class="t">descendencia bastarda</span></div><div><span class="n">08</span><span class="t">el venero creativo</span></div><div><span class="n">09</span><span class="t">la marca blanca</span></div><div><span class="n">10</span><span class="t">la llegada del moho</span></div></div><div class="tag">@cfueradelloc<span class="sep">·</span>cfdl.site</div></div></div></body></html>

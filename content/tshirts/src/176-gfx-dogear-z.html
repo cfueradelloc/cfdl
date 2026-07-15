@@ -15,6 +15,20 @@
 .verbs .hi{position:relative;display:inline-block}
 .verbs .hi::after{content:"";display:block;height:2.5px;background:var(--accent);width:100%;margin-top:2px}
 .sigla-grid{display:inline-grid;grid-template-columns:1fr 1fr;gap:0 .16em;font-family:var(--serif);color:var(--ink);line-height:1.04;text-align:center}
+/* balanced sigla monogram: equal fixed cells + centred content -> both rows are
+   identical width (concentric, no drift) and letters align on their centres
+   (C over D, F over L). Periods kept at the font's natural distance (no forced
+   kerning). translateX is a fixed optical-centring correction so the monogram's
+   ink centre lands on the same axis as the name below (the narrow F/L cells
+   would otherwise pull the ink slightly left of centre). Verified by pixel
+   measurement: monogram / name / shirt centreline agree to within ~1px. */
+.sig{display:inline-grid;grid-template-columns:1.0em 1.0em;justify-items:center;column-gap:.06em;row-gap:.08em;font-family:var(--serif);color:var(--ink);line-height:1;transform:translateX(.05em)}
+.sig .cell{white-space:nowrap}
+/* escaped period ("fuera de lugar" variant): the terminal dot renders as the
+   third beat of the period rhythm -- one column-pitch (~.97em) right of its home
+   slot, on the L baseline, where a phantom third column's period would fall.
+   Transform only -> layout slot stays, so the CFDL block remains centred. */
+.sig .esc{display:inline-block;transform:translateX(.97em)}
 .siglacaps{font-family:var(--sans);color:var(--ink)}
 .siglaserif{font-family:var(--serif);color:var(--ink);line-height:1}
 .namecaps{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.24em;color:var(--ink);line-height:1.5}
@@ -55,7 +69,7 @@
 .smear div{font-family:var(--serif);font-style:italic;color:var(--ink)}
 .freedom span{font-family:var(--serif);font-style:italic;color:var(--ink);display:inline-block;margin:0 .12em;vertical-align:middle}
 .pinlabel{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.2em;color:var(--ink)}
-.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt16{margin-top:16px}
 </style></head>
 <body><div class="stage white" style="--ink:#332f8a;--accent:#fde700;--field:#fde700;--bar:#332f8a;--tagcol:#332f8a">
 <div class="print " style=""><svg class="gfx" width="96" height="120" viewBox="0 0 130 160">

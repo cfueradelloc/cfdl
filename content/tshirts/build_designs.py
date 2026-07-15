@@ -42,6 +42,20 @@ STYLE = """
 .verbs .hi{position:relative;display:inline-block}
 .verbs .hi::after{content:"";display:block;height:2.5px;background:var(--accent);width:100%;margin-top:2px}
 .sigla-grid{display:inline-grid;grid-template-columns:1fr 1fr;gap:0 .16em;font-family:var(--serif);color:var(--ink);line-height:1.04;text-align:center}
+/* balanced sigla monogram: equal fixed cells + centred content -> both rows are
+   identical width (concentric, no drift) and letters align on their centres
+   (C over D, F over L). Periods kept at the font's natural distance (no forced
+   kerning). translateX is a fixed optical-centring correction so the monogram's
+   ink centre lands on the same axis as the name below (the narrow F/L cells
+   would otherwise pull the ink slightly left of centre). Verified by pixel
+   measurement: monogram / name / shirt centreline agree to within ~1px. */
+.sig{display:inline-grid;grid-template-columns:1.0em 1.0em;justify-items:center;column-gap:.06em;row-gap:.08em;font-family:var(--serif);color:var(--ink);line-height:1;transform:translateX(.05em)}
+.sig .cell{white-space:nowrap}
+/* escaped period ("fuera de lugar" variant): the terminal dot renders as the
+   third beat of the period rhythm -- one column-pitch (~.97em) right of its home
+   slot, on the L baseline, where a phantom third column's period would fall.
+   Transform only -> layout slot stays, so the CFDL block remains centred. */
+.sig .esc{display:inline-block;transform:translateX(.97em)}
 .siglacaps{font-family:var(--sans);color:var(--ink)}
 .siglaserif{font-family:var(--serif);color:var(--ink);line-height:1}
 .namecaps{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.24em;color:var(--ink);line-height:1.5}
@@ -82,7 +96,7 @@ STYLE = """
 .smear div{font-family:var(--serif);font-style:italic;color:var(--ink)}
 .freedom span{font-family:var(--serif);font-style:italic;color:var(--ink);display:inline-block;margin:0 .12em;vertical-align:middle}
 .pinlabel{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.2em;color:var(--ink)}
-.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt16{margin-top:16px}
 """
 
 # ---- inline SVG motifs (palette-aware) ---------------------------------
@@ -205,6 +219,19 @@ def sigla_grid(size, periods=True, sub=None):
     cells=''.join(f'<div>{l}{d}</div>' for l in ['C','F','D','L'])
     h=f'<div class="sigla-grid" style="font-size:{size}px">{cells}</div>'
     if sub: h+=f'<div class="namecaps mt14" style="font-size:8.5px">{sub}</div>'
+    return h+TAG
+def sigla_grid_aligned(size, sub_lines, esc=False):
+    """Balanced 2x2 sigla monogram (C. F. / D. L.): equal fixed cells + centred
+    content -> concentric rows and letters aligned on their centres; periods at
+    the font's natural distance. sub_lines = centred name lines below.
+    esc=True sends the terminal period "fuera de lugar" (see .sig .esc)."""
+    def cell(l):
+        dot = '<span class="esc">.</span>' if (esc and l=='L') else '.'
+        return f'<div class="cell">{l}{dot}</div>'
+    cells=''.join(cell(l) for l in ['C','F','D','L'])
+    h=f'<div class="sig" style="font-size:{size}px">{cells}</div>'
+    name='<br>'.join(sub_lines)
+    h+=f'<div class="namecaps mt16" style="font-size:8px;letter-spacing:0.28em">{name}</div>'
     return h+TAG
 def sigla_line(size, sub=None):
     body='<span class="dot" style="margin:0 .26em"></span>'.join(['C','F','D','L'])
@@ -416,7 +443,7 @@ add("gfx-espiral-z", "zafiro",  graphic("espiral","garganta sin fondo", 16))
 # D · C.F.D.L. TIPOGRÁFICO (~9) -----------------------------------------
 add("cfdl-grid",       "zafiro",  sigla_grid(52, periods=True))
 add("cfdl-grid-nodot", "citrina", sigla_grid(56, periods=False))
-add("cfdl-grid-name",  "zafiro",  sigla_grid(44, periods=True, sub="Colectivo Fuera de Lugar"))
+add("cfdl-grid-name",  "zafiro",  sigla_grid_aligned(48, ["Colectivo", "Fuera de Lugar"]))
 add("cfdl-line",       "zafiro",  sigla_line(22))
 add("cfdl-line-name",  "amatista",sigla_line(20, sub="Col·lectiu Fora de Lloc"))
 add("cfdl-serif-big",  "citrina", sigla_serif("CFDL", 64))
@@ -849,6 +876,25 @@ add("xt-truism-museo","amatista",truism(["un museo que","nunca visitaremos"], 15
 add("xt-cat-molsa", "zafiro",  wool(["L'ARRIBADA","DE LA MOLSA"], 24))
 add("xt-cat-atopic","citrina", bracket("allò atòpic", 36))
 add("xt-derive-asilo","zafiro", derive("el viaje como asilo"))
+
+# ============ TANDA 5 — evento «14,4» (14,4 km · dos orillas) + C.F.D.L. ============
+# El club de lectura «14.4» alude a los 14,4 km que separan Europa de África.
+# Parten del diseño existente (14,4 km — entre dos orillas) y le suman las siglas
+# C.F.D.L. visibles, cada uno en una familia distinta. La línea de contacto va en todos.
+add("ev144-num",   "zafiro",
+    '<div class="kicker">C · F · D · L</div>'
+    '<div class="bignum" style="font-size:80px;margin-top:10px">14,4</div>'
+    '<div class="oneliner mt10" style="font-size:12px">km — entre dos orillas</div>'+TAG)
+add("ev144-pin",   "citrina", pin("14,4 km", coord="Europa — África", kicker="C · F · D · L"))
+add("ev144-sello", "zafiro",  stamp(["14,4"], "· C · F · D · L · 14,4 KM ENTRE DOS ORILLAS · "))
+add("ev144-wool",  "citrina", wool(["14,4 KM","ENTRE DOS","ORILLAS"], 30, kicker="C · F · D · L"))
+add("ev144-sigla", "amatista",sigla_serif("C.F.D.L.", 44, sub="14,4 km — entre dos orillas"))
+
+# ---- variante: dot fuera de lugar (variant of 043 cfdl-grid-name) -------
+# The terminal period escapes the grid by exactly one column-pitch, landing on
+# the phantom third beat of the period rhythm. Kept as a separate design so the
+# clean cfdl-grid-name (043) stays intact.
+add("cfdl-grid-esc",  "zafiro",  sigla_grid_aligned(48, ["Colectivo", "Fuera de Lugar"], esc=True))
 
 # ---- emit --------------------------------------------------------------
 PAGE='''<!doctype html>
