@@ -14,6 +14,7 @@ LISTA=(
   "cfdl-monograma-gruesa-ambar-negro       32 favicon-32"
   "cfdl-linea-media-ninguno-negro         200 linea-negro"
   "cfdl-linea-media-ninguno-blanco        200 linea-blanco"
+  "cfdl-linea-media-ninguno-zafiro        200 linea-zafiro"
   "cfdl-hoja-fina-ambar-negro             900 hoja"
 )
 for fila in "${LISTA[@]}"; do

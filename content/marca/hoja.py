@@ -29,27 +29,37 @@ def pagina():
 
     # ── sobre cada fondo ───────────────────────────────────────────────────
     p.append('<section><h2>Sobre cada fondo</h2><div class="rej">')
-    for css, tinta, et in (("f-blanco", NEGRO, "negro sobre blanco"),
-                           ("f-negro",  AMBAR, "ámbar sobre negro"),
-                           ("f-ambar",  NEGRO, "negro sobre ámbar"),
+    for css, tinta, et in (("f-blanco", NEGRO,  "negro sobre blanco"),
+                           ("f-blanco", ZAFIRO, "zafiro sobre blanco"),
+                           ("f-negro",  AMBAR,  "ámbar sobre negro"),
+                           ("f-negro",  BLANCO, "blanco sobre negro"),
+                           ("f-ambar",  NEGRO,  "negro sobre ámbar"),
                            ("f-rosa",   ZAFIRO, "zafiro sobre rosa"),
-                           ("f-zafiro", CREMA, "crema sobre zafiro"),
-                           ("f-zafiro", AMBAR, "ámbar sobre zafiro")):
+                           ("f-zafiro", CREMA,  "crema sobre zafiro"),
+                           ("f-zafiro", AMBAR,  "ámbar sobre zafiro")):
         p.append(_fig(firma("media", alto=58, tinta=tinta), et, css))
     p.append('</div></section>')
 
     # ── el símbolo solo ────────────────────────────────────────────────────
+    # En cuadrados exactos: el símbolo ya lleva su propio aire dentro, así que
+    # el recuadro no debe añadir relleno ni un gris de fondo — sería un
+    # segundo marco encima del que ya tiene.
+    def _sq(sv, et, fondo=""):
+        return (f'<figure class="sq"><div class="t {fondo}">{sv}</div>'
+                f'<figcaption>{et}</figcaption></figure>')
+
     p.append('<section><h2>El símbolo solo</h2><div class="rej">')
-    p.append(_fig('<span class="circ">'
-                  + firma("media", alto=120, con_siglas=False,
-                          campo=AMBAR, respiro=0.20) + '</span>',
-                  "foto de perfil — el cuadrado entero dentro del círculo, con margen", "f-claro"))
-    p.append(_fig(firma("media", alto=104, con_siglas=False, campo=AMBAR),
-                  "con campo — la espiral nunca toca el borde", "f-claro"))
-    p.append(_fig(firma("media", alto=104, con_siglas=False),
-                  "sin campo", "f-blanco"))
-    p.append(_fig(firma("gruesa", alto=104, con_siglas=False, campo=AMBAR),
-                  "favicon — tres anillos cerrados", "f-claro"))
+    p.append(_sq('<span class="circ">'
+                 + firma("media", alto=132, con_siglas=False,
+                         campo=AMBAR, respiro=0.20) + '</span>',
+                 "foto de perfil — entera dentro del círculo"))
+    p.append(_sq(firma("media", alto=132, con_siglas=False, campo=AMBAR),
+                 "con campo"))
+    p.append(_sq(firma("media", alto=132, con_siglas=False), "sin campo", "t-blanco"))
+    p.append(_sq(firma("media", alto=132, con_siglas=False, tinta=BLANCO),
+                 "en negativo", "t-negro"))
+    p.append(_sq(firma("gruesa", alto=132, con_siglas=False, campo=AMBAR),
+                 "favicon — tres anillos cerrados"))
     p.append('</div></section>')
 
     # ── tamaños ────────────────────────────────────────────────────────────
@@ -123,10 +133,15 @@ h2{font:400 11px/1 ui-sans-serif,system-ui;letter-spacing:.22em;
 .rej.abajo{align-items:flex-end}
 figure{margin:0;text-align:center}
 figure .l{line-height:0;padding:16px 20px;display:block;border-radius:2px}
+figure.sq{width:132px}
+figure.sq .t{width:132px;height:132px;line-height:0;display:block;overflow:hidden}
+figure.sq .t svg{display:block;width:132px;height:132px}
+figure.sq .t.t-blanco{background:#fff} figure.sq .t.t-negro{background:#171513}
+figure.sq .circ{display:block;width:132px;height:132px}
 figcaption{font-size:11.5px;color:var(--tinta2);margin-top:10px;max-width:210px}
 .f-blanco .l{background:#fff} .f-negro .l{background:#171513}
 .f-ambar .l{background:#ffb923} .f-rosa .l{background:#f8ccce}
-.f-zafiro .l{background:#332f8a} .f-claro .l{background:var(--papel2)}
+.f-zafiro .l{background:#332f8a}
 .circ{border-radius:50%;overflow:hidden;display:inline-block;line-height:0}
 .nota{font-size:13.5px;color:var(--tinta2);margin:24px 0 0;max-width:62ch}
 table.aj{border-collapse:collapse;font-size:14.5px}

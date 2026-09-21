@@ -155,10 +155,14 @@ COMBOS = [
     ("monograma", "ambar",   "negro",  "gruesa"),   # favicon
     ("monograma", "ninguno", "negro",  "gruesa"),
     ("monograma", "ninguno", "blanco", "gruesa"),
+    ("monograma", "negro",   "blanco", "media"),
+    ("monograma", "ninguno", "zafiro", "media"),
     ("hoja",      "ambar",   "negro",  "fina"),
     ("hoja",      "ninguno", "negro",  "fina"),
     ("hoja",      "negro",   "ambar",  "fina"),
     ("linea",     "ninguno", "negro",  "media"),
+    ("linea",     "ninguno", "zafiro", "media"),
+    ("linea",     "negro",   "blanco", "media"),
     ("linea",     "ninguno", "blanco", "media"),
     ("linea",     "ambar",   "negro",  "media"),
 ]
