@@ -39,7 +39,7 @@ son su pie. Está más cerca de un colofón que de un lockup corporativo, que es
 lo que corresponde a un colectivo cuyo símbolo carga el significado.
 
   tamaño     símbolo            gris
-  grande     7 anillos 1:3     ~16 %     104 px
+  grande     6 anillos 1:3      18,0 %    104 px
   medio      5 anillos 1:3      16,6 %    60 px
   pequeno    3 anillos 1:2      24,6 %    30 px
 """
@@ -75,12 +75,13 @@ ROSA = "#f8ccce"   # Candy Pink — el --band-fg de docs/assets/css/base.css
 # anillos, hueco (en módulos de grosor), vacío central, interletrado, corte
 # TRES TAMAÑOS, un signo. La retícula cambia con el tamaño porque no caben a
 # la vez muchos anillos, un vacío grande y un trazo nítido: a 104 px, siete
-# anillos con aire 1:4 dejan el trazo en 0,57 px y la marca se ve gris. Con
-# aire 1:3 sube a 0,84 y los anillos se separan, conservando los siete de la
-# hoja impresa.
+# anillos con aire 1:4 dejan el trazo en 0,57 px y la marca se ve gris; con
+# aire 1:3, en 0,84, todavía por debajo del píxel. Seis anillos llevan la
+# retícula a 107 módulos y el trazo a 0,97 px — sale del subpíxel, y el grande
+# sigue siendo el más denso de los tres sin pelearse con el medio.
 #          anillos, aire (en grosores), vacío central, interletrado, corte
 DENSIDAD = {
-    "grande":  dict(anillos=7, hu=3, vacio=0.55, track=0.200, corte=0.55),
+    "grande":  dict(anillos=6, hu=3, vacio=0.55, track=0.200, corte=0.55),
     "medio":   dict(anillos=5, hu=3, vacio=0.60, track=0.200, corte=0.55),
     "pequeno": dict(anillos=3, hu=2, vacio=0.55, track=0.200, corte=None),
 }

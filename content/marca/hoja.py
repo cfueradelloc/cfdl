@@ -42,7 +42,7 @@ def pagina():
                       f"{d} · {a} px", "f-liso"))
     p.append('</div><p class="nota">La retícula cambia con el tamaño porque no '
              'caben a la vez muchos anillos, un vacío grande y un trazo nítido: '
-             '<b>grande</b> 7 anillos, <b>medio</b> 5, <b>pequeno</b> 3. Es el '
+             '<b>grande</b> 6 anillos, <b>medio</b> 5, <b>pequeno</b> 3. Es el '
              'mismo signo, y el centro se queda vacío en los tres.</p></section>')
 
     # ── sobre cada fondo, al tamaño medio ──────────────────────────────────
@@ -65,20 +65,21 @@ def pagina():
         return (f'<figure class="sq"><div class="t {fondo}">{sv}</div>'
                 f'<figcaption>{et}</figcaption></figure>')
 
-    p.append('<section><h2>El símbolo solo <i>· tamaño grande</i></h2>'
+    p.append('<section><h2>El símbolo solo <i>· tamaño medio</i></h2>'
              '<div class="rej">')
     p.append(_sq('<span class="circ">'
-                 + firma("grande", alto=104, con_siglas=False,
+                 + firma("medio", alto=60, con_siglas=False,
                          campo=AMBAR, respiro=0.20) + '</span>',
-                 "foto de perfil — entera dentro del círculo"))
-    p.append(_sq(firma("grande", alto=104, con_siglas=False, campo=AMBAR),
+                 "foto de perfil"))
+    p.append(_sq(firma("medio", alto=60, con_siglas=False, campo=AMBAR),
                  "con campo"))
-    p.append(_sq(firma("grande", alto=104, con_siglas=False), "sin campo", "t-blanco"))
-    p.append(_sq(firma("grande", alto=104, con_siglas=False, tinta=BLANCO),
+    p.append(_sq(firma("medio", alto=60, con_siglas=False), "sin campo", "t-blanco"))
+    p.append(_sq(firma("medio", alto=60, con_siglas=False, tinta=BLANCO),
                  "en negativo", "t-negro"))
-    p.append(_sq(firma("pequeno", alto=104, con_siglas=False, campo=AMBAR),
-                 "favicon — el tamaño pequeno, ampliado"))
-    p.append('</div></section>')
+    p.append('</div><p class="nota">Siempre con respiro dentro de la caja — el '
+             'símbolo nunca toca el borde. En la foto de perfil el respiro sube '
+             'a 0,20 para que la espiral entera quepa dentro del '
+             'círculo.</p></section>')
 
     # ── el ajuste ──────────────────────────────────────────────────────────
     p.append('<section><h2>El ajuste</h2><table class="aj">'
@@ -148,12 +149,13 @@ h2 i{font-style:normal;color:var(--tinta3);opacity:.7;letter-spacing:.1em}
 .rej.abajo{align-items:flex-end}
 figure{margin:0;text-align:center}
 figure .l{line-height:0;padding:16px 20px;display:block;border-radius:2px}
-figure.sq{width:104px}
-figure.sq .t{width:104px;height:104px;line-height:0;display:block;overflow:hidden}
-figure.sq .t svg{display:block;width:104px;height:104px}
+figure.sq{width:60px}
+figure.sq .t{width:60px;height:60px;line-height:0;display:block;overflow:hidden}
+figure.sq .t svg{display:block;width:60px;height:60px}
 figure.sq .t.t-blanco{background:#fff} figure.sq .t.t-negro{background:#171513}
-figure.sq .circ{display:block;width:104px;height:104px}
+figure.sq .circ{display:block;width:60px;height:60px}
 figcaption{font-size:11.5px;color:var(--tinta2);margin-top:10px;max-width:210px}
+figure.sq figcaption{max-width:120px}
 .f-blanco .l{background:#fff} .f-negro .l{background:#171513}
 .f-ambar .l{background:#ffb923} .f-rosa .l{background:#f8ccce}
 .f-zafiro .l{background:#332f8a}

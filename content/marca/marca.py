@@ -12,7 +12,7 @@ espiral, estilizada hasta que aguanta a 16 px.
 
 No hace falta inventarle un símbolo al colectivo: ya tiene uno, y está impreso.
 
-DENSIDAD EN VEZ DE VARIANTES. Una espiral de siete anillos se empasta en un
+DENSIDAD EN VEZ DE VARIANTES. Una espiral de muchos anillos se empasta en un
 favicon. En lugar de dibujar marcas distintas, se elige cuántas vueltas según
 el tamaño: `fina` para lo grande, `gruesa` para lo diminuto. Es el mismo signo.
 
@@ -41,6 +41,7 @@ FONDOS = {"ambar": AMBAR, "negro": NEGRO, "blanco": BLANCO, "ninguno": None}
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
 
 from espiral import espiral as _espiral_pts, polilinea, U as W
+import lockup
 
 RATIO_HOJA = 0.571          # medido sobre la hoja impresa
 
@@ -52,10 +53,14 @@ RATIO_HOJA = 0.571          # medido sobre la hoja impresa
 #
 # Una banda fina se cierra en cuanto se reduce, así que la densidad baja con el
 # tamaño: menos anillos y menos aire, conservando el centro vacío.
-#            anillos, grosor, hueco, lado en módulos  → vacío
-DENSIDAD = {"grande":  (7, 1, 3, 124),   # 104 px — 7 anillos, aire 1:3, vacío 55 %
-            "medio":   (5, 1, 3, 100),   #  60 px — 5 anillos, 60 %
-            "pequeno": (3, 1, 2,  40)}   #  30 px — 3 anillos cerrados, 55 %
+# La tabla vive en lockup.py y se deriva aquí: tenerla dos veces ya provocó
+# una deriva antes.
+#          anillos, grosor, hueco, lado en módulos  → vacío
+DENSIDAD = {d: (a["anillos"], 1, a["hu"],
+                round(2 * a["anillos"] * (1 + a["hu"]) / (1 - a["vacio"])))
+            for d, a in lockup.DENSIDAD.items()}
+#  grande 104 px — 6 anillos, aire 1:3, vacío 55 %
+#  medio   60 px — 5 anillos, 60 %   ·   pequeno 30 px — 3 cerrados, 55 %
 CORTE_REL = 0.55            # dónde muere la última vuelta, sobre su recta
 
 

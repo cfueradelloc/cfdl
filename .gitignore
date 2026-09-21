@@ -5,3 +5,5 @@
 # HTML generado del módulo de Instagram (src/_shared.css sí se versiona)
 content/instagram/src/*.html
 content/instagram/src/_sizes.txt
+
+__pycache__/
