@@ -89,9 +89,10 @@ def _siglas(tinta, x, y, size, anchor="start"):
 MARGEN_CIRCULO = 0.20
 
 
-def _monograma(t, d): return _espiral(t, d, 1.0, 0.04)
+# El símbolo solo nunca toca el límite de su caja: 0,12 de aire por lado.
+def _monograma(t, d): return _espiral(t, d, 1.0, 0.12)
 def _perfil(t, d):    return _espiral(t, d, 1.0, MARGEN_CIRCULO)
-def _hoja(t, d):      return _espiral(t, d, 1 / RATIO_HOJA, 0.04)
+def _hoja(t, d):      return _espiral(t, d, 1 / RATIO_HOJA, 0.10)
 
 
 # La firma no se dibuja aquí: la construye lockup.py, que es donde viven sus

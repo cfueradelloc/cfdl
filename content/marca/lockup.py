@@ -86,6 +86,12 @@ DENSIDAD = {
 # las esquinas rozan el borde. 0,20 deja el lado en 60 y la semidiagonal en
 # 42,4: un 85 % del radio, con margen de verdad por dentro.
 RESPIRO_CIRCULO = 0.20
+# El símbolo SOLO lleva siempre aire dentro de su caja: la espiral no debe
+# tocar nunca el límite de la figura. Es el área de respeto del signo, y va
+# dentro del propio dibujo para que no dependa de que alguien se acuerde de
+# dejarla. En la firma no se aplica: allí el espacio lo gobiernan las reglas
+# del conjunto (separación 0,40) y sumarle el respiro lo abriría de más.
+RESPIRO_SOLO = 0.12
 
 
 def simbolo(densidad="fina", tinta=NEGRO, campo=None, respiro=0.0):
@@ -123,7 +129,7 @@ def ancho_siglas(track):
 
 def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
           rel=3.20, sep=0.40, respeto=0.0, alto=64, apilada=False,
-          track=None, con_siglas=True, respiro=0.0, alinea="centro"):
+          track=None, con_siglas=True, respiro=None, alinea="centro"):
     """La firma completa.
 
     rel      alto del símbolo ÷ altura de mayúscula. Por encima de ~2,5 las
@@ -144,6 +150,9 @@ def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
     """
     d = DENSIDAD[densidad]
     tr = d["track"] if track is None else track
+    # el símbolo solo nunca va a ras: si no se pide otra cosa, lleva su aire
+    if respiro is None:
+        respiro = RESPIRO_SOLO if not con_siglas else 0.0
     S = 100.0                                   # lado del símbolo
     cap = S / rel                               # altura de mayúscula
     fs = cap / CAP_EM

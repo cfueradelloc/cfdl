@@ -45,7 +45,7 @@ def pagina():
                           campo=AMBAR, respiro=0.20) + '</span>',
                   "foto de perfil — el cuadrado entero dentro del círculo, con margen", "f-claro"))
     p.append(_fig(firma("media", alto=104, con_siglas=False, campo=AMBAR),
-                  "con campo", "f-claro"))
+                  "con campo — la espiral nunca toca el borde", "f-claro"))
     p.append(_fig(firma("media", alto=104, con_siglas=False),
                   "sin campo", "f-blanco"))
     p.append(_fig(firma("gruesa", alto=104, con_siglas=False, campo=AMBAR),
