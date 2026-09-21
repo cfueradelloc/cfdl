@@ -1,0 +1,15 @@
+{
+  "id": "ej-07-numero",
+  "theme": "citrine",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "numero",
+    "marca_cfdl": "logo+sigla",
+    "antetitulo": "club de lectura",
+    "numero": { "valor": "14,4", "unidad": "km" },
+    "subtitular": "entre dos orillas",
+    "bio": "Lo que separa Europa de África por su punto más estrecho. El club lee esa distancia.",
+    "alt": "La cifra 14,4 km a gran tamaño, con el lema entre dos orillas."
+  }],
+  "caption": { "texto": "14,4 km. Lo que separa Europa de África por su punto más estrecho, y lo que el club se propone leer durante una temporada.\n\nClub de lectura — Librería La Perecquiana, Valladolid\n\ncfdl.site", "etiquetas": [] }
+}

@@ -1,0 +1,19 @@
+{
+  "id": "ej-02-retrato",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "retrato",
+    "lado": "izq",
+    "ciclo": "en-voz-alta",
+    "marca_cfdl": "logo",
+    "titular": ["Ana", "Griott"],
+    "subtitular": "narración oral",
+    "fecha": { "dia_semana": "miércoles", "texto": "8 de octubre" },
+    "tipo": "Lectura",
+    "lugar": "perecquiana",
+    "foto": { "src": "docs/gallery/envozalta-ana-1.jpg", "forma": "caja", "encuadre": "50% 35%", "tratamiento": "bn", "contraste": 1.18 },
+    "alt": "Retrato de Ana Griott en blanco y negro junto a los datos de la sesión."
+  }],
+  "caption": { "texto": "Ana Griott cuenta desde 1992. Dirige Libros de las Malas Compañías y trabaja con la narración tradicional — el cuento que se dice antes de escribirse.\n\nLectura — Librería La Perecquiana, Valladolid\nMiércoles 8 de octubre, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site", "etiquetas": [] }
+}

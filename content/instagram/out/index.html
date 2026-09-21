@@ -1,47 +1,437 @@
-<!doctype html><meta charset="utf-8"><title>C.F.D.L. — hoja de contactos</title>
-<style>
-body{font:14px/1.5 -apple-system,sans-serif;background:#1a1a1a;color:#eee;margin:0;padding:32px}
-h1{font-size:18px;font-weight:400;letter-spacing:.2em;text-transform:uppercase}
-h2{font-size:13px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:#9a9a9a;margin:40px 0 12px}
-section{border-top:1px solid #333;padding-top:16px}
-.laminas{display:flex;flex-wrap:wrap;gap:28px}
-.l{display:flex;gap:14px;align-items:flex-start}
-.feed img{width:430px;display:block}
-.cap3x4{position:relative;width:322px;overflow:hidden}
-.cap3x4 img{width:430px;margin-left:-54px;display:block}
-.cap3x4 .crop{position:absolute;inset:0;outline:2px dashed #4af;pointer-events:none}
-.full img{width:1080px;display:block}
-.n{writing-mode:vertical-rl;font-size:10px;color:#777;letter-spacing:.1em}
-pre{white-space:pre-wrap;background:#242424;padding:16px;font-size:13px;max-width:700px;margin-top:16px}
-.leyenda{color:#8a8a8a;font-size:12px;margin-bottom:8px}
-</style>
-<h1>C.F.D.L. — hoja de contactos</h1>
-<p class="leyenda">Columna 1: 430&nbsp;px, el tamaño real en el feed — <b>si la fecha no se lee aquí, el cartel ha fallado</b>.
-Columna 2: recorte 3:4 de la rejilla de perfil. Columna 3: 1080&nbsp;px para el detalle.</p>
-<section><h2>2025-10-08-ciclo-en-voz-alta</h2><div class="laminas"><div class="l"><div class="feed"><img src="2025-10-08-ciclo-en-voz-alta-01.png"></div><div class="cap3x4"><img src="2025-10-08-ciclo-en-voz-alta-01.png"><span class="crop"></span></div><div class="full"><img src="2025-10-08-ciclo-en-voz-alta-01.png"></div><div class="n">2025-10-08-ciclo-en-voz-alta-01.png</div></div></div><pre>Tres sesiones de otoño. Escritoras y escritores leen sus propios textos en voz alta y hablan de lo que los sostiene.
+<!doctype html><meta charset="utf-8"><title>C.F.D.L. — Instagram · entrada y salida</title><style>
+*{box-sizing:border-box}
+body{font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;
+     background:#12121a;color:#e8e8ef;margin:0;padding:40px 44px}
+h1{font:400 15px/1.3 system-ui;letter-spacing:.24em;text-transform:uppercase;
+   color:#fff;margin:0 0 6px}
+.intro{font:400 14px/1.7 system-ui;color:#9a9ab0;max-width:900px;margin:0 0 36px}
+.intro b{color:#e8e8ef;font-weight:500}
+.intro code{background:#22222e;padding:2px 6px;border-radius:3px;font-size:13px}
+h2{font:400 13px/1.3 system-ui;letter-spacing:.16em;text-transform:uppercase;
+   color:#fff;margin:0;padding:0}
+.post{border:1px solid #2a2a38;border-radius:6px;margin:0 0 28px;overflow:hidden}
+.cab{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+     background:#1b1b26;padding:14px 18px;border-bottom:1px solid #2a2a38}
+.chip{font:400 11px/1 system-ui;letter-spacing:.1em;text-transform:uppercase;
+      background:#2e2e3e;color:#b9b9cc;padding:5px 9px;border-radius:3px}
+.chip.t{background:#332f8a;color:#f8ccce}
+.chip.f{background:#5a4a12;color:#ffd25a}
+.lam{display:grid;grid-template-columns:1fr 470px;gap:0;border-top:1px solid #2a2a38}
+.lam:first-of-type{border-top:0}
+.ent,.sal{padding:18px}
+.ent{border-right:1px solid #2a2a38;min-width:0}
+.rot{font:400 10px/1 system-ui;letter-spacing:.22em;text-transform:uppercase;
+     color:#6f6f88;margin-bottom:10px}
+pre{margin:0;white-space:pre-wrap;word-break:break-word;font-size:12.5px;
+    line-height:1.55;color:#c9c9dc}
+.k{color:#8fb6ff}.s{color:#ffd28a}.n{color:#a6e3a1}.b{color:#f38ba8}
+.sal img{width:430px;display:block;border:1px solid #2a2a38}
+.sal .nom{font-size:11px;color:#6f6f88;margin-top:8px}
+.txt{background:#1b1b26;border-top:1px solid #2a2a38;padding:18px;
+     display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.txt pre{font:400 13.5px/1.65 system-ui;color:#dcdce8;white-space:pre-wrap}
+.falta{color:#ff7ab8}
+</style><h1>C.F.D.L. — Instagram</h1><p class="intro">Cada fila enfrenta <b>la entrada</b> —el JSON exacto de esa lámina en <code>posts/&lt;id&gt;.json</code>— con <b>la salida</b>: el PNG y, debajo, el texto que lo acompaña. Una publicación son siempre las dos cosas.<br>Las imágenes se muestran a <b>430&nbsp;px</b>, el ancho real en el feed de un teléfono: <b>si la fecha no se lee aquí, el cartel ha fallado</b>, por bien que se vea a 1080. La maquetación se ajusta en <code>src/_shared.css</code>, nunca en el Python.</p><div class="post"><div class="cab"><h2>2025-10-08-ciclo-en-voz-alta</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">ciclo</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/2025-10-08-ciclo-en-voz-alta.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"ciclo"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"en-voz-alta"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"sigla"</span>,
+  <span class="k">"agenda"</span>: [
+    {
+      <span class="k">"dia"</span>: <span class="s">"miércoles"</span>,
+      <span class="k">"fecha"</span>: <span class="s">"8 oct"</span>,
+      <span class="k">"nombre"</span>: <span class="s">"Ana Griott"</span>
+    },
+    {
+      <span class="k">"dia"</span>: <span class="s">"jueves"</span>,
+      <span class="k">"fecha"</span>: <span class="s">"13 nov"</span>,
+      <span class="k">"nombre"</span>: <span class="s">"Pablo Martín Sánchez"</span>
+    },
+    {
+      <span class="k">"dia"</span>: <span class="s">"viernes"</span>,
+      <span class="k">"fecha"</span>: <span class="s">"12 dic"</span>,
+      <span class="k">"nombre"</span>: <span class="s">"Ángela Mallén"</span>
+    }
+  ],
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"a partir de las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:30"</span>
+  },
+  <span class="k">"tipo"</span>: <span class="s">"Ciclo de lecturas"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"aforo"</span>: <span class="s">"Entrada gratuita hasta completar aforo"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Cartel del ciclo En voz alta con sus tres sesiones: Ana Griott, Pablo Martín Sánchez y Ángela Mallén."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="2025-10-08-ciclo-en-voz-alta-01.png" alt=""><div class="nom">out/2025-10-08-ciclo-en-voz-alta-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/2025-10-08-ciclo-en-voz-alta.caption.txt — el texto de la publicación</div><pre>Tres sesiones de otoño. Escritoras y escritores leen sus propios textos en voz alta y hablan de lo que los sostiene.
 
 Ciclo de lecturas — Librería La Perecquiana, Valladolid
 Miércoles 8 de octubre, jueves 13 de noviembre, viernes 12 de diciembre, 19:30
 Entrada gratuita hasta completar aforo
 
 cfdl.site
-</pre></section><section><h2>2025-12-12-angela-mallen</h2><div class="laminas"><div class="l"><div class="feed"><img src="2025-12-12-angela-mallen-01.png"></div><div class="cap3x4"><img src="2025-12-12-angela-mallen-01.png"><span class="crop"></span></div><div class="full"><img src="2025-12-12-angela-mallen-01.png"></div><div class="n">2025-12-12-angela-mallen-01.png</div></div><div class="l"><div class="feed"><img src="2025-12-12-angela-mallen-02.png"></div><div class="cap3x4"><img src="2025-12-12-angela-mallen-02.png"><span class="crop"></span></div><div class="full"><img src="2025-12-12-angela-mallen-02.png"></div><div class="n">2025-12-12-angela-mallen-02.png</div></div><div class="l"><div class="feed"><img src="2025-12-12-angela-mallen-03.png"></div><div class="cap3x4"><img src="2025-12-12-angela-mallen-03.png"><span class="crop"></span></div><div class="full"><img src="2025-12-12-angela-mallen-03.png"></div><div class="n">2025-12-12-angela-mallen-03.png</div></div></div><pre>Cerramos «En voz alta» con Ángela Mallén. Lee sus textos en voz baja — susurros, atmósferas, el aire entre las frases.
+</pre></div><div><div class="rot">salida · out/2025-10-08-ciclo-en-voz-alta.alt.txt — texto alternativo por lámina</div><pre>01: Cartel del ciclo En voz alta con sus tres sesiones: Ana Griott, Pablo Martín Sánchez y Ángela Mallén.
+</pre></div></div></div><div class="post"><div class="cab"><h2>2025-12-12-angela-mallen</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">evento</span><span class="chip">evento</span><span class="chip">recordatorio</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/2025-12-12-angela-mallen.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"evento"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"en-voz-alta"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"sigla"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;Ángela&quot;,
+    &quot;Mallén&quot;
+  ],
+  <span class="k">"tipo"</span>: <span class="s">"Lectura"</span>,
+  <span class="k">"fecha"</span>: {
+    <span class="k">"dia_semana"</span>: <span class="s">"viernes"</span>,
+    <span class="k">"texto"</span>: <span class="s">"12 de diciembre"</span>,
+    <span class="k">"anio"</span>: <span class="s">"2025"</span>
+  },
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"a partir de las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:30"</span>
+  },
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"foto"</span>: {
+    <span class="k">"src"</span>: <span class="s">"docs/gallery/envozalta-angela-1.jpg"</span>,
+    <span class="k">"encuadre"</span>: <span class="s">"50% 34%"</span>,
+    <span class="k">"forma"</span>: <span class="s">"banda"</span>,
+    <span class="k">"tratamiento"</span>: <span class="s">"duo"</span>,
+    <span class="k">"contraste"</span>: <span class="n">1.14</span>
+  },
+  <span class="k">"alt"</span>: <span class="s">"Retrato de Ángela Mallén leyendo en La Perecquiana, en duotono zafiro y rosa."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="2025-12-12-angela-mallen-01.png" alt=""><div class="nom">out/2025-12-12-angela-mallen-01.png</div></div></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/2025-12-12-angela-mallen.json → slides[1]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"evento"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"en voz alta — el autor ante sus textos"</span>,
+  <span class="k">"subtitular"</span>: <span class="s">"susurros y atmósferas"</span>,
+  <span class="k">"bio"</span>: <span class="s">"Cierra el ciclo con una lectura de sus propios textos. Escribe desde la voz baja: la frase corta, el aire entre palabras, lo que se dice cuando nadie levanta el tono."</span>,
+  <span class="k">"alt"</span>: <span class="s">"Texto sobre fondo zafiro: presentación de la sesión de Ángela Mallén."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="2025-12-12-angela-mallen-02.png" alt=""><div class="nom">out/2025-12-12-angela-mallen-02.png</div></div></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/2025-12-12-angela-mallen.json → slides[2]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"recordatorio"</span>,
+  <span class="k">"titular"</span>: <span class="s">"viernes 12"</span>,
+  <span class="k">"subtitular"</span>: <span class="s">"a las 19:30"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"tipo"</span>: <span class="s">"Lectura"</span>,
+  <span class="k">"aforo"</span>: <span class="s">"Entrada gratuita hasta completar aforo"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Datos prácticos: viernes 12 de diciembre, 19:30, Librería La Perecquiana, Valladolid."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="2025-12-12-angela-mallen-03.png" alt=""><div class="nom">out/2025-12-12-angela-mallen-03.png</div></div></div><div class="txt"><div><div class="rot">salida · out/2025-12-12-angela-mallen.caption.txt — el texto de la publicación</div><pre>Cerramos «En voz alta» con Ángela Mallén. Lee sus textos en voz baja — susurros, atmósferas, el aire entre las frases.
 
 Lectura — Librería La Perecquiana, Valladolid
 Viernes 12 de diciembre, 19:30
 Entrada gratuita hasta completar aforo
 
 cfdl.site
-</pre></section><section><h2>2026-03-13-magistral-jorge-onecha</h2><div class="laminas"><div class="l"><div class="feed"><img src="2026-03-13-magistral-jorge-onecha-01.png"></div><div class="cap3x4"><img src="2026-03-13-magistral-jorge-onecha-01.png"><span class="crop"></span></div><div class="full"><img src="2026-03-13-magistral-jorge-onecha-01.png"></div><div class="n">2026-03-13-magistral-jorge-onecha-01.png</div></div></div><pre>Jorge Onecha se acerca a la figura de Jesús en la obra de Leonard Cohen. Liturgia, música y literatura — el vinilo y la lectura en voz alta.
+</pre></div><div><div class="rot">salida · out/2025-12-12-angela-mallen.alt.txt — texto alternativo por lámina</div><pre>01: Retrato de Ángela Mallén leyendo en La Perecquiana, en duotono zafiro y rosa.
+02: Texto sobre fondo zafiro: presentación de la sesión de Ángela Mallén.
+03: Datos prácticos: viernes 12 de diciembre, 19:30, Librería La Perecquiana, Valladolid.
+</pre></div></div></div><div class="post"><div class="cab"><h2>2026-03-13-magistral-jorge-onecha</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip">evento</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/2026-03-13-magistral-jorge-onecha.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"evento"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"la-magistral"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"sigla"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;Jorge&quot;,
+    &quot;Onecha&quot;
+  ],
+  <span class="k">"subtitular"</span>: <span class="s">"la herida de la que hablo"</span>,
+  <span class="k">"tipo"</span>: <span class="s">"Conferencia"</span>,
+  <span class="k">"fecha"</span>: {
+    <span class="k">"dia_semana"</span>: <span class="s">"viernes"</span>,
+    <span class="k">"texto"</span>: <span class="s">"13 de marzo"</span>,
+    <span class="k">"anio"</span>: <span class="s">"2026"</span>
+  },
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"a partir de las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:30"</span>
+  },
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"aforo"</span>: <span class="s">"Entrada gratuita hasta completar aforo"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Cartel tipográfico sobre fondo niebla: Jorge Onecha, viernes 13 de marzo, 19:30."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="2026-03-13-magistral-jorge-onecha-01.png" alt=""><div class="nom">out/2026-03-13-magistral-jorge-onecha-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/2026-03-13-magistral-jorge-onecha.caption.txt — el texto de la publicación</div><pre>Jorge Onecha se acerca a la figura de Jesús en la obra de Leonard Cohen. Liturgia, música y literatura — el vinilo y la lectura en voz alta.
 
 Conferencia — Librería La Perecquiana, Valladolid
 Viernes 13 de marzo, 19:30
 Entrada gratuita hasta completar aforo
 
 cfdl.site
-</pre></section><section><h2>cita-extenuacion</h2><div class="laminas"><div class="l"><div class="feed"><img src="cita-extenuacion-01.png"></div><div class="cap3x4"><img src="cita-extenuacion-01.png"><span class="crop"></span></div><div class="full"><img src="cita-extenuacion-01.png"></div><div class="n">cita-extenuacion-01.png</div></div></div><pre>Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal.
+</pre></div><div><div class="rot">salida · out/2026-03-13-magistral-jorge-onecha.alt.txt — texto alternativo por lámina</div><pre>01: Cartel tipográfico sobre fondo niebla: Jorge Onecha, viernes 13 de marzo, 19:30.
+</pre></div></div></div><div class="post"><div class="cab"><h2>cita-extenuacion</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip">cita</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/cita-extenuacion.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"cita"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"nombre"</span>,
+  <span class="k">"cita"</span>: {
+    <span class="k">"texto"</span>: <span class="s">"Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal"</span>,
+    <span class="k">"fuente"</span>: <span class="s">"Manifiesto — Colectivo Fuera de Lugar"</span>
+  },
+  <span class="k">"alt"</span>: <span class="s">"Fragmento del manifiesto sobre fondo medianoche: «Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal»."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="cita-extenuacion-01.png" alt=""><div class="nom">out/cita-extenuacion-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/cita-extenuacion.caption.txt — el texto de la publicación</div><pre>Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal.
 
 Del manifiesto, 2023.
 
 cfdl.site
-</pre></section>
+</pre></div><div><div class="rot">salida · out/cita-extenuacion.alt.txt — texto alternativo por lámina</div><pre>01: Fragmento del manifiesto sobre fondo medianoche: «Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal».
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-01-portada</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">portada</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-01-portada.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"portada"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"en-voz-alta"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;Pablo&quot;,
+    &quot;Martín Sánchez&quot;
+  ],
+  <span class="k">"subtitular"</span>: <span class="s">"presenta Fricciones"</span>,
+  <span class="k">"fecha"</span>: {
+    <span class="k">"dia_semana"</span>: <span class="s">"jueves"</span>,
+    <span class="k">"texto"</span>: <span class="s">"13 de noviembre"</span>
+  },
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"a partir de las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:30"</span>
+  },
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"foto"</span>: {
+    <span class="k">"src"</span>: <span class="s">"docs/gallery/envozalta-pablo-2.jpg"</span>,
+    <span class="k">"encuadre"</span>: <span class="s">"50% 40%"</span>,
+    <span class="k">"tratamiento"</span>: <span class="s">"duo"</span>,
+    <span class="k">"contraste"</span>: <span class="n">1.2</span>
+  },
+  <span class="k">"alt"</span>: <span class="s">"Pablo Martín Sánchez en La Perecquiana, foto a toda página en duotono con el texto encima."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-01-portada-01.png" alt=""><div class="nom">out/ej-01-portada-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-01-portada.caption.txt — el texto de la publicación</div><pre>Pablo Martín Sánchez lee de Fricciones, su edición ampliada y revisada. La frase que se resiste, el texto que roza.
+
+Lectura — Librería La Perecquiana, Valladolid
+Jueves 13 de noviembre, 19:30
+Entrada gratuita hasta completar aforo
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-01-portada.alt.txt — texto alternativo por lámina</div><pre>01: Pablo Martín Sánchez en La Perecquiana, foto a toda página en duotono con el texto encima.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-02-retrato</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">retrato</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-02-retrato.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"retrato"</span>,
+  <span class="k">"lado"</span>: <span class="s">"izq"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"en-voz-alta"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;Ana&quot;,
+    &quot;Griott&quot;
+  ],
+  <span class="k">"subtitular"</span>: <span class="s">"narración oral"</span>,
+  <span class="k">"fecha"</span>: {
+    <span class="k">"dia_semana"</span>: <span class="s">"miércoles"</span>,
+    <span class="k">"texto"</span>: <span class="s">"8 de octubre"</span>
+  },
+  <span class="k">"tipo"</span>: <span class="s">"Lectura"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"foto"</span>: {
+    <span class="k">"src"</span>: <span class="s">"docs/gallery/envozalta-ana-1.jpg"</span>,
+    <span class="k">"forma"</span>: <span class="s">"caja"</span>,
+    <span class="k">"encuadre"</span>: <span class="s">"50% 35%"</span>,
+    <span class="k">"tratamiento"</span>: <span class="s">"bn"</span>,
+    <span class="k">"contraste"</span>: <span class="n">1.18</span>
+  },
+  <span class="k">"alt"</span>: <span class="s">"Retrato de Ana Griott en blanco y negro junto a los datos de la sesión."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-02-retrato-01.png" alt=""><div class="nom">out/ej-02-retrato-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-02-retrato.caption.txt — el texto de la publicación</div><pre>Ana Griott cuenta desde 1992. Dirige Libros de las Malas Compañías y trabaja con la narración tradicional — el cuento que se dice antes de escribirse.
+
+Lectura — Librería La Perecquiana, Valladolid
+Miércoles 8 de octubre, 19:30
+Entrada gratuita hasta completar aforo
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-02-retrato.alt.txt — texto alternativo por lámina</div><pre>01: Retrato de Ana Griott en blanco y negro junto a los datos de la sesión.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-03-programa</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip">programa</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-03-programa.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"programa"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"Welcome Summer Festival"</span>,
+  <span class="k">"titular"</span>: <span class="s">"Una tarde larga"</span>,
+  <span class="k">"programa"</span>: [
+    {
+      <span class="k">"hora"</span>: <span class="s">"19:30"</span>,
+      <span class="k">"titulo"</span>: <span class="s">"Gonzalo Sánchez-Terán"</span>,
+      <span class="k">"detalle"</span>: <span class="s">"Lectura y charla — poesía, literatura y África. Modera Rosauro Varo Cobos."</span>
+    },
+    {
+      <span class="k">"hora"</span>: <span class="s">"21:30"</span>,
+      <span class="k">"titulo"</span>: <span class="s">"María Sotelo · JAM3S"</span>,
+      <span class="k">"detalle"</span>: <span class="s">"Recital poético y musical en The Bowie Bar."</span>
+    }
+  ],
+  <span class="k">"tipo"</span>: <span class="s">"Festival"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"aforo"</span>: <span class="s">"Entrada libre hasta completar aforo"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Programa del Welcome Summer Festival con dos actividades, a las 19:30 y a las 21:30."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-03-programa-01.png" alt=""><div class="nom">out/ej-03-programa-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-03-programa.caption.txt — el texto de la publicación</div><pre>Dos citas el mismo día. Primero la palabra dicha despacio, después la palabra con música.
+
+Festival — Valladolid
+Jueves 19 de junio, desde las 19:30
+Entrada libre hasta completar aforo
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-03-programa.alt.txt — texto alternativo por lámina</div><pre>01: Programa del Welcome Summer Festival con dos actividades, a las 19:30 y a las 21:30.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-04-datos</h2><span class="chip t">pink</span><span class="chip f">cuadrado 1080×1080</span><span class="chip">datos</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-04-datos.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"datos"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"14.4 — club de lectura"</span>,
+  <span class="k">"titular"</span>: <span class="s">"Cómo apuntarse"</span>,
+  <span class="k">"datos"</span>: [
+    {
+      <span class="k">"Sesiones"</span>: <span class="s">"seis, de enero a julio"</span>
+    },
+    {
+      <span class="k">"Dónde"</span>: <span class="s">"La Perecquiana, Valladolid"</span>
+    },
+    {
+      <span class="k">"Hora"</span>: <span class="s">"19:30"</span>
+    },
+    {
+      <span class="k">"Inscripción"</span>: <span class="s">"36 € la temporada"</span>
+    },
+    {
+      <span class="k">"Con"</span>: <span class="s">"Observatorio de Estudios Africanos, UVa"</span>
+    }
+  ],
+  <span class="k">"alt"</span>: <span class="s">"Datos prácticos del club de lectura 14.4: seis sesiones, La Perecquiana, 19:30, 36 euros."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-04-datos-01.png" alt=""><div class="nom">out/ej-04-datos-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-04-datos.caption.txt — el texto de la publicación</div><pre>14,4 son los kilómetros que separan Europa de África. El club lee esa distancia — ensayo, narrativa, poesía, imagen.
+
+Club de lectura — Librería La Perecquiana, Valladolid
+Seis sesiones, 19:30
+Inscripción 36 €
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-04-datos.alt.txt — texto alternativo por lámina</div><pre>01: Datos prácticos del club de lectura 14.4: seis sesiones, La Perecquiana, 19:30, 36 euros.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-05-resumen</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">resumen</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-05-resumen.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"resumen"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"pasó en Welcome Summer"</span>,
+  <span class="k">"titular"</span>: <span class="s">"El círculo"</span>,
+  <span class="k">"fotos"</span>: [
+    {
+      <span class="k">"src"</span>: <span class="s">"docs/gallery/welcome-summer-2.jpg"</span>,
+      <span class="k">"tratamiento"</span>: <span class="s">"duo"</span>,
+      <span class="k">"encuadre"</span>: <span class="s">"50% 40%"</span>
+    },
+    {
+      <span class="k">"src"</span>: <span class="s">"docs/gallery/welcome-summer-5.jpg"</span>,
+      <span class="k">"tratamiento"</span>: <span class="s">"duo"</span>
+    },
+    {
+      <span class="k">"src"</span>: <span class="s">"docs/gallery/welcome-summer-7.jpg"</span>,
+      <span class="k">"tratamiento"</span>: <span class="s">"duo"</span>
+    }
+  ],
+  <span class="k">"bio"</span>: <span class="s">"Una tarde de junio en la librería: se leyó de pie, sentados en el suelo y desde el sofá verde."</span>,
+  <span class="k">"tipo"</span>: <span class="s">"Festival"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Tres fotografías del Welcome Summer Festival en duotono: el círculo de lectura, leyendo y los poetas."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-05-resumen-01.png" alt=""><div class="nom">out/ej-05-resumen-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-05-resumen.caption.txt — el texto de la publicación</div><pre>Quedó así. Se leyó de pie, en el suelo y desde el sofá verde, hasta que se acabó la tarde.
+
+Festival — Librería La Perecquiana, Valladolid
+Gracias a quienes vinieron a escuchar.
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-05-resumen.alt.txt — texto alternativo por lámina</div><pre>01: Tres fotografías del Welcome Summer Festival en duotono: el círculo de lectura, leyendo y los poetas.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-06-pieza</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip">pieza</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-06-pieza.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"pieza"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"obra generativa"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;La llegada&quot;,
+    &quot;del moho&quot;
+  ],
+  <span class="k">"tecnica"</span>: <span class="s">"Reacción-difusión Gray-Scott — colonización química"</span>,
+  <span class="k">"bio"</span>: <span class="s">"Dos sustancias que se persiguen sobre una retícula. Nadie dibuja la mancha: aparece porque las reglas no saben parar."</span>,
+  <span class="k">"alt"</span>: <span class="s">"Cartel de la pieza generativa La llegada del moho, sobre fondo medianoche."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-06-pieza-01.png" alt=""><div class="nom">out/ej-06-pieza-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-06-pieza.caption.txt — el texto de la publicación</div><pre>Dos sustancias que se persiguen sobre una retícula. Nadie dibuja la mancha: aparece porque las reglas no saben parar.
+
+Reacción-difusión Gray-Scott — colonización química
+Se mueve en cfdl.site
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-06-pieza.alt.txt — texto alternativo por lámina</div><pre>01: Cartel de la pieza generativa La llegada del moho, sobre fondo medianoche.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-07-numero</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip">numero</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-07-numero.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"numero"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"antetitulo"</span>: <span class="s">"club de lectura"</span>,
+  <span class="k">"numero"</span>: {
+    <span class="k">"valor"</span>: <span class="s">"14,4"</span>,
+    <span class="k">"unidad"</span>: <span class="s">"km"</span>
+  },
+  <span class="k">"subtitular"</span>: <span class="s">"entre dos orillas"</span>,
+  <span class="k">"bio"</span>: <span class="s">"Lo que separa Europa de África por su punto más estrecho. El club lee esa distancia."</span>,
+  <span class="k">"alt"</span>: <span class="s">"La cifra 14,4 km a gran tamaño, con el lema entre dos orillas."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-07-numero-01.png" alt=""><div class="nom">out/ej-07-numero-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-07-numero.caption.txt — el texto de la publicación</div><pre>14,4 km. Lo que separa Europa de África por su punto más estrecho, y lo que el club se propone leer durante una temporada.
+
+Club de lectura — Librería La Perecquiana, Valladolid
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-07-numero.alt.txt — texto alternativo por lámina</div><pre>01: La cifra 14,4 km a gran tamaño, con el lema entre dos orillas.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-08-historia</h2><span class="chip t">pink</span><span class="chip f">historia 1080×1920</span><span class="chip">recordatorio</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-08-historia.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"recordatorio"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"titular"</span>: <span class="s">"hoy"</span>,
+  <span class="k">"subtitular"</span>: <span class="s">"a las 19:30"</span>,
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"puertas desde las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:00"</span>
+  },
+  <span class="k">"tipo"</span>: <span class="s">"Lectura"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"alt"</span>: <span class="s">"Historia de recordatorio: hoy, a las 19:30, en La Perecquiana."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-08-historia-01.png" alt=""><div class="nom">out/ej-08-historia-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-08-historia.caption.txt — el texto de la publicación</div><pre>Hoy, a las 19:30, en La Perecquiana.
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-08-historia.alt.txt — texto alternativo por lámina</div><pre>01: Historia de recordatorio: hoy, a las 19:30, en La Perecquiana.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-09-formatos</h2><span class="chip t">citrine</span><span class="chip f">feed 1080×1350</span><span class="chip f">cuadrado 1080×1080</span><span class="chip f">historia 1080×1920</span><span class="chip">cita</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-09-formatos.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"cita"</span>,
+  <span class="k">"superficie"</span>: <span class="s">"oscuro"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+nombre"</span>,
+  <span class="k">"cita"</span>: {
+    <span class="k">"texto"</span>: <span class="s">"Creemos en una identidad inquieta, de paso hacia la incertidumbre"</span>,
+    <span class="k">"fuente"</span>: <span class="s">"Manifiesto — 2023"</span>
+  },
+  <span class="k">"alt"</span>: <span class="s">"Fragmento del manifiesto sobre identidad inquieta, sobre fondo medianoche."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-09-formatos-01-feed.png" alt=""><div class="nom">out/ej-09-formatos-01-feed.png</div><img src="ej-09-formatos-01-cuadrado.png" alt=""><div class="nom">out/ej-09-formatos-01-cuadrado.png</div><img src="ej-09-formatos-01-historia.png" alt=""><div class="nom">out/ej-09-formatos-01-historia.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-09-formatos.caption.txt — el texto de la publicación</div><pre>Creemos en una identidad inquieta, de paso hacia la incertidumbre.
+
+Del manifiesto, 2023. Se lee entero en seis idiomas en cfdl.site.
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-09-formatos.alt.txt — texto alternativo por lámina</div><pre>01: Fragmento del manifiesto sobre identidad inquieta, sobre fondo medianoche.
+</pre></div></div></div><div class="post"><div class="cab"><h2>ej-10-logos</h2><span class="chip t">pink</span><span class="chip f">feed 1080×1350</span><span class="chip">evento</span></div><div class="lam"><div class="ent"><div class="rot">entrada · posts/ej-10-logos.json → slides[0]</div><pre>{
+  <span class="k">"plantilla"</span>: <span class="s">"evento"</span>,
+  <span class="k">"alinear"</span>: <span class="s">"der"</span>,
+  <span class="k">"variante"</span>: <span class="s">"centro"</span>,
+  <span class="k">"ciclo"</span>: <span class="s">"la-magistral"</span>,
+  <span class="k">"marca_cfdl"</span>: <span class="s">"logo+sigla"</span>,
+  <span class="k">"titular"</span>: [
+    &quot;Marta&quot;,
+    &quot;Álvarez&quot;
+  ],
+  <span class="k">"subtitular"</span>: <span class="s">"publicar de otra manera"</span>,
+  <span class="k">"fecha"</span>: {
+    <span class="k">"dia_semana"</span>: <span class="s">"viernes"</span>,
+    <span class="k">"texto"</span>: <span class="s">"10 de abril"</span>,
+    <span class="k">"anio"</span>: <span class="s">"2026"</span>
+  },
+  <span class="k">"hora"</span>: {
+    <span class="k">"prefijo"</span>: <span class="s">"a partir de las"</span>,
+    <span class="k">"texto"</span>: <span class="s">"19:30"</span>
+  },
+  <span class="k">"tipo"</span>: <span class="s">"Conferencia"</span>,
+  <span class="k">"lugar"</span>: <span class="s">"perecquiana"</span>,
+  <span class="k">"aforo"</span>: <span class="s">"Entrada gratuita hasta completar aforo"</span>,
+  <span class="k">"logos_cred"</span>: <span class="s">"con"</span>,
+  <span class="k">"logos"</span>: [
+    {
+      <span class="k">"src"</span>: <span class="s">"assets/logos/_ejemplo-a.svg"</span>,
+      <span class="k">"alt"</span>: <span class="s">"Lugar (logotipo de ejemplo)"</span>
+    },
+    {
+      <span class="k">"src"</span>: <span class="s">"assets/logos/_ejemplo-b.svg"</span>,
+      <span class="k">"alt"</span>: <span class="s">"Colaborador (logotipo de ejemplo)"</span>
+    }
+  ],
+  <span class="k">"alt"</span>: <span class="s">"Cartel alineado a la derecha para Marta Álvarez, con dos logotipos de ejemplo tratados a tinta en el pie."</span>
+}</pre></div><div class="sal"><div class="rot">salida</div><img src="ej-10-logos-01.png" alt=""><div class="nom">out/ej-10-logos-01.png</div></div></div><div class="txt"><div><div class="rot">salida · out/ej-10-logos.caption.txt — el texto de la publicación</div><pre>Marta Álvarez habla del libro de artista, el fotolibro y el fanzine. La autoedición como vía de autonomía y el libro como objeto plástico.
+
+Conferencia — Librería La Perecquiana, Valladolid
+Viernes 10 de abril, 19:30
+Entrada gratuita hasta completar aforo
+
+cfdl.site
+</pre></div><div><div class="rot">salida · out/ej-10-logos.alt.txt — texto alternativo por lámina</div><pre>01: Cartel alineado a la derecha para Marta Álvarez, con dos logotipos de ejemplo tratados a tinta en el pie.
+</pre></div></div></div>

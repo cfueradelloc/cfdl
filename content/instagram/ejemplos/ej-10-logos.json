@@ -1,0 +1,47 @@
+{
+  "id": "ej-10-logos",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [
+    {
+      "plantilla": "evento",
+      "alinear": "der",
+      "variante": "centro",
+      "ciclo": "la-magistral",
+      "marca_cfdl": "logo+sigla",
+      "titular": [
+        "Marta",
+        "Álvarez"
+      ],
+      "subtitular": "publicar de otra manera",
+      "fecha": {
+        "dia_semana": "viernes",
+        "texto": "10 de abril",
+        "anio": "2026"
+      },
+      "hora": {
+        "prefijo": "a partir de las",
+        "texto": "19:30"
+      },
+      "tipo": "Conferencia",
+      "lugar": "perecquiana",
+      "aforo": "Entrada gratuita hasta completar aforo",
+      "logos_cred": "con",
+      "logos": [
+        {
+          "src": "assets/logos/_ejemplo-a.svg",
+          "alt": "Lugar (logotipo de ejemplo)"
+        },
+        {
+          "src": "assets/logos/_ejemplo-b.svg",
+          "alt": "Colaborador (logotipo de ejemplo)"
+        }
+      ],
+      "alt": "Cartel alineado a la derecha para Marta Álvarez, con dos logotipos de ejemplo tratados a tinta en el pie."
+    }
+  ],
+  "caption": {
+    "texto": "Marta Álvarez habla del libro de artista, el fotolibro y el fanzine. La autoedición como vía de autonomía y el libro como objeto plástico.\n\nConferencia — Librería La Perecquiana, Valladolid\nViernes 10 de abril, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

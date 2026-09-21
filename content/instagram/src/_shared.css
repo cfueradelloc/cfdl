@@ -98,7 +98,7 @@
 
 /* ── Lienzo ───────────────────────────────────────────────────────────────── */
 * { margin:0; padding:0; box-sizing:border-box; }
-html, body { width:1080px; height:1350px; background:#101010; }
+html, body { width:var(--W); height:var(--H); background:#101010; }
 
 .stage {
   position:relative; overflow:hidden;
@@ -257,4 +257,178 @@ html, body { width:1080px; height:1350px; background:#101010; }
 .stage.debug::after {
   content:""; position:absolute; top:0; bottom:0; left:34px; right:34px;
   z-index:98; pointer-events:none; outline:2px dashed rgba(0,160,255,.6);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LOGOTIPOS
+   Dos cosas distintas. La marca del colectivo se dibuja (SVG en línea, toma
+   los colores del tema), así que nunca desentona ni pixela. Los logos ajenos
+   —lugar, colaboradores— son archivos que llegan como vengan: se normalizan
+   con filtros para que entren en la paleta en vez de pegar un rectángulo de
+   otra marca encima del cartel.
+   ═════════════════════════════════════════════════════════════════════════ */
+.marca      { display:block; color:currentColor; }
+.marca-fila { display:flex; align-items:center; gap:calc(var(--gutter)*0.6); }
+
+.logos {
+  display:flex; align-items:center; flex-wrap:wrap;
+  gap:calc(var(--gutter)*1.4) calc(var(--gutter)*1.6);
+}
+.logos img { display:block; width:auto; height:var(--logo-h, 52px); }
+/* tinta: cualquier logo → sólido en el color del texto. Es lo que mantiene la
+   página en dos tintas en vez de convertirla en una valla publicitaria. */
+.logos.t-tinta  img { filter:grayscale(1) brightness(0) opacity(.78); }
+.stage.sup-oscuro .logos.t-tinta img,
+.logos.t-blanco img { filter:grayscale(1) brightness(0) invert(1) opacity(.86); }
+.logos.t-gris   img { filter:grayscale(1) contrast(1.1) opacity(.7); }
+.logos.t-color  img { filter:none; }
+.logos-pie { margin-top:calc(var(--u)*5); }
+.logos .cred {
+  font-family:var(--sans); font-size:var(--fs-tag);
+  letter-spacing:var(--track-tag); text-transform:uppercase;
+  color:var(--c-muted); align-self:center;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FOTO — más formas
+   ═════════════════════════════════════════════════════════════════════════ */
+.foto.f-media   { height:812px; }
+.foto.f-alta    { height:960px; }
+/* «sangre» ocupa el lienzo entero por detrás de todo; las zonas se le montan
+   encima. Necesita velo o el texto no se lee sobre una foto con detalle. */
+.stage.con-sangre .zona-sup,
+.stage.con-sangre .zona-med,
+.stage.con-sangre .zona-inf { position:relative; z-index:2; }
+.velo {
+  position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(to top,
+    var(--velo-col) 0%,
+    color-mix(in srgb, var(--velo-col) 72%, transparent) 34%,
+    color-mix(in srgb, var(--velo-col) 12%, transparent) 62%,
+    transparent 100%);
+}
+.velo.v-pleno { background:color-mix(in srgb, var(--velo-col) 62%, transparent); }
+.velo.v-alto  { background:linear-gradient(to bottom,
+    var(--velo-col) 0%, color-mix(in srgb,var(--velo-col) 30%,transparent) 45%,
+    transparent 100%); }
+.velo.v-ambos { background:linear-gradient(to bottom,
+    color-mix(in srgb,var(--velo-col) 86%,transparent) 0%,
+    color-mix(in srgb,var(--velo-col) 26%,transparent) 18%,
+    color-mix(in srgb,var(--velo-col) 14%,transparent) 44%,
+    color-mix(in srgb,var(--velo-col) 74%,transparent) 74%,
+    var(--velo-col) 100%); }
+.stage           { --velo-col:var(--band-bg); }
+.stage.sup-claro { --velo-col:var(--band-bg); }
+
+/* Dos columnas: foto a un lado, texto al otro. */
+.par { display:grid; grid-template-columns:1fr 1fr; gap:calc(var(--gutter)*1.6);
+       align-items:center; }
+.par.izq { grid-template-columns:var(--par-foto, 420px) 1fr; }
+.par.der { grid-template-columns:1fr var(--par-foto, 420px); }
+.par .foto { height:var(--par-alto, 560px); }
+.par .fecha { margin-left:0; margin-right:0;
+              font-size:calc(var(--fs-fecha) * 0.76); }
+.par .bio   { max-width:none; }
+
+/* Rejilla de fotos para el resumen posterior al evento. */
+.rejilla { display:grid; gap:10px; }
+.rejilla.n2 { grid-template-columns:1fr 1fr; }
+.rejilla.n3 { grid-template-columns:1fr 1fr; }
+.rejilla.n3 .foto:first-child { grid-column:1 / -1; }
+.rejilla.n4 { grid-template-columns:1fr 1fr; }
+.rejilla .foto { height:var(--rej-alto, 228px); }
+.foto.f-rej { height:var(--rej-alto, 228px); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PROGRAMA · DATOS · NÚMERO
+   ═════════════════════════════════════════════════════════════════════════ */
+.programa { display:grid; row-gap:calc(var(--u)*4); }
+.programa .it {
+  display:grid; grid-template-columns:var(--prog-col, 92px) 1fr;
+  gap:var(--gutter); align-items:baseline;
+  border-top:1px solid var(--c-rule); padding-top:calc(var(--u)*3);
+}
+.programa .h { font-family:var(--sans); font-size:var(--fs-hora);
+               letter-spacing:var(--track-hora); color:var(--accent); }
+.programa .t { font-family:var(--serif); font-style:italic;
+               font-size:var(--fs-sub); line-height:1.15; }
+.programa .d { font-family:var(--serif); font-size:var(--fs-tag2, 24px);
+               line-height:1.4; color:var(--c-muted); margin-top:calc(var(--u)*1); }
+
+.datos { display:grid; row-gap:calc(var(--u)*4); }
+.datos .fila { display:grid; grid-template-columns:var(--datos-col, 260px) 1fr;
+               gap:var(--gutter); align-items:baseline; }
+.datos .k { font-family:var(--sans); font-size:var(--fs-label);
+            letter-spacing:var(--track-label); text-transform:uppercase;
+            color:var(--c-muted); }
+.datos .v { font-family:var(--serif); font-size:var(--fs-sub); font-style:italic;
+            line-height:1.2; }
+
+.numero { font-family:var(--serif); font-size:var(--fs-numero, 300px);
+          line-height:0.82; font-style:italic; }
+.numero .u { font-size:0.3em; font-style:normal; font-family:var(--sans);
+             letter-spacing:var(--track-label); text-transform:uppercase;
+             color:var(--c-muted); }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VARIANTES DE COMPOSICIÓN
+   Dónde se apoya el bloque de texto. Por defecto centrado; «alta» y «baja»
+   existen para que un carrusel no sea tres veces la misma página.
+   ═════════════════════════════════════════════════════════════════════════ */
+.stage.v-alta  .zona-med { align-self:start; }
+.stage.v-baja  .zona-med { align-self:end; }
+.stage.v-centro .zona-med { align-self:center; }
+/* Texto a la derecha: el desplazamiento de la fecha se invierte para que siga
+   saliéndose de la retícula y no hacia dentro. */
+.stage.al-der .zona-sup, .stage.al-der .zona-med, .stage.al-der .zona-inf,
+.stage.al-der .meta, .stage.al-der .bio { text-align:right; }
+.stage.al-der .fecha { margin-left:0; margin-right:calc(var(--desplazo) * -1); }
+.stage.al-der .bio { margin-left:auto; }
+.stage.al-der .pie { flex-direction:row-reverse; }
+.stage.al-der .izq { flex-direction:row-reverse; }
+.stage.al-der .logos { justify-content:flex-end; }
+.stage.al-der .programa .it, .stage.al-der .datos .fila,
+.stage.al-der .agenda .fila { direction:rtl; }
+.stage.al-der .programa .it > *, .stage.al-der .datos .fila > *,
+.stage.al-der .agenda .fila > * { direction:ltr; }
+
+/* Sin desplazamiento, para cuando una lámina lo necesite recta. */
+.stage.recto .fecha { margin-left:0; margin-right:0; }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   FORMATOS
+   Las tres proporciones que usa Instagram. La clase va en <html>, así que
+   html, body y .stage leen el mismo --W/--H y no hay dos sitios que cuadrar.
+   Cada formato reajusta la escala: lo que respira en 1920 de alto se ahoga
+   en 1080, y al revés.
+   ═════════════════════════════════════════════════════════════════════════ */
+:root.f-feed     { --W:1080px; --H:1350px; }
+
+:root.f-cuadrado {
+  --W:1080px; --H:1080px;
+  --m-top:76px; --m-bot:76px;
+  --fs-display:88px; --fs-hero:76px; --fs-sub:34px;
+  --fs-fecha:46px;  --fs-body:26px;  --fs-numero:230px;
+  --foto-h:430px;   --par-alto:440px; --rej-alto:180px;
+}
+:root.f-cuadrado .foto.f-media { height:520px; }
+:root.f-cuadrado .foto.f-alta  { height:640px; }
+
+/* Historia: los márgenes superior e inferior no son estética, son la zona que
+   tapa la interfaz de Instagram (avatar arriba, caja de respuesta abajo).
+   Todo lo legible vive en la banda central. */
+:root.f-historia {
+  --W:1080px; --H:1920px;
+  --m-top:260px; --m-bot:300px;
+  --fs-display:132px; --fs-hero:108px; --fs-sub:46px;
+  --fs-fecha:64px;   --fs-body:32px;  --fs-numero:380px;
+  --foto-h:760px;    --par-alto:700px; --rej-alto:330px;
+  --desplazo:52px;
+}
+:root.f-historia .foto.f-media { height:980px; }
+:root.f-historia .foto.f-alta  { height:1200px; }
+/* Marca de zona insegura, sólo con --debug. */
+:root.f-historia .stage.debug .zona-sup::before {
+  content:""; position:absolute; left:0; right:0; top:0; height:var(--m-top);
+  background:rgba(255,0,160,.10); pointer-events:none;
 }

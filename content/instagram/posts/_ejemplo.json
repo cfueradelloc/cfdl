@@ -1,16 +1,28 @@
 {
-  "_": "Brief de referencia: TODAS las claves posibles, anotadas. Los ficheros que empiezan por _ no se generan. `plantilla` es la única clave obligatoria de una lámina; el resto son bloques que se dibujan si están.",
+  "_": "Brief de referencia: todas las claves posibles, anotadas. Los ficheros que empiezan por _ no se construyen. Dentro de una lámina, `plantilla` es la única clave obligatoria; el resto son bloques que se dibujan si están y desaparecen si no. Ejemplos ejecutables de cada plantilla: ../ejemplos/",
+
   "id": "AAAA-MM-DD-slug",
   "theme": "pink | citrine",
-  "evento_ref": "AAAA-MM-DD — la entrada de calendario-eventos.md contra la que contrastar",
+  "formato": "feed (1080×1350) | cuadrado (1080×1080) | historia (1080×1920)",
+  "formatos": ["feed", "cuadrado", "historia"],
+  "evento_ref": "AAAA-MM-DD — entrada de calendario-eventos.md contra la que contrastar",
+
   "slides": [
     {
-      "plantilla": "evento | ciclo | recordatorio | cita",
+      "plantilla": "evento | ciclo | recordatorio | cita | portada | retrato | programa | datos | resumen | pieza | numero",
+
       "theme": "opcional, pisa el del post",
-      "superficie": "claro | oscuro",
+      "formato": "opcional, pisa el del post",
+      "superficie": "claro (fondo del tema) | oscuro (banda invertida)",
+      "variante": "centro (por defecto) | alta | baja — dónde se apoya el bloque de texto",
+      "alinear": "izq (por defecto) | der — al alinear a la derecha, el desplazamiento de la fecha se invierte",
+      "recto": "true para desactivar el desplazamiento de la fecha en esta lámina",
+
+      "marca_cfdl": "sigla | nombre | logo | logo+sigla | logo+nombre — sale en el pie. El logotipo se dibuja en SVG y toma los colores del tema.",
+      "marca_alto": 40,
       "marca_lugar": "La Perecquiana — sólo si el lugar debe acreditarse arriba; normalmente basta la línea meta del pie",
-      "ciclo": "en-voz-alta | la-magistral | 14-4 — o un objeto {nombre, lema}",
-      "marca_cfdl": "sigla | nombre — sale en el pie, junto a la marca de contacto",
+      "ciclo": "en-voz-alta | la-magistral | 14-4 — clave de defaults.json, o un objeto {nombre, lema}",
+
       "antetitulo": "cresta breve sobre el titular",
       "titular": ["una", "lista de líneas para partir a mano", "o una cadena suelta"],
       "subtitular": "en serif cursiva, bajo el titular",
@@ -20,26 +32,42 @@
       "lugar": "perecquiana — clave de defaults.json, o un objeto {nombre, ciudad}",
       "presentacion": "Presentado por … — si se omite, no sale",
       "bio": "Párrafo en serif redonda. El linter avisa por encima de ~340 caracteres.",
+      "aforo": "Entrada gratuita hasta completar aforo",
+
       "foto": {
-        "src": "../../../docs/gallery/envozalta-angela-1.jpg",
+        "src": "docs/gallery/envozalta-angela-1.jpg — desde la raíz del repo, o assets/… desde el módulo",
         "encuadre": "50% 34% — object-position",
-        "forma": "banda (1080×608, ratio nativo) | caja (912×684) | sangre (lienzo entero)",
+        "forma": "banda (1080×608, ratio nativo, sin recorte) | caja | media | alta | sangre (lienzo entero)",
         "tratamiento": "bn | duo | duo-suave | color | duo-mix",
         "contraste": 1.12,
         "brillo": 1.0,
         "grano": false
       },
-      "portadas": [ { "src": "../assets/portadas/fricciones.jpg" } ],
-      "agenda": [ { "dia": "miércoles", "fecha": "8 oct", "nombre": "Ana Griott" } ],
-      "cita": { "texto": "fragmento del manifiesto", "fuente": "Manifiesto — 09" },
-      "aforo": "Entrada gratuita hasta completar aforo",
-      "qr": { "destino": "https://cfdl.site/eventos.html", "mostrar": false },
+      "velo": "v-ambos | v-alto | v-pleno — sólo con foto a sangre; oscurece para que el texto se lea encima",
+
+      "fotos": [ { "src": "docs/gallery/welcome-summer-2.jpg", "tratamiento": "duo" } ],
+      "portadas": [ { "src": "assets/portadas/fricciones.jpg" } ],
+      "lado": "izq | der — en «retrato», de qué lado va la foto",
+
+      "logos_cred": "con",
+      "logos_trat": "tinta (por defecto) | blanco | gris | color",
+      "logos_alto": 52,
+      "logos": [ { "src": "assets/logos/perecquiana.svg", "alt": "La Perecquiana" } ],
+
+      "agenda":   [ { "dia": "miércoles", "fecha": "8 oct", "nombre": "Ana Griott" } ],
+      "programa": [ { "hora": "19:30", "titulo": "Gonzalo Sánchez-Terán", "detalle": "Lectura y charla." } ],
+      "datos":    [ { "Inscripción": "36 € la temporada" } ],
+      "cita":     { "texto": "fragmento del manifiesto, máx ~150 caracteres", "fuente": "Manifiesto — 2023" },
+      "numero":   { "valor": "14,4", "unidad": "km" },
+      "tecnica":  "Reacción-difusión Gray-Scott — colonización química",
+
       "paginacion": "true|false — por defecto, activo si hay más de una lámina",
-      "alt": "Texto alternativo de ESTA lámina. Obligatorio; el linter avisa si falta."
+      "alt": "Texto alternativo de ESTA lámina. Obligatorio: el linter avisa si falta."
     }
   ],
+
   "caption": {
-    "texto": "El pie, ya escrito en voz C.F.D.L. Si falta, se emite un andamio a partir de los datos y hay que escribirlo.",
+    "texto": "El texto de la publicación, ya en voz C.F.D.L. Una publicación son SIEMPRE dos cosas, imagen y texto: si esto falta, el generador emite un andamio [PENDIENTE] y el linter no lo deja pasar.",
     "etiquetas": []
   },
   "notas": "Notas para uno mismo. No se dibujan nunca."

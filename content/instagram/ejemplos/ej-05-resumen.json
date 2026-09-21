@@ -1,0 +1,21 @@
+{
+  "id": "ej-05-resumen",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "resumen",
+    "marca_cfdl": "logo",
+    "antetitulo": "pasó en Welcome Summer",
+    "titular": "El círculo",
+    "fotos": [
+      { "src": "docs/gallery/welcome-summer-2.jpg", "tratamiento": "duo", "encuadre": "50% 40%" },
+      { "src": "docs/gallery/welcome-summer-5.jpg", "tratamiento": "duo" },
+      { "src": "docs/gallery/welcome-summer-7.jpg", "tratamiento": "duo" }
+    ],
+    "bio": "Una tarde de junio en la librería: se leyó de pie, sentados en el suelo y desde el sofá verde.",
+    "tipo": "Festival",
+    "lugar": "perecquiana",
+    "alt": "Tres fotografías del Welcome Summer Festival en duotono: el círculo de lectura, leyendo y los poetas."
+  }],
+  "caption": { "texto": "Quedó así. Se leyó de pie, en el suelo y desde el sofá verde, hasta que se acabó la tarde.\n\nFestival — Librería La Perecquiana, Valladolid\nGracias a quienes vinieron a escuchar.\n\ncfdl.site", "etiquetas": [] }
+}

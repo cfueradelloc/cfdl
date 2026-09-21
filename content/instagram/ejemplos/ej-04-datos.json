@@ -1,0 +1,20 @@
+{
+  "id": "ej-04-datos",
+  "theme": "pink",
+  "formato": "cuadrado",
+  "slides": [{
+    "plantilla": "datos",
+    "marca_cfdl": "logo+sigla",
+    "antetitulo": "14.4 — club de lectura",
+    "titular": "Cómo apuntarse",
+    "datos": [
+      { "Sesiones": "seis, de enero a julio" },
+      { "Dónde": "La Perecquiana, Valladolid" },
+      { "Hora": "19:30" },
+      { "Inscripción": "36 € la temporada" },
+      { "Con": "Observatorio de Estudios Africanos, UVa" }
+    ],
+    "alt": "Datos prácticos del club de lectura 14.4: seis sesiones, La Perecquiana, 19:30, 36 euros."
+  }],
+  "caption": { "texto": "14,4 son los kilómetros que separan Europa de África. El club lee esa distancia — ensayo, narrativa, poesía, imagen.\n\nClub de lectura — Librería La Perecquiana, Valladolid\nSeis sesiones, 19:30\nInscripción 36 €\n\ncfdl.site", "etiquetas": [] }
+}

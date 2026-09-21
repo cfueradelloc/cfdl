@@ -1,0 +1,16 @@
+{
+  "id": "ej-06-pieza",
+  "theme": "citrine",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "pieza",
+    "superficie": "oscuro",
+    "marca_cfdl": "logo+sigla",
+    "antetitulo": "obra generativa",
+    "titular": ["La llegada", "del moho"],
+    "tecnica": "Reacción-difusión Gray-Scott — colonización química",
+    "bio": "Dos sustancias que se persiguen sobre una retícula. Nadie dibuja la mancha: aparece porque las reglas no saben parar.",
+    "alt": "Cartel de la pieza generativa La llegada del moho, sobre fondo medianoche."
+  }],
+  "caption": { "texto": "Dos sustancias que se persiguen sobre una retícula. Nadie dibuja la mancha: aparece porque las reglas no saben parar.\n\nReacción-difusión Gray-Scott — colonización química\nSe mueve en cfdl.site\n\ncfdl.site", "etiquetas": [] }
+}

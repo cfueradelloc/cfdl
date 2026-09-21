@@ -1,30 +1,42 @@
 #!/bin/bash
-# Renderiza cada src/<id>-NN.html a out/<id>-NN.png con Chrome sin cabeza.
+# Renderiza cada src/<base>.html a out/<base>.png con Chrome sin cabeza.
 #
-# Cada carril reutiliza UN perfil temporal propio sobre su lote: aislado del
-# navegador del usuario (sin bloqueo de instancia única), caliente (sin arranque
-# en frío repetido) y en paralelo entre carriles. Es la parte del script de
-# camisetas que hace que Chrome sin cabeza en paralelo no se cuelgue.
+# El tamaño de ventana lo dicta src/_sizes.txt, que escribe build_posts.py:
+# una línea «base ANCHO ALTO» por página. Así conviven 4:5, 1:1 y 9:16 en la
+# misma tirada sin que este script tenga que leer JSON.
 #
-#   bash render.sh                 todo
-#   bash render.sh 'src/2025-*'    sólo lo que case
-#   SCALE=2 bash render.sh         maestro 2160×2700 (Instagram recorta a 1080)
+# Cada carril reutiliza UN perfil temporal propio: aislado del navegador del
+# usuario (sin bloqueo de instancia única), caliente (sin arranque en frío
+# repetido) y en paralelo entre carriles.
+#
+#   bash render.sh                  todo
+#   bash render.sh 2025-12          sólo las páginas que contengan ese texto
+#   SCALE=2 bash render.sh          maestro al doble (Instagram recorta a 1080)
 cd "$(dirname "$0")"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
-shopt -s nullglob
-LANES=4                  # menos que en camisetas: estas páginas pesan más
-SCALE="${SCALE:-1}"      # 1 → PNG exacto de 1080×1350, el tamaño nativo del feed
+LANES=4
+SCALE="${SCALE:-1}"
 mkdir -p out
 
-PATTERN="${1:-src/*-[0-9][0-9].html}"
-files=( $PATTERN )
-if [ ${#files[@]} -eq 0 ]; then echo "nada que renderizar en $PATTERN"; exit 0; fi
+if [ ! -f src/_sizes.txt ]; then
+  echo "falta src/_sizes.txt — ejecuta antes: python3 build_posts.py"; exit 1
+fi
+
+FILTRO="${1:-}"
+mapa=()
+while read -r base W H; do
+  [ -z "$base" ] && continue
+  [ -n "$FILTRO" ] && case "$base" in *"$FILTRO"*) ;; *) continue ;; esac
+  [ -f "src/$base.html" ] && mapa+=("$base|$W|$H")
+done < src/_sizes.txt
+
+if [ ${#mapa[@]} -eq 0 ]; then echo "nada que renderizar"; exit 0; fi
 
 lane() {
   local prof; prof=$(mktemp -d /tmp/cfdligchrome.XXXXXX)
-  local f base pid killer
-  for f in "$@"; do
-    base=$(basename "$f" .html)
+  local e base W H pid killer
+  for e in "$@"; do
+    base="${e%%|*}"; rest="${e#*|}"; W="${rest%%|*}"; H="${rest##*|}"
     "$CHROME" --headless=new --disable-gpu --hide-scrollbars \
       --no-first-run --no-default-browser-check --disable-extensions \
       --disable-background-networking --disable-component-update --disable-sync \
@@ -32,11 +44,11 @@ lane() {
       --disable-client-side-phishing-detection \
       --disable-features=Translate,OptimizationHints,MediaRouter \
       --user-data-dir="$prof" \
-      --force-device-scale-factor="$SCALE" --window-size=1080,1350 \
+      --force-device-scale-factor="$SCALE" --window-size="$W,$H" \
       --virtual-time-budget=3000 --run-all-compositor-stages-before-draw \
-      --screenshot="$PWD/out/$base.png" "file://$PWD/$f" >/dev/null 2>&1 &
+      --screenshot="$PWD/out/$base.png" "file://$PWD/src/$base.html" >/dev/null 2>&1 &
     pid=$!
-    ( sleep 20; kill -9 $pid 2>/dev/null ) >/dev/null 2>&1 &
+    ( sleep 25; kill -9 $pid 2>/dev/null ) >/dev/null 2>&1 &
     killer=$!
     wait $pid 2>/dev/null
     kill -9 $killer 2>/dev/null
@@ -44,10 +56,58 @@ lane() {
   rm -rf "$prof"
 }
 
+# una función para un solo archivo, con vigilante propio
+uno() {
+  local base="$1" W="$2" H="$3" espera="$4" prof pid killer
+  prof=$(mktemp -d /tmp/cfdligchrome.XXXXXX)
+  "$CHROME" --headless=new --disable-gpu --hide-scrollbars \
+    --no-first-run --no-default-browser-check --disable-extensions \
+    --disable-background-networking --disable-component-update --disable-sync \
+    --disable-default-apps --metrics-recording-only \
+    --disable-client-side-phishing-detection \
+    --disable-features=Translate,OptimizationHints,MediaRouter \
+    --user-data-dir="$prof" \
+    --force-device-scale-factor="$SCALE" --window-size="$W,$H" \
+    --virtual-time-budget=4000 --run-all-compositor-stages-before-draw \
+    --screenshot="$PWD/out/$base.png" "file://$PWD/src/$base.html" >/dev/null 2>&1 &
+  pid=$!
+  ( sleep "$espera"; kill -9 $pid 2>/dev/null ) >/dev/null 2>&1 &
+  killer=$!
+  wait $pid 2>/dev/null
+  kill -9 $killer 2>/dev/null
+  rm -rf "$prof"
+}
+
 for ((L=0; L<LANES; L++)); do
   shard=()
-  for ((i=L; i<${#files[@]}; i+=LANES)); do shard+=("${files[$i]}"); done
+  for ((i=L; i<${#mapa[@]}; i+=LANES)); do shard+=("${mapa[$i]}"); done
   [ ${#shard[@]} -gt 0 ] && lane "${shard[@]}" &
 done
 wait
-echo "RENDER_DONE $(ls out/*.png 2>/dev/null | wc -l | tr -d ' ')"
+
+# Segunda pasada, en serie y con más margen. Chrome sin cabeza falla de vez en
+# cuando bajo carga en paralelo —una página con SVG externos se pasó de los 25s
+# y se quedó sin PNG, en silencio—. Un PNG que falta no debe pasar inadvertido.
+faltan=()
+for e in "${mapa[@]}"; do
+  base="${e%%|*}"
+  [ -f "out/$base.png" ] || faltan+=("$e")
+done
+if [ ${#faltan[@]} -gt 0 ]; then
+  echo "reintentando ${#faltan[@]} página(s) en serie…"
+  for e in "${faltan[@]}"; do
+    base="${e%%|*}"; rest="${e#*|}"
+    uno "$base" "${rest%%|*}" "${rest##*|}" 60
+  done
+fi
+
+hechos=0; perdidos=()
+for e in "${mapa[@]}"; do
+  base="${e%%|*}"
+  if [ -f "out/$base.png" ]; then hechos=$((hechos+1)); else perdidos+=("$base"); fi
+done
+echo "RENDER_DONE $hechos/${#mapa[@]} páginas → out/*.png"
+if [ ${#perdidos[@]} -gt 0 ]; then
+  printf 'SIN RENDERIZAR: %s\n' "${perdidos[@]}"
+  exit 1
+fi

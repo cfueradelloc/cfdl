@@ -1,0 +1,38 @@
+{
+  "id": "ej-01-portada",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [
+    {
+      "plantilla": "portada",
+      "superficie": "oscuro",
+      "ciclo": "en-voz-alta",
+      "marca_cfdl": "logo+sigla",
+      "titular": [
+        "Pablo",
+        "Martín Sánchez"
+      ],
+      "subtitular": "presenta Fricciones",
+      "fecha": {
+        "dia_semana": "jueves",
+        "texto": "13 de noviembre"
+      },
+      "hora": {
+        "prefijo": "a partir de las",
+        "texto": "19:30"
+      },
+      "lugar": "perecquiana",
+      "foto": {
+        "src": "docs/gallery/envozalta-pablo-2.jpg",
+        "encuadre": "50% 40%",
+        "tratamiento": "duo",
+        "contraste": 1.2
+      },
+      "alt": "Pablo Martín Sánchez en La Perecquiana, foto a toda página en duotono con el texto encima."
+    }
+  ],
+  "caption": {
+    "texto": "Pablo Martín Sánchez lee de Fricciones, su edición ampliada y revisada. La frase que se resiste, el texto que roza.\n\nLectura — Librería La Perecquiana, Valladolid\nJueves 13 de noviembre, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

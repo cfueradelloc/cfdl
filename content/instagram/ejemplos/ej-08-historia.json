@@ -1,0 +1,24 @@
+{
+  "id": "ej-08-historia",
+  "theme": "pink",
+  "formato": "historia",
+  "slides": [
+    {
+      "plantilla": "recordatorio",
+      "marca_cfdl": "logo+sigla",
+      "titular": "hoy",
+      "subtitular": "a las 19:30",
+      "hora": {
+        "prefijo": "puertas desde las",
+        "texto": "19:00"
+      },
+      "tipo": "Lectura",
+      "lugar": "perecquiana",
+      "alt": "Historia de recordatorio: hoy, a las 19:30, en La Perecquiana."
+    }
+  ],
+  "caption": {
+    "texto": "Hoy, a las 19:30, en La Perecquiana.\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

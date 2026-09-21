@@ -23,7 +23,7 @@
       },
       "lugar": "perecquiana",
       "foto": {
-        "src": "../../../docs/gallery/envozalta-angela-1.jpg",
+        "src": "docs/gallery/envozalta-angela-1.jpg",
         "encuadre": "50% 34%",
         "forma": "banda",
         "tratamiento": "duo",

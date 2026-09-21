@@ -1,0 +1,21 @@
+{
+  "id": "ej-03-programa",
+  "theme": "citrine",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "programa",
+    "superficie": "oscuro",
+    "marca_cfdl": "logo+sigla",
+    "antetitulo": "Welcome Summer Festival",
+    "titular": "Una tarde larga",
+    "programa": [
+      { "hora": "19:30", "titulo": "Gonzalo Sánchez-Terán", "detalle": "Lectura y charla — poesía, literatura y África. Modera Rosauro Varo Cobos." },
+      { "hora": "21:30", "titulo": "María Sotelo · JAM3S", "detalle": "Recital poético y musical en The Bowie Bar." }
+    ],
+    "tipo": "Festival",
+    "lugar": "perecquiana",
+    "aforo": "Entrada libre hasta completar aforo",
+    "alt": "Programa del Welcome Summer Festival con dos actividades, a las 19:30 y a las 21:30."
+  }],
+  "caption": { "texto": "Dos citas el mismo día. Primero la palabra dicha despacio, después la palabra con música.\n\nFestival — Valladolid\nJueves 19 de junio, desde las 19:30\nEntrada libre hasta completar aforo\n\ncfdl.site", "etiquetas": [] }
+}

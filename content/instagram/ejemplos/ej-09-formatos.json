@@ -1,0 +1,13 @@
+{
+  "id": "ej-09-formatos",
+  "theme": "citrine",
+  "formatos": ["feed", "cuadrado", "historia"],
+  "slides": [{
+    "plantilla": "cita",
+    "superficie": "oscuro",
+    "marca_cfdl": "logo+nombre",
+    "cita": { "texto": "Creemos en una identidad inquieta, de paso hacia la incertidumbre", "fuente": "Manifiesto — 2023" },
+    "alt": "Fragmento del manifiesto sobre identidad inquieta, sobre fondo medianoche."
+  }],
+  "caption": { "texto": "Creemos en una identidad inquieta, de paso hacia la incertidumbre.\n\nDel manifiesto, 2023. Se lee entero en seis idiomas en cfdl.site.\n\ncfdl.site", "etiquetas": [] }
+}
