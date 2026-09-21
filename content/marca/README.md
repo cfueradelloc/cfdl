@@ -28,15 +28,20 @@ son una mancha. En lugar de dibujar marcas distintas, baja la densidad con el
 tamaño — menos anillos y menos aire— **conservando el centro vacío**, que es lo
 que significa.
 
-| densidad | anillos · trazo : hueco | vacío central | para |
-|---|---|---|---|
-| `fina` | 7 · 1:4 | 65 % | 64 px en adelante — la densidad de la hoja |
-| `media` | 5 · 1:3 | 60 % | 32–64 px, y junto a texto |
-| `gruesa` | 3 · 1:2 | 55 % | por debajo de 32 px: favicon, sellos, bordado |
+| densidad | anillos · trazo : hueco | vacío central | trazo | para |
+|---|---|---|---|---|
+| `grande` | 6 · 1:3 | 55 % | 0,97 px | 104 px — el uso principal |
+| `medio` | 5 · 1:3 | 60 % | 0,60 px | 60 px, y junto a texto |
+| `pequeno` | 3 · 1:2 | 55 % | 0,75 px | 30 px: favicon, sellos, bordado |
+
+**Por qué el grande no lleva los siete anillos de la hoja.** Con siete la
+retícula sube a 124 módulos y el trazo cae a 0,84 px: por debajo del píxel, así
+que el navegador lo reparte entre dos columnas y la marca se ve gris en vez de
+negra. Con seis la retícula baja a 107 y el trazo sube a 0,97.
 
 **El límite, dicho claro:** por debajo de ~24 px la espiral deja de leerse como
 espiral y queda un marco. Se conserva el vacío central y se pierde el giro; es
-lo que se puede sostener a ese tamaño, y por eso `gruesa` existe.
+lo que se puede sostener a ese tamaño, y por eso `pequeno` existe.
 
 ## Piezas
 
@@ -46,25 +51,34 @@ lo que se puede sostener a ese tamaño, y por eso `gruesa` existe.
 | `perfil` | igual, metida hacia dentro | **foto de perfil**: cabe entera en el círculo |
 | `hoja` | proporción 0.571, vertical | cabeceras, papelería — es la hoja impresa |
 | `linea` | signo + `C.F.D.L.` al lado | firmas, pies, cabeceras horizontales |
-| `lockup` | signo sobre `C.F.D.L.` | cuando manda el eje vertical |
+| `nombre` | signo + el nombre entero en tres líneas | cuando el colectivo no se presupone |
 
 **`perfil` existe por una razón concreta.** Instagram recorta en círculo, y a
 una espiral rectangular perder las esquinas no le sienta como un recorte: le
-sienta como una avería. Con el margen de 15 unidades el cuadrado entero cabe en
-el círculo inscrito (la semidiagonal de un cuadrado de lado 70 es 49,5 < 50).
+sienta como una avería. Con el respiro de 0,20 el cuadrado entero cabe en el
+círculo inscrito: lado 60, semidiagonal 42,4 — un 85 % del radio.
+
+**`nombre` no baja de 60 px de alto.** La mayúscula mide 4,55 veces menos que
+el símbolo, así que por debajo cae de 13 px y las tres líneas dejan de leerse.
+Ahí es `linea` la que toca. Su interletrado es 0,150, menor que los 0,200 de
+las siglas: en `C.F.D.L.` el aire construye el monograma, aquí son palabras
+que hay que leer. Las tres líneas se alinean por la **tinta** y no por el
+origen de avance — el prosa izquierdo de la «C» y el de la «F» se llevan
+0,043 em, y alinear los orígenes dejaría la primera línea metida hacia dentro.
 
 ## Cómo pedirlo
 
 ```python
 import marca
-marca.svg("perfil", fondo="ambar", tinta="negro", densidad="fina", size=1080)
-marca.svg("linea",  fondo="ninguno", tinta="auto", densidad="media")
+marca.svg("perfil", fondo="ambar", tinta="negro", densidad="grande", size=1080)
+marca.svg("linea",  fondo="ninguno", tinta="auto",  densidad="medio")
+marca.svg("nombre", fondo="ninguno", tinta="negro", densidad="medio")
 ```
 
-- **pieza** `monograma` · `perfil` · `hoja` · `linea` · `lockup`
+- **pieza** `monograma` · `perfil` · `hoja` · `linea` · `nombre`
 - **fondo** `ambar` · `negro` · `blanco` · `ninguno`
 - **tinta** `negro` · `blanco` · `zafiro` · `ambar` · `crema` · `auto`
-- **densidad** `fina` · `media` · `gruesa`
+- **densidad** `grande` (104 px, 6 anillos) · `medio` (60, 5) · `pequeno` (30, 3)
 
 `tinta="auto"` devuelve `currentColor`: el SVG hereda el color del texto que lo
 rodea, que es lo cómodo dentro de una página que ya tiene temas.
@@ -72,8 +86,8 @@ rodea, que es lo cómodo dentro de una página que ya tiene temas.
 ## Combinaciones probadas
 
 `index.html` enfrenta cada pieza con cada fondo y cada tinta que le sirve:
-blanco, negro, ámbar, rosa y zafiro — solo, con las siglas al lado, apilado, y
-llevándose su propio campo encima.
+blanco, negro, ámbar, rosa y zafiro — solo, con las siglas al lado, con el
+nombre entero, y llevándose su propio campo encima.
 
 Pares que funcionan:
 
@@ -89,13 +103,14 @@ Pares que funcionan:
 
 ```
 marca.py           el generador — la única fuente
-svg/               18 combinaciones exportadas
+svg/               27 combinaciones exportadas
 png/               los tamaños que hacen falta de verdad
   perfil-instagram.png  1080 · foto de perfil, a prueba de círculo
   favicon-180.png       180  · icono de aplicación
-  favicon-32.png        32   · favicon, densidad gruesa
-  linea-negro.png       680×200 · firma
-  hoja.png              513×900 · la hoja
+  favicon-32.png        32   · favicon, densidad pequeno
+  linea-negro.png       664×200 · la firma corta
+  nombre-negro.png      663×200 · el nombre desplegado
+  hoja.png              555×900 · la hoja
 index.html         la hoja de casos
 bocetos/           las rondas descartadas, como registro
 ```
@@ -113,7 +128,7 @@ bocetos/           las rondas descartadas, como registro
   dibujo se devuelve por diferencia entre su caja real y la del lienzo. Sin eso
   el avatar se ve descolgado.
 - **Trazo y hueco casi iguales.** Es lo que produce la vibración de la hoja
-  impresa. En `gruesa` el hueco baja un punto para que a 16 px no se cierre.
+  impresa. En `pequeno` el hueco baja un punto para que a 16 px no se cierre.
 - **Uniones en inglete, remates a hueso.** Nada redondeado: es una hoja doblada,
   no un icono de aplicación.
 

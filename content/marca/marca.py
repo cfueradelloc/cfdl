@@ -103,26 +103,37 @@ def _hoja(t, d):      return _espiral(t, d, 1 / RATIO_HOJA, 0.10)
 # La firma no se dibuja aquí: la construye lockup.py, que es donde viven sus
 # reglas (gris, separación, tamaño relativo). Tenerla en dos sitios es como
 # acaban divergiendo dos versiones de la misma marca.
-def _linea(t, d):
-    from lockup import firma as _firma
-    sv = _firma(d, tinta=t, alto=100)
+def _desmonta(sv):
+    """Saca el cuerpo y el viewBox de un SVG ya armado por lockup."""
     import re as _re
     m = _re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', sv)
-    W, H = float(m.group(1)), float(m.group(2))
     cuerpo = sv[sv.index(">", sv.index("<svg")) + 1: sv.rindex("</svg>")]
-    return cuerpo, W, H
+    return cuerpo, float(m.group(1)), float(m.group(2))
 
 
-PIEZAS = ("monograma", "perfil", "hoja", "linea")
+def _linea(t, d):
+    return _desmonta(lockup.firma(d, tinta=t, alto=100))
+
+
+# El nombre desplegado, en tres líneas a la izquierda. No baja de 60 px de
+# alto: por debajo la mayúscula cae de 13 px y las tres líneas dejan de
+# leerse — ahí es la firma corta la que toca.
+def _nombre(t, d):
+    return _desmonta(lockup.firma_nombre(d, tinta=t, alto=100))
+
+
+PIEZAS = ("monograma", "perfil", "hoja", "linea", "nombre")
 _FN = {"monograma": _monograma, "perfil": _perfil, "hoja": _hoja,
-       "linea": _linea}
+       "linea": _linea, "nombre": _nombre}
+_ARMADAS = ("linea", "nombre")   # las que ya vienen con su viewBox hecho
 
 
 def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="grande",
         size=None, clase=""):
     """El SVG como cadena.
 
-    pieza     monograma | perfil (a prueba de círculo) | hoja | linea
+    pieza     monograma | perfil (a prueba de círculo) | hoja |
+              linea (símbolo + C.F.D.L.) | nombre (+ el nombre entero)
     fondo     ambar | negro | blanco | ninguno
     tinta     negro | blanco | zafiro | ambar | crema | auto (currentColor)
     densidad  grande (104 px) | medio (60) | pequeno (30)
@@ -134,7 +145,7 @@ def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="grande",
     col = TINTAS.get(tinta, tinta)
     bg = FONDOS.get(fondo, fondo)
     r = _FN[pieza](col, densidad)
-    if pieza == "linea":
+    if pieza in _ARMADAS:
         cuerpo, VW, VH = r
         escala = ""
     else:
@@ -144,9 +155,10 @@ def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="grande",
     campo = f'<rect width="{VW}" height="{VH:.2f}" fill="{bg}"/>' if bg else ""
     dim = f' width="{round(size*VW/VH)}" height="{size}"' if size else ""
     cls = f' class="{clase}"' if clase else ""
+    etq = "Colectivo Fuera de Lugar" if pieza == "nombre" else "C.F.D.L."
     return (f'<svg{cls} viewBox="0 0 {VW} {VH:.2f}"{dim} '
             f'xmlns="http://www.w3.org/2000/svg" role="img" '
-            f'aria-label="C.F.D.L.">{campo}{escala}{cuerpo}</svg>')
+            f'aria-label="{etq}">{campo}{escala}{cuerpo}</svg>')
 
 
 COMBOS = [
@@ -171,6 +183,12 @@ COMBOS = [
     ("linea",     "ninguno", "rosa",   "medio"),
     ("linea",     "ninguno", "blanco", "medio"),
     ("linea",     "ambar",   "negro",  "medio"),
+    ("nombre",    "ninguno", "negro",  "medio"),
+    ("nombre",    "ninguno", "zafiro", "medio"),
+    ("nombre",    "negro",   "blanco", "medio"),
+    ("nombre",    "negro",   "ambar",  "medio"),
+    ("nombre",    "ambar",   "negro",  "medio"),
+    ("nombre",    "ninguno", "blanco", "medio"),
 ]
 
 

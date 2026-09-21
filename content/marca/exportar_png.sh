@@ -15,6 +15,9 @@ LISTA=(
   "cfdl-linea-medio-ninguno-negro         200 linea-negro"
   "cfdl-linea-medio-ninguno-blanco        200 linea-blanco"
   "cfdl-linea-medio-ninguno-zafiro        200 linea-zafiro"
+  "cfdl-nombre-medio-ninguno-negro        200 nombre-negro"
+  "cfdl-nombre-medio-ninguno-blanco       200 nombre-blanco"
+  "cfdl-nombre-medio-ninguno-zafiro       200 nombre-zafiro"
   "cfdl-hoja-grande-ambar-negro             900 hoja"
 )
 for fila in "${LISTA[@]}"; do

@@ -223,6 +223,75 @@ def firma(densidad="medio", tinta=NEGRO, campo=None, fondo_firma=None,
             f'role="img" aria-label="C.F.D.L.">{f}{cuerpo}</svg>')
 
 
+# ── EL NOMBRE ENTERO ───────────────────────────────────────────────────────
+# «C.F.D.L.» es la firma corta; el nombre desplegado es otro objeto, no la
+# misma firma con más letras. Tres líneas alineadas a la izquierda, porque en
+# una sola el bloque mediría casi siete anchos de símbolo y la firma dejaría
+# de ser un signo para ser un renglón.
+#
+# EL CORTE. «Colectivo / Fuera de / Lugar» baja en escalera (9-8-5 signos):
+# el borde derecho desciende sin volver a crecer, que es lo que pide una
+# bandera izquierda. Partir por «Fuera / de Lugar» hace panza en medio.
+#
+# EL INTERLETRADO ES MENOR que el de las siglas. En «C.F.D.L.» los 0,200 em
+# separan ocho signos sueltos y construyen el aire del monograma; aquí son
+# palabras que hay que leer, y a 0,200 se deshacen. 0,150 mantiene el color
+# del bloque sin romper la palabra.
+NOMBRE = ("COLECTIVO", "FUERA DE", "LUGAR")
+
+
+def ancho_linea(texto, track):
+    """Ancho de TINTA de una línea, en em: el avance menos el prosa izquierdo
+    del primer signo, más el interletrado de los huecos interiores."""
+    return _F.ancho(texto) + (len(texto) - 1) * track - _F.prosa_izq(texto[0])
+
+
+def firma_nombre(densidad="medio", tinta=NEGRO, campo=None, fondo_firma=None,
+                 rel=4.55, sep=0.40, interlinea=1.50, respeto=0.0, alto=64,
+                 track=0.150, lineas=NOMBRE, respiro=0.0,
+                 etiqueta="Colectivo Fuera de Lugar"):
+    """El símbolo con el nombre desplegado en tres líneas, bandera izquierda.
+
+    rel         alto del símbolo ÷ altura de mayúscula. Más alto que en la
+                firma corta (3,20) porque aquí hay tres líneas: el bloque
+                entero, no una línea suelta, es lo que tiene que caber.
+    interlinea  paso entre líneas de base, en alturas de mayúscula.
+    sep         aire entre símbolo y bloque, en ANCHOS DE SÍMBOLO — la misma
+                unidad que la firma corta, para que las dos separen igual.
+
+    Las líneas se alinean por la TINTA, no por el origen de avance: el prosa
+    izquierdo de la «C» (0,033 em) y el de la «F»/«L» (0,076) se llevan
+    0,043 em, y alinear los orígenes dejaría la «C» metida hacia dentro.
+    """
+    S = 100.0
+    cap = S / rel
+    fs = cap / CAP_EM
+    paso = interlinea * cap
+    bloque = (len(lineas) - 1) * paso + cap
+    w_txt = max(ancho_linea(t, track) for t in lineas) * fs + 0.01 * fs
+    m = S * respeto
+    hueco = S * sep
+    W = S + hueco + w_txt + 2*m
+    H = S + 2*m
+    yb0 = m + (S - bloque)/2 + cap          # base de la primera línea
+
+    sim = simbolo(densidad, tinta, campo, respiro)
+    t = []
+    for i, linea in enumerate(lineas):
+        t.append(f'<text x="{-_F.prosa_izq(linea[0])*fs:.3f}" '
+                 f'y="{i*paso:.3f}" font-family="{FUENTE}" '
+                 f'font-size="{fs:.3f}" fill="{tinta}" '
+                 f'letter-spacing="{track*fs:.3f}">{linea}</text>')
+    f = (f'<rect width="{W:.2f}" height="{H:.2f}" fill="{fondo_firma}"/>'
+         if fondo_firma else "")
+    cuerpo = (f'<g transform="translate({m:.2f},{m:.2f})">{sim}</g>'
+              f'<g transform="translate({m+S+hueco:.2f},{yb0:.2f})">'
+              f'{"".join(t)}</g>')
+    return (f'<svg viewBox="0 0 {W:.2f} {H:.2f}" width="{round(alto*W/H)}" '
+            f'height="{round(alto)}" xmlns="http://www.w3.org/2000/svg" '
+            f'role="img" aria-label="{etiqueta}">{f}{cuerpo}</svg>')
+
+
 if __name__ == "__main__":
     print(f"altura de mayúscula {CAP_EM:.4f} em · asta {ASTA_EM:.4f} em "
           f"({100*ASTA_EM/CAP_EM:.1f} % de la mayúscula)")

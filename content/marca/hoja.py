@@ -8,7 +8,8 @@ explorador— van al pie, porque son para quien quiera entrar, no para quien
 quiera usarla.
 """
 import os
-from lockup import firma, AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA
+from lockup import (firma, firma_nombre,
+                    AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA)
 
 ROSA = "#f8ccce"   # Candy Pink — el --band-fg del propio sitio
 
@@ -44,6 +45,29 @@ def pagina():
              'caben a la vez muchos anillos, un vacío grande y un trazo nítido: '
              '<b>grande</b> 6 anillos, <b>medio</b> 5, <b>pequeno</b> 3. Es el '
              'mismo signo, y el centro se queda vacío en los tres.</p></section>')
+
+    # ── el nombre desplegado ───────────────────────────────────────────────
+    p.append('<section><h2>El nombre desplegado</h2><div class="rej abajo">')
+    for d, a in (("grande", 104), ("medio", 60)):
+        p.append(_fig(firma_nombre(d, alto=a), f"{d} · {a} px", "f-blanco"))
+    p.append('</div><div class="rej sep">')
+    for css, tinta, campo, et in (
+            ("f-negro",  AMBAR,  None,  "ámbar sobre negro"),
+            ("f-negro",  BLANCO, None,  "blanco sobre negro"),
+            ("f-ambar",  NEGRO,  None,  "negro sobre ámbar"),
+            ("f-zafiro", CREMA,  None,  "crema sobre zafiro")):
+        p.append(_fig(firma_nombre("medio", alto=60, tinta=tinta), et, css))
+    p.append('</div><p class="nota">Cuando el colectivo no se presupone —una '
+             'primera página, un pie de cartel, una firma de correo— las '
+             'siglas se despliegan. Tres líneas en bandera izquierda, '
+             'alineadas por la <b>tinta</b> y no por el origen de avance: el '
+             'prosa izquierdo de la «C» y el de la «F» se llevan 0,043 em, y '
+             'alinear los orígenes dejaría la primera línea metida hacia '
+             'dentro. La separación es la misma que en la firma corta —0,40 '
+             'anchos de símbolo— y el bloque queda centrado contra el '
+             'símbolo. <b>No baja de 60 px de alto</b>: por debajo la '
+             'mayúscula cae de 13 px y las tres líneas dejan de leerse; ahí '
+             'manda la firma corta.</p></section>')
 
     # ── sobre cada fondo, al tamaño medio ──────────────────────────────────
     p.append('<section><h2>Sobre cada fondo <i>· tamaño medio</i></h2>'
@@ -92,16 +116,19 @@ def pagina():
              '0,20 para el círculo</td></tr>'
              '<tr><td>centrado</td><td>mismo aire por encima y por debajo de las '
              'letras <i>— comprobado midiendo píxeles</i></td></tr>'
+             '<tr><td>nombre entero</td><td>mayúscula 4,55 veces menor que el '
+             'símbolo · interlínea 1,50 · interletrado 0,150 '
+             '<i>— menos que las siglas: aquí son palabras que se leen</i></td></tr>'
              '</table></section>')
 
     # ── archivos ───────────────────────────────────────────────────────────
     p.append('<section><h2>Los archivos</h2><div class="arch">'
-             '<div><b>svg/</b><span>21 combinaciones. El SVG es el maestro: escala '
+             '<div><b>svg/</b><span>27 combinaciones. El SVG es el maestro: escala '
              'sin perder nada, y con <code>tinta="auto"</code> hereda el color del '
              'texto que lo rodea.</span></div>'
              '<div><b>png/</b><span><code>perfil-instagram</code> 1080&nbsp;· '
-             '<code>linea-negro</code>, <code>linea-blanco</code> y '
-             '<code>linea-zafiro</code>&nbsp;· <code>favicon-32</code> y '
+             '<code>linea-*</code> y <code>nombre-*</code>, en negro, blanco '
+             'y zafiro&nbsp;· <code>favicon-32</code> y '
              '<code>favicon-180</code>&nbsp;· <code>monograma-512</code>&nbsp;· '
              '<code>hoja</code></span></div>'
              '<div><b>para regenerar</b><span><code>python3 marca.py</code> rehace '
