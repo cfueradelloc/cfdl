@@ -109,8 +109,11 @@ la válvula de escape, y el linter la obliga.
 
 Dos cosas distintas:
 
-- **La marca del colectivo** se dibuja en SVG desde `build_posts.py` (`marca_cfdl`), así que
-  toma los colores del tema, funciona sobre claro y sobre oscuro, y no pixela.
+- **La marca del colectivo** se redibuja en SVG desde `build_posts.py` (`marca_cfdl`): el
+  cuadrado ámbar con «C.F. / D.L.» y el doble filete cuyas esquinas no cierran — la marca
+  ya es, ella misma, algo fuera de lugar. No es el favicon del sitio, que es otra cosa.
+  `logo` la dibuja en color; `logo-mono` a una sola tinta, para cuando el cartel no admite
+  un cuadrado de color. El original está en `assets/logos/cfdl-logo-original.jpeg`.
 - **Los logos ajenos** (lugar, colaboradores, quien financia) son archivos que se dejan a
   mano en `assets/logos/` y por defecto se pasan a **tinta plana**. Ver
   `assets/logos/README.md`.
@@ -135,10 +138,12 @@ Dos cosas distintas:
   rejilla de perfil recorta 34 px por lado y el desplazamiento debe seguir entero en la
   miniatura.
 - **El acento es puntuación** —un separador, el año, la lámina activa— nunca un campo.
-- **`citrine` aquí no es la `citrina` de `content/tshirts/`.** Allí la tinta es casi negra
-  porque tenía que sobrevivir sobre algodón blanco. Aquí se usa la paleta ampliada de
-  `skills/brand-content/SKILL.md` en su combinación cálida (Cera + Citrina + Medianoche),
-  porque Instagram es pantalla, el mismo medio que el sitio.
+- **Los dos temas son objetos reales del colectivo.** `pink` es la identidad publicada en
+  la web. `citrine` es su ámbar: el `#ffb923` del logotipo —muestreado del propio archivo,
+  `assets/logos/cfdl-logo-original.jpeg`— y el del manifiesto impreso, ese acordeón
+  amarillo de `docs/gallery/manifiesto-*.jpg`. `brand-content` lo llama «Citrina (marca)».
+  Ojo: el `#e9ad51` de `content/tshirts/` es otra cosa —la aproximación al papel Colorplan
+  Citrine, un punto más apagada—, así que los dos módulos no comparten ámbar.
 - **El fallback de las tipografías es `monospace` a propósito.** Si Chrome no carga los OTF,
   todo sale en Courier y el fallo es imposible de pasar por alto. Un fallback «Georgia,
   serif» daría un cartel creíble pero fuera de marca, que es peor.

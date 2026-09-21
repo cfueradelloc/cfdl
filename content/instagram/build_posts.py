@@ -39,7 +39,7 @@ FMT_ALIAS = {"4:5": "feed", "1:1": "cuadrado", "9:16": "historia",
              "story": "historia", "square": "cuadrado", "post": "feed"}
 
 THEMES = {"pink":    {"duo_dark": "#332f8a", "duo_light": "#f8ccce"},
-          "citrine": {"duo_dark": "#1a2e3d", "duo_light": "#ffd25a"}}
+          "citrine": {"duo_dark": "#171513", "duo_light": "#ffb923"}}
 ALIAS = {"rosa": "pink", "citrina": "citrine"}
 
 MESES = ["enero","febrero","marzo","abril","mayo","junio",
@@ -60,9 +60,36 @@ CTA = re.compile(r"\b(únete|unete|descubre|no te lo pierdas|reserva ya|apúntat
                  r"apuntate|corre|date prisa|últimas plazas|ultimas plazas|"
                  r"desliza|swipe|link en bio)\b", re.I)
 EMOJI = re.compile("[\U0001F000-\U0001FAFF☀-➿️←-⇿]")
-FUNCIONALES = re.compile(
-    r"(?<!^)\b(De|Del|La|El|Los|Las|Un|Una|Y|O|En|A|Al|Ante|Con|Sin|Por|Para|"
-    r"Que|Su|Sus|Lo|Se|Como|Desde|Hasta|Entre|Sobre|Tras)\b")
+# Detección de Title Case. Una palabra funcional capitalizada a media frase lo
+# sugiere («La Fractura Profiláctica»), pero no basta: los nombres propios
+# españoles llevan artículo dentro («Lorca en La Habana», «El Almíbar»). Lo que
+# sí discrimina es que no quede NINGUNA palabra funcional en minúscula: si la
+# hay, la frase está en caja de frase y el artículo alto es parte de un nombre.
+_FUNC = ("de|del|la|el|los|las|un|una|y|o|en|a|al|ante|con|sin|por|para|"
+         "que|su|sus|lo|se|como|desde|hasta|entre|sobre|tras")
+_F_ALTA = re.compile(r"(?<!^)\b(" + _FUNC.title().replace("|", "|") + r")\b")
+_F_BAJA = re.compile(r"\b(" + _FUNC + r")\b")
+
+
+def parece_title_case(t):
+    """Dos señales, ninguna de las cuales marca un nombre propio.
+
+    A · palabra funcional capitalizada a media frase → «Publicar De Otra Manera».
+    B · la frase ABRE con artículo y todo lo demás va en alta → «La Fractura
+        Profiláctica». Que abra con artículo es lo que la separa de un nombre de
+        persona: «Pablo Martín Sánchez» también va todo en alta, pero no empieza
+        por artículo.
+    Las dos exigen que no quede ninguna funcional en minúscula: si la hay, la
+    frase está en caja de frase y el artículo alto es parte de un nombre
+    («Lorca en La Habana»)."""
+    if _F_BAJA.search(t):
+        return False
+    if _F_ALTA.search(t):
+        return True
+    pal = [w for w in t.split() if w[:1].isalpha()]
+    return bool(len(pal) >= 3
+                and re.match(r"^(" + _FUNC.title() + r")$", pal[0])
+                and all(w[:1].isupper() for w in pal))
 
 
 def esc(s): return html.escape(str(s), quote=True)
@@ -107,13 +134,40 @@ def resolver(v, tabla):
 # El favicon del sitio es una «C» de tres barras con un punto amarillo. Se
 # redibuja en SVG en lugar de enlazar el PNG: así toma los colores del tema,
 # funciona sobre fondo claro y oscuro, y no pixela a ningún tamaño.
-def svg_marca(alto=44):
-    return (f'<svg class="marca" viewBox="0 0 32 32" width="{alto}" height="{alto}" '
-            f'aria-hidden="true">'
-            f'<rect x="10" y="5" width="15" height="5" rx="1" fill="currentColor"/>'
-            f'<rect x="5" y="5" width="5" height="22" rx="1" fill="currentColor"/>'
-            f'<rect x="10" y="22" width="15" height="5" rx="1" fill="currentColor"/>'
-            f'<circle cx="26" cy="6" r="3" fill="var(--accent)"/></svg>')
+def svg_marca(alto=44, mono=False):
+    """El logotipo del colectivo, redibujado.
+
+    No es el favicon del sitio (una «C» de barras): es el cuadrado ámbar con
+    «C.F. / D.L.» en negro y un doble filete cuyas esquinas no cierran — el
+    detalle deliberado que hace que la propia marca esté fuera de lugar.
+    Muestreado de assets/logos/cfdl-logo-original.jpeg: el ámbar es #ffb923.
+
+    Se redibuja en SVG en vez de enlazar el JPEG porque así no pixela a ningún
+    tamaño, y porque `mono` permite ponerlo a una sola tinta cuando el cartel
+    no admite un cuadrado de color.
+    """
+    fondo = "none" if mono else "#ffb923"
+    tinta = "currentColor" if mono else "#171513"
+    return (
+      f'<svg class="marca" viewBox="0 0 100 100" width="{alto}" height="{alto}" '
+      f'aria-label="C.F.D.L." role="img">'
+      f'<rect width="100" height="100" fill="{fondo}"/>'
+      # Filete exterior con una muesca en el borde superior, cerca de la
+      # esquina izquierda: el trazo no llega a cerrar.
+      f'<path d="M20 5 H95 V95 H5 V5 H11" fill="none" stroke="{tinta}" '
+      f'stroke-width="1.9" stroke-linecap="square"/>'
+      # Filete interior, cerrado, y una pata que se descuelga por la izquierda.
+      f'<rect x="10.5" y="10.5" width="79" height="79" fill="none" '
+      f'stroke="{tinta}" stroke-width="1.9"/>'
+      f'<path d="M7 64 V95" fill="none" stroke="{tinta}" stroke-width="1.9" '
+      f'stroke-linecap="square"/>'
+      f'<text x="51" y="48" text-anchor="middle" fill="{tinta}" '
+      f'font-family="FuturaStd, Helvetica, Arial" font-size="35" '
+      f'letter-spacing="-0.5">C.F.</text>'
+      f'<text x="51" y="84" text-anchor="middle" fill="{tinta}" '
+      f'font-family="FuturaStd, Helvetica, Arial" font-size="35" '
+      f'letter-spacing="-0.5">D.L.</text>'
+      f'</svg>')
 
 
 def marca_cfdl(s):
@@ -121,11 +175,12 @@ def marca_cfdl(s):
     v = s.get("marca_cfdl")
     if not v: return ""
     v = str(v)
-    logo = svg_marca(s.get("marca_alto", 40)) if v.startswith("logo") else ""
+    mono = "mono" in v
+    logo = svg_marca(s.get("marca_alto", 40), mono) if v.startswith("logo") else ""
     txt = ""
     if v.endswith("sigla") or v == "sigla":   txt = "C · F · D · L"
     elif v.endswith("nombre") or v == "nombre": txt = "Colectivo Fuera de Lugar"
-    elif v == "logo": txt = ""
+    elif v in ("logo", "logo-mono"): txt = ""
     cuerpo = logo + (f'<div class="sigla">{esc(txt)}</div>' if txt else "")
     return f'<div class="marca-fila">{cuerpo}</div>' if cuerpo else ""
 
@@ -311,7 +366,7 @@ def receta(s, d, n, total):
     if p == "evento":
         sup = b_marca_lugar(s) + b_strapline(s, ciclos)
         med = (b_antetitulo(s) + b_titular(s) + b_subtitular(s) + b_fecha(s)
-               + b_hora(s) + b_presentacion(s) + b_bio(s))
+               + b_hora(s) + b_presentacion(s) + b_bio(s) + b_portadas(s))
         inf = b_meta(s, lugares) + b_aforo(s) + b_logos(s, "logos-pie") + b_pie(s, tag, n, total)
 
     elif p == "ciclo":
@@ -347,7 +402,7 @@ def receta(s, d, n, total):
         lado = s.get("lado", "izq")
         cols = (_foto(s["foto"], " ") if s.get("foto") else "")
         txt = (f'<div>{b_antetitulo(s)}{b_titular(s)}{b_subtitular(s)}'
-               f'{b_fecha(s)}{b_hora(s)}{b_bio(s)}</div>')
+               f'{b_fecha(s)}{b_hora(s)}{b_bio(s)}{b_portadas(s)}</div>')
         med = (f'<div class="par {lado}">'
                + (cols + txt if lado == "izq" else txt + cols) + "</div>")
         sup = b_marca_lugar(s) + b_strapline(s, ciclos)
@@ -368,7 +423,8 @@ def receta(s, d, n, total):
     # frases. El colectivo ya tiene 39 fotos publicadas en docs/gallery/.
     elif p == "resumen":
         sup = b_marca_lugar(s) + b_strapline(s, ciclos)
-        med = b_antetitulo(s) + b_titular(s) + b_subtitular(s) + b_rejilla(s) + b_bio(s)
+        med = (b_antetitulo(s) + b_titular(s) + b_subtitular(s) + b_rejilla(s)
+               + b_bio(s) + b_portadas(s))
         inf = b_meta(s, lugares) + b_logos(s, "logos-pie") + b_pie(s, tag, n, total)
 
     # Pieza: obra generativa de docs/output/. El sitio ya describe cada una
@@ -473,6 +529,12 @@ def emit(brief, d, forzar_tema=None, forzar_fmt=None, debug=False):
             for k in ("marca_lugar", "ciclo", "logos", "logos_trat"):
                 if i == 1 and k not in s and k in brief: s[k] = brief[k]
 
+            fs0 = s.get("foto")
+            if (s["plantilla"] == "portada" or
+                    (fs0 and fs0.get("forma") == "sangre")):
+                # Sobre una foto a sangre siempre se escribe encima del velo,
+                # así que la superficie es oscura salvo que se diga lo contrario.
+                s.setdefault("superficie", "oscuro")
             z1, z2, zf, z3 = receta(s, d, i, total)
 
             # Portada y cualquier lámina con foto «sangre»: la imagen va al
@@ -576,7 +638,7 @@ def lint(brief, d, caption):
             if CTA.search(v):        w.append(f"{tag}.{k}: llamada a la acción")
         t = s.get("titular")
         t = " ".join(t) if isinstance(t, list) else (t or "")
-        if FUNCIONALES.search(t):
+        if parece_title_case(t):
             w.append(f"{tag}.titular: parece Title Case — la casa usa caja de frase")
         if isinstance(s.get("titular"), str) and len(s["titular"]) > 40:
             w.append(f"{tag}.titular: {len(s['titular'])} caracteres sin saltos "

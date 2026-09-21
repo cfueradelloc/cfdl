@@ -30,8 +30,10 @@ printed-poster inventory is illegible there.
 margins are large because Instagram's own UI covers the top and bottom. `cuadrado` when it
 also goes elsewhere. `"formatos": ["feed","historia"]` renders the same brief in several.
 
-**Theme.** `pink` is the shipped identity and the default. `citrine` when a piece
-deliberately steps outside it.
+**Theme.** Both are real objects of the collective, not decoration. `pink` is the
+identity published on the website, and the default. `citrine` is the collective's amber —
+the `#ffb923` of the logo and of the printed manifesto. Reach for it when a piece belongs
+to the printed/manifesto side rather than the web side.
 
 **Photo.** `docs/gallery/*.jpg` is already published and safe — reference it as
 `docs/gallery/<file>.jpg` (paths are resolved from the repo root). Author portraits are in
@@ -40,9 +42,14 @@ Google Drive, which currently does not serve bytes locally: copy them by hand in
 type-only slide always beats a bad crop. Those gallery photos are 16:9, so leave
 `foto.forma` on its `banda` default rather than cropping a portrait out of a landscape.
 
-**Logos.** `marca_cfdl` draws the collective's own mark in SVG. Other people's logos go in
-`assets/logos/` and default to flat ink — see `assets/logos/README.md`. Don't switch them
-to `color` unless someone actually requires it.
+**Logos.** `marca_cfdl` redraws the collective's own mark in SVG — the amber square with
+"C.F. / D.L." and the double rule whose corners deliberately don't meet. `logo` for the
+colour version, `logo-mono` for one ink, `logo+sigla` to pair it with the lettering. Other
+people's logos go in `assets/logos/` and default to flat ink — see that folder's README.
+Don't switch them to `color` unless someone actually requires it.
+
+**Book covers.** `portadas` draws a row of covers; the files live in `assets/portadas/`.
+Two or three at most — they count against the slide's block cap.
 
 ## 3. Write the brief
 

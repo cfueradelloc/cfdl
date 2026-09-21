@@ -1,0 +1,17 @@
+{
+  "id": "ej-12-cine",
+  "theme": "citrine",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "portada",
+    "marca_cfdl": "logo-mono",
+    "antetitulo": "cine a la carta",
+    "titular": ["Lorca", "en La Habana"],
+    "subtitular": "proyección y coloquio",
+    "fecha": { "dia_semana": "lunes", "texto": "2 de febrero", "anio": "2026" },
+    "lugar": "casablanca",
+    "foto": { "src": "docs/gallery/lorca-habana-2.jpg", "encuadre": "50% 42%", "tratamiento": "duo", "contraste": 1.22 },
+    "alt": "Fotograma del coloquio de Lorca en La Habana, a toda página en duotono ámbar."
+  }],
+  "caption": { "texto": "Federico García Lorca pasó tres meses en Cuba en 1930 y dijo que fueron los mejores de su vida. El documental de José Antonio Torres y Antonio Manuel va detrás de esa estancia.\n\nProyección y coloquio — Cinemes Casablanca, Valladolid\nLunes 2 de febrero\nColoquio posterior con el colectivo\n\ncfdl.site", "etiquetas": [] }
+}

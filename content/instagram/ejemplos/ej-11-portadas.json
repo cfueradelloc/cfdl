@@ -1,0 +1,21 @@
+{
+  "id": "ej-11-portadas",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [{
+    "plantilla": "evento",
+    "ciclo": "en-voz-alta",
+    "marca_cfdl": "logo",
+    "titular": ["Ángela", "Mallén"],
+    "subtitular": "doce publicaciones, algunos premios",
+    "fecha": { "dia_semana": "viernes", "texto": "12 de diciembre", "anio": "2025" },
+    "hora": { "prefijo": "a partir de las", "texto": "19:30" },
+    "portadas": [
+      { "src": "assets/portadas/motel-milla-noventa.jpg" },
+      { "src": "assets/portadas/cuentos-madre-muerte.avif" }
+    ],
+    "lugar": "perecquiana",
+    "alt": "Cartel de Ángela Mallén con las portadas de dos de sus libros."
+  }],
+  "caption": { "texto": "Ángela Mallén escribe desde la voz baja y transita géneros: psicología clínica, filología alemana, doce libros. Cierra el ciclo leyendo los suyos.\n\nLectura — Librería La Perecquiana, Valladolid\nViernes 12 de diciembre, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site", "etiquetas": [] }
+}

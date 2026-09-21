@@ -1,0 +1,36 @@
+{
+  "id": "ej-13-banel",
+  "theme": "pink",
+  "formato": "feed",
+  "slides": [
+    {
+      "plantilla": "retrato",
+      "lado": "der",
+      "marca_cfdl": "logo",
+      "antetitulo": "Mostra Salut, Drets i Acció",
+      "titular": [
+        "Banel",
+        "& Adama"
+      ],
+      "fecha": {
+        "dia_semana": "viernes",
+        "texto": "24 de abril"
+      },
+      "tipo": "Coloquio",
+      "lugar": "girona",
+      "bio": "Rosauro Varo Cobos conversa con Déguène Eufemia Seck sobre comunidad, tradición y libertad desde el contexto rural senegalés.",
+      "foto": {
+        "src": "docs/gallery/banel-adama-2.jpg",
+        "forma": "caja",
+        "encuadre": "50% 40%",
+        "tratamiento": "bn",
+        "contraste": 1.16
+      },
+      "alt": "Fotografía del coloquio de Banel & Adama, con la foto a la derecha y el texto a la izquierda."
+    }
+  ],
+  "caption": {
+    "texto": "Dos voces sobre la misma película: comunidad, tradición y libertad en el Senegal rural. Después de Banel & Adama, se habla.\n\nColoquio — Cinemes Girona, Barcelona\nViernes 24 de abril\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

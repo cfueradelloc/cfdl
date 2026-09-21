@@ -1,0 +1,45 @@
+{
+  "id": "ej-14-carrusel",
+  "theme": "citrine",
+  "formato": "feed",
+  "evento_ref": "2026-05-15",
+  "slides": [
+    {
+      "plantilla": "portada",
+      "ciclo": "la-magistral",
+      "marca_cfdl": "logo-mono",
+      "titular": ["Juan", "Navarro"],
+      "fecha": { "dia_semana": "viernes", "texto": "15 de mayo" },
+      "foto": { "src": "docs/gallery/magistral-juan-3.jpg", "encuadre": "50% 38%", "tratamiento": "duo", "contraste": 1.2 },
+      "alt": "Juan Navarro durante La Magistral, foto a toda página en duotono ámbar."
+    },
+    {
+      "plantilla": "cita",
+      "superficie": "oscuro",
+      "marca_cfdl": "logo-mono",
+      "cita": { "texto": "La crónica del fuego: el periodismo y la literatura ante la catástrofe", "fuente": "La Magistral — tercera sesión" },
+      "alt": "Sobre fondo negro cálido, el subtítulo de la conferencia de Juan Navarro."
+    },
+    {
+      "plantilla": "evento",
+      "variante": "alta",
+      "marca_cfdl": "logo",
+      "subtitular": "los rescoldos de la culebra",
+      "bio": "Autor de la crónica de los incendios de la sierra de la Culebra en 2022, publicada por Libros del K.O. Escribe sobre lo que queda cuando el fuego se apaga.",
+      "presentacion": "Presentado por Rosauro Varo Cobos, miembro del «Colectivo Fuera de Lugar»",
+      "alt": "Texto de presentación de Juan Navarro y su libro sobre los incendios."
+    },
+    {
+      "plantilla": "datos",
+      "marca_cfdl": "logo",
+      "titular": "Los datos",
+      "datos": [
+        { "Cuándo": "viernes 15 de mayo, 20:00" },
+        { "Dónde": "La Perecquiana, Valladolid" },
+        { "Entrada": "gratuita hasta completar aforo" }
+      ],
+      "alt": "Datos prácticos: viernes 15 de mayo a las 20:00 en La Perecquiana, entrada gratuita."
+    }
+  ],
+  "caption": { "texto": "Juan Navarro cuenta los incendios de la sierra de la Culebra. Qué se quema, qué queda y quién lo escribe — el periodismo y la literatura delante de la catástrofe.\n\nConferencia — Librería La Perecquiana, Valladolid\nViernes 15 de mayo, 20:00\nEntrada gratuita hasta completar aforo\n\ncfdl.site", "etiquetas": [] }
+}

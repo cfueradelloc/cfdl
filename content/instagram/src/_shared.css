@@ -73,27 +73,27 @@
 }
 
 /* ── Temas ────────────────────────────────────────────────────────────────
-   «pink» es la identidad publicada (docs/assets/css/base.css, literal).
-   «citrine» es la paleta ampliada de skills/brand-content/SKILL.md, en su
-   combinación «Editorial» (Niebla + Citrina + Medianoche). Ojo: la «citrina»
-   de content/tshirts/ es OTRA — su tinta casi negra se eligió para sobrevivir
-   sobre algodón blanco. Instagram es pantalla, como el sitio. */
+   Dos, y los dos son objetos reales del colectivo: «pink» es la identidad
+   publicada en la web (docs/assets/css/base.css, literal) y «citrine» es el
+   papel del manifiesto impreso. */
 .tema-pink {
   --bg:#f8ccce; --surface:#bbabd5; --text:#332f8a; --muted:#857c75;
   --border:#c8b8d8; --accent:#fde700;
   --band-bg:#332f8a; --band-fg:#f8ccce; --band-muted:#b0a8e0; --band-rule:#5552b8;
   --duo-dark:#332f8a; --duo-light:#f8ccce;
 }
-/* Sobre Niebla (#e8edf0) el tema salía gris frío y la Citrina no aparecía por
-   ningún lado: con el acento reducido a puntuación, una lámina sólo de texto
-   quedaba indistinguible de un gris cualquiera. Sobre Cera el tema es
-   reconociblemente cálido desde el fondo, sin inundar nada de amarillo.
-   Es la combinación «Cálida» de la propia paleta: Cera + Azafrán + Resina. */
+/* «citrine» es el ámbar del colectivo: el mismo #ffb923 del logotipo —
+   muestreado del propio archivo, assets/logos/cfdl-logo-original.jpeg— y el
+   del manifiesto impreso, ese acordeón amarillo de docs/gallery/manifiesto-*.
+   brand-content lo llama «Citrina (marca)». El #e9ad51 de content/tshirts/ es
+   otra cosa: la aproximación al papel Colorplan Citrine, un punto más apagada.
+   La tinta es el negro cálido de la impresión; el acento es Zafiro, el único
+   color que no venía del papel y lo único que destaca de verdad sobre ámbar. */
 .tema-citrine {
-  --bg:#fff4d6; --surface:#ffd25a; --text:#1a2e3d; --muted:#8a6a2a;
-  --border:#e8d9ad; --accent:#ffb923;
-  --band-bg:#1a2e3d; --band-fg:#fff4d6; --band-muted:#c9b98e; --band-rule:#4a6880;
-  --duo-dark:#1a2e3d; --duo-light:#ffd25a;
+  --bg:#ffb923; --surface:#ffd25a; --text:#171513; --muted:#7a4f06;
+  --border:#d9941a; --accent:#332f8a;
+  --band-bg:#171513; --band-fg:#ffb923; --band-muted:#c08a2a; --band-rule:#4a3f2a;
+  --duo-dark:#171513; --duo-light:#ffb923;
 }
 
 /* ── Lienzo ───────────────────────────────────────────────────────────────── */

@@ -34,5 +34,16 @@ Prefiere **SVG**: escala sin pixelar y el filtro de tinta lo deja limpio. Un PNG
 con fondo blanco opaco se verá como un recuadro blanco — recórtalo con
 transparencia antes.
 
-La marca del propio colectivo **no va aquí**: se dibuja en SVG desde
-`build_posts.py` (`marca_cfdl`), así que toma los colores del tema.
+## La marca del propio colectivo no se trata como un logo ajeno
+
+`cfdl-logo-original.jpeg` (1600×1600, bajado del Drive) es el original y se guarda aquí
+como referencia, pero **no se enlaza desde ningún cartel**. La marca se redibuja en SVG
+desde `build_posts.py` (`svg_marca`): el cuadrado ámbar `#ffb923`, «C.F. / D.L.» en
+FuturaStd y el doble filete cuyas esquinas no cierran — ese desajuste es del diseño
+original, no un error.
+
+Redibujarla en vez de enlazar el JPEG gana tres cosas: no pixela a ningún tamaño, no
+arrastra el fondo blanco del JPEG, y admite una versión a una tinta (`logo-mono`) para
+cuando el cartel no acepta un cuadrado de color.
+
+Se pide desde el brief con `"marca_cfdl": "logo"`, `"logo-mono"`, `"logo+sigla"`…

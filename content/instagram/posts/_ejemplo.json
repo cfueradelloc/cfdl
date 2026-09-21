@@ -18,7 +18,7 @@
       "alinear": "izq (por defecto) | der — al alinear a la derecha, el desplazamiento de la fecha se invierte",
       "recto": "true para desactivar el desplazamiento de la fecha en esta lámina",
 
-      "marca_cfdl": "sigla | nombre | logo | logo+sigla | logo+nombre — sale en el pie. El logotipo se dibuja en SVG y toma los colores del tema.",
+      "marca_cfdl": "sigla | nombre | logo | logo-mono | logo+sigla | logo-mono+sigla | logo+nombre — sale en el pie. El logotipo real (cuadrado ámbar, C.F./D.L.) se redibuja en SVG; -mono lo pone a una sola tinta.",
       "marca_alto": 40,
       "marca_lugar": "La Perecquiana — sólo si el lugar debe acreditarse arriba; normalmente basta la línea meta del pie",
       "ciclo": "en-voz-alta | la-magistral | 14-4 — clave de defaults.json, o un objeto {nombre, lema}",
