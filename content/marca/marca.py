@@ -183,93 +183,10 @@ GROUNDS = [
 
 
 def hoja_muestras():
-    def c(pieza, fondo, tinta, dens, size, css, et, circ=False):
-        sv = svg(pieza, fondo, tinta, dens, size)
-        if circ: sv = f'<span class="circ">{sv}</span>'
-        return (f'<div class="c"><span class="caja {css}">{sv}</span>'
-                f'<div class="et">{et}</div></div>')
+    """La página vive en hoja.py, que es donde se decide qué se enseña."""
+    from hoja import pagina
+    pagina()
 
-    def parrilla(pieza, size, dens="fina", nota=""):
-        """La pieza sobre cada fondo, con cada tinta que le sirve."""
-        out = ['<div class="fila">']
-        for css, nom, _hex, tintas in GROUNDS:
-            for t in tintas:
-                out.append(c(pieza, "ninguno", t, dens, size, css, f"{nom} · {t}"))
-        out.append("</div>")
-        return "".join(out)
-
-    p = []
-    p.append('<h2>monograma · principal</h2><div class="fila">')
-    p.append(c("perfil","ambar","negro","fina",112,"b-cuadros","círculo · pieza «perfil»",True))
-    p.append(c("monograma","ambar","negro","fina",112,"b-cuadros","«monograma» pierde esquinas",True))
-    p.append(c("monograma","ambar","negro","fina",104,"b-cuadros","104 · fina"))
-    p.append(c("monograma","ambar","negro","media",48,"b-cuadros","48 · media"))
-    p.append(c("monograma","ambar","negro","gruesa",32,"b-cuadros","32 · gruesa"))
-    p.append(c("monograma","ambar","negro","gruesa",16,"b-blanco","16 · gruesa"))
-    p.append("</div>")
-
-    p.append('<h2>la densidad se elige por tamaño — es el mismo signo</h2><div class="fila">')
-    for dens in ("fina", "media", "gruesa"):
-        p.append(c("monograma","ambar","negro",dens,104,"b-cuadros",dens))
-        p.append(c("monograma","ambar","negro",dens,32,"b-cuadros",f"{dens} a 32"))
-    p.append("</div>")
-
-    p.append("<h2>el signo solo · sobre cada fondo, con cada tinta</h2>")
-    p.append(parrilla("monograma", 84))
-
-    p.append("<h2>con las siglas al lado · el caso de un pie o una firma</h2>")
-    p.append(parrilla("linea", 54, "media"))
-
-    p.append("<h2>con campo propio · el signo se lleva su fondo encima</h2><div class="
-             "'fila'>")
-    for pieza, size in (("monograma", 92), ("linea", 54)):
-        p.append(c(pieza,"ambar","negro","media",size,"b-blanco","campo ámbar sobre blanco"))
-        p.append(c(pieza,"negro","ambar","media",size,"b-blanco","campo negro sobre blanco"))
-        p.append(c(pieza,"ambar","negro","media",size,"b-negro","campo ámbar sobre negro"))
-    p.append("</div>")
-
-    p.append("<h2>hoja — proporción de la hoja impresa (0.571)</h2>")
-    p.append(parrilla("hoja", 120))
-
-    return_doc = HOJA.format(cuerpo="".join(p))
-    with open(os.path.join(AQUI, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(return_doc)
-    print("hoja → content/marca/index.html")
-
-
-HOJA = """<!doctype html><meta charset="utf-8"><title>C.F.D.L. — la marca</title>
-<style>
-@font-face{{font-family:'FuturaStd';
-  src:url('../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');font-display:block}}
-*{{box-sizing:border-box}}
-body{{margin:0;padding:34px 38px;background:#13131a;color:#e6e6ef;font:14px/1.6 system-ui}}
-h1{{font:400 15px/1.3 system-ui;letter-spacing:.24em;text-transform:uppercase;margin:0 0 6px}}
-h2{{font:400 11px/1 system-ui;letter-spacing:.2em;text-transform:uppercase;color:#6f6f88;
-   margin:34px 0 14px;border-top:1px solid #2a2a38;padding-top:16px}}
-.intro{{color:#9a9ab0;max-width:920px;margin:0}} .intro b{{color:#e6e6ef;font-weight:500}}
-.fila{{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end}}
-.c{{text-align:center}} .c .et{{font-size:10px;color:#6f6f88;margin-top:7px;letter-spacing:.05em}}
-.caja{{line-height:0;display:inline-block;padding:10px}}
-.b-rosa{{background:#f8ccce}} .b-blanco{{background:#fff}}
-.b-negro{{background:#171513}} .b-ambar{{background:#ffb923}}
-.b-zafiro{{background:#332f8a}}
-.b-cuadros{{background:
-  linear-gradient(45deg,#3a3a48 25%,transparent 25%,transparent 75%,#3a3a48 75%),
-  linear-gradient(45deg,#3a3a48 25%,#2a2a34 25%,#2a2a34 75%,#3a3a48 75%);
-  background-size:14px 14px;background-position:0 0,7px 7px}}
-.circ{{border-radius:50%;overflow:hidden;display:inline-block;line-height:0}}
-a{{color:#ffb923}}
-</style>
-<h1>C.F.D.L. — la marca</h1>
-<p class="intro">En la hoja impresa el texto vive en los <b>márgenes</b> y el
-centro queda <b>vacío</b>: el colectivo está fuera de lugar, en los bordes. Una
-banda fina de espiral pegada al borde, y el 65&nbsp;% del centro en blanco.<br>
-No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y está impreso.<br>
-<a href="firma.html">la firma: símbolo + siglas →</a> normas de construcción. <a href="ajuste.html">ajuste →</a> separación, interletrado y tamaño relativo, medidos.
-<a href="explorador.html">explorador de variantes →</a> barrido de parámetros:
-vueltas, retícula, grosor, remate, boca, proporción, giro, tinta.</p>
-{cuerpo}
-"""
 
 if __name__ == "__main__":
     if "--hoja" not in sys.argv:

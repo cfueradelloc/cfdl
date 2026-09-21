@@ -19,7 +19,7 @@ ya es el estilo de la casa para las etiquetas, así que la regla no es una
 imposición: es lo que ya se hacía, ahora con un número detrás.
 
 AJUSTE DE LA FIRMA — elegido:
-  densidad media · rel 3,20 · pie centrado · separación 0,34 · interletrado 0,135 em
+  densidad media · rel 3,20 · pie centrado · separación 0,40 · interletrado 0,200 em
 
 La separación se mide en anchos de símbolo y 0,34 no es un número redondo por
 casualidad: es donde el hueco entre símbolo y pie vale ≈ el ancho de una
@@ -63,7 +63,7 @@ AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = ("#ffb923","#171513","#332f8a",
 # anillos, hueco (en módulos de grosor), vacío central, interletrado que iguala
 DENSIDAD = {
     "fina":   dict(anillos=7, hu=4, vacio=0.62, track=0.320),
-    "media":  dict(anillos=5, hu=3, vacio=0.60, track=0.135),
+    "media":  dict(anillos=5, hu=3, vacio=0.60, track=0.200),
     "gruesa": dict(anillos=3, hu=2, vacio=0.55, track=0.000),
 }
 CORTE_REL = 0.55
@@ -101,7 +101,7 @@ def ancho_siglas(track):
 
 
 def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
-          rel=3.20, sep=0.34, respeto=0.0, alto=64, apilada=False,
+          rel=3.20, sep=0.40, respeto=0.0, alto=64, apilada=False,
           track=None, con_siglas=True, respiro=0.0, alinea="centro"):
     """La firma completa.
 
