@@ -14,7 +14,7 @@ U = 100.0   # el lienzo en unidades de usuario del SVG
 
 
 def espiral(N=16, vueltas=3.5, gr=1, hu=1, M=None, corte=None, boca=0,
-            espejo=False):
+            espejo=False, hu_prog=1.0):
     """Espiral rectangular hacia dentro sobre retícula de N×M módulos.
 
     gr, hu   grosor de trazo y hueco entre vueltas, en módulos
@@ -22,11 +22,15 @@ def espiral(N=16, vueltas=3.5, gr=1, hu=1, M=None, corte=None, boca=0,
              Es el gesto abierto: la hoja impresa hace lo mismo.
     boca     módulos que se le quitan al arranque — abre la vuelta exterior
     espejo   invierte el sentido de giro
+    hu_prog  el hueco se multiplica por esto en cada vuelta: >1 abre el aire
+             hacia dentro, <1 lo cierra. Un texto que gira hace algo así.
 
     Devuelve (puntos, N, M, gr). Los puntos van en módulos, no en px.
     """
     M = M or N
-    paso, c = gr + hu, gr / 2.0
+    c = gr / 2.0
+    hu_k = float(hu)
+    paso = gr + hu_k
     l, t, r, b = c, c, N - c, M - c
     # el remate de arranque sale a ras de caja, no sobre la línea media de la
     # columna de al lado: medio grosor corto se lee como un error
@@ -39,7 +43,9 @@ def espiral(N=16, vueltas=3.5, gr=1, hu=1, M=None, corte=None, boca=0,
         if lado == 0:   P.append((r, t))
         elif lado == 1: P.append((r, corte if (ult and corte is not None) else b))
         elif lado == 2: P.append((l, b)); t += paso
-        else:           P.append((l, t)); l += paso; r -= paso; b -= paso
+        else:
+            P.append((l, t)); l += paso; r -= paso; b -= paso
+            hu_k *= hu_prog; paso = gr + hu_k
     if espejo:
         P = [(N - x, y) for x, y in P]
     return P, N, M, gr
