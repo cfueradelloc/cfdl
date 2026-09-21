@@ -21,16 +21,33 @@ def _fig(sv, et, css=""):
 
 
 def pagina():
+    """Toda la página usa SÓLO los tres tamaños, cada uno con su densidad.
+    Enseñar tamaños intermedios sugería que valía cualquiera."""
+    T = (("grande", 104), ("medio", 60), ("pequeno", 30))
     p = []
 
-    # ── la firma, a tamaño de verdad ───────────────────────────────────────
+    # ── la firma, al tamaño grande ─────────────────────────────────────────
     p.append('<section class="hero">'
-             f'<div class="l">{firma("medio", alto=124)}</div>'
-             '<p class="ph">La firma. Símbolo y siglas — el uso principal.</p>'
-             '</section>')
+             f'<div class="l">{firma("grande", alto=104)}</div>'
+             '<p class="ph">La firma, al tamaño grande. Símbolo y siglas — '
+             'el uso principal.</p></section>')
 
-    # ── sobre cada fondo ───────────────────────────────────────────────────
-    p.append('<section><h2>Sobre cada fondo</h2><div class="rej">')
+    # ── los tres tamaños ───────────────────────────────────────────────────
+    p.append('<section><h2>Los tres tamaños</h2><div class="rej abajo">')
+    for d, a in T:
+        p.append(_fig(firma(d, alto=a), f"{d} · {a} px", "f-blanco"))
+    p.append('</div><div class="rej abajo sep">')
+    for d, a in T:
+        p.append(_fig(firma(d, alto=a, con_siglas=False, campo=AMBAR),
+                      f"{d} · {a} px", "f-liso"))
+    p.append('</div><p class="nota">La retícula cambia con el tamaño porque no '
+             'caben a la vez muchos anillos, un vacío grande y un trazo nítido: '
+             '<b>grande</b> 7 anillos, <b>medio</b> 5, <b>pequeno</b> 3. Es el '
+             'mismo signo, y el centro se queda vacío en los tres.</p></section>')
+
+    # ── sobre cada fondo, al tamaño medio ──────────────────────────────────
+    p.append('<section><h2>Sobre cada fondo <i>· tamaño medio</i></h2>'
+             '<div class="rej">')
     for css, tinta, et in (("f-blanco", NEGRO,  "negro sobre blanco"),
                            ("f-blanco", ZAFIRO, "zafiro sobre blanco"),
                            ("f-negro",  AMBAR,  "ámbar sobre negro"),
@@ -40,63 +57,55 @@ def pagina():
                            ("f-zafiro", CREMA,  "crema sobre zafiro"),
                            ("f-zafiro", AMBAR,  "ámbar sobre zafiro"),
                            ("f-zafiro", ROSA,   "rosa sobre zafiro")):
-        p.append(_fig(firma("medio", alto=58, tinta=tinta), et, css))
+        p.append(_fig(firma("medio", alto=60, tinta=tinta), et, css))
     p.append('</div></section>')
 
-    # ── el símbolo solo ────────────────────────────────────────────────────
-    # En cuadrados exactos: el símbolo ya lleva su propio aire dentro, así que
-    # el recuadro no debe añadir relleno ni un gris de fondo — sería un
-    # segundo marco encima del que ya tiene.
+    # ── el símbolo solo, al tamaño grande ──────────────────────────────────
     def _sq(sv, et, fondo=""):
         return (f'<figure class="sq"><div class="t {fondo}">{sv}</div>'
                 f'<figcaption>{et}</figcaption></figure>')
 
-    p.append('<section><h2>El símbolo solo</h2><div class="rej">')
+    p.append('<section><h2>El símbolo solo <i>· tamaño grande</i></h2>'
+             '<div class="rej">')
     p.append(_sq('<span class="circ">'
-                 + firma("medio", alto=132, con_siglas=False,
+                 + firma("grande", alto=104, con_siglas=False,
                          campo=AMBAR, respiro=0.20) + '</span>',
                  "foto de perfil — entera dentro del círculo"))
-    p.append(_sq(firma("medio", alto=132, con_siglas=False, campo=AMBAR),
+    p.append(_sq(firma("grande", alto=104, con_siglas=False, campo=AMBAR),
                  "con campo"))
-    p.append(_sq(firma("medio", alto=132, con_siglas=False), "sin campo", "t-blanco"))
-    p.append(_sq(firma("medio", alto=132, con_siglas=False, tinta=BLANCO),
+    p.append(_sq(firma("grande", alto=104, con_siglas=False), "sin campo", "t-blanco"))
+    p.append(_sq(firma("grande", alto=104, con_siglas=False, tinta=BLANCO),
                  "en negativo", "t-negro"))
-    p.append(_sq(firma("pequeno", alto=132, con_siglas=False, campo=AMBAR),
-                 "favicon — tres anillos cerrados"))
+    p.append(_sq(firma("pequeno", alto=104, con_siglas=False, campo=AMBAR),
+                 "favicon — el tamaño pequeno, ampliado"))
     p.append('</div></section>')
 
-    # ── tamaños ────────────────────────────────────────────────────────────
-    p.append('<section><h2>Tamaños</h2><div class="rej abajo">')
-    for a, d, et in ((104, "medio", "104 px"), (68, "medio", "68 px"),
-                     (46, "medio", "46 px"), (30, "pequeno", "30 px")):
-        p.append(_fig(firma(d, alto=a), et, "f-blanco"))
-    p.append('</div><p class="nota">Por debajo de unos 24&nbsp;px la espiral deja '
-             'de leerse como espiral y queda un marco. Se conserva el centro '
-             'vacío, que es lo que significa.</p></section>')
-
-    # ── el ajuste, en una línea ────────────────────────────────────────────
+    # ── el ajuste ──────────────────────────────────────────────────────────
     p.append('<section><h2>El ajuste</h2><table class="aj">'
+             '<tr><td>tamaños</td><td>grande 104 px · medio 60 · pequeno 30</td></tr>'
              '<tr><td>alto del símbolo</td><td>3,20 × la altura de mayúscula</td></tr>'
              '<tr><td>separación</td><td>0,40 anchos de símbolo'
              ' <i>— 1,35 mayúsculas, 4,8× el hueco entre letras</i></td></tr>'
-             '<tr><td>interletrado</td><td>0,200 em</td></tr>'
+             '<tr><td>interletrado</td><td>0,200 em <i>— igual en los tres tamaños</i></td></tr>'
+             '<tr><td>respiro</td><td>0,12 dentro de la caja cuando va solo; '
+             '0,20 para el círculo</td></tr>'
              '<tr><td>centrado</td><td>mismo aire por encima y por debajo de las '
              'letras <i>— comprobado midiendo píxeles</i></td></tr>'
              '</table></section>')
 
     # ── archivos ───────────────────────────────────────────────────────────
     p.append('<section><h2>Los archivos</h2><div class="arch">'
-             '<div><b>svg/</b><span>16 combinaciones. El SVG es el maestro: escala '
+             '<div><b>svg/</b><span>21 combinaciones. El SVG es el maestro: escala '
              'sin perder nada, y con <code>tinta="auto"</code> hereda el color del '
              'texto que lo rodea.</span></div>'
              '<div><b>png/</b><span><code>perfil-instagram</code> 1080&nbsp;· '
-             '<code>linea-negro</code> y <code>linea-blanco</code> 663×200&nbsp;· '
-             '<code>favicon-32</code> y <code>favicon-180</code>&nbsp;· '
-             '<code>monograma-512</code>&nbsp;· <code>hoja</code></span></div>'
+             '<code>linea-negro</code>, <code>linea-blanco</code> y '
+             '<code>linea-zafiro</code>&nbsp;· <code>favicon-32</code> y '
+             '<code>favicon-180</code>&nbsp;· <code>monograma-512</code>&nbsp;· '
+             '<code>hoja</code></span></div>'
              '<div><b>para regenerar</b><span><code>python3 marca.py</code> rehace '
              'los SVG y esta página. <code>bash exportar_png.sh</code>, los '
-             'PNG.</span></div>'
-             '</div></section>')
+             'PNG.</span></div></div></section>')
 
     with open(os.path.join(AQUI, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(PLANTILLA.replace("{cuerpo}", "".join(p)))
@@ -129,6 +138,9 @@ section{border-bottom:1px solid var(--linea);padding:40px 0}
 section:last-of-type{border-bottom:0}
 h2{font:400 11px/1 ui-sans-serif,system-ui;letter-spacing:.22em;
   text-transform:uppercase;color:var(--tinta3);margin:0 0 24px}
+h2 i{font-style:normal;color:var(--tinta3);opacity:.7;letter-spacing:.1em}
+.rej.sep{margin-top:26px}
+.f-liso .l{background:transparent;padding:0}
 .hero{text-align:center;padding:52px 0 44px}
 .hero .l{display:inline-block;line-height:0;background:#fff;padding:34px 44px}
 .ph{color:var(--tinta2);font-size:14px;margin:20px 0 0}
@@ -136,11 +148,11 @@ h2{font:400 11px/1 ui-sans-serif,system-ui;letter-spacing:.22em;
 .rej.abajo{align-items:flex-end}
 figure{margin:0;text-align:center}
 figure .l{line-height:0;padding:16px 20px;display:block;border-radius:2px}
-figure.sq{width:132px}
-figure.sq .t{width:132px;height:132px;line-height:0;display:block;overflow:hidden}
-figure.sq .t svg{display:block;width:132px;height:132px}
+figure.sq{width:104px}
+figure.sq .t{width:104px;height:104px;line-height:0;display:block;overflow:hidden}
+figure.sq .t svg{display:block;width:104px;height:104px}
 figure.sq .t.t-blanco{background:#fff} figure.sq .t.t-negro{background:#171513}
-figure.sq .circ{display:block;width:132px;height:132px}
+figure.sq .circ{display:block;width:104px;height:104px}
 figcaption{font-size:11.5px;color:var(--tinta2);margin-top:10px;max-width:210px}
 .f-blanco .l{background:#fff} .f-negro .l{background:#171513}
 .f-ambar .l{background:#ffb923} .f-rosa .l{background:#f8ccce}
