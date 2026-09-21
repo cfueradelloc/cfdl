@@ -30,10 +30,12 @@ printed-poster inventory is illegible there.
 margins are large because Instagram's own UI covers the top and bottom. `cuadrado` when it
 also goes elsewhere. `"formatos": ["feed","historia"]` renders the same brief in several.
 
-**Theme.** Both are real objects of the collective, not decoration. `pink` is the
-identity published on the website, and the default. `citrine` is the collective's amber —
-the `#ffb923` of the logo and of the printed manifesto. Reach for it when a piece belongs
-to the printed/manifesto side rather than the web side.
+**Tono.** One palette, five tonos — the ground is always `papel`; what changes is whose
+the band is. `ámbar` and `zafiro` belong to the collective; `rosa`, `moho` and `náufrago`
+are the three cycles (En voz alta, Noches íntimas, La Magistral). Pick the cycle's tono
+when the piece belongs to a cycle, `zafiro` otherwise. The old `theme` key and the names
+`pink`/`citrine` still resolve, to `rosa` and `ámbar`. Tokens are generated from
+`content/paleta/` — never hand-write a hex into a brief.
 
 **Photo.** `docs/gallery/*.jpg` is already published and safe — reference it as
 `docs/gallery/<file>.jpg` (paths are resolved from the repo root). Author portraits are in

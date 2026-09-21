@@ -1,0 +1,60 @@
+/* GENERADO por content/paleta/paleta.py — no editar a mano.
+   Se rehace con: python3 paleta.py --css */
+:root {
+  --papel: #fdf5eb;
+  --hueso: #f1e7db;
+  --filete: #e0d6ca;
+  --ceniza: #a89f96;
+  --humo: #6a625a;
+  --tinta: #171513;
+  --ambar: #ffb923;
+  --rosa: #f8ccce;
+  --zafiro: #332f8a;
+  --moho: #1b5033;
+  --naufrago: #004d5f;
+  --cera: #fff4d6;
+  --lavanda: #bbabd5;
+}
+
+/* Un tono por pieza. El suelo es SIEMPRE el papel; lo que cambia
+   es de quién es la banda. */
+.tono-ambar {
+  --bg:var(--papel); --surface:var(--hueso); --text:var(--tinta);
+  --muted:var(--humo); --border:var(--filete);
+  --accent:#714a00;
+  --band-bg:#ffb923; --band-fg:#171513;
+  --band-muted:#714a00; --band-rule:#c49232;
+  --duo-dark:#ffb923; --duo-light:var(--papel);
+}
+.tono-rosa {
+  --bg:var(--papel); --surface:var(--hueso); --text:var(--tinta);
+  --muted:var(--humo); --border:var(--filete);
+  --accent:#725759;
+  --band-bg:#f8ccce; --band-fg:#171513;
+  --band-muted:#725759; --band-rule:#c2a3a5;
+  --duo-dark:#f8ccce; --duo-light:var(--papel);
+}
+.tono-zafiro {
+  --bg:var(--papel); --surface:var(--hueso); --text:var(--tinta);
+  --muted:var(--humo); --border:var(--filete);
+  --accent:#332f8a;
+  --band-bg:#332f8a; --band-fg:#fff4d6;
+  --band-muted:#ad9ce8; --band-rule:#6a5da3;
+  --duo-dark:#332f8a; --duo-light:var(--papel);
+}
+.tono-moho {
+  --bg:var(--papel); --surface:var(--hueso); --text:var(--tinta);
+  --muted:var(--humo); --border:var(--filete);
+  --accent:#1b5033;
+  --band-bg:#1b5033; --band-fg:#fff4d6;
+  --band-muted:#98bfa5; --band-rule:#557a63;
+  --duo-dark:#1b5033; --duo-light:var(--papel);
+}
+.tono-naufrago {
+  --bg:var(--papel); --surface:var(--hueso); --text:var(--tinta);
+  --muted:var(--humo); --border:var(--filete);
+  --accent:#004d5f;
+  --band-bg:#004d5f; --band-fg:#fff4d6;
+  --band-muted:#94bbca; --band-rule:#517785;
+  --duo-dark:#004d5f; --duo-light:var(--papel);
+}

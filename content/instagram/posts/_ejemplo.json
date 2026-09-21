@@ -2,7 +2,7 @@
   "_": "Brief de referencia: todas las claves posibles, anotadas. Los ficheros que empiezan por _ no se construyen. Dentro de una lámina, `plantilla` es la única clave obligatoria; el resto son bloques que se dibujan si están y desaparecen si no. Ejemplos ejecutables de cada plantilla: ../ejemplos/",
 
   "id": "AAAA-MM-DD-slug",
-  "theme": "pink | citrine",
+  "tono": "ambar | rosa | zafiro | moho | naufrago — de quién es la banda",
   "formato": "feed (1080×1350) | cuadrado (1080×1080) | historia (1080×1920)",
   "formatos": ["feed", "cuadrado", "historia"],
   "evento_ref": "AAAA-MM-DD — entrada de calendario-eventos.md contra la que contrastar",
@@ -11,7 +11,7 @@
     {
       "plantilla": "evento | ciclo | recordatorio | cita | portada | retrato | programa | datos | resumen | pieza | numero",
 
-      "theme": "opcional, pisa el del post",
+      "tono": "opcional, pisa el del post",
       "formato": "opcional, pisa el del post",
       "superficie": "claro (fondo del tema) | oscuro (banda invertida)",
       "variante": "centro (por defecto) | alta | baja — dónde se apoya el bloque de texto",

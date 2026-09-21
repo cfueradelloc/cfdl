@@ -32,7 +32,7 @@ Un brief mínimo y lo que produce:
 ```json
 {
   "id": "2025-12-12-angela-mallen",
-  "theme": "pink",
+  "tono": "rosa",
   "slides": [{
     "plantilla": "evento",
     "ciclo": "en-voz-alta",
@@ -66,7 +66,7 @@ open out/index.html
 
 | bandera | qué hace |
 |---|---|
-| `--pink` / `--citrine` | fuerza el tema en toda la tirada (alias `--rosa` / `--citrina`) |
+| `--ambar` `--zafiro` `--rosa` `--moho` `--naufrago` | fuerza el tono en toda la tirada (siguen valiendo `--pink` → rosa y `--citrine` → ámbar) |
 | `--formato feed\|cuadrado\|historia` | fuerza la proporción en toda la tirada |
 | `--ejemplos` | construye también `ejemplos/`, un brief por plantilla |
 | `--solo <texto>` | sólo los briefs cuyo nombre contenga ese texto |
@@ -130,7 +130,7 @@ Dos cosas distintas:
 
 - **`posts/*.json`** — la fuente escrita a mano. Un fichero por publicación.
 - **`ejemplos/*.json`** — un brief por plantilla, ejecutable. Es la documentación real.
-- **`src/_shared.css`** — **la superficie de ajuste**: retícula, escala, temas, formatos,
+- **`src/_shared.css`** — **la superficie de ajuste**: retícula, escala, formatos,
   tratamiento de foto. Se escribe a mano; `build_posts.py` no la genera nunca. Para afinar
   un cartel: `open src/<id>-01.html` en una pestaña de Chrome —es 1:1— y edita esta hoja en
   DevTools. El Python emite estructura, no diseño.
@@ -146,12 +146,23 @@ Dos cosas distintas:
   rejilla de perfil recorta 34 px por lado y el desplazamiento debe seguir entero en la
   miniatura.
 - **El acento es puntuación** —un separador, el año, la lámina activa— nunca un campo.
-- **Los dos temas son objetos reales del colectivo.** `pink` es la identidad publicada en
-  la web. `citrine` es su ámbar: el `#ffb923` del logotipo —muestreado del propio archivo,
-  `assets/logos/cfdl-logo-original.jpeg`— y el del manifiesto impreso, ese acordeón
-  amarillo de `docs/gallery/manifiesto-*.jpg`. `brand-content` lo llama «Citrina (marca)».
-  Ojo: el `#e9ad51` de `content/tshirts/` es otra cosa —la aproximación al papel Colorplan
-  Citrine, un punto más apagada—, así que los dos módulos no comparten ámbar.
+- **Ya no hay dos temas: hay una paleta y cinco tonos.** Había `pink` —la identidad
+  publicada en la web— y `citrine` —el ámbar del manifiesto—, cada uno con su propio
+  suelo, y eso hacía que dos piezas del mismo colectivo parecieran de dos proyectos.
+  Ahora el suelo es siempre el papel y lo que cambia es **de quién es la banda**:
+  `ámbar` y `zafiro` son del colectivo; `rosa`, `moho` y `náufrago` son los tres ciclos.
+  Los nombres viejos siguen valiendo — `pink` resuelve a `rosa` y `citrine` a `ámbar`.
+- **Los tokens los genera `content/paleta/`**, no se escriben aquí:
+  `cd ../paleta && python3 paleta.py --css > ../instagram/src/_paleta.css`. Antes vivían
+  en `_shared.css` **y** en un `THEMES` de `build_posts.py`: dos copias de lo mismo
+  esperando a divergir. El secundario y el filete de cada banda no se eligen a ojo — se
+  derivan del propio tono buscando el desplazamiento de claridad más pequeño que alcanza
+  4,5:1.
+- **El antetítulo lleva el color de su tono.** Es la línea que nombra el ciclo, así que
+  ponerla en el color del ciclo es lo único que hace falta para distinguirlos de un
+  vistazo. Sin eso, una pieza clara no enseñaba su tono por ninguna parte: medido sobre
+  el render, `náufrago` aparecía en el **0,0 %** de los píxeles y el cartel de La
+  Magistral era indistinguible del de En voz alta.
 - **El fallback de las tipografías es `monospace` a propósito.** Si Chrome no carga los OTF,
   todo sale en Courier y el fallo es imposible de pasar por alto. Un fallback «Georgia,
   serif» daría un cartel creíble pero fuera de marca, que es peor.

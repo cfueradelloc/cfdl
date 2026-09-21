@@ -3,7 +3,7 @@
   "sitio": "cfdl.site",
   "aforo": "Entrada gratuita hasta completar aforo",
   "presentacion": "Presentado por Rosauro Varo Cobos, miembro del «Colectivo Fuera de Lugar»",
-  "theme": "pink",
+  "tono": "zafiro",
   "lugares": {
     "perecquiana": { "nombre": "Librería La Perecquiana", "ciudad": "Valladolid", "marca": "La Perecquiana" },
     "casablanca":  { "nombre": "Cinemes Casablanca", "ciudad": "Valladolid", "marca": "Casablanca" },

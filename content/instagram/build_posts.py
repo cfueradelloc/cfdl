@@ -38,9 +38,21 @@ FORMATOS = {"feed": (1080, 1350), "cuadrado": (1080, 1080), "historia": (1080, 1
 FMT_ALIAS = {"4:5": "feed", "1:1": "cuadrado", "9:16": "historia",
              "story": "historia", "square": "cuadrado", "post": "feed"}
 
-THEMES = {"pink":    {"duo_dark": "#332f8a", "duo_light": "#f8ccce"},
-          "citrine": {"duo_dark": "#171513", "duo_light": "#ffb923"}}
-ALIAS = {"rosa": "pink", "citrina": "citrine"}
+# LA PALETA VIENE DE content/paleta/, no se redeclara aquí. Antes había un
+# THEMES con los dos duotonos y un bloque .tema-* en _shared.css con los mismos
+# valores: dos copias de lo mismo esperando a divergir.
+#
+# Un TONO es un color de la paleta puesto a trabajar como banda de la pieza.
+# Reemplaza a los dos temas enteros: el suelo es siempre el papel, y lo que
+# cambia es de quién es la banda.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "..", "paleta"))
+from paleta import TONOS, HEX as PALETA_HEX, clave as _clave   # noqa: E402
+
+TONO_DEF = "zafiro"
+# Los nombres viejos siguen valiendo para no romper los briefs ya escritos.
+ALIAS = {"pink": "rosa", "citrine": "ámbar", "citrina": "ámbar",
+         "naufrago": "náufrago", "ambar": "ámbar"}
 
 MESES = ["enero","febrero","marzo","abril","mayo","junio",
          "julio","agosto","septiembre","octubre","noviembre","diciembre"]
@@ -146,8 +158,8 @@ def svg_marca(alto=44, mono=False):
     tamaño, y porque `mono` permite ponerlo a una sola tinta cuando el cartel
     no admite un cuadrado de color.
     """
-    fondo = "none" if mono else "#ffb923"
-    tinta = "currentColor" if mono else "#171513"
+    fondo = "none" if mono else PALETA_HEX["ámbar"]
+    tinta = "currentColor" if mono else PALETA_HEX["tinta"]
     return (
       f'<svg class="marca" viewBox="0 0 100 100" width="{alto}" height="{alto}" '
       f'aria-label="C.F.D.L." role="img">'
@@ -479,6 +491,7 @@ CANARIO = (
 PAGE = """<!doctype html>
 <html lang="es" class="f-{fmt}"><head><meta charset="utf-8">
 <title>C.F.D.L. — {id} · {n}</title>
+<link rel="stylesheet" href="_paleta.css">
 <link rel="stylesheet" href="_shared.css">
 </head><body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -490,7 +503,7 @@ PAGE = """<!doctype html>
 <feFuncG type="table" tableValues="{dg} {lg}"/>
 <feFuncB type="table" tableValues="{db} {lb}"/>
 </feComponentTransfer></filter></defs></svg>
-<div class="stage tema-{theme} sup-{sup} v-{var} {extra} fitcheck">
+<div class="stage tono-{tono} sup-{sup} v-{var} {extra} fitcheck">
 {fondo}
 <div class="zona-sup">{z1}</div>
 <div class="zona-med">{z2}</div>
@@ -517,13 +530,16 @@ def emit(brief, d, forzar_tema=None, forzar_fmt=None, debug=False):
     for fmt in fmts:
         for i, raw in enumerate(slides, 1):
             s = dict(raw)
-            # Ojo: ALIAS.get(x, "pink") se tragaba los nombres válidos —
-            # «citrine» no está en ALIAS, así que caía al valor por defecto y
-            # todo salía en rosa. El alias se resuelve sobre sí mismo.
-            th = (forzar_tema or s.get("theme") or brief.get("theme")
-                  or d.get("theme", "pink"))
+            # Ojo: ALIAS.get(x, <defecto>) se tragaba los nombres válidos —
+            # el que no estaba en ALIAS caía al valor por defecto y todo salía
+            # igual. El alias se resuelve sobre sí mismo.
+            th = (forzar_tema or s.get("tono") or s.get("theme")
+                  or brief.get("tono") or brief.get("theme")
+                  or d.get("tono", TONO_DEF))
             th = ALIAS.get(th, th)
-            if th not in THEMES: raise SystemExit(f"{pid}: tema desconocido «{th}»")
+            if th not in TONOS:
+                raise SystemExit(f"{pid}: tono desconocido «{th}» "
+                                 f"(hay {', '.join(TONOS)})")
             if s.get("plantilla") not in PLANTILLAS:
                 raise SystemExit(f"{pid}: plantilla desconocida «{s.get('plantilla')}»")
             for k in ("marca_lugar", "ciclo", "logos", "logos_trat"):
@@ -556,9 +572,10 @@ def emit(brief, d, forzar_tema=None, forzar_fmt=None, debug=False):
             if s.get("recto"): extra.append("recto")
             if debug: extra.append("debug")
 
-            dk, lt = hex01(THEMES[th]["duo_dark"]), hex01(THEMES[th]["duo_light"])
+            dk = hex01(TONOS[th]["color"])
+            lt = hex01(PALETA_HEX["papel"])
             page = PAGE.format(
-                id=esc(pid), n=i, fmt=fmt, theme=th,
+                id=esc(pid), n=i, fmt=fmt, tono=_clave(th),
                 sup=s.get("superficie", "claro"), var=s.get("variante", "centro"),
                 extra=" ".join(extra), fondo=fondo,
                 dr=dk[0], dg=dk[1], db=dk[2], lr=lt[0], lg=lt[1], lb=lt[2],
@@ -779,7 +796,9 @@ def indice(briefs, d, hechos):
         pid = b["id"]
         s0 = b["slides"][0]
         fmts = b.get("formatos") or [b.get("formato", "feed")]
-        chips = (f'<span class="chip t">{b.get("theme", d.get("theme"))}</span>'
+        chips = (f'<span class="chip t">'
+                 f'{b.get("tono", b.get("theme", d.get("tono", TONO_DEF)))}'
+                 f'</span>'
                  + "".join(f'<span class="chip f">{FMT_ALIAS.get(f,f)} '
                            f'{FORMATOS[FMT_ALIAS.get(f,f)][0]}×'
                            f'{FORMATOS[FMT_ALIAS.get(f,f)][1]}</span>' for f in fmts)
@@ -830,8 +849,12 @@ def indice(briefs, d, hechos):
 def main():
     a = sys.argv[1:]
     tema = None
-    for k, v in (("--pink","pink"),("--rosa","pink"),
-                 ("--citrine","citrine"),("--citrina","citrine")):
+    # --pink y --citrine siguen aceptándose: eran los dos temas, y ahora son
+    # dos de los cinco tonos.
+    for k, v in (("--pink", "rosa"), ("--rosa", "rosa"),
+                 ("--citrine", "ámbar"), ("--citrina", "ámbar"),
+                 ("--ambar", "ámbar"), ("--zafiro", "zafiro"),
+                 ("--moho", "moho"), ("--naufrago", "náufrago")):
         if k in a: tema = v
     fmt = None
     if "--formato" in a:

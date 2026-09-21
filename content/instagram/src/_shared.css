@@ -73,28 +73,19 @@
 }
 
 /* ── Temas ────────────────────────────────────────────────────────────────
-   Dos, y los dos son objetos reales del colectivo: «pink» es la identidad
-   publicada en la web (docs/assets/css/base.css, literal) y «citrine» es el
-   papel del manifiesto impreso. */
-.tema-pink {
-  --bg:#f8ccce; --surface:#bbabd5; --text:#332f8a; --muted:#857c75;
-  --border:#c8b8d8; --accent:#fde700;
-  --band-bg:#332f8a; --band-fg:#f8ccce; --band-muted:#b0a8e0; --band-rule:#5552b8;
-  --duo-dark:#332f8a; --duo-light:#f8ccce;
-}
-/* «citrine» es el ámbar del colectivo: el mismo #ffb923 del logotipo —
-   muestreado del propio archivo, assets/logos/cfdl-logo-original.jpeg— y el
-   del manifiesto impreso, ese acordeón amarillo de docs/gallery/manifiesto-*.
-   brand-content lo llama «Citrina (marca)». El #e9ad51 de content/tshirts/ es
-   otra cosa: la aproximación al papel Colorplan Citrine, un punto más apagada.
-   La tinta es el negro cálido de la impresión; el acento es Zafiro, el único
-   color que no venía del papel y lo único que destaca de verdad sobre ámbar. */
-.tema-citrine {
-  --bg:#ffb923; --surface:#ffd25a; --text:#171513; --muted:#7a4f06;
-  --border:#d9941a; --accent:#332f8a;
-  --band-bg:#171513; --band-fg:#ffb923; --band-muted:#c08a2a; --band-rule:#4a3f2a;
-  --duo-dark:#171513; --duo-light:#ffb923;
-}
+   YA NO HAY DOS. Había «pink» —la identidad publicada en la web— y «citrine»
+   —el papel del manifiesto—, cada una con su propio suelo, y eso hacía que dos
+   piezas del mismo colectivo parecieran de dos proyectos distintos.
+
+   Ahora hay una paleta y cinco TONOS. El suelo es siempre el papel; lo que
+   cambia de una pieza a otra es de quién es la banda: ámbar y zafiro son del
+   colectivo, y rosa, moho y náufrago son los tres ciclos.
+
+   Los tokens viven en _paleta.css, que GENERA content/paleta/paleta.py:
+       cd ../paleta && python3 paleta.py --css > ../instagram/src/_paleta.css
+   Antes estaban aquí Y en el THEMES de build_posts.py, dos copias de lo mismo
+   esperando a divergir. Ahora la fuente es una y los derivados —el secundario
+   de cada banda, su filete— se calculan buscando el contraste, no a ojo. */
 
 /* ── Lienzo ───────────────────────────────────────────────────────────────── */
 * { margin:0; padding:0; box-sizing:border-box; }
@@ -142,10 +133,20 @@ html, body { width:var(--W); height:var(--H); background:#101010; }
                text-transform:uppercase; }
 .sigla       { font-size:var(--fs-label); letter-spacing:0.34em;
                text-transform:uppercase; }
+/* EL ANTETÍTULO LLEVA EL COLOR DE SU TONO. Es la línea que nombra el ciclo
+   —«La Magistral — literatura y otros saberes»—, así que ponerla en el color
+   del ciclo es lo único que hace falta para distinguirlos de un vistazo.
+   Sin esto, una pieza clara no enseña su tono por ninguna parte: medido sobre
+   el render, náufrago aparecía en el 0,0 % de los píxeles y el cartel de La
+   Magistral era indistinguible del de En voz alta.
+   El acento pasa AA sobre papel en los cinco tonos (6,0–10,2:1) — los dos
+   claros, ámbar y rosa, prestan su versión oscurecida justo para esto. */
 .kicker, .strapline {
   font-size:var(--fs-label); letter-spacing:var(--track-label);
-  text-transform:uppercase; color:var(--c-muted);
+  text-transform:uppercase; color:var(--accent);
 }
+/* Sobre banda oscura manda la banda: ahí el acento ES el fondo. */
+.stage.sup-oscuro .kicker, .stage.sup-oscuro .strapline { color:var(--c-muted); }
 
 .hero { font-size:var(--fs-hero); line-height:var(--lh-hero); font-style:italic; }
 .sub  { font-size:var(--fs-sub);  line-height:var(--lh-sub);  font-style:italic;

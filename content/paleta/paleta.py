@@ -26,7 +26,8 @@ import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, AQUI)
-from color import lch, contraste, nivel, distancia, salto_matiz, desde_lch
+from color import (lch, contraste, nivel, distancia, salto_matiz,
+                   desde_lch)
 
 # ── LA PALETA ──────────────────────────────────────────────────────────────
 # SEIS NEUTROS, CINCO COLORES, DOS PARA ENCIMA DE LO OSCURO.
@@ -190,6 +191,89 @@ RETIRADOS = [
 CONTRADICCION = ("skills/brand-content/references/colorplan.md", 83)
 
 
+# ── LOS TONOS ──────────────────────────────────────────────────────────────
+# Un tono es un color de la paleta puesto a trabajar: la banda oscura de una
+# pieza, con su tinta encima, su secundario y su filete. Los cinco cromáticos
+# dan cinco tonos, y ésa es toda la variación que necesita una pieza — antes
+# eran dos temas enteros, «pink» y «citrine», cada uno con su propio suelo.
+#
+# NO SE ELIGEN A OJO. El secundario y el filete se derivan del propio tono
+# aclarándolo u oscureciéndolo, con el croma bajado a 0,72 para que no
+# compitan, y el desplazamiento se BUSCA: el más pequeño que alcanza 4,5:1.
+# Así el secundario sigue perteneciendo a su banda en vez de ser otro color.
+_K = 0.72                    # cuánto croma conserva un derivado
+
+
+def _deriva(h, dL):
+    L, C, H = lch(h)
+    return desde_lch(max(2, min(98, L + dL)), C * _K, H)
+
+
+def _busca(h, objetivo, arriba):
+    """El desplazamiento de claridad más pequeño que alcanza el contraste."""
+    paso = 1 if arriba else -1
+    for i in range(1, 96):
+        c = _deriva(h, paso * i)
+        if contraste(c, h) >= objetivo:
+            return c
+    raise SystemExit(f"no hay derivado de {h} que llegue a {objetivo}:1")
+
+
+def _tono(nombre):
+    h = HEX[nombre]
+    claro = lch(h)[0] > 55
+    sobre = HEX["tinta"] if claro else HEX["cera"]
+    # El acento se usa sobre PAPEL, no sobre la banda. El ámbar sobre papel da
+    # 1,59:1 y el rosa 1,34: sirven para un punto grande, no para un filete.
+    # Por eso un tono claro presta su versión oscurecida como acento.
+    acento = h if not claro else _busca(h, 4.5, False)
+    return {
+        "color":  h,
+        "sobre":  sobre,
+        "segundo": _busca(h, 4.5, not claro),
+        "filete": _deriva(h, -16 if claro else 18),
+        "acento": acento,
+    }
+
+
+TONOS = {n: _tono(n) for n in ("ámbar", "rosa", "zafiro", "moho", "náufrago")}
+
+# El nombre del tono llega desde un JSON y acaba en una clase CSS, así que no
+# puede llevar tilde.
+SIN_TILDE = str.maketrans("áéíóúñ", "aeioun")
+
+
+def clave(nombre):
+    return nombre.translate(SIN_TILDE)
+
+
+def css():
+    """El bloque de tokens, para que lo escriba quien lo necesite en vez de
+    mantenerlo a mano en dos sitios. Instagram tenía los suyos repetidos en el
+    CSS y en Python, y era cuestión de tiempo que divergieran."""
+    L = ["/* GENERADO por content/paleta/paleta.py — no editar a mano.",
+         "   Se rehace con: python3 paleta.py --css */",
+         ":root {"]
+    for n, h, _, _, _ in PALETA:
+        L.append(f"  --{clave(n)}: {h};")
+    L.append("}")
+    L.append("")
+    L.append("/* Un tono por pieza. El suelo es SIEMPRE el papel; lo que cambia")
+    L.append("   es de quién es la banda. */")
+    for n, t in TONOS.items():
+        k = clave(n)
+        L.append(f".tono-{k} {{")
+        L.append(f"  --bg:var(--papel); --surface:var(--hueso); "
+                 f"--text:var(--tinta);")
+        L.append(f"  --muted:var(--humo); --border:var(--filete);")
+        L.append(f"  --accent:{t['acento']};")
+        L.append(f"  --band-bg:{t['color']}; --band-fg:{t['sobre']};")
+        L.append(f"  --band-muted:{t['segundo']}; --band-rule:{t['filete']};")
+        L.append(f"  --duo-dark:{t['color']}; --duo-light:var(--papel);")
+        L.append("}")
+    return "\n".join(L) + "\n"
+
+
 def verificar(ruidoso=True):
     """Devuelve el número de parejas que fallan. Dos listas y dos umbrales:
     texto pide 4,5:1; lo que no es texto pero tiene que verse, 3:1."""
@@ -206,13 +290,41 @@ def verificar(ruidoso=True):
                     print(f"  FALLA  {a} sobre {b}: {c:.2f}:1", file=sys.stderr)
             elif ruidoso:
                 print(f"  ok     {a:8s} sobre {b:8s} {c:6.2f}:1  {nivel(c)}")
+    # y cada tono contra su propia banda
     if ruidoso:
-        t = len(PAREJAS) + len(PAREJAS_UI)
+        print("\n  — tonos, cada uno sobre su banda —")
+    n_t = 0
+    for n, t in TONOS.items():
+        for campo, umbral in (("sobre", 4.5), ("segundo", 4.5), ("acento", 0)):
+            if umbral == 0:
+                continue
+            n_t += 1
+            c = contraste(t[campo], t["color"])
+            if c < umbral:
+                mal += 1
+                if ruidoso:
+                    print(f"  FALLA  {n}/{campo}: {c:.2f}:1", file=sys.stderr)
+            elif ruidoso:
+                print(f"  ok     {n:9s} {campo:8s} {c:6.2f}:1  {nivel(c)}")
+        # el acento se usa sobre PAPEL, no sobre la banda
+        n_t += 1
+        c = contraste(t["acento"], HEX["papel"])
+        if c < 3.0:
+            mal += 1
+            if ruidoso:
+                print(f"  FALLA  {n}/acento sobre papel: {c:.2f}:1", file=sys.stderr)
+        elif ruidoso:
+            print(f"  ok     {n:9s} acento   {c:6.2f}:1 sobre papel")
+    if ruidoso:
+        t = len(PAREJAS) + len(PAREJAS_UI) + n_t
         print(f"\n{t - mal} de {t} parejas pasan su umbral.")
     return mal
 
 
 if __name__ == "__main__":
+    if "--css" in sys.argv:
+        print(css(), end="")
+        sys.exit(0)
     if "--verificar" in sys.argv:
         sys.exit(1 if verificar() else 0)
     for g in GRUPOS:
