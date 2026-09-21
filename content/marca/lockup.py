@@ -19,7 +19,7 @@ ya es el estilo de la casa para las etiquetas, así que la regla no es una
 imposición: es lo que ya se hacía, ahora con un número detrás.
 
 AJUSTE DE LA FIRMA — elegido:
-  densidad media · rel 3,20 · pie centrado · separación 0,40 · interletrado 0,200 em
+  densidad medio · rel 3,20 · pie centrado · separación 0,40 · interletrado 0,200 em
   (el interletrado es constante en las tres densidades)
 
 La separación se mide en anchos de símbolo y 0,34 no es un número redondo por
@@ -38,11 +38,10 @@ por encima, la jerarquía es inequívoca — el símbolo es la marca y las sigla
 son su pie. Está más cerca de un colofón que de un lockup corporativo, que es
 lo que corresponde a un colectivo cuyo símbolo carga el significado.
 
-  símbolo                gris      interletrado que lo iguala
-  7 anillos 1:4         12,6 %     0,32 em
-  5 anillos 1:3         16,6 %     0,135 em
-  3 anillos 1:2         24,6 %     0 em  (el símbolo pesa algo más: a tamaño
-                                    pequeño conviene)
+  tamaño     símbolo            gris
+  grande     7 anillos 1:3     ~16 %     104 px
+  medio      5 anillos 1:3      16,6 %    60 px
+  pequeno    3 anillos 1:2      24,6 %    30 px
 """
 import math
 from espiral import espiral, polilinea
@@ -61,6 +60,7 @@ HUECOS   = 7                      # espacios entre los 8 signos
 
 AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = ("#ffb923","#171513","#332f8a",
                                        "#ffffff","#fff4d6")
+ROSA = "#f8ccce"   # Candy Pink — el --band-fg de docs/assets/css/base.css
 
 # INTERLETRADO CONSTANTE. Se derivó uno por densidad para igualar el gris,
 # pero eso era para cuando símbolo y siglas medían lo mismo. Con el pie a un
@@ -73,11 +73,19 @@ AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = ("#ffb923","#171513","#332f8a",
 # del favicon, cierra sus anillos.
 #
 # anillos, hueco (en módulos de grosor), vacío central, interletrado, corte
+# TRES TAMAÑOS, un signo. La retícula cambia con el tamaño porque no caben a
+# la vez muchos anillos, un vacío grande y un trazo nítido: a 104 px, siete
+# anillos con aire 1:4 dejan el trazo en 0,57 px y la marca se ve gris. Con
+# aire 1:3 sube a 0,84 y los anillos se separan, conservando los siete de la
+# hoja impresa.
+#          anillos, aire (en grosores), vacío central, interletrado, corte
 DENSIDAD = {
-    "fina":   dict(anillos=7, hu=4, vacio=0.62, track=0.200, corte=0.55),
-    "media":  dict(anillos=5, hu=3, vacio=0.60, track=0.200, corte=0.55),
-    "gruesa": dict(anillos=3, hu=2, vacio=0.55, track=0.200, corte=None),
+    "grande":  dict(anillos=7, hu=3, vacio=0.55, track=0.200, corte=0.55),
+    "medio":   dict(anillos=5, hu=3, vacio=0.60, track=0.200, corte=0.55),
+    "pequeno": dict(anillos=3, hu=2, vacio=0.55, track=0.200, corte=None),
 }
+# a qué tamaño se usa cada una
+TAMANO = {"grande": 104, "medio": 60, "pequeno": 30}
 
 
 # Para que un cuadrado quepa ENTERO en el círculo inscrito, su semidiagonal
@@ -94,7 +102,7 @@ RESPIRO_CIRCULO = 0.20
 RESPIRO_SOLO = 0.12
 
 
-def simbolo(densidad="fina", tinta=NEGRO, campo=None, respiro=0.0):
+def simbolo(densidad="grande", tinta=NEGRO, campo=None, respiro=0.0):
     """El símbolo sobre una caja de 100×100. `respiro` mete el dibujo hacia
     dentro (fracción del lado): hace falta para el recorte circular."""
     d = DENSIDAD[densidad]
@@ -110,7 +118,7 @@ def simbolo(densidad="fina", tinta=NEGRO, campo=None, respiro=0.0):
     return fondo + polilinea(P, CN, g, tinta, desplaza=(m, m))
 
 
-def gris_simbolo(densidad="fina"):
+def gris_simbolo(densidad="grande"):
     d = DENSIDAD[densidad]
     a, hu, v = d["anillos"], d["hu"], d["vacio"]
     banda = a * (1 + hu); N = int(round(2 * banda / (1 - v)))
@@ -127,7 +135,7 @@ def ancho_siglas(track):
     return TINTA_EM + HUECOS * track
 
 
-def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
+def firma(densidad="medio", tinta=NEGRO, campo=None, fondo_firma=None,
           rel=3.20, sep=0.40, respeto=0.0, alto=64, apilada=False,
           track=None, con_siglas=True, respiro=None, alinea="centro"):
     """La firma completa.

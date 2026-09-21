@@ -36,7 +36,7 @@ CREMA  = "#fff4d6"
 BLANCO = "#ffffff"
 
 TINTAS = {"negro": NEGRO, "blanco": BLANCO, "zafiro": ZAFIRO, "ambar": AMBAR,
-          "crema": CREMA, "auto": "currentColor"}
+          "crema": CREMA, "rosa": "#f8ccce", "auto": "currentColor"}
 FONDOS = {"ambar": AMBAR, "negro": NEGRO, "blanco": BLANCO, "ninguno": None}
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
 
@@ -53,9 +53,9 @@ RATIO_HOJA = 0.571          # medido sobre la hoja impresa
 # Una banda fina se cierra en cuanto se reduce, así que la densidad baja con el
 # tamaño: menos anillos y menos aire, conservando el centro vacío.
 #            anillos, grosor, hueco, lado en módulos  → vacío
-DENSIDAD = {"fina":   (7, 1, 4, 200),   # ≥64 px — la densidad de la hoja, 65 %
-            "media":  (5, 1, 3, 100),   # 32–64 px — 60 %
-            "gruesa": (3, 1, 2, 40)}    # <32 px — 55 %
+DENSIDAD = {"grande":  (7, 1, 3, 124),   # 104 px — 7 anillos, aire 1:3, vacío 55 %
+            "medio":   (5, 1, 3, 100),   #  60 px — 5 anillos, 60 %
+            "pequeno": (3, 1, 2,  40)}   #  30 px — 3 anillos cerrados, 55 %
 CORTE_REL = 0.55            # dónde muere la última vuelta, sobre su recta
 
 
@@ -113,14 +113,14 @@ _FN = {"monograma": _monograma, "perfil": _perfil, "hoja": _hoja,
        "linea": _linea}
 
 
-def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="fina",
+def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="grande",
         size=None, clase=""):
     """El SVG como cadena.
 
     pieza     monograma | perfil (a prueba de círculo) | hoja | linea
     fondo     ambar | negro | blanco | ninguno
     tinta     negro | blanco | zafiro | ambar | crema | auto (currentColor)
-    densidad  fina (≥64 px) | media (32–64) | gruesa (<32)
+    densidad  grande (104 px) | medio (60) | pequeno (30)
     """
     if pieza not in PIEZAS:
         raise SystemExit(f"pieza desconocida: {pieza} (hay {', '.join(PIEZAS)})")
@@ -145,26 +145,27 @@ def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="fina",
 
 
 COMBOS = [
-    ("monograma", "ambar",   "negro",  "fina"),     # principal
-    ("perfil",    "ambar",   "negro",  "fina"),     # foto de perfil, a prueba de círculo
-    ("monograma", "ninguno", "negro",  "fina"),
-    ("monograma", "negro",   "ambar",  "fina"),
-    ("monograma", "ninguno", "zafiro", "fina"),
-    ("monograma", "ninguno", "blanco", "fina"),
-    ("monograma", "ambar",   "negro",  "media"),
-    ("monograma", "ambar",   "negro",  "gruesa"),   # favicon
-    ("monograma", "ninguno", "negro",  "gruesa"),
-    ("monograma", "ninguno", "blanco", "gruesa"),
-    ("monograma", "negro",   "blanco", "media"),
-    ("monograma", "ninguno", "zafiro", "media"),
-    ("hoja",      "ambar",   "negro",  "fina"),
-    ("hoja",      "ninguno", "negro",  "fina"),
-    ("hoja",      "negro",   "ambar",  "fina"),
-    ("linea",     "ninguno", "negro",  "media"),
-    ("linea",     "ninguno", "zafiro", "media"),
-    ("linea",     "negro",   "blanco", "media"),
-    ("linea",     "ninguno", "blanco", "media"),
-    ("linea",     "ambar",   "negro",  "media"),
+    ("monograma", "ambar",   "negro",  "grande"),     # principal
+    ("perfil",    "ambar",   "negro",  "grande"),     # foto de perfil, a prueba de círculo
+    ("monograma", "ninguno", "negro",  "grande"),
+    ("monograma", "negro",   "ambar",  "grande"),
+    ("monograma", "ninguno", "zafiro", "grande"),
+    ("monograma", "ninguno", "blanco", "grande"),
+    ("monograma", "ambar",   "negro",  "medio"),
+    ("monograma", "ambar",   "negro",  "pequeno"),   # favicon
+    ("monograma", "ninguno", "negro",  "pequeno"),
+    ("monograma", "ninguno", "blanco", "pequeno"),
+    ("monograma", "negro",   "blanco", "medio"),
+    ("monograma", "ninguno", "zafiro", "medio"),
+    ("hoja",      "ambar",   "negro",  "grande"),
+    ("hoja",      "ninguno", "negro",  "grande"),
+    ("hoja",      "negro",   "ambar",  "grande"),
+    ("linea",     "ninguno", "negro",  "medio"),
+    ("linea",     "ninguno", "zafiro", "medio"),
+    ("linea",     "negro",   "blanco", "medio"),
+    ("linea",     "ninguno", "rosa",   "medio"),
+    ("linea",     "ninguno", "blanco", "medio"),
+    ("linea",     "ambar",   "negro",  "medio"),
 ]
 
 

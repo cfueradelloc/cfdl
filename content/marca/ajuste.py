@@ -17,7 +17,7 @@ para que la decisión no dependa de la impresión.
 from lockup import (firma, DENSIDAD, CAP_EM, ancho_siglas, AMBAR, NEGRO,
                     ZAFIRO, BLANCO, CREMA)
 
-DENS = "media"
+DENS = "medio"
 TR0 = DENSIDAD[DENS]["track"]          # 0.135 em
 ANCHO_C = 0.717                        # avance de la «C», en em
 

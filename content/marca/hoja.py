@@ -10,6 +10,8 @@ quiera usarla.
 import os
 from lockup import firma, AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA
 
+ROSA = "#f8ccce"   # Candy Pink — el --band-fg del propio sitio
+
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -23,7 +25,7 @@ def pagina():
 
     # ── la firma, a tamaño de verdad ───────────────────────────────────────
     p.append('<section class="hero">'
-             f'<div class="l">{firma("media", alto=124)}</div>'
+             f'<div class="l">{firma("medio", alto=124)}</div>'
              '<p class="ph">La firma. Símbolo y siglas — el uso principal.</p>'
              '</section>')
 
@@ -36,8 +38,9 @@ def pagina():
                            ("f-ambar",  NEGRO,  "negro sobre ámbar"),
                            ("f-rosa",   ZAFIRO, "zafiro sobre rosa"),
                            ("f-zafiro", CREMA,  "crema sobre zafiro"),
-                           ("f-zafiro", AMBAR,  "ámbar sobre zafiro")):
-        p.append(_fig(firma("media", alto=58, tinta=tinta), et, css))
+                           ("f-zafiro", AMBAR,  "ámbar sobre zafiro"),
+                           ("f-zafiro", ROSA,   "rosa sobre zafiro")):
+        p.append(_fig(firma("medio", alto=58, tinta=tinta), et, css))
     p.append('</div></section>')
 
     # ── el símbolo solo ────────────────────────────────────────────────────
@@ -50,22 +53,22 @@ def pagina():
 
     p.append('<section><h2>El símbolo solo</h2><div class="rej">')
     p.append(_sq('<span class="circ">'
-                 + firma("media", alto=132, con_siglas=False,
+                 + firma("medio", alto=132, con_siglas=False,
                          campo=AMBAR, respiro=0.20) + '</span>',
                  "foto de perfil — entera dentro del círculo"))
-    p.append(_sq(firma("media", alto=132, con_siglas=False, campo=AMBAR),
+    p.append(_sq(firma("medio", alto=132, con_siglas=False, campo=AMBAR),
                  "con campo"))
-    p.append(_sq(firma("media", alto=132, con_siglas=False), "sin campo", "t-blanco"))
-    p.append(_sq(firma("media", alto=132, con_siglas=False, tinta=BLANCO),
+    p.append(_sq(firma("medio", alto=132, con_siglas=False), "sin campo", "t-blanco"))
+    p.append(_sq(firma("medio", alto=132, con_siglas=False, tinta=BLANCO),
                  "en negativo", "t-negro"))
-    p.append(_sq(firma("gruesa", alto=132, con_siglas=False, campo=AMBAR),
+    p.append(_sq(firma("pequeno", alto=132, con_siglas=False, campo=AMBAR),
                  "favicon — tres anillos cerrados"))
     p.append('</div></section>')
 
     # ── tamaños ────────────────────────────────────────────────────────────
     p.append('<section><h2>Tamaños</h2><div class="rej abajo">')
-    for a, d, et in ((104, "media", "104 px"), (68, "media", "68 px"),
-                     (46, "media", "46 px"), (30, "gruesa", "30 px")):
+    for a, d, et in ((104, "medio", "104 px"), (68, "medio", "68 px"),
+                     (46, "medio", "46 px"), (30, "pequeno", "30 px")):
         p.append(_fig(firma(d, alto=a), et, "f-blanco"))
     p.append('</div><p class="nota">Por debajo de unos 24&nbsp;px la espiral deja '
              'de leerse como espiral y queda un marco. Se conserva el centro '

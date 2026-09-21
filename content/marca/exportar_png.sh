@@ -6,16 +6,16 @@ cd "$(dirname "$0")"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 mkdir -p png
 LISTA=(
-  "cfdl-perfil-fina-ambar-negro          1080 perfil-instagram"
-  "cfdl-monograma-fina-ambar-negro        512 monograma-512"
-  "cfdl-monograma-fina-ninguno-negro      512 monograma-negro"
-  "cfdl-monograma-fina-ninguno-blanco     512 monograma-blanco"
-  "cfdl-monograma-gruesa-ambar-negro      180 favicon-180"
-  "cfdl-monograma-gruesa-ambar-negro       32 favicon-32"
-  "cfdl-linea-media-ninguno-negro         200 linea-negro"
-  "cfdl-linea-media-ninguno-blanco        200 linea-blanco"
-  "cfdl-linea-media-ninguno-zafiro        200 linea-zafiro"
-  "cfdl-hoja-fina-ambar-negro             900 hoja"
+  "cfdl-perfil-grande-ambar-negro          1080 perfil-instagram"
+  "cfdl-monograma-grande-ambar-negro        512 monograma-512"
+  "cfdl-monograma-grande-ninguno-negro      512 monograma-negro"
+  "cfdl-monograma-grande-ninguno-blanco     512 monograma-blanco"
+  "cfdl-monograma-pequeno-ambar-negro      180 favicon-180"
+  "cfdl-monograma-pequeno-ambar-negro       32 favicon-32"
+  "cfdl-linea-medio-ninguno-negro         200 linea-negro"
+  "cfdl-linea-medio-ninguno-blanco        200 linea-blanco"
+  "cfdl-linea-medio-ninguno-zafiro        200 linea-zafiro"
+  "cfdl-hoja-grande-ambar-negro             900 hoja"
 )
 for fila in "${LISTA[@]}"; do
   set -- $fila
