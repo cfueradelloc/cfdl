@@ -271,13 +271,16 @@ h2{{font:400 11px/1 system-ui;letter-spacing:.2em;text-transform:uppercase;color
   linear-gradient(45deg,#3a3a48 25%,#2a2a34 25%,#2a2a34 75%,#3a3a48 75%);
   background-size:14px 14px;background-position:0 0,7px 7px}}
 .circ{{border-radius:50%;overflow:hidden;display:inline-block;line-height:0}}
+a{{color:#ffb923}}
 </style>
 <h1>C.F.D.L. — la marca</h1>
 <p class="intro">El manifiesto impreso compone su texto como una <b>espiral
 rectangular</b>: rectángulos encajados girando hacia dentro, con la vuelta interior
 cortada a media altura. <b>No cierra nunca</b> — «cambiante y nunca cumplido».
 La marca es esa espiral, estilizada hasta que aguanta a 16&nbsp;px.<br>
-No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y está impreso.</p>
+No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y está impreso.<br>
+<a href="explorador.html">explorador de variantes →</a> barrido de parámetros:
+vueltas, retícula, grosor, remate, boca, proporción, giro, tinta.</p>
 {cuerpo}
 """
 
