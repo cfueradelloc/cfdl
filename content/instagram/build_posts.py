@@ -3,9 +3,9 @@
 """C.F.D.L. — generador de publicaciones para Instagram.
 
 ENTRADA   posts/<id>.json      un brief por publicación (JSON, escrito a mano)
-SALIDA    out/<id>-NN.png      la imagen (o varias, si es carrusel)
-          out/<id>.caption.txt el texto que acompaña a la imagen
-          out/<id>.alt.txt     el texto alternativo, una línea por lámina
+SALIDA    out/<id>/01.png      la imagen (o varias, si es carrusel)
+          out/<id>/caption.txt el texto que acompaña a la imagen
+          out/<id>/alt.txt     el texto alternativo, una línea por lámina
           out/index.html       entrada y salida enfrentadas, para revisar
 
 Una publicación son SIEMPRE dos cosas: imagen y texto. El generador escribe las
@@ -563,10 +563,13 @@ def emit(brief, d, forzar_tema=None, forzar_fmt=None, debug=False):
                 extra=" ".join(extra), fondo=fondo,
                 dr=dk[0], dg=dk[1], db=dk[2], lr=lt[0], lg=lt[1], lb=lt[2],
                 z1=z1, z2=z2, zf=zf, z3=z3, canario=CANARIO)
-            base = f"{pid}-{i:02d}" + (f"-{fmt}" if varios else "")
-            with open(os.path.join(SRC, base + ".html"), "w", encoding="utf-8") as fh:
+            # Una carpeta por publicación: al publicar quieres las imágenes y
+            # su texto juntos, no repartidos por tipo de archivo.
+            base = f"{pid}/{i:02d}" + (f"-{fmt}" if varios else "")
+            plano = base.replace("/", "~")   # src/ se mantiene plano
+            with open(os.path.join(SRC, plano + ".html"), "w", encoding="utf-8") as fh:
                 fh.write(page)
-            hechos.append((base, *FORMATOS[fmt], fmt))
+            hechos.append((plano, base, *FORMATOS[fmt], fmt))
     return hechos
 
 
@@ -593,11 +596,13 @@ def sidecars(brief, d):
                 + f"\n\n{d['sitio']}"
     et = cap.get("etiquetas", d.get("etiquetas_por_defecto", []))
     if et: texto += "\n\n" + " ".join("#" + e.lower().lstrip("#") for e in et)
-    with open(os.path.join(OUT, f"{pid}.caption.txt"), "w", encoding="utf-8") as fh:
+    dst = os.path.join(OUT, pid)
+    os.makedirs(dst, exist_ok=True)
+    with open(os.path.join(dst, "caption.txt"), "w", encoding="utf-8") as fh:
         fh.write(texto.rstrip() + "\n")
     alts = [f"{i:02d}: {s.get('alt','[FALTA texto alternativo]')}"
             for i, s in enumerate(brief["slides"], 1)]
-    with open(os.path.join(OUT, f"{pid}.alt.txt"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(dst, "alt.txt"), "w", encoding="utf-8") as fh:
         fh.write("\n".join(alts) + "\n")
     return texto
 
@@ -782,7 +787,7 @@ def indice(briefs, d, hechos):
                            for s in b["slides"]))
         lams = ""
         for i, s in enumerate(b["slides"], 1):
-            pngs = [h[0] for h in hechos if h[0].startswith(f"{pid}-{i:02d}")]
+            pngs = [h[1] for h in hechos if h[1].startswith(f"{pid}/{i:02d}")]
             imgs = "".join(
                 f'<img src="{p}.png" alt=""><div class="nom">out/{p}.png</div>'
                 for p in pngs if os.path.exists(os.path.join(OUT, p + ".png")))
@@ -790,8 +795,8 @@ def indice(briefs, d, hechos):
                      f'<div class="rot">entrada · posts/{html.escape(pid)}.json '
                      f'→ slides[{i-1}]</div><pre>{_json_color(s)}</pre></div>'
                      f'<div class="sal"><div class="rot">salida</div>{imgs}</div></div>')
-        cap = os.path.join(OUT, f"{pid}.caption.txt")
-        alt = os.path.join(OUT, f"{pid}.alt.txt")
+        cap = os.path.join(OUT, pid, "caption.txt")
+        alt = os.path.join(OUT, pid, "alt.txt")
         ct = open(cap, encoding="utf-8").read() if os.path.exists(cap) else ""
         at = open(alt, encoding="utf-8").read() if os.path.exists(alt) else ""
         cls = ' class="falta"' if "[PENDIENTE" in ct else ""
@@ -799,9 +804,9 @@ def indice(briefs, d, hechos):
             f'<div class="post"><div class="cab"><h2>{html.escape(pid)}</h2>{chips}</div>'
             f'{lams}'
             f'<div class="txt"><div><div class="rot">salida · out/{html.escape(pid)}'
-            f'.caption.txt — el texto de la publicación</div>'
+            f'/caption.txt — el texto de la publicación</div>'
             f'<pre{cls}>{html.escape(ct)}</pre></div>'
-            f'<div><div class="rot">salida · out/{html.escape(pid)}.alt.txt — '
+            f'<div><div class="rot">salida · out/{html.escape(pid)}/alt.txt — '
             f'texto alternativo por lámina</div><pre>{html.escape(at)}</pre></div>'
             f'</div></div>')
 
@@ -866,7 +871,7 @@ def main():
     # render.sh no puede adivinar el tamaño de ventana de cada página: se lo
     # decimos aquí, en texto plano, para no meter jq ni python en el bash.
     with open(os.path.join(SRC, "_sizes.txt"), "w", encoding="utf-8") as fh:
-        for base, W, H, _ in hechos: fh.write(f"{base} {W} {H}\n")
+        for plano, base, W, H, _ in hechos: fh.write(f"{plano} {base} {W} {H}\n")
 
     if "--verificar" in a:
         cal = leer_calendario()
@@ -881,10 +886,10 @@ def main():
         print("hoja de entrada/salida → out/index.html")
 
     porfmt = {}
-    for _, _, _, f in hechos: porfmt[f] = porfmt.get(f, 0) + 1
+    for *_, f in hechos: porfmt[f] = porfmt.get(f, 0) + 1
     detalle = ", ".join(f"{v} en {k}" for k, v in sorted(porfmt.items()))
     print(f"{len(briefs)} briefs, {len(hechos)} láminas ({detalle}) → src/*.html")
-    print(f"{len(briefs)*2} archivos de texto → out/*.caption.txt, out/*.alt.txt")
+    print(f"{len(briefs)} carpetas en out/ — imagen(es) + caption.txt + alt.txt")
     if avisos:
         print(f"\n{len(avisos)} aviso(s):")
         for x in avisos: print("  ·", x)

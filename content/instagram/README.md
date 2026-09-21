@@ -13,12 +13,19 @@ compilación, sin dependencias.
 las dos.
 
 ```
-ENTRADA                          SALIDA
-posts/<id>.json  ────────────▶   out/<id>-01.png          la imagen (o varias, si es carrusel)
-                                 out/<id>.caption.txt     el texto que la acompaña
-                                 out/<id>.alt.txt         el texto alternativo, una línea por lámina
-                                 out/index.html           las dos cosas enfrentadas, para revisar
+ENTRADA                        SALIDA
+posts/<id>.json  ──────────▶   out/<id>/01.png       la imagen
+                               out/<id>/02.png       …y las demás, si es carrusel
+                               out/<id>/caption.txt  el texto que la acompaña
+                               out/<id>/alt.txt      el alternativo, una línea por lámina
+
+                               out/index.html        todo lo anterior, enfrentado
 ```
+
+**Una carpeta por publicación.** Al publicar abres `out/<id>/`, arrastras los PNG en
+orden de nombre y copias `caption.txt`. Nada que buscar entre archivos sueltos.
+
+Con varios formatos el nombre lo dice: `01-feed.png`, `01-historia.png`.
 
 Un brief mínimo y lo que produce:
 
@@ -68,6 +75,7 @@ open out/index.html
 | `--indice` | la hoja de entrada/salida en `out/index.html` |
 | `--debug` | superpone la retícula, el recorte 3:4 y la zona insegura de historias |
 | `SCALE=2 bash render.sh` | maestro al doble (Instagram recorta a 1080 de ancho) |
+| `bash render.sh <texto>` | renderiza sólo las páginas que casen |
 
 ## Formatos
 
