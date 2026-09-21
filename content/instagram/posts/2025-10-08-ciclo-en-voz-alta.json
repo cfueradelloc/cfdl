@@ -1,0 +1,27 @@
+{
+  "id": "2025-10-08-ciclo-en-voz-alta",
+  "theme": "pink",
+  "evento_ref": "2025-10-08",
+  "slides": [
+    {
+      "plantilla": "ciclo",
+      "superficie": "oscuro",
+      "ciclo": "en-voz-alta",
+      "marca_cfdl": "sigla",
+      "agenda": [
+        { "dia": "miércoles", "fecha": "8 oct", "nombre": "Ana Griott" },
+        { "dia": "jueves", "fecha": "13 nov", "nombre": "Pablo Martín Sánchez" },
+        { "dia": "viernes", "fecha": "12 dic", "nombre": "Ángela Mallén" }
+      ],
+      "hora": { "prefijo": "a partir de las", "texto": "19:30" },
+      "tipo": "Ciclo de lecturas",
+      "lugar": "perecquiana",
+      "aforo": "Entrada gratuita hasta completar aforo",
+      "alt": "Cartel del ciclo En voz alta con sus tres sesiones: Ana Griott, Pablo Martín Sánchez y Ángela Mallén."
+    }
+  ],
+  "caption": {
+    "texto": "Tres sesiones de otoño. Escritoras y escritores leen sus propios textos en voz alta y hablan de lo que los sostiene.\n\nCiclo de lecturas — Librería La Perecquiana, Valladolid\nMiércoles 8 de octubre, jueves 13 de noviembre, viernes 12 de diciembre, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

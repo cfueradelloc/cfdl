@@ -1,0 +1,20 @@
+{
+  "id": "cita-extenuacion",
+  "theme": "citrine",
+  "slides": [
+    {
+      "plantilla": "cita",
+      "superficie": "oscuro",
+      "marca_cfdl": "nombre",
+      "cita": {
+        "texto": "Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal",
+        "fuente": "Manifiesto — Colectivo Fuera de Lugar"
+      },
+      "alt": "Fragmento del manifiesto sobre fondo medianoche: «Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal»."
+    }
+  ],
+  "caption": {
+    "texto": "Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal.\n\nDel manifiesto, 2023.\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

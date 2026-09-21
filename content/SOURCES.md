@@ -17,13 +17,20 @@ Raíz del Drive:
 | Manifiesto (`docs/manifiesto.html`) | `docs/assets/docs/Manifesto_Fuera_De_Lugar.pdf`, `docs/assets/images/` | `Contenido/Manifiesto/` — traducciones (ES/CA/EN/DE/FR/PT/AST) y `Manifiesto/Fotos/` |
 | Branding (logo, tipografía) | `docs/assets/logo/`, `docs/assets/fonts/` | `Branding/` — logo, favicon, fuentes |
 | Traducciones del manifiesto (referencia) | `skills/brand-content/references/manifesto/` | `Contenido/Manifiesto/` |
+| Instagram (@cfueradelloc) | `content/instagram/posts/*.json` → `content/instagram/out/*.png` | `Eventos/<ciclo>/Carteles/` — carteles anteriores; `Eventos/<ciclo>/<autor>/` — retratos y portadas |
 
 ## Cómo actualizar eventos
 1. Edita `content/events/calendario-eventos.md` (la lista canónica).
 2. Refleja los cambios en `docs/eventos.html` (estructura *Próximos* / *Pasados*).
 3. Si añades fotos, colócalas en `docs/gallery/` y enlázalas desde `docs/galeria.html`.
 
+## Cómo anunciar en Instagram
+Las imágenes se generan en `content/instagram/` (ver su README y la skill `instagram-post`).
+El calendario manda: primero la entrada en `calendario-eventos.md`, después el brief.
+
 ## Pendiente
 - El perfil de Instagram [@cfueradelloc](https://www.instagram.com/cfueradelloc/) tiene
   material (fechas, posts) que no se ha volcado aquí — requiere inicio de sesión. Ver las
-  notas ⚠️ «por confirmar» en `calendario-eventos.md`.
+  notas ⚠️ «por confirmar» en `calendario-eventos.md`. Por eso las plantillas de
+  `content/instagram/` se dedujeron de los carteles del Drive y del CSS del sitio, no de
+  las publicaciones reales; deja capturas en `content/instagram/ref/` para afinarlas.

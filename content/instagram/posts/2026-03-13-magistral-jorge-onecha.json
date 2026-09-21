@@ -1,0 +1,34 @@
+{
+  "id": "2026-03-13-magistral-jorge-onecha",
+  "theme": "citrine",
+  "evento_ref": "2026-03-13",
+  "slides": [
+    {
+      "plantilla": "evento",
+      "ciclo": "la-magistral",
+      "marca_cfdl": "sigla",
+      "titular": [
+        "Jorge",
+        "Onecha"
+      ],
+      "subtitular": "la herida de la que hablo",
+      "tipo": "Conferencia",
+      "fecha": {
+        "dia_semana": "viernes",
+        "texto": "13 de marzo",
+        "anio": "2026"
+      },
+      "hora": {
+        "prefijo": "a partir de las",
+        "texto": "19:30"
+      },
+      "lugar": "perecquiana",
+      "aforo": "Entrada gratuita hasta completar aforo",
+      "alt": "Cartel tipográfico sobre fondo niebla: Jorge Onecha, viernes 13 de marzo, 19:30."
+    }
+  ],
+  "caption": {
+    "texto": "Jorge Onecha se acerca a la figura de Jesús en la obra de Leonard Cohen. Liturgia, música y literatura — el vinilo y la lectura en voz alta.\n\nConferencia — Librería La Perecquiana, Valladolid\nViernes 13 de marzo, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site",
+    "etiquetas": []
+  }
+}

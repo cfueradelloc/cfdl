@@ -1,3 +1,6 @@
 .DS_Store
 .Rhistory
 .claude/settings.local.json
+
+# HTML generado del módulo de Instagram (src/_shared.css sí se versiona)
+content/instagram/src/*.html

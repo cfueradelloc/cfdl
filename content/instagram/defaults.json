@@ -1,0 +1,19 @@
+{
+  "tag": "@cfueradelloc · cfdl.site",
+  "sitio": "cfdl.site",
+  "aforo": "Entrada gratuita hasta completar aforo",
+  "presentacion": "Presentado por Rosauro Varo Cobos, miembro del «Colectivo Fuera de Lugar»",
+  "theme": "pink",
+  "lugares": {
+    "perecquiana": { "nombre": "Librería La Perecquiana", "ciudad": "Valladolid", "marca": "La Perecquiana" },
+    "casablanca":  { "nombre": "Cinemes Casablanca", "ciudad": "Valladolid", "marca": "Casablanca" },
+    "girona":      { "nombre": "Cinemes Girona", "ciudad": "Barcelona", "marca": "Cinemes Girona" },
+    "bowie":       { "nombre": "The Bowie Bar", "ciudad": "Valladolid", "marca": "The Bowie Bar" }
+  },
+  "ciclos": {
+    "en-voz-alta": { "nombre": "En voz alta", "lema": "el autor ante sus textos" },
+    "la-magistral":{ "nombre": "La Magistral", "lema": "literatura y otros saberes" },
+    "14-4":        { "nombre": "14.4", "lema": "km — entre dos orillas" }
+  },
+  "etiquetas_por_defecto": []
+}

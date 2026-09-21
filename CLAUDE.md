@@ -21,9 +21,12 @@ The repo root separates **the served website** (`docs/`) from **project material
   - `.nojekyll` — disables Jekyll on the published site.
 - `content/` — **source of truth for updating the site** (NOT served): `events/calendario-eventos.md`
   (canonical events list) and `SOURCES.md` (maps each site section → its raw material in Drive).
+  Also two generators whose output is artwork, not pages: `tshirts/` (shirt mockups) and
+  `instagram/` (1080×1350 announcement images + captions for @cfueradelloc; briefs in
+  `instagram/posts/*.json`, layout in `instagram/src/_shared.css`, see the `instagram-post` skill).
   Edit here, then reflect changes into the pages under `docs/`.
 - `skills/` — Claude Code skills (NOT served), each a folder with a `SKILL.md`: `brand-content/`
-  (+ `references/` for colorplan and manifesto sources) and `algorithmic-art/`.
+  (+ `references/` for colorplan and manifesto sources), `algorithmic-art/` and `instagram-post/`.
 - `README.md` — overview of the skills.
 
 ### Deployment

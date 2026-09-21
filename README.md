@@ -16,14 +16,17 @@ A hand-written static site (plain HTML, no build step), served from `docs/` with
 - **Galería** — photographs from the events.
 
 The raw material behind the site (events calendar, source notes) lives in `content/`; the fonts,
-logo and images it serves live in `docs/assets/`.
+logo and images it serves live in `docs/assets/`. `content/` also holds two generators that
+produce artwork rather than pages: `tshirts/` (shirt mockups) and `instagram/` (announcement
+images for [@cfueradelloc](https://www.instagram.com/cfueradelloc/)).
 
 ## Skills
 
-The `skills/` folder holds two Claude Code skills:
+The `skills/` folder holds three Claude Code skills:
 
 - **brand-content** — write or rewrite copy in the collective's voice, and convert images to its style.
 - **algorithmic-art** — build generative p5.js pieces with seeded randomness.
+- **instagram-post** — turn a calendar entry into an Instagram announcement and its caption.
 
 To use one, point Claude Code at this `skills/` directory or copy a skill folder into your own
 project's `.claude/skills/`.

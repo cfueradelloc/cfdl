@@ -1,0 +1,260 @@
+/* ============================================================================
+   C.F.D.L. — Instagram · hoja compartida
+   ESTA ES LA SUPERFICIE DE AJUSTE. Se escribe a mano; build_posts.py nunca la
+   genera ni la sobrescribe. Para afinar un diseño: abre src/<id>-01.html en una
+   pestaña normal de Chrome (es 1:1, 1080×1350), DevTools, edita este archivo.
+
+   Lienzo: 1080×1350 px CSS a factor de escala 1 → PNG exacto de 1080×1350.
+   Las rutas url() se resuelven desde ESTE archivo (content/instagram/src/).
+   ========================================================================== */
+
+/* ── Tipografías ───────────────────────────────────────────────────────────
+   Se referencian las del sitio; no hay copia local (verificado: Chrome las
+   carga por file:// desde este nivel). El fallback es monospace A PROPÓSITO:
+   si Chrome no las carga, todo sale en Courier y el fallo es imposible de
+   pasar por alto. Un fallback «Georgia, serif» produciría un cartel creíble
+   pero fuera de marca, que es el peor modo de fallo posible aquí. */
+@font-face {
+  font-family: 'MinionPro';
+  src: url('../../../docs/assets/fonts/MinionPro-Regular.otf') format('opentype');
+  font-display: block;
+}
+@font-face {
+  font-family: 'FuturaStd';
+  src: url('../../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');
+  font-display: block;
+}
+
+/* ── Bloque de ajuste ─────────────────────────────────────────────────────── */
+:root {
+  --W: 1080px;
+  --H: 1350px;
+
+  /* Márgenes. El lateral debe quedarse en ≥60px: la rejilla de perfil de
+     Instagram recorta el 4:5 a 3:4 (1350 × 0.75 = 1012px), o sea ~34px por
+     lado. Con 84px el recorte nunca toca el texto. */
+  --m-x: 84px;
+  --m-top: 96px;
+  --m-bot: 96px;
+
+  --col: 132px;      /* 6 × 132 + 5 × 24 = 912 = 1080 − 2×84 */
+  --gutter: 24px;
+  --u: 6px;          /* unidad de ritmo vertical: 2u / 4u / 8u */
+
+  /* Escala tipográfica. Nada por debajo de 20px: en el feed una imagen de
+     1080 se muestra a ~430pt, así que 20px ≈ 8px reales en pantalla. */
+  --fs-display: 108px;  --lh-display: 0.98;
+  --fs-hero:     92px;  --lh-hero:    0.98;
+  --fs-sub:      40px;  --lh-sub:     1.15;
+  /* La fecha es la carga útil de un cartel de evento, no una etiqueta más.
+     Va en serif de display, no en sans versaleada como el resto de la cresta. */
+  --fs-fecha:    56px;  --lh-fecha:   1.05;
+  --fs-hora:     26px;  --track-hora: 0.16em;
+
+  /* «Fuera de lugar», literal: un solo elemento por cartel se sale de la
+     retícula. Tope 50px — la rejilla de perfil recorta 34px por lado, así que
+     hasta 84−34 el desplazamiento sigue entero en la miniatura. */
+  --desplazo: 44px;
+
+  /* Agenda del ciclo: escala propia. Heredaba --fs-fecha (56px, la fecha-carga)
+     y desbordaba su columna hasta pisar los nombres. */
+  --fs-agenda: 26px;  --agenda-col: 310px;
+  --fs-body:     30px;  --lh-body:    1.45;
+  --fs-label:    22px;  --track-label: 0.28em;
+  --fs-tag:      20px;  --track-tag:  0.14em;
+
+  /* Foto */
+  --foto-h: 608px;              /* «banda»: 1080 × 608 ≈ 16:9, sin recorte */
+  --foto-contraste: 1.12;
+  --foto-brillo: 1.0;
+
+  --serif: 'MinionPro', monospace;
+  --sans:  'FuturaStd', monospace;
+}
+
+/* ── Temas ────────────────────────────────────────────────────────────────
+   «pink» es la identidad publicada (docs/assets/css/base.css, literal).
+   «citrine» es la paleta ampliada de skills/brand-content/SKILL.md, en su
+   combinación «Editorial» (Niebla + Citrina + Medianoche). Ojo: la «citrina»
+   de content/tshirts/ es OTRA — su tinta casi negra se eligió para sobrevivir
+   sobre algodón blanco. Instagram es pantalla, como el sitio. */
+.tema-pink {
+  --bg:#f8ccce; --surface:#bbabd5; --text:#332f8a; --muted:#857c75;
+  --border:#c8b8d8; --accent:#fde700;
+  --band-bg:#332f8a; --band-fg:#f8ccce; --band-muted:#b0a8e0; --band-rule:#5552b8;
+  --duo-dark:#332f8a; --duo-light:#f8ccce;
+}
+/* Sobre Niebla (#e8edf0) el tema salía gris frío y la Citrina no aparecía por
+   ningún lado: con el acento reducido a puntuación, una lámina sólo de texto
+   quedaba indistinguible de un gris cualquiera. Sobre Cera el tema es
+   reconociblemente cálido desde el fondo, sin inundar nada de amarillo.
+   Es la combinación «Cálida» de la propia paleta: Cera + Azafrán + Resina. */
+.tema-citrine {
+  --bg:#fff4d6; --surface:#ffd25a; --text:#1a2e3d; --muted:#8a6a2a;
+  --border:#e8d9ad; --accent:#ffb923;
+  --band-bg:#1a2e3d; --band-fg:#fff4d6; --band-muted:#c9b98e; --band-rule:#4a6880;
+  --duo-dark:#1a2e3d; --duo-light:#ffd25a;
+}
+
+/* ── Lienzo ───────────────────────────────────────────────────────────────── */
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:1080px; height:1350px; background:#101010; }
+
+.stage {
+  position:relative; overflow:hidden;
+  width:var(--W); height:var(--H);
+  background:var(--bg); color:var(--text);
+  padding: var(--m-top) var(--m-x) var(--m-bot);
+  /* Cuatro filas, y la foto tiene la suya. Si la banda vive dentro de la fila
+     flexible acaba solapando el pie cuando el titular crece — que es
+     exactamente el fallo que apareció en el primer render. */
+  display:grid; grid-template-rows:auto 1fr auto auto; row-gap:calc(var(--u)*4);
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+/* Superficie oscura: misma inversión que body.theme-dark en el sitio. */
+.stage           { --c-muted:var(--muted);      --c-rule:var(--border); }
+.stage.sup-oscuro { --c-muted:var(--band-muted); --c-rule:var(--band-rule);
+                    background:var(--band-bg); color:var(--band-fg); }
+
+/* Fila explícita por zona. Sin esto, una zona vacía con display:none sale del
+   flujo y las demás se recolocan: la zona media caía en la fila «auto» y el pie
+   se quedaba con el 1fr, dejando un hueco enorme en medio de la lámina. */
+.zona-sup  { grid-row:1; align-self:start; }
+.zona-med  { grid-row:2; align-self:center; min-height:0; }
+.zona-foto { grid-row:3; align-self:end; min-height:0; }
+.zona-inf  { grid-row:4; align-self:end; }
+.zona-foto:empty, .zona-sup:empty, .zona-med:empty { display:none; }
+
+/* Escape a sangre completa desde dentro del padding del escenario. */
+.sangre { margin-inline:calc(var(--m-x) * -1); width:var(--W); }
+
+/* ── Primitivas ───────────────────────────────────────────────────────────
+   Regla de marca: el texto fuente se escribe en caja normal; el CSS hace las
+   mayúsculas. Y el acento (--accent) es puntuación —un punto, una regla, un
+   separador— nunca un campo. */
+.sans, .kicker, .marca-lugar, .strapline, .fecha, .meta, .aforo, .tag, .pag, .sigla, .agenda .f {
+  font-family:var(--sans);
+}
+.serif, .hero, .sub, .bio, .cita-txt, .agenda .n { font-family:var(--serif); }
+.ital { font-style:italic; }
+
+.marca-lugar { font-size:var(--fs-label); letter-spacing:var(--track-label);
+               text-transform:uppercase; }
+.sigla       { font-size:var(--fs-label); letter-spacing:0.34em;
+               text-transform:uppercase; }
+.kicker, .strapline {
+  font-size:var(--fs-label); letter-spacing:var(--track-label);
+  text-transform:uppercase; color:var(--c-muted);
+}
+
+.hero { font-size:var(--fs-hero); line-height:var(--lh-hero); font-style:italic; }
+.sub  { font-size:var(--fs-sub);  line-height:var(--lh-sub);  font-style:italic;
+        color:var(--c-muted); }
+.display { font-size:var(--fs-display); line-height:var(--lh-display); font-style:italic; }
+
+.fecha { font-family:var(--serif); font-style:italic;
+         font-size:var(--fs-fecha); line-height:var(--lh-fecha);
+         margin-left:calc(var(--desplazo) * -1); }
+.hora  { font-size:var(--fs-hora); letter-spacing:var(--track-hora);
+         text-transform:uppercase; color:var(--c-muted); }
+
+.meta  { font-size:var(--fs-label); letter-spacing:0.16em;
+         text-transform:uppercase; color:var(--c-muted); line-height:1.6;
+         text-wrap:balance; }
+.bio   { font-size:var(--fs-body); line-height:var(--lh-body); color:var(--c-muted);
+         max-width:calc(var(--col)*5 + var(--gutter)*4); }
+.aforo { font-size:var(--fs-label); letter-spacing:var(--track-label);
+         text-transform:uppercase; color:var(--c-muted); }
+.tag   { font-size:var(--fs-tag); letter-spacing:var(--track-tag);
+         text-transform:uppercase; color:var(--c-muted); }
+.tag .sep, .meta .sep { color:var(--accent); margin:0 .5em; }
+.fecha .anio { color:var(--c-muted); }
+
+.rule  { border:none; border-top:2px solid var(--c-rule); width:96px; }
+.dot   { display:inline-block; width:.3em; height:.3em; border-radius:50%;
+         background:var(--accent); vertical-align:.12em; }
+
+.mt2{margin-top:calc(var(--u)*2)} .mt4{margin-top:calc(var(--u)*4)}
+.mt6{margin-top:calc(var(--u)*6)} .mt8{margin-top:calc(var(--u)*8)}
+.mt12{margin-top:calc(var(--u)*12)}
+
+/* ── Foto ─────────────────────────────────────────────────────────────────
+   Todas las fotos de docs/gallery/ son 1600×900 (16:9 apaisado). Un recorte
+   vertical a sangre tiraría ~55% del encuadre y suele cortar cabezas, así que
+   «banda» (1080×608, ratio nativo, sin recorte) es el valor por defecto. */
+.foto { position:relative; overflow:hidden; isolation:isolate; }
+.foto img { display:block; width:100%; height:100%;
+            object-fit:cover; object-position:var(--encuadre, 50% 50%); }
+.foto.f-banda  { height:var(--foto-h); }
+.foto.f-caja   { height:684px; }
+.foto.f-sangre { height:var(--H); position:absolute; inset:0; z-index:0; }
+
+.foto.t-bn    img { filter:grayscale(1) contrast(var(--foto-contraste)) brightness(var(--foto-brillo)); }
+.foto.t-color img { filter:none; }
+/* Duotono canónico: mapa de gradiente en SVG (más predecible que los modos de
+   fusión). build_posts.py inyecta el <filter id="duo"> por página, con los
+   tableValues calculados desde --duo-dark/--duo-light del tema activo.
+   El orden importa: los filtros se aplican de izquierda a derecha. */
+.foto.t-duo   img { filter:contrast(var(--foto-contraste)) url(#duo); }
+.foto.t-duo-suave img { filter:contrast(var(--foto-contraste)) url(#duo); opacity:.86; }
+/* Alternativa por si un filtro choca con overflow/border-radius. */
+.foto.t-duo-mix { background:var(--duo-dark); }
+.foto.t-duo-mix img { filter:grayscale(1) contrast(1.1); mix-blend-mode:screen; }
+.foto.t-duo-mix::after { content:""; position:absolute; inset:0;
+  background:var(--duo-light); mix-blend-mode:multiply; }
+
+.foto.grano::before {
+  content:""; position:absolute; inset:0; pointer-events:none;
+  opacity:.10; mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Portadas de libros ───────────────────────────────────────────────────── */
+.portadas { display:flex; gap:var(--gutter); align-items:flex-end; }
+.portadas img { height:220px; width:auto; display:block;
+                border:1px solid var(--border); }
+
+/* ── Agenda (plantilla «ciclo») ───────────────────────────────────────────── */
+.agenda { display:grid; row-gap:calc(var(--u)*3); }
+.agenda + .hora { margin-top:calc(var(--u)*6); }
+.agenda .fila { display:grid; grid-template-columns:var(--agenda-col) 1fr;
+                gap:var(--gutter); align-items:baseline;
+                border-top:1px solid var(--c-rule); padding-top:calc(var(--u)*3); }
+.agenda .f { font-size:var(--fs-agenda); letter-spacing:var(--track-hora);
+             text-transform:uppercase; color:var(--c-muted); line-height:1.3;
+             white-space:nowrap; }
+.agenda .n { font-size:var(--fs-sub); font-style:italic; line-height:1.15; }
+
+/* ── Cita ─────────────────────────────────────────────────────────────────── */
+.cita-txt { font-size:var(--fs-display); line-height:var(--lh-display);
+            font-style:italic; text-indent:-0.42em; }
+.cita-src { font-size:var(--fs-label); letter-spacing:var(--track-label);
+            text-transform:uppercase; color:var(--c-muted); }
+
+/* ── Pie: marca de contacto y paginación ──────────────────────────────────── */
+.pie { display:flex; align-items:baseline; justify-content:space-between;
+        gap:var(--gutter); }
+.pie .izq { display:flex; align-items:baseline; gap:calc(var(--gutter)*1.5); }
+.pag { font-size:var(--fs-tag); letter-spacing:var(--track-tag); color:var(--c-muted); }
+.pag .hoy { color:var(--accent); }
+
+/* ── Canarios de control (no salen en un render correcto) ─────────────────── */
+.canary {
+  position:absolute; left:0; right:0; bottom:0; z-index:99;
+  background:#ff00a0; color:#fff; font-family:var(--sans); font-size:28px;
+  letter-spacing:.2em; text-align:center; padding:10px 0; text-transform:uppercase;
+}
+/* Rejilla de depuración: build_posts.py --debug añade .debug al escenario. */
+.stage.debug::before {
+  content:""; position:absolute; inset:var(--m-top) var(--m-x) var(--m-bot);
+  z-index:98; pointer-events:none;
+  background:repeating-linear-gradient(to right,
+    rgba(255,0,160,.14) 0 var(--col),
+    transparent var(--col) calc(var(--col) + var(--gutter)));
+  outline:1px solid rgba(255,0,160,.5);
+}
+/* Recorte 3:4 de la rejilla de perfil (~34px por lado). */
+.stage.debug::after {
+  content:""; position:absolute; top:0; bottom:0; left:34px; right:34px;
+  z-index:98; pointer-events:none; outline:2px dashed rgba(0,160,255,.6);
+}

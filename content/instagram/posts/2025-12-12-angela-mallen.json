@@ -1,0 +1,57 @@
+{
+  "id": "2025-12-12-angela-mallen",
+  "theme": "pink",
+  "evento_ref": "2025-12-12",
+  "slides": [
+    {
+      "plantilla": "evento",
+      "ciclo": "en-voz-alta",
+      "marca_cfdl": "sigla",
+      "titular": [
+        "Ángela",
+        "Mallén"
+      ],
+      "tipo": "Lectura",
+      "fecha": {
+        "dia_semana": "viernes",
+        "texto": "12 de diciembre",
+        "anio": "2025"
+      },
+      "hora": {
+        "prefijo": "a partir de las",
+        "texto": "19:30"
+      },
+      "lugar": "perecquiana",
+      "foto": {
+        "src": "../../../docs/gallery/envozalta-angela-1.jpg",
+        "encuadre": "50% 34%",
+        "forma": "banda",
+        "tratamiento": "duo",
+        "contraste": 1.14
+      },
+      "alt": "Retrato de Ángela Mallén leyendo en La Perecquiana, en duotono zafiro y rosa."
+    },
+    {
+      "plantilla": "evento",
+      "superficie": "oscuro",
+      "antetitulo": "en voz alta — el autor ante sus textos",
+      "subtitular": "susurros y atmósferas",
+      "bio": "Cierra el ciclo con una lectura de sus propios textos. Escribe desde la voz baja: la frase corta, el aire entre palabras, lo que se dice cuando nadie levanta el tono.",
+      "alt": "Texto sobre fondo zafiro: presentación de la sesión de Ángela Mallén."
+    },
+    {
+      "plantilla": "recordatorio",
+      "titular": "viernes 12",
+      "subtitular": "a las 19:30",
+      "lugar": "perecquiana",
+      "tipo": "Lectura",
+      "aforo": "Entrada gratuita hasta completar aforo",
+      "alt": "Datos prácticos: viernes 12 de diciembre, 19:30, Librería La Perecquiana, Valladolid."
+    }
+  ],
+  "caption": {
+    "texto": "Cerramos «En voz alta» con Ángela Mallén. Lee sus textos en voz baja — susurros, atmósferas, el aire entre las frases.\n\nLectura — Librería La Perecquiana, Valladolid\nViernes 12 de diciembre, 19:30\nEntrada gratuita hasta completar aforo\n\ncfdl.site",
+    "etiquetas": []
+  },
+  "notas": "Retrato tomado de la galería publicada; no hay foto de prensa utilizable en Drive."
+}

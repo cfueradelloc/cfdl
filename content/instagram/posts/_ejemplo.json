@@ -1,0 +1,46 @@
+{
+  "_": "Brief de referencia: TODAS las claves posibles, anotadas. Los ficheros que empiezan por _ no se generan. `plantilla` es la única clave obligatoria de una lámina; el resto son bloques que se dibujan si están.",
+  "id": "AAAA-MM-DD-slug",
+  "theme": "pink | citrine",
+  "evento_ref": "AAAA-MM-DD — la entrada de calendario-eventos.md contra la que contrastar",
+  "slides": [
+    {
+      "plantilla": "evento | ciclo | recordatorio | cita",
+      "theme": "opcional, pisa el del post",
+      "superficie": "claro | oscuro",
+      "marca_lugar": "La Perecquiana — sólo si el lugar debe acreditarse arriba; normalmente basta la línea meta del pie",
+      "ciclo": "en-voz-alta | la-magistral | 14-4 — o un objeto {nombre, lema}",
+      "marca_cfdl": "sigla | nombre — sale en el pie, junto a la marca de contacto",
+      "antetitulo": "cresta breve sobre el titular",
+      "titular": ["una", "lista de líneas para partir a mano", "o una cadena suelta"],
+      "subtitular": "en serif cursiva, bajo el titular",
+      "fecha": { "dia_semana": "viernes", "texto": "12 de diciembre", "anio": "2025" },
+      "hora": { "prefijo": "a partir de las", "texto": "19:30", "sufijo": "opcional" },
+      "tipo": "Lectura — compone la línea «Tipo — Lugar, Ciudad»",
+      "lugar": "perecquiana — clave de defaults.json, o un objeto {nombre, ciudad}",
+      "presentacion": "Presentado por … — si se omite, no sale",
+      "bio": "Párrafo en serif redonda. El linter avisa por encima de ~340 caracteres.",
+      "foto": {
+        "src": "../../../docs/gallery/envozalta-angela-1.jpg",
+        "encuadre": "50% 34% — object-position",
+        "forma": "banda (1080×608, ratio nativo) | caja (912×684) | sangre (lienzo entero)",
+        "tratamiento": "bn | duo | duo-suave | color | duo-mix",
+        "contraste": 1.12,
+        "brillo": 1.0,
+        "grano": false
+      },
+      "portadas": [ { "src": "../assets/portadas/fricciones.jpg" } ],
+      "agenda": [ { "dia": "miércoles", "fecha": "8 oct", "nombre": "Ana Griott" } ],
+      "cita": { "texto": "fragmento del manifiesto", "fuente": "Manifiesto — 09" },
+      "aforo": "Entrada gratuita hasta completar aforo",
+      "qr": { "destino": "https://cfdl.site/eventos.html", "mostrar": false },
+      "paginacion": "true|false — por defecto, activo si hay más de una lámina",
+      "alt": "Texto alternativo de ESTA lámina. Obligatorio; el linter avisa si falta."
+    }
+  ],
+  "caption": {
+    "texto": "El pie, ya escrito en voz C.F.D.L. Si falta, se emite un andamio a partir de los datos y hay que escribirlo.",
+    "etiquetas": []
+  },
+  "notas": "Notas para uno mismo. No se dibujan nunca."
+}
