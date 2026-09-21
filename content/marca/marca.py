@@ -83,7 +83,10 @@ def _siglas(tinta, x, y, size, anchor="start"):
             f'font-size="{size}" fill="{tinta}">C.F.D.L.</text>')
 
 
-MARGEN_CIRCULO = 0.11   # fracción del lado: mete el dibujo dentro del círculo
+# Fracción del lado que se mete hacia dentro para el recorte circular. Con
+# 0,11 la semidiagonal del cuadrado (55,2) superaba el radio (50) y las
+# esquinas se cortaban; 0,20 la deja en 42,4 — el 85 % del radio.
+MARGEN_CIRCULO = 0.20
 
 
 def _monograma(t, d): return _espiral(t, d, 1.0, 0.04)

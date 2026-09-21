@@ -79,6 +79,7 @@ class Futura:
         nh = struct.unpack(">H", d[hh+34:hh+36])[0]
         mo, _ = t["hmtx"]
         self.adv = [struct.unpack(">H", d[mo+i*4:mo+i*4+2])[0] for i in range(nh)]
+        self.lsb = [struct.unpack(">h", d[mo+i*4+2:mo+i*4+4])[0] for i in range(nh)]
         co, _ = t["cmap"]
         self.cmap = _cmap4(d, co)
 
@@ -89,6 +90,13 @@ class Futura:
             g = self.cmap.get(ord(ch), 0)
             tot += self.adv[g] if g < len(self.adv) else self.adv[-1]
         return tot / self.upem
+
+    def prosa_izq(self, ch):
+        """Prosa izquierdo del carácter, en em. Es lo que separa el origen del
+        glifo de donde empieza su tinta — si no se descuenta, la firma se
+        desplaza a la derecha y el último punto se sale de la caja."""
+        g = self.cmap.get(ord(ch), 0)
+        return (self.lsb[g] if g < len(self.lsb) else 0) / self.upem
 
     @property
     def cap_em(self):
@@ -102,3 +110,5 @@ if __name__ == "__main__":
     print(f"ascendente/descend.  {f.asc} / {f.desc}")
     for t in ("C.F.D.L.", "C.F.D.L", "CFDL", "C", "."):
         print(f"ancho {t!r:12} {f.ancho(t):.4f} em")
+    for ch in "CFDL.":
+        print(f"prosa izquierdo {ch!r} {f.prosa_izq(ch):.4f} em")

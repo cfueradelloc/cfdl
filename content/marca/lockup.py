@@ -20,6 +20,7 @@ imposición: es lo que ya se hacía, ahora con un número detrás.
 
 AJUSTE DE LA FIRMA — elegido:
   densidad media · rel 3,20 · pie centrado · separación 0,40 · interletrado 0,200 em
+  (el interletrado es constante en las tres densidades)
 
 La separación se mide en anchos de símbolo y 0,34 no es un número redondo por
 casualidad: es donde el hueco entre símbolo y pie vale ≈ el ancho de una
@@ -51,6 +52,7 @@ _F = Futura()
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
 
 CAP_EM   = _F.cap_em              # 0.7540
+LSB_C    = _F.prosa_izq("C")      # prosa izquierdo de la «C»
 ASTA_EM  = 0.0840                 # medida sobre el tipo renderizado
 SIGLAS   = "C.F.D.L."
 AV_EM    = _F.ancho(SIGLAS)       # 3.4800 — ancho de avance
@@ -60,13 +62,30 @@ HUECOS   = 7                      # espacios entre los 8 signos
 AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = ("#ffb923","#171513","#332f8a",
                                        "#ffffff","#fff4d6")
 
-# anillos, hueco (en módulos de grosor), vacío central, interletrado que iguala
+# INTERLETRADO CONSTANTE. Se derivó uno por densidad para igualar el gris,
+# pero eso era para cuando símbolo y siglas medían lo mismo. Con el pie a un
+# tercio manda la legibilidad, y cambiarlo con el tamaño hacía que la firma
+# pareciera otra según dónde se usara — además al revés de lo que toca, porque
+# la letra pequeña pide más aire, no menos. 0,200 en todas.
+#
+# EL CORTE, NO. La última vuelta cortada es un gesto de tamaño grande: a 16 px
+# deja un pico suelto que se lee como suciedad. La densidad «gruesa», que es la
+# del favicon, cierra sus anillos.
+#
+# anillos, hueco (en módulos de grosor), vacío central, interletrado, corte
 DENSIDAD = {
-    "fina":   dict(anillos=7, hu=4, vacio=0.62, track=0.320),
-    "media":  dict(anillos=5, hu=3, vacio=0.60, track=0.200),
-    "gruesa": dict(anillos=3, hu=2, vacio=0.55, track=0.000),
+    "fina":   dict(anillos=7, hu=4, vacio=0.62, track=0.200, corte=0.55),
+    "media":  dict(anillos=5, hu=3, vacio=0.60, track=0.200, corte=0.55),
+    "gruesa": dict(anillos=3, hu=2, vacio=0.55, track=0.200, corte=None),
 }
-CORTE_REL = 0.55
+
+
+# Para que un cuadrado quepa ENTERO en el círculo inscrito, su semidiagonal
+# tiene que caber en el radio: lado·√2/2 ≤ 50. Con respiro 0,11 el lado era 78
+# y la semidiagonal 55,2 — las esquinas se salían. El mínimo es 0,1465, y ahí
+# las esquinas rozan el borde. 0,20 deja el lado en 60 y la semidiagonal en
+# 42,4: un 85 % del radio, con margen de verdad por dentro.
+RESPIRO_CIRCULO = 0.20
 
 
 def simbolo(densidad="fina", tinta=NEGRO, campo=None, respiro=0.0):
@@ -76,7 +95,8 @@ def simbolo(densidad="fina", tinta=NEGRO, campo=None, respiro=0.0):
     a, hu, v = d["anillos"], d["hu"], d["vacio"]
     banda = a * (1 + hu)
     N = int(round(2 * banda / (1 - v)))
-    corte = banda + (N - 2 * banda) * CORTE_REL
+    cr = d["corte"]
+    corte = None if cr is None else banda + (N - 2 * banda) * cr
     P, *_ , g = espiral(N=N, vueltas=a, gr=1, hu=hu, corte=corte)
     m = N * respiro
     CN = N + 2 * m
@@ -88,8 +108,9 @@ def gris_simbolo(densidad="fina"):
     d = DENSIDAD[densidad]
     a, hu, v = d["anillos"], d["hu"], d["vacio"]
     banda = a * (1 + hu); N = int(round(2 * banda / (1 - v)))
+    cr = d["corte"]
     P, *_ , g = espiral(N=N, vueltas=a, gr=1, hu=hu,
-                        corte=banda + (N - 2*banda) * CORTE_REL)
+                        corte=None if cr is None else banda + (N-2*banda)*cr)
     L = sum(math.hypot(P[i+1][0]-P[i][0], P[i+1][1]-P[i][1])
             for i in range(len(P)-1))
     return L * g / (N * N)
@@ -126,7 +147,9 @@ def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
     S = 100.0                                   # lado del símbolo
     cap = S / rel                               # altura de mayúscula
     fs = cap / CAP_EM
-    w_txt = ancho_siglas(tr) * fs
+    # ancho de TINTA, más un pelo para que el antialias del último punto no
+    # se coma un píxel al redondear
+    w_txt = ancho_siglas(tr) * fs + 0.01 * fs
     m = S * respeto
     sim = simbolo(densidad, tinta, campo, respiro)
 
@@ -145,7 +168,11 @@ def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
                 f'role="img" aria-label="C.F.D.L.">{f}'
                 f'<g transform="translate({m:.2f},{m:.2f})">{sim}</g></svg>')
 
-    txt = (f'<text font-family="{FUENTE}" font-size="{fs:.3f}" fill="{tinta}" '
+    # El texto se retranquea su prosa izquierdo para que la TINTA empiece
+    # exactamente en x. Si no: la separación real salía 0,033 em mayor de lo
+    # pedido, y el punto final se salía de la caja y aparecía cortado.
+    txt = (f'<text x="{-LSB_C*fs:.3f}" font-family="{FUENTE}" '
+           f'font-size="{fs:.3f}" fill="{tinta}" '
            f'letter-spacing="{tr*fs:.3f}">{SIGLAS}</text>')
 
     if apilada:

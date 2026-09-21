@@ -33,7 +33,8 @@ def pagina():
                            ("f-negro",  AMBAR, "ámbar sobre negro"),
                            ("f-ambar",  NEGRO, "negro sobre ámbar"),
                            ("f-rosa",   ZAFIRO, "zafiro sobre rosa"),
-                           ("f-zafiro", CREMA, "crema sobre zafiro")):
+                           ("f-zafiro", CREMA, "crema sobre zafiro"),
+                           ("f-zafiro", AMBAR, "ámbar sobre zafiro")):
         p.append(_fig(firma("media", alto=58, tinta=tinta), et, css))
     p.append('</div></section>')
 
@@ -41,14 +42,14 @@ def pagina():
     p.append('<section><h2>El símbolo solo</h2><div class="rej">')
     p.append(_fig('<span class="circ">'
                   + firma("media", alto=120, con_siglas=False,
-                          campo=AMBAR, respiro=0.11) + '</span>',
-                  "foto de perfil — cabe entera en el círculo", "f-claro"))
+                          campo=AMBAR, respiro=0.20) + '</span>',
+                  "foto de perfil — el cuadrado entero dentro del círculo, con margen", "f-claro"))
     p.append(_fig(firma("media", alto=104, con_siglas=False, campo=AMBAR),
                   "con campo", "f-claro"))
     p.append(_fig(firma("media", alto=104, con_siglas=False),
                   "sin campo", "f-blanco"))
     p.append(_fig(firma("gruesa", alto=104, con_siglas=False, campo=AMBAR),
-                  "favicon — menos anillos", "f-claro"))
+                  "favicon — tres anillos cerrados", "f-claro"))
     p.append('</div></section>')
 
     # ── tamaños ────────────────────────────────────────────────────────────
