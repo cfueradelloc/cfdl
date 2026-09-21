@@ -18,6 +18,18 @@ siglas hasta que los dos grises coinciden. Y resulta que abrir las versalitas
 ya es el estilo de la casa para las etiquetas, así que la regla no es una
 imposición: es lo que ya se hacía, ahora con un número detrás.
 
+AJUSTE DE LA FIRMA (elegido mirando, no por fórmula):
+  densidad media · rel 3,20 · pie centrado · separación 0,14
+
+El pie va centrado sobre el eje horizontal del símbolo. Se probó apoyarlo en
+la banda y en el borde exterior; centrado es lo que se eligió.
+
+El pie va deliberadamente PEQUEÑO respecto al símbolo. Por debajo de rel ~2,5
+los dos compiten como iguales y el ojo tiene que decidir cuál es el logotipo;
+por encima, la jerarquía es inequívoca — el símbolo es la marca y las siglas
+son su pie. Está más cerca de un colofón que de un lockup corporativo, que es
+lo que corresponde a un colectivo cuyo símbolo carga el significado.
+
   símbolo                gris      interletrado que lo iguala
   7 anillos 1:4         12,6 %     0,32 em
   5 anillos 1:3         16,6 %     0,135 em
@@ -81,13 +93,24 @@ def ancho_siglas(track):
     return TINTA_EM + HUECOS * track
 
 
-def firma(densidad="fina", tinta=NEGRO, campo=None, fondo_firma=None,
-          rel=1.30, sep=0.55, respeto=0.0, alto=64, apilada=False,
-          track=None, con_siglas=True, respiro=0.0):
+def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
+          rel=3.20, sep=0.14, respeto=0.0, alto=64, apilada=False,
+          track=None, con_siglas=True, respiro=0.0, alinea="centro"):
     """La firma completa.
 
-    rel      alto del símbolo ÷ altura de mayúscula
-    sep      aire entre símbolo y siglas, en alturas de MAYÚSCULA
+    rel      alto del símbolo ÷ altura de mayúscula. Por encima de ~2,5 las
+             siglas dejan de competir con el símbolo y pasan a ser su pie —
+             que es la jerarquía correcta cuando el símbolo es el que
+             significa algo.
+    sep      aire entre símbolo y siglas, medido en ANCHOS DE SÍMBOLO. En
+             alturas de mayúscula no vale: al encoger el pie el aire encogía
+             con él, y a rel alto el pie casi tocaba el dibujo.
+    alinea   dónde se apoya la línea de base del pie:
+               base    el borde exterior del símbolo
+               banda   el borde INTERIOR de la banda — lo ata a la estructura
+                       de la espiral en vez de a una línea cualquiera
+               centro  la mayúscula centrada en la caja del símbolo
+               tercio  centrada en el tercio inferior
     respeto  área de respeto alrededor, en alturas de símbolo
     track    interletrado; si no se da, el que iguala el gris de esa densidad
     """
@@ -99,6 +122,13 @@ def firma(densidad="fina", tinta=NEGRO, campo=None, fondo_firma=None,
     w_txt = ancho_siglas(tr) * fs
     m = S * respeto
     sim = simbolo(densidad, tinta, campo, respiro)
+
+    # dónde acaba la banda de la espiral, en fracción del lado: hace falta
+    # para poder apoyar el pie en la estructura del dibujo y no a ojo
+    dd = DENSIDAD[densidad]
+    _banda = dd["anillos"] * (1 + dd["hu"])
+    _N = int(round(2 * _banda / (1 - dd["vacio"])))
+    frac_banda = _banda / _N
 
     if not con_siglas:
         W = H = S + 2*m
@@ -112,7 +142,7 @@ def firma(densidad="fina", tinta=NEGRO, campo=None, fondo_firma=None,
            f'letter-spacing="{tr*fs:.3f}">{SIGLAS}</text>')
 
     if apilada:
-        hueco = cap * sep
+        hueco = S * sep
         W = max(S, w_txt) + 2*m
         H = S + hueco + cap + 2*m
         xs = m + (W - 2*m - S)/2
@@ -121,11 +151,17 @@ def firma(densidad="fina", tinta=NEGRO, campo=None, fondo_firma=None,
         cuerpo = (f'<g transform="translate({xs:.2f},{m:.2f})">{sim}</g>'
                   f'<g transform="translate({xt:.2f},{m+S+hueco+cap:.2f})">{txt}</g>')
     else:
-        hueco = cap * sep
+        hueco = S * sep
         W = S + hueco + w_txt + 2*m
         H = S + 2*m
-        # la mayúscula se centra ópticamente sobre la caja del símbolo
-        yb = m + (S + cap)/2
+        # dónde se apoya el pie. Con la letra pequeña, «centro» la deja
+        # flotando en medio de un símbolo alto; «base» la asienta sobre la
+        # misma línea que cierra la espiral, que es lo que la ata al dibujo.
+        if alinea == "base":     yb = m + S
+        elif alinea == "banda":  yb = m + S * (1 - frac_banda)
+        elif alinea == "tercio": yb = m + S*(2/3) + cap/2
+        elif alinea == "alto":   yb = m + cap
+        else:                    yb = m + (S + cap)/2
         f = f'<rect width="{W:.2f}" height="{H:.2f}" fill="{fondo_firma}"/>' if fondo_firma else ""
         cuerpo = (f'<g transform="translate({m:.2f},{m:.2f})">{sim}</g>'
                   f'<g transform="translate({m+S+hueco:.2f},{yb:.2f})">{txt}</g>')

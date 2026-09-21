@@ -35,32 +35,47 @@ sec("El gris manda", "igualar grosores es imposible; igualar el gris, no",
   <th class="n">interletrado</th><th class="n">ancho siglas</th></tr></thead>
   <tbody>{tabla}</tbody></table>
   <div class="fila comp">
-    {c(firma("fina", alto=54), "fina · interletrado 0,320 em", "b-blanco")}
-    {c(firma("fina", alto=54, track=0.0), "fina · SIN interletrado — la letra pesa más", "b-blanco mal")}
+    {c(firma("fina", alto=58, rel=3.2, alinea="centro"), "pie pequeño — la jerarquía clara", "b-blanco")}
+    {c(firma("fina", alto=58, rel=1.3), "rel 1,3 — compiten como iguales", "b-blanco mal")}
   </div>''')
 
 # ── 2 · la firma principal ─────────────────────────────────────────────────
-sec("La firma", "símbolo y siglas, horizontal — el uso principal",
-  fila([c(firma(d, alto=62), f"{d} · {DENSIDAD[d]['anillos']} anillos", "b-blanco")
+sec("La firma", "media · rel 3,20 · pie centrado · separación 0,14",
+  fila([c(firma(d, alto=68, rel=3.2, alinea="centro"),
+          f"{d} · {DENSIDAD[d]['anillos']} anillos", "b-blanco")
         for d in DENSIDAD]))
 
 # ── 3 · proporción símbolo / mayúscula ─────────────────────────────────────
-sec("Alto del símbolo", "dividido por la altura de mayúscula — 1,30 es el ajuste",
-  fila([c(firma("fina", alto=54, rel=r), f"rel {r}", "b-blanco")
-        for r in (1.0, 1.15, 1.30, 1.45, 1.60, 1.80)]))
+sec("Alto del símbolo", "el símbolo dividido por la altura de mayúscula — la "
+    "decisión de jerarquía",
+  fila([c(firma("fina", alto=54, rel=r, alinea="base"), f"rel {r}", "b-blanco")
+        for r in (1.0, 1.3, 1.8, 2.2, 2.6, 3.0, 3.2, 3.6, 4.0, 4.6)])
+  + '''<p class="nota">Por debajo de ~2,5 los dos elementos compiten como
+  iguales y el ojo tiene que decidir cuál es el logotipo. Por encima, la
+  jerarquía es inequívoca: <b>el símbolo es la marca y las siglas son su
+  pie</b> — que es lo que corresponde cuando el significado lo carga el
+  símbolo. Más cerca de un colofón que de un lockup.</p>''')
+
+# ── 3b · dónde se apoya el pie ─────────────────────────────────────────────
+sec("Dónde se apoya el pie", "con la letra pequeña, centrarla la deja flotando",
+  fila([c(firma("fina", alto=60, rel=3.2, alinea=a), et, "b-blanco")
+        for a, et in (("centro","centro — flota"),
+                      ("base","base — se asienta en la línea que cierra la espiral"),
+                      ("alto","alto — cuelga del borde superior"))]))
 
 # ── 4 · separación ─────────────────────────────────────────────────────────
-sec("Separación", "aire entre símbolo y siglas, en alturas de mayúscula",
-  fila([c(firma("fina", alto=54, sep=s), f"sep {s}", "b-blanco")
-        for s in (0.30, 0.45, 0.55, 0.70, 0.90)]))
+sec("Separación", "aire entre símbolo y siglas, en ANCHOS DE SÍMBOLO — en alturas de mayúscula encogía con el pie",
+  fila([c(firma("fina", alto=60, rel=3.2, alinea="centro", sep=s), f"sep {s}", "b-blanco")
+        for s in (0.06, 0.10, 0.14, 0.18, 0.24, 0.32)]))
 
-# ── 5 · apilada ────────────────────────────────────────────────────────────
-sec("Apilada", "cuando manda el eje vertical",
-  fila([c(firma(d, alto=104, apilada=True), d, "b-blanco") for d in DENSIDAD]
-     + [c(firma("fina", alto=104, apilada=True, sep=s), f"sep {s}", "b-blanco")
-        for s in (0.35, 0.75)]))
+# ── 4b · interletrado del pie ──────────────────────────────────────────────
+sec("Interletrado del pie", "a este tamaño ya no iguala grises: ahora es "
+    "legibilidad y estilo de la casa",
+  fila([c(firma("fina", alto=60, rel=3.2, alinea="centro", track=t),
+          f"{t:.2f} em", "b-blanco")
+        for t in (0.0, 0.10, 0.18, 0.26, 0.32, 0.42)]))
 
-# ── 6 · el símbolo solo ────────────────────────────────────────────────────
+# ── 5 · el símbolo solo ────────────────────────────────────────────────────
 sec("El símbolo solo", "sin siglas — avatar, favicon, sello",
   fila([c(firma(d, alto=96, con_siglas=False), d, "b-blanco") for d in DENSIDAD]
      + [c(f'<span class="circ">{firma("fina", alto=104, con_siglas=False, campo=AMBAR, respiro=0.11)}</span>',
@@ -71,7 +86,7 @@ sec("El símbolo solo", "sin siglas — avatar, favicon, sello",
 # ── 7 · escala ─────────────────────────────────────────────────────────────
 esc = []
 for a, d in ((132,"fina"),(96,"fina"),(64,"fina"),(48,"media"),(34,"media"),(24,"gruesa")):
-    esc.append(c(firma(d, alto=a), f"{a} px · {d}", "b-blanco"))
+    esc.append(c(firma(d, alto=a, rel=3.2, alinea="centro"), f"{a} px · {d}", "b-blanco"))
 sec("Escala", "la densidad baja con el tamaño — es el mismo signo",
     fila(esc) + '<p class="nota">Por debajo de ~24&nbsp;px con siglas, y de ~16&nbsp;px '
     'sólo símbolo, la espiral deja de leerse como espiral y queda un marco. '
@@ -79,28 +94,28 @@ sec("Escala", "la densidad baja con el tamaño — es el mismo signo",
 
 # ── 8 · área de respeto ────────────────────────────────────────────────────
 sec("Área de respeto", "nada entra a menos de media altura de símbolo",
-  fila([c(f'<span class="respeto">{firma("fina", alto=58, respeto=r)}</span>',
+  fila([c(f'<span class="respeto">{firma("fina", alto=58, rel=3.2, alinea="centro", respeto=r)}</span>',
           f"respeto {r}", "b-blanco") for r in (0.0, 0.25, 0.50)]))
 
 # ── 9 · color ──────────────────────────────────────────────────────────────
 sec("Color", "cada fondo con la tinta que le sirve",
-  fila([c(firma("fina", alto=52, tinta=ink), nom, css)
+  fila([c(firma("fina", alto=56, rel=3.2, alinea="centro", tinta=ink), nom, css)
         for css, bg, ink, nom in GROUNDS])
-  + fila([c(firma("fina", alto=52, tinta=NEGRO, campo=AMBAR, fondo_firma=AMBAR),
+  + fila([c(firma("fina", alto=56, rel=3.2, alinea="centro", tinta=NEGRO, campo=AMBAR, fondo_firma=AMBAR),
             "con campo ámbar", "b-blanco"),
-          c(firma("fina", alto=52, tinta=AMBAR, campo=NEGRO, fondo_firma=NEGRO),
+          c(firma("fina", alto=56, rel=3.2, alinea="centro", tinta=AMBAR, campo=NEGRO, fondo_firma=NEGRO),
             "con campo negro", "b-blanco"),
-          c(firma("fina", alto=52, tinta=ZAFIRO), "zafiro sobre rosa", "b-rosa")]))
+          c(firma("fina", alto=56, rel=3.2, alinea="centro", tinta=ZAFIRO), "zafiro sobre rosa", "b-rosa")]))
 
 # ── 10 · usos incorrectos ──────────────────────────────────────────────────
 sec("Lo que no",
   "cada uno rompe una de las reglas de arriba",
   fila([
-    c(firma("fina", alto=52, track=0.0), "sin interletrado: los grises no casan", "b-blanco mal"),
-    c(firma("gruesa", alto=52, track=0.32), "interletrado de la fina sobre la gruesa", "b-blanco mal"),
-    c(firma("fina", alto=52, rel=1.0), "símbolo a la altura de la caja: se lo come", "b-blanco mal"),
-    c(firma("fina", alto=52, sep=0.15), "sin aire: se leen como una sola pieza", "b-blanco mal"),
-    c(firma("fina", alto=22), "fina a 22 px: se empasta", "b-blanco mal"),
+    c(firma("fina", alto=52, rel=3.2, alinea="centro"), "pie flotando a media altura", "b-blanco mal"),
+    c(firma("fina", alto=52, rel=5.5, alinea="base"), "rel 5,5 — el pie desaparece", "b-blanco mal"),
+    c(firma("fina", alto=52, rel=1.0), "rel 1,0 — la letra se come al símbolo", "b-blanco mal"),
+    c(firma("fina", alto=52, rel=3.2, alinea="centro", sep=0.12), "sin aire: se leen como una pieza", "b-blanco mal"),
+    c(firma("fina", alto=24, rel=3.2, alinea="centro"), "fina a 24 px: se empasta", "b-blanco mal"),
   ]))
 
 print(f'''<!doctype html><meta charset="utf-8"><title>C.F.D.L. — la firma</title>
