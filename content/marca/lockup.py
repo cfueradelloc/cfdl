@@ -18,8 +18,15 @@ siglas hasta que los dos grises coinciden. Y resulta que abrir las versalitas
 ya es el estilo de la casa para las etiquetas, así que la regla no es una
 imposición: es lo que ya se hacía, ahora con un número detrás.
 
-AJUSTE DE LA FIRMA (elegido mirando, no por fórmula):
-  densidad media · rel 3,20 · pie centrado · separación 0,14
+AJUSTE DE LA FIRMA — elegido:
+  densidad media · rel 3,20 · pie centrado · separación 0,34 · interletrado 0,135 em
+
+La separación se mide en anchos de símbolo y 0,34 no es un número redondo por
+casualidad: es donde el hueco entre símbolo y pie vale ≈ el ancho de una
+mayúscula (1,14 anchos de «C») y seis veces el hueco entre letras. Esa
+proporción es la que hace que el símbolo presida la firma en vez de
+incorporarse a la cadena como un signo más. Con 0,14 el hueco era sólo 2,5
+veces la interletra y el símbolo se leía como parte de la palabra.
 
 El pie va centrado sobre el eje horizontal del símbolo. Se probó apoyarlo en
 la banda y en el borde exterior; centrado es lo que se eligió.
@@ -94,7 +101,7 @@ def ancho_siglas(track):
 
 
 def firma(densidad="media", tinta=NEGRO, campo=None, fondo_firma=None,
-          rel=3.20, sep=0.14, respeto=0.0, alto=64, apilada=False,
+          rel=3.20, sep=0.34, respeto=0.0, alto=64, apilada=False,
           track=None, con_siglas=True, respiro=0.0, alinea="centro"):
     """La firma completa.
 

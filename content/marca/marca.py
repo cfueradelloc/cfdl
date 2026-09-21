@@ -19,8 +19,8 @@ el tamaño: `fina` para lo grande, `gruesa` para lo diminuto. Es el mismo signo.
 PIEZAS
   monograma  cuadrado. Perfil (que recorta en círculo), favicon, pie de cartel.
   hoja       proporción 0.571 — la de la hoja impresa. Vertical, para cabeceras.
-  linea      monograma y siglas en horizontal, para firmas y pies.
-  lockup     monograma sobre las siglas, apilado.
+  linea      la firma: monograma y siglas en horizontal, para firmas y pies.
+             La construye lockup.py, que es donde viven sus reglas.
 
     python3 marca.py          exporta svg/ y la hoja de muestras
     python3 marca.py --hoja   sólo la hoja
@@ -91,28 +91,29 @@ def _perfil(t, d):    return _espiral(t, d, 1.0, MARGEN_CIRCULO)
 def _hoja(t, d):      return _espiral(t, d, 1 / RATIO_HOJA, 0.04)
 
 
+# La firma no se dibuja aquí: la construye lockup.py, que es donde viven sus
+# reglas (gris, separación, tamaño relativo). Tenerla en dos sitios es como
+# acaban divergiendo dos versiones de la misma marca.
 def _linea(t, d):
-    cuerpo, CN, CM = _espiral(t, d, 1.0, 0.04)
-    return (f'<g transform="scale({W/CN:.4f})">{cuerpo}</g>'
-            + _siglas(t, 124, 63, 40)), 340, 100
+    from lockup import firma as _firma
+    sv = _firma(d, tinta=t, alto=100)
+    import re as _re
+    m = _re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', sv)
+    W, H = float(m.group(1)), float(m.group(2))
+    cuerpo = sv[sv.index(">", sv.index("<svg")) + 1: sv.rindex("</svg>")]
+    return cuerpo, W, H
 
 
-def _lockup(t, d):
-    cuerpo, CN, CM = _espiral(t, d, 1.0, 0.04)
-    return (f'<g transform="translate(28,2) scale({W*0.44/CN:.4f})">{cuerpo}</g>'
-            + _siglas(t, 50, 90, 23, "middle")), 100, 100
-
-
-PIEZAS = ("monograma", "perfil", "hoja", "linea", "lockup")
+PIEZAS = ("monograma", "perfil", "hoja", "linea")
 _FN = {"monograma": _monograma, "perfil": _perfil, "hoja": _hoja,
-       "linea": _linea, "lockup": _lockup}
+       "linea": _linea}
 
 
 def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="fina",
         size=None, clase=""):
     """El SVG como cadena.
 
-    pieza     monograma | perfil (a prueba de círculo) | hoja | linea | lockup
+    pieza     monograma | perfil (a prueba de círculo) | hoja | linea
     fondo     ambar | negro | blanco | ninguno
     tinta     negro | blanco | zafiro | ambar | crema | auto (currentColor)
     densidad  fina (≥64 px) | media (32–64) | gruesa (<32)
@@ -124,7 +125,7 @@ def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="fina",
     col = TINTAS.get(tinta, tinta)
     bg = FONDOS.get(fondo, fondo)
     r = _FN[pieza](col, densidad)
-    if pieza in ("linea", "lockup"):
+    if pieza == "linea":
         cuerpo, VW, VH = r
         escala = ""
     else:
@@ -156,8 +157,6 @@ COMBOS = [
     ("linea",     "ninguno", "negro",  "media"),
     ("linea",     "ninguno", "blanco", "media"),
     ("linea",     "ambar",   "negro",  "media"),
-    ("lockup",    "ambar",   "negro",  "media"),
-    ("lockup",    "ninguno", "negro",  "media"),
 ]
 
 
@@ -221,12 +220,9 @@ def hoja_muestras():
     p.append("<h2>con las siglas al lado · el caso de un pie o una firma</h2>")
     p.append(parrilla("linea", 54, "media"))
 
-    p.append("<h2>apilado · cuando manda el eje vertical</h2>")
-    p.append(parrilla("lockup", 92, "media"))
-
     p.append("<h2>con campo propio · el signo se lleva su fondo encima</h2><div class="
              "'fila'>")
-    for pieza, size in (("monograma", 92), ("linea", 54), ("lockup", 92)):
+    for pieza, size in (("monograma", 92), ("linea", 54)):
         p.append(c(pieza,"ambar","negro","media",size,"b-blanco","campo ámbar sobre blanco"))
         p.append(c(pieza,"negro","ambar","media",size,"b-blanco","campo negro sobre blanco"))
         p.append(c(pieza,"ambar","negro","media",size,"b-negro","campo ámbar sobre negro"))

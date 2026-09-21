@@ -14,15 +14,23 @@ LISTA=(
   "cfdl-monograma-gruesa-ambar-negro       32 favicon-32"
   "cfdl-linea-media-ninguno-negro         200 linea-negro"
   "cfdl-linea-media-ninguno-blanco        200 linea-blanco"
-  "cfdl-lockup-media-ambar-negro          600 lockup"
   "cfdl-hoja-fina-ambar-negro             900 hoja"
 )
 for fila in "${LISTA[@]}"; do
   set -- $fila
   svg="svg/$1.svg"; size=$2; nom=$3
   [ -f "$svg" ] || { echo "falta $svg"; continue; }
-  W=$size
-  case "$1" in *linea*) W=$((size*34/10));; *hoja*) W=$((size*571/1000));; esac
+  # El ancho sale del viewBox del propio SVG. Antes se codificaba a mano
+  # (3,4 para la línea) y dejó de coincidir en cuanto cambió la separación:
+  # el PNG salía 680 de ancho donde tocaban 613.
+  W=$(python3 - "$svg" "$size" <<'PY'
+import re, sys
+d = open(sys.argv[1], encoding="utf-8").read()
+m = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', d)
+vw, vh = float(m.group(1)), float(m.group(2))
+print(round(int(sys.argv[2]) * vw / vh))
+PY
+)
   cat > /tmp/cfdlmarca.html <<EOF
 <!doctype html><meta charset="utf-8"><style>
 @font-face{font-family:'FuturaStd';src:url('$PWD/../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');font-display:block}
