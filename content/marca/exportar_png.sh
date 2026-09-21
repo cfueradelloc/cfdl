@@ -5,27 +5,29 @@
 cd "$(dirname "$0")"
 CHROME="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 mkdir -p png
-# archivo-svg  tamaño  nombre-png
 LISTA=(
-  "cfdl-monograma-duo-ambar-negro     1080 perfil-instagram"
-  "cfdl-monograma-duo-ambar-negro      512 monograma-512"
-  "cfdl-monograma-plano-ambar-negro    180 favicon-180"
-  "cfdl-monograma-plano-ambar-negro     32 favicon-32"
-  "cfdl-monograma-duo-ninguno-negro    512 monograma-sin-campo"
-  "cfdl-lockup-duo-ambar-negro        1080 lockup-1080"
-  "cfdl-linea-duo-ninguno-negro        400 linea-400"
+  "cfdl-perfil-fina-ambar-negro          1080 perfil-instagram"
+  "cfdl-monograma-fina-ambar-negro        512 monograma-512"
+  "cfdl-monograma-fina-ninguno-negro      512 monograma-negro"
+  "cfdl-monograma-fina-ninguno-blanco     512 monograma-blanco"
+  "cfdl-monograma-gruesa-ambar-negro      180 favicon-180"
+  "cfdl-monograma-gruesa-ambar-negro       32 favicon-32"
+  "cfdl-linea-media-ninguno-negro         200 linea-negro"
+  "cfdl-linea-media-ninguno-blanco        200 linea-blanco"
+  "cfdl-lockup-media-ambar-negro          600 lockup"
+  "cfdl-hoja-fina-ambar-negro             900 hoja"
 )
 for fila in "${LISTA[@]}"; do
   set -- $fila
   svg="svg/$1.svg"; size=$2; nom=$3
   [ -f "$svg" ] || { echo "falta $svg"; continue; }
-  # ancho proporcional: la línea es 3.4:1, las demás cuadradas
-  W=$size; case "$1" in *linea*) W=$((size*34/10));; esac
+  W=$size
+  case "$1" in *linea*) W=$((size*34/10));; *hoja*) W=$((size*571/1000));; esac
   cat > /tmp/cfdlmarca.html <<EOF
 <!doctype html><meta charset="utf-8"><style>
 @font-face{font-family:'FuturaStd';src:url('$PWD/../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');font-display:block}
 html,body{margin:0;padding:0;width:${W}px;height:${size}px;background:transparent}
-img,svg{display:block;width:${W}px;height:${size}px}
+svg{display:block;width:${W}px;height:${size}px}
 </style>$(cat "$svg")
 EOF
   prof=$(mktemp -d /tmp/cfdlmarca.XXXXXX)
