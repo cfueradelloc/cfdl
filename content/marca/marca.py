@@ -40,54 +40,42 @@ TINTAS = {"negro": NEGRO, "blanco": BLANCO, "zafiro": ZAFIRO, "ambar": AMBAR,
 FONDOS = {"ambar": AMBAR, "negro": NEGRO, "blanco": BLANCO, "ninguno": None}
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
 
-W = 100
-RATIO_HOJA = 0.571          # medido de la hoja impresa
+from espiral import espiral as _espiral_pts, polilinea, U as W
 
-# vueltas, grosor, hueco — elegidos para que el trazo siga viéndose al reducir
-DENSIDAD = {"fina":   (3.5, 6.5, 7.5),
-            "media":  (2.5, 10.0, 10.0),
-            "gruesa": (2.0, 13.0, 12.0)}
-CORTE = 0.45                # cuánto dibuja la última recta: el gesto abierto
+RATIO_HOJA = 0.571          # medido sobre la hoja impresa
 
-
-def _puntos(vueltas, w, g, alto, corte, margen=0.0):
-    """Espiral rectangular hacia dentro, desde la esquina superior izquierda."""
-    p, o = w + g, w / 2 + margen
-    l, t, r, b = o, o, W - o, alto - o
-    P = [(l, t)]
-    n = int(vueltas * 4)
-    for k in range(n):
-        if r - l < p * 0.6 or b - t < p * 0.6:
-            break
-        f = corte if k == n - 1 else 1.0
-        lado = k % 4
-        if lado == 0:    P.append((l + (r - l) * f, t))
-        elif lado == 1:  P.append((r, t + (b - t) * f))
-        elif lado == 2:  P.append((r - (r - l) * f, b)); t += p
-        else:            P.append((l, b - (b - t) * f)); l += p; r -= p; b -= p
-    return P
+# LA BANDA DEL MARGEN. En la hoja impresa el texto vive en los márgenes y el
+# centro queda vacío: el colectivo está fuera de lugar, en los bordes. Medido
+# sobre el original (svg_espiral_frame en content/tshirts): trazo 1, hueco 4,
+# siete anillos — la banda ocupa ~18 % de cada lado y deja ~65 % en blanco.
+# El aire entre vueltas es CUATRO VECES el grosor, no igual.
+#
+# Una banda fina se cierra en cuanto se reduce, así que la densidad baja con el
+# tamaño: menos anillos y menos aire, conservando el centro vacío.
+#            anillos, grosor, hueco, lado en módulos  → vacío
+DENSIDAD = {"fina":   (7, 1, 4, 200),   # ≥64 px — la densidad de la hoja, 65 %
+            "media":  (5, 1, 3, 100),   # 32–64 px — 60 %
+            "gruesa": (3, 1, 2, 40)}    # <32 px — 55 %
+CORTE_REL = 0.55            # dónde muere la última vuelta, sobre su recta
 
 
-def _espiral(tinta, densidad, alto=W, corte=CORTE, margen=0.0):
-    """La espiral, centrada ópticamente dentro de su caja.
+def _espiral(tinta, densidad, alto_rel=1.0, margen_rel=0.0):
+    """La espiral del margen, centrada en su caja."""
+    anillos, gr, hu, N = DENSIDAD[densidad]
+    M = round(N * alto_rel)
+    banda = anillos * (gr + hu)
+    corte = banda + (min(N, M) - 2 * banda) * CORTE_REL
+    P, N_, M_, g = _espiral_pts(N=N, M=M, vueltas=anillos, gr=gr, hu=hu,
+                                corte=corte)
+    m = round(N * margen_rel)
+    CN = N + 2 * m
+    return polilinea(P, CN, g, tinta, desplaza=(m, m)), CN, M + 2 * m
 
-    Una espiral hacia dentro carga su masa hacia un lado; sin corregirlo, el
-    avatar se ve descolgado.
 
-    `margen` mete el dibujo hacia dentro. Con 15 el cuadrado entero cabe en el
-    círculo inscrito (la semidiagonal de un cuadrado de lado 70 es 49,5 < 50),
-    así que el recorte circular de Instagram no se come ninguna esquina — y a
-    una espiral rectangular perder las esquinas no le sienta como un recorte,
-    le sienta como una avería."""
-    vueltas, w, g = DENSIDAD[densidad]
-    P = _puntos(vueltas, w, g, alto, corte, margen)
-    xs = [x for x, _ in P]; ys = [y for _, y in P]
-    dx = W / 2 - (min(xs) + max(xs)) / 2
-    dy = alto / 2 - (min(ys) + max(ys)) / 2
-    d = " ".join(f"{x:.2f},{y:.2f}" for x, y in P)
-    return (f'<polyline points="{d}" fill="none" stroke="{tinta}" '
-            f'stroke-width="{w}" stroke-linejoin="miter" stroke-linecap="butt" '
-            f'transform="translate({dx:.2f},{dy:.2f})"/>')
+def vacio(densidad):
+    """Qué fracción del lado queda en blanco en el centro."""
+    anillos, gr, hu, N = DENSIDAD[densidad]
+    return (N - 2 * anillos * (gr + hu)) / N
 
 
 def _siglas(tinta, x, y, size, anchor="start"):
@@ -95,57 +83,60 @@ def _siglas(tinta, x, y, size, anchor="start"):
             f'font-size="{size}" fill="{tinta}">C.F.D.L.</text>')
 
 
-MARGEN_CIRCULO = 15   # para que el cuadrado quepa entero en el círculo inscrito
+MARGEN_CIRCULO = 0.11   # fracción del lado: mete el dibujo dentro del círculo
 
 
-# ── piezas ─────────────────────────────────────────────────────────────────
-def _monograma(t, densidad): return _espiral(t, densidad, margen=6)
-def _perfil(t, densidad):    return _espiral(t, densidad, margen=MARGEN_CIRCULO)
-
-def _hoja(t, densidad):
-    return _espiral(t, densidad, alto=round(W / RATIO_HOJA))
-
-def _linea(t, densidad):
-    # El signo ocupa el cuadrado de la izquierda; las siglas arrancan a una
-    # distancia igual a un cuarto del signo, que es lo que impide que se lean
-    # como una sola pieza.
-    return (f'<g transform="translate(6,6) scale(0.88)">{_espiral(t, densidad)}</g>'
-            + _siglas(t, 124, 63, 40))
-
-def _lockup(t, densidad):
-    return (f'<g transform="translate(28,6) scale(0.44)">{_espiral(t, densidad)}</g>'
-            + _siglas(t, 50, 88, 23, "middle"))
+def _monograma(t, d): return _espiral(t, d, 1.0, 0.04)
+def _perfil(t, d):    return _espiral(t, d, 1.0, MARGEN_CIRCULO)
+def _hoja(t, d):      return _espiral(t, d, 1 / RATIO_HOJA, 0.04)
 
 
-PIEZAS = {"monograma": (_monograma, W, W),
-          "perfil":    (_perfil,    W, W),
-          "hoja":      (_hoja,      W, round(W / RATIO_HOJA)),
-          "linea":     (_linea,     340, W),
-          "lockup":    (_lockup,    W, W)}
+def _linea(t, d):
+    cuerpo, CN, CM = _espiral(t, d, 1.0, 0.04)
+    return (f'<g transform="scale({W/CN:.4f})">{cuerpo}</g>'
+            + _siglas(t, 124, 63, 40)), 340, 100
+
+
+def _lockup(t, d):
+    cuerpo, CN, CM = _espiral(t, d, 1.0, 0.04)
+    return (f'<g transform="translate(28,2) scale({W*0.44/CN:.4f})">{cuerpo}</g>'
+            + _siglas(t, 50, 90, 23, "middle")), 100, 100
+
+
+PIEZAS = ("monograma", "perfil", "hoja", "linea", "lockup")
+_FN = {"monograma": _monograma, "perfil": _perfil, "hoja": _hoja,
+       "linea": _linea, "lockup": _lockup}
 
 
 def svg(pieza="monograma", fondo="ambar", tinta="negro", densidad="fina",
         size=None, clase=""):
     """El SVG como cadena.
 
-    pieza     monograma | perfil (recorte circular) | hoja | linea | lockup
+    pieza     monograma | perfil (a prueba de círculo) | hoja | linea | lockup
     fondo     ambar | negro | blanco | ninguno
     tinta     negro | blanco | zafiro | ambar | crema | auto (currentColor)
-    densidad  fina (grande) | media | gruesa (diminuto)
+    densidad  fina (≥64 px) | media (32–64) | gruesa (<32)
     """
     if pieza not in PIEZAS:
         raise SystemExit(f"pieza desconocida: {pieza} (hay {', '.join(PIEZAS)})")
     if densidad not in DENSIDAD:
         raise SystemExit(f"densidad desconocida: {densidad} (hay {', '.join(DENSIDAD)})")
-    fn, VW, VH = PIEZAS[pieza]
     col = TINTAS.get(tinta, tinta)
     bg = FONDOS.get(fondo, fondo)
-    campo = f'<rect width="{VW}" height="{VH}" fill="{bg}"/>' if bg else ""
+    r = _FN[pieza](col, densidad)
+    if pieza in ("linea", "lockup"):
+        cuerpo, VW, VH = r
+        escala = ""
+    else:
+        cuerpo, CN, CM = r
+        VW, VH = W, W * CM / CN
+        escala = ""
+    campo = f'<rect width="{VW}" height="{VH:.2f}" fill="{bg}"/>' if bg else ""
     dim = f' width="{round(size*VW/VH)}" height="{size}"' if size else ""
     cls = f' class="{clase}"' if clase else ""
-    return (f'<svg{cls} viewBox="0 0 {VW} {VH}"{dim} '
+    return (f'<svg{cls} viewBox="0 0 {VW} {VH:.2f}"{dim} '
             f'xmlns="http://www.w3.org/2000/svg" role="img" '
-            f'aria-label="C.F.D.L.">{campo}{fn(col, densidad)}</svg>')
+            f'aria-label="C.F.D.L.">{campo}{escala}{cuerpo}</svg>')
 
 
 COMBOS = [
@@ -274,10 +265,9 @@ h2{{font:400 11px/1 system-ui;letter-spacing:.2em;text-transform:uppercase;color
 a{{color:#ffb923}}
 </style>
 <h1>C.F.D.L. — la marca</h1>
-<p class="intro">El manifiesto impreso compone su texto como una <b>espiral
-rectangular</b>: rectángulos encajados girando hacia dentro, con la vuelta interior
-cortada a media altura. <b>No cierra nunca</b> — «cambiante y nunca cumplido».
-La marca es esa espiral, estilizada hasta que aguanta a 16&nbsp;px.<br>
+<p class="intro">En la hoja impresa el texto vive en los <b>márgenes</b> y el
+centro queda <b>vacío</b>: el colectivo está fuera de lugar, en los bordes. Una
+banda fina de espiral pegada al borde, y el 65&nbsp;% del centro en blanco.<br>
 No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y está impreso.<br>
 <a href="explorador.html">explorador de variantes →</a> barrido de parámetros:
 vueltas, retícula, grosor, remate, boca, proporción, giro, tinta.</p>

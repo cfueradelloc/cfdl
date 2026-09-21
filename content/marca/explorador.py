@@ -9,34 +9,9 @@ variación es un ajuste a ojo.
 
     python3 explorador.py > explorador.html
 """
+from espiral import espiral, U
+
 AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = "#ffb923","#171513","#332f8a","#ffffff","#fff4d6"
-U = 100.0
-
-
-def espiral(N=16, vueltas=3.5, gr=1, hu=1, M=None, corte=None, boca=0,
-            giro=0, espejo=False):
-    """Espiral rectangular sobre retícula de N×M módulos.
-
-    Devuelve (puntos, N, M, gr). El grosor se mantiene uniforme porque la
-    escala es isótropa: una proporción distinta se GENERA en una retícula más
-    alta, no se aplasta con scale(x,1) — aplastar adelgaza las verticales.
-    """
-    M = M or N
-    paso, c = gr + hu, gr / 2.0
-    l, t, r, b = c, c, N - c, M - c
-    P = [(boca if boca else 0.0, t)]
-    n = int(vueltas * 4)
-    for k in range(n):
-        if r - l < paso or b - t < paso:
-            break
-        ult, lado = (k == n - 1), k % 4
-        if lado == 0:   P.append((r, t))
-        elif lado == 1: P.append((r, corte if (ult and corte is not None) else b))
-        elif lado == 2: P.append((l, b)); t += paso
-        else:           P.append((l, t)); l += paso; r -= paso; b -= paso
-    if espejo:
-        P = [(N - x, y) for x, y in P]
-    return P, N, M, gr
 
 
 def pieza(P, N, M, gr, ink, giro=0, negativo=False, bg=None):

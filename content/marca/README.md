@@ -8,26 +8,35 @@ versiones separándose con el tiempo.
 
 ## La idea
 
-El manifiesto impreso compone su texto como una **espiral rectangular**:
-rectángulos encajados girando hacia dentro, con la vuelta interior cortada a
-media altura. **No cierra nunca** — *cambiante y nunca cumplido*.
+El manifiesto impreso compone su texto como una **espiral rectangular**, y lo
+decisivo es *dónde*: el texto vive en los **márgenes** y el centro queda
+**vacío**. El colectivo está fuera de lugar — en los bordes.
 
-La marca es esa espiral, estilizada hasta que aguanta a 16 px. No hacía falta
-inventarle un símbolo al colectivo: ya tenía uno, y está impreso. La
-reproducción exacta de la hoja vive en `content/tshirts/build_designs.py`
-(`svg_espiral_frame`), medida sobre el original: proporción 0.571, siete
-anillos.
+La marca es esa banda. Fina, pegada al borde, con el **65 % del centro en
+blanco**. No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y
+está impreso.
+
+Medido sobre el original (`svg_espiral_frame` en `content/tshirts/build_designs.py`,
+medido a su vez sobre la hoja): **trazo 1, hueco 4, siete anillos**, proporción
+0.571. El aire entre vueltas es **cuatro veces** el grosor, no igual — eso es lo
+que la hace una banda de texto y no una greca.
 
 ## Densidad en vez de variantes
 
-Siete anillos se empastan en un favicon. En lugar de dibujar marcas distintas
-para cada tamaño, se elige **cuántas vueltas** da la espiral. Es el mismo signo.
+Una banda fina se cierra en cuanto se reduce: a 32 px, siete anillos con hueco 4
+son una mancha. En lugar de dibujar marcas distintas, baja la densidad con el
+tamaño — menos anillos y menos aire— **conservando el centro vacío**, que es lo
+que significa.
 
-| densidad | vueltas | para |
-|---|---|---|
-| `fina` | 3½ | 64 px en adelante — la densidad de la hoja impresa |
-| `media` | 2½ | 32–64 px, y junto a texto |
-| `gruesa` | 2 | por debajo de 32 px: favicon, sellos, bordado |
+| densidad | anillos · trazo : hueco | vacío central | para |
+|---|---|---|---|
+| `fina` | 7 · 1:4 | 65 % | 64 px en adelante — la densidad de la hoja |
+| `media` | 5 · 1:3 | 60 % | 32–64 px, y junto a texto |
+| `gruesa` | 3 · 1:2 | 55 % | por debajo de 32 px: favicon, sellos, bordado |
+
+**El límite, dicho claro:** por debajo de ~24 px la espiral deja de leerse como
+espiral y queda un marco. Se conserva el vacío central y se pierde el giro; es
+lo que se puede sostener a ese tamaño, y por eso `gruesa` existe.
 
 ## Piezas
 
@@ -116,10 +125,20 @@ bocetos/           las rondas descartadas, como registro
    primitivas sueltas, sin sistema, y una barra suelta que se leía como ruido.
 2. **ronda 2–3** — la C con el brazo fuera de sitio, y el **registro corrido**
    (dos planchas, una desplazada). Buena idea —el colectivo imprime— y
-   funcionaba, pero se le inventaba un símbolo al colectivo teniendo uno ya.
-3. **ronda 4–5** — la espiral. Dos hallazgos: siete anillos se empastan (de ahí
-   la densidad variable), y una vuelta corrida SOBRE la espiral era ruido —
-   confirmó que una idea a la vez.
+   funcionaba, pero se le inventaba un símbolo teniendo uno ya.
+3. **ronda 4–6** — la espiral, mal entendida: enrollada hacia el centro, trazo y
+   hueco iguales, hueco central pequeño. Legible, pero era la greca griega. De
+   aquí salió lo que sí vale: la retícula modular y los remates a ras.
+4. **ronda 7** — probar la proporción 0.571 con trazo grueso. No funcionaba: en
+   caja alta las vueltas se leían como rectángulos concéntricos. **El veredicto
+   era condicional**, no general — con banda fina la hoja alta sí funciona, y de
+   hecho es donde mejor se reconoce el manifiesto.
+5. **ronda 8** — búsqueda «por cálculo» de remates con el hueco cuadrado, con un
+   error de medida: el hueco se leía en los últimos vértices, que sólo lo
+   describen cuando hay pocas vueltas.
+6. **ronda 10** — la corrección de fondo: el texto va en el **margen** y el
+   centro va **vacío**. Invierte los parámetros — trazo fino, hueco cuatro veces
+   mayor, banda estrecha — y es lo que se ha construido.
 
 ## Colores
 
