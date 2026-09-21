@@ -269,7 +269,7 @@ a{{color:#ffb923}}
 centro queda <b>vacío</b>: el colectivo está fuera de lugar, en los bordes. Una
 banda fina de espiral pegada al borde, y el 65&nbsp;% del centro en blanco.<br>
 No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y está impreso.<br>
-<a href="firma.html">la firma: símbolo + siglas →</a> normas de construcción.
+<a href="firma.html">la firma: símbolo + siglas →</a> normas de construcción. <a href="ajuste.html">ajuste →</a> separación, interletrado y tamaño relativo, medidos.
 <a href="explorador.html">explorador de variantes →</a> barrido de parámetros:
 vueltas, retícula, grosor, remate, boca, proporción, giro, tinta.</p>
 {cuerpo}
