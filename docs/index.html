@@ -22,105 +22,138 @@
     <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
     <style>
-        /* index is a bespoke split layout — it consumes base.css tokens/fonts/reset
-           but keeps its own grid, nav, and footer chrome. */
-        body {
+        /* La portada consume los tokens y las fuentes de base.css y se queda
+           con su propia retícula. Antes era una pantalla partida por la mitad:
+           medio lienzo de zafiro sosteniendo dos líneas de texto, y enfrente
+           cuatro filas idénticas de una palabra cada una. Decía el nombre del
+           colectivo y nada más. Ahora abre con lo que el colectivo ES —una
+           frase del manifiesto y la hoja impresa— y cada sección declara lo
+           que contiene. */
+
+        /* La cabecera es la COMPARTIDA de base.css (.site-nav): la portada
+           traía una propia —zafiro, 48 px de sangrado, otros cuerpos— y al
+           pasar de una página a otra la barra saltaba. Una sola cabecera. */
+
+        /* ── Apertura ──────────────────────────────────────────────────────── */
+        .apertura {
             display: grid;
-            grid-template-rows: 1fr auto;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 56px;
+            align-items: center;
+            padding: 56px 40px 56px;
+            max-width: 1320px;
+            margin: 0 auto;
         }
-
-        /* ── Main ──────────────────────────────────────────────────────────── */
-        main {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            min-height: calc(100vh - 56px);
-        }
-
-        /* ── Left: branding ────────────────────────────────────────────────── */
-        .brand-col {
-            background: var(--band-bg);
-            padding: 48px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .brand-top {
-            font-size: 9px;
+        .ante {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 10px;
             letter-spacing: 0.22em;
             text-transform: uppercase;
-            color: var(--band-muted);
-            line-height: 1.8;
+            color: var(--muted);
         }
-
-        .brand-name {
+        .tesis {
             font-family: 'MinionPro', serif;
-            font-size: clamp(64px, 11vw, 160px);
-            line-height: 0.9;
-            font-weight: normal;
             font-style: italic;
-            color: var(--band-fg);
-            align-self: flex-end;
+            font-weight: normal;
+            font-size: clamp(38px, 5.4vw, 74px);
+            line-height: 1.06;
+            /* La cursiva del serif entra con prosa izquierdo: sin este empujón
+               la «C» arranca un par de píxeles a la derecha del antetítulo. */
+            margin: 18px 0 0 -0.035em;
+            text-wrap: balance;
+        }
+        .bajada {
+            max-width: 46ch;
+            margin: 26px 0 0;
+            color: var(--muted);
+            font-size: 16px;
+            line-height: 1.66;
+        }
+        .filete-ambar { width: 58px; height: 4px; background: var(--accent); margin: 30px 0 0; }
+        .hoja { margin: 0; }
+        /* La foto original es 2:3. A esa altura estiraba la fila y dejaba un
+           palmo de hueco muerto bajo el filete. Se recorta a 4:5.
+           El recorte va en un MARCO y no en la propia imagen: «aspect-ratio»
+           sobre un elemento reemplazado pierde contra el «height: auto» que
+           base.css le da a todas las imágenes, y la foto seguía saliendo
+           entera. Sobre un div normal no hay pelea. */
+        .hoja .marco {
+            aspect-ratio: 4 / 5;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+        .hoja .marco img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 50% 44%;
+            display: block;
+        }
+        .hoja figcaption {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 9.5px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 12px;
         }
 
-        /* ── Right: nav sections ───────────────────────────────────────────── */
-        .nav-col {
-            display: flex;
-            flex-direction: column;
+        /* ── Las cuatro secciones ──────────────────────────────────────────── */
+        /* Sin tarjetas: un filete arriba y nada más. El colectivo publica una
+           hoja doblada, no una aplicación. */
+        .secciones {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 56px;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 40px 80px;
         }
-
-        .nav-item {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 48px;
-            border-bottom: 1px solid var(--border);
-            border-left: 3px solid transparent;
+        .seccion {
+            display: block;
             text-decoration: none;
             color: var(--text);
-            transition: background var(--ease), border-color var(--ease);
+            border-top: 1px solid var(--border);
+            padding: 26px 0 30px;
+            transition: border-color var(--ease);
         }
-
-        .nav-item:last-child { border-bottom: none; }
-
-        .nav-item:hover {
-            background: #f1e7db;
-            border-left-color: var(--accent);
+        .seccion:hover { border-top-color: var(--accent); }
+        .seccion .cuenta {
+            font-family: 'FuturaStd', sans-serif;
+            font-size: 10px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
-
-        .nav-item:hover .nav-arrow {
-            transform: translateX(6px);
-            color: var(--accent-fg);
-        }
-
-        .nav-item-label {
+        .seccion h2 {
             font-family: 'MinionPro', serif;
-            font-size: clamp(28px, 4vw, 52px);
-            font-weight: normal;
             font-style: italic;
+            font-weight: normal;
+            font-size: clamp(26px, 3vw, 38px);
+            line-height: 1.12;
+            margin: 8px 0 0;
+            transition: color var(--ease);
+        }
+        .seccion:hover h2 { color: var(--accent-fg); }
+        .seccion p {
+            margin: 10px 0 0;
+            color: var(--muted);
+            font-size: 14.5px;
+            line-height: 1.6;
+            max-width: 42ch;
         }
 
-        .nav-arrow {
-            font-size: 20px;
-            color: var(--accent-fg);
-            opacity: 0.55;
-            transition: transform var(--ease), color var(--ease), opacity var(--ease);
-        }
-
-        .nav-item:hover .nav-arrow { opacity: 1; }
-
-        /* ── Footer (bespoke, fixed-height row) ────────────────────────────── */
+        /* ── Pie ───────────────────────────────────────────────────────────── */
         footer {
-            height: 56px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0 48px;
+            gap: 20px;
+            flex-wrap: wrap;
+            padding: 20px 40px;
             background: var(--band-bg);
             border-top: 1px solid var(--band-rule);
         }
-
         footer p, footer a {
             font-size: 9px;
             letter-spacing: 0.12em;
@@ -129,48 +162,76 @@
             text-decoration: none;
             transition: color var(--ease);
         }
-
         footer a:hover { color: var(--band-fg); }
 
-        /* ── Responsive ────────────────────────────────────────────────────── */
-        @media (max-width: 700px) {
-            main { grid-template-columns: 1fr; min-height: auto; }
-            .brand-col { border-bottom: 1px solid var(--band-rule); padding: 32px 24px; min-height: 40vh; }
-            .nav-item { padding: 0 24px; }
-            /* hold the footer to a single row — override base.css's column rule */
-            footer { padding: 0 24px; flex-direction: row; gap: 0; text-align: left; }
+        @media (max-width: 900px) {
+            .apertura { grid-template-columns: 1fr; gap: 40px; padding: 44px 24px 40px; }
+            .hoja { max-width: 340px; }
+            .secciones { grid-template-columns: 1fr; gap: 0; padding: 0 24px 56px; }
+            .ante { letter-spacing: 0.16em; }
+            footer { padding: 18px 24px; flex-direction: row; gap: 12px; text-align: left; }
         }
     </style>
 </head>
 <body>
 
-<main>
-    <div class="brand-col">
-        <div class="brand-top reveal">
-            Colectivo Fuera de Lugar<br>
-            Col·lectiu Fora de Lloc
-        </div>
-        <h1 class="brand-name reveal reveal-2">C.F.D.L.</h1>
+<nav class="site-nav">
+    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <div class="nav-links">
+        <a href="manifiesto.html">Manifiesto</a>
+        <a href="eventos.html">Eventos</a>
+        <a href="proyectos.html">Proyectos</a>
+        <a href="galeria.html">Galería</a>
+        <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
     </div>
+</nav>
 
-    <nav class="nav-col" aria-label="Secciones">
-        <a class="nav-item" href="manifiesto.html">
-            <span class="nav-item-label">Manifiesto</span>
-            <span class="nav-arrow" aria-hidden="true">→</span>
+<main>
+    <section class="apertura">
+        <div>
+            <div class="ante reveal">Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</div>
+            <h1 class="tesis reveal reveal-2">Crear donde no alcance ninguna raíz.</h1>
+            <p class="bajada reveal reveal-3">Escogemos un mundo de ciudades recordadas,
+            siempre en construcción, en terrenos donde no deberían estar. Reivindicamos el
+            exilio y el destierro, la creación como una solicitud de asilo, el viaje como
+            acto frustrante e improductivo.</p>
+            <div class="filete-ambar reveal reveal-3"></div>
+        </div>
+        <figure class="hoja reveal reveal-3">
+            <div class="marco">
+                <img src="gallery/manifiesto-2.jpg" width="600" height="900"
+                     alt="El manifiesto impreso en papel ámbar, doblado en acordeón y sostenido con las dos manos.">
+            </div>
+            <figcaption>El manifiesto, doblado — de donde sale el ámbar</figcaption>
+        </figure>
+    </section>
+
+    <div class="secciones">
+        <a class="seccion" href="manifiesto.html">
+            <span class="cuenta">seis lenguas</span>
+            <h2>Manifiesto</h2>
+            <p>Cambiante y nunca cumplido. En español, català, english, français,
+            português y asturianu.</p>
         </a>
-        <a class="nav-item" href="eventos.html">
-            <span class="nav-item-label">Eventos</span>
-            <span class="nav-arrow" aria-hidden="true">→</span>
+        <a class="seccion" href="eventos.html">
+            <span class="cuenta">nueve encuentros — 2025 y 2026</span>
+            <h2>Eventos</h2>
+            <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con
+            La Perecquiana en Valladolid; poesía en el Almíbar de Córdoba.</p>
         </a>
-        <a class="nav-item" href="proyectos.html">
-            <span class="nav-item-label">Proyectos</span>
-            <span class="nav-arrow" aria-hidden="true">→</span>
+        <a class="seccion" href="proyectos.html">
+            <span class="cuenta">siete piezas generativas</span>
+            <h2>Proyectos</h2>
+            <p>Brújula sin imán, Maleza, La llegada del moho, Garganta sin fondo, Ante la
+            síntesis la disgregación — títulos sacados del propio manifiesto.</p>
         </a>
-        <a class="nav-item" href="galeria.html">
-            <span class="nav-item-label">Galería</span>
-            <span class="nav-arrow" aria-hidden="true">→</span>
+        <a class="seccion" href="galeria.html">
+            <span class="cuenta">treinta y nueve fotografías</span>
+            <h2>Galería</h2>
+            <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz
+            alta, el manifiesto pasando de mano en mano.</p>
         </a>
-    </nav>
+    </div>
 </main>
 
 <footer>

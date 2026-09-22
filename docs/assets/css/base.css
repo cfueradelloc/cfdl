@@ -213,8 +213,18 @@ footer a:hover { color: var(--bg); }
 
 /* ── Responsive (shared chrome) ────────────────────────────────────────── */
 @media (max-width: 700px) {
-    .site-nav { padding: 0 24px; }
-    .nav-links { gap: 16px; }
+    /* LA BARRA TIENE QUE ENVOLVER. Con cinco enlaces a 32 px de separación y
+       sin wrap, su ancho mínimo era ~500 px: a 390 px no desbordaba sólo la
+       barra, desbordaba EN HORIZONTAL LA PÁGINA ENTERA, las cinco. Medido:
+       80 px en manifiesto, proyectos y galería; 111 px en portada y eventos.
+       Y con la altura fija de 48 px, la segunda fila quedaba cortada. */
+    .site-nav {
+        height: auto;
+        flex-wrap: wrap;
+        gap: 6px 0;
+        padding: 10px 24px;
+    }
+    .nav-links { flex-wrap: wrap; gap: 10px 16px; }
     header { padding: 40px 24px 24px; }
     footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
 }
