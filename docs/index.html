@@ -38,7 +38,7 @@
 
         /* ── Left: branding ────────────────────────────────────────────────── */
         .brand-col {
-            background: var(--text);
+            background: var(--band-bg);
             padding: 48px;
             display: flex;
             flex-direction: column;
@@ -59,7 +59,7 @@
             line-height: 0.9;
             font-weight: normal;
             font-style: italic;
-            color: var(--bg);
+            color: var(--band-fg);
             align-self: flex-end;
         }
 
@@ -85,13 +85,13 @@
         .nav-item:last-child { border-bottom: none; }
 
         .nav-item:hover {
-            background: #e8b8c8;
+            background: #f1e7db;
             border-left-color: var(--accent);
         }
 
         .nav-item:hover .nav-arrow {
             transform: translateX(6px);
-            color: var(--accent);
+            color: var(--accent-fg);
         }
 
         .nav-item-label {
@@ -103,7 +103,7 @@
 
         .nav-arrow {
             font-size: 20px;
-            color: var(--accent);
+            color: var(--accent-fg);
             opacity: 0.55;
             transition: transform var(--ease), color var(--ease), opacity var(--ease);
         }
@@ -117,7 +117,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 0 48px;
-            background: var(--text);
+            background: var(--band-bg);
             border-top: 1px solid var(--band-rule);
         }
 
@@ -130,7 +130,7 @@
             transition: color var(--ease);
         }
 
-        footer a:hover { color: var(--bg); }
+        footer a:hover { color: var(--band-fg); }
 
         /* ── Responsive ────────────────────────────────────────────────────── */
         @media (max-width: 700px) {

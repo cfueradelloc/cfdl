@@ -65,7 +65,7 @@
             list-style: none;
         }
         .event-item summary::-webkit-details-marker { display: none; }
-        .event-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+        .event-item summary:focus-visible { outline: 2px solid var(--accent-fg); outline-offset: -2px; }
 
         /* let the 1fr column shrink so long meta lines wrap instead of overflowing */
         .event-info { min-width: 0; }
@@ -92,7 +92,7 @@
         }
 
         .event-item:not(.past) .event-month,
-        .event-item:not(.past) .event-year { color: var(--accent); }
+        .event-item:not(.past) .event-year { color: var(--accent-fg); }
 
         .event-title {
             font-family: 'MinionPro', serif;
@@ -140,7 +140,7 @@
             transition: color var(--ease);
         }
         .event-toggle::after { content: '+'; }
-        details[open] .event-toggle { color: var(--accent); }
+        details[open] .event-toggle { color: var(--accent-fg); }
         details[open] .event-toggle::after { content: '−'; }
 
         /* Revealed description */
@@ -173,7 +173,7 @@
             color: var(--muted);
         }
         .event-ciclo a { color: var(--muted); border-bottom: none; }
-        .event-ciclo a:hover { color: var(--accent); }
+        .event-ciclo a:hover { color: var(--accent-fg); }
 
         /* ── Ciclos ────────────────────────────────────────────────────────── */
         .ciclo-list { padding: 8px 64px 48px; }
