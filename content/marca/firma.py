@@ -14,7 +14,7 @@ from metricas import Futura
 
 _F = Futura()
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
-AMBAR, NEGRO, BLANCO = "#ffb923", "#171513", "#ffffff"
+from lockup import AMBAR, NEGRO, BLANCO   # content/paleta/ es la fuente
 
 CAP_EM = _F.cap_em                      # 0.7540
 SIGLAS = "C.F.D.L."

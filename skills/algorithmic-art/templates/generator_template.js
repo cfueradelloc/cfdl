@@ -31,7 +31,11 @@ let params = {
     // - Colors: palette arrays
 
     seed: 12345,
-    // define colorPalette as an array -- choose whatever colors you'd like ['#d97757', '#6a9bcc', '#788c5d', '#b0aea5']
+    // colorPalette: an array of C.F.D.L. colours. The source is content/paleta/ —
+    // «python3 paleta.py» lists them. Do NOT reach for the Anthropic palette
+    // (#d97757 / #6a9bcc / #788c5d): brand-content forbids it expressly, and this
+    // template used to ship it as the default.
+    // ['#ffb923', '#332f8a', '#1b5033', '#004d5f', '#f8ccce']
     // Add YOUR parameters here based on your algorithm
 };
 

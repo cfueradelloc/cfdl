@@ -45,8 +45,8 @@ FMT_ALIAS = {"4:5": "feed", "1:1": "cuadrado", "9:16": "historia",
 # Un TONO es un color de la paleta puesto a trabajar como banda de la pieza.
 # Reemplaza a los dos temas enteros: el suelo es siempre el papel, y lo que
 # cambia es de quién es la banda.
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                "..", "paleta"))
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                             "..", "paleta"))
 from paleta import TONOS, HEX as PALETA_HEX, clave as _clave   # noqa: E402
 
 TONO_DEF = "zafiro"
@@ -756,8 +756,8 @@ h2{font:400 13px/1.3 system-ui;letter-spacing:.16em;text-transform:uppercase;
      background:#1b1b26;padding:14px 18px;border-bottom:1px solid #2a2a38}
 .chip{font:400 11px/1 system-ui;letter-spacing:.1em;text-transform:uppercase;
       background:#2e2e3e;color:#b9b9cc;padding:5px 9px;border-radius:3px}
-.chip.t{background:#332f8a;color:#f8ccce}
-.chip.f{background:#5a4a12;color:#ffd25a}
+.chip.t{background:#332f8a;color:#fff4d6}
+.chip.f{background:#714a00;color:#ffb923}
 .lam{display:grid;grid-template-columns:1fr 470px;gap:0;border-top:1px solid #2a2a38}
 .lam:first-of-type{border-top:0}
 .ent,.sal{padding:18px}
@@ -796,6 +796,10 @@ def indice(briefs, d, hechos):
         pid = b["id"]
         s0 = b["slides"][0]
         fmts = b.get("formatos") or [b.get("formato", "feed")]
+        # El resto del cromo de esta hoja es deliberadamente ajeno a la
+        # paleta: es una herramienta de revisión, no una pieza, y conviene que
+        # no se confunda con lo que está mirando. Los chips sí la usan porque
+        # nombran el tono de la pieza.
         chips = (f'<span class="chip t">'
                  f'{b.get("tono", b.get("theme", d.get("tono", TONO_DEF)))}'
                  f'</span>'

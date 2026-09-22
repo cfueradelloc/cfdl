@@ -10,12 +10,14 @@ import os
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
+# Aquí sí va primero el propio directorio: este script quiere SU hoja, y de
+# ../marca sólo necesita lockup, que no colisiona con nada.
 sys.path.insert(0, AQUI)
-sys.path.insert(0, os.path.join(AQUI, "..", "marca"))
+sys.path.append(os.path.join(AQUI, "..", "marca"))
 
 from color import lch, contraste, nivel, distancia, salto_matiz, desde_lch
 from paleta import (PALETA, HEX, GRUPOS, ROLES, CICLOS, PAREJAS,
-                    PAREJAS_UI, RETIRADOS, verificar)
+                    PAREJAS_UI, TONOS, RETIRADOS, verificar)
 
 try:
     from lockup import firma
@@ -383,9 +385,10 @@ def pagina():
     with open(os.path.join(AQUI, "index.html"), "w", encoding="utf-8") as fh:
         fh.write(html)
     mal = verificar(ruidoso=False)
+    # las parejas de los tonos también cuentan: tres por tono
+    t = len(PAREJAS) + len(PAREJAS_UI) + 3 * len(TONOS)
     print(f"página → content/paleta/index.html   "
-          f"({len(PALETA)} tonos · {len(PAREJAS)+len(PAREJAS_UI)-mal} de "
-          f"{len(PAREJAS)+len(PAREJAS_UI)} parejas pasan)")
+          f"({len(PALETA)} tonos · {t - mal} de {t} parejas pasan)")
     return mal
 
 

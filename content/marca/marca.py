@@ -29,15 +29,14 @@ import os, sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
-AMBAR  = "#ffb923"   # el ámbar del colectivo: el del logotipo y el del manifiesto
-NEGRO  = "#171513"   # la tinta impresa, negro cálido
-ZAFIRO = "#332f8a"   # la tinta de la web
-CREMA  = "#fff4d6"
-BLANCO = "#ffffff"
+# De lockup, que a su vez los toma de content/paleta/. Una sola fuente.
+from lockup import AMBAR, NEGRO, ZAFIRO, CREMA, BLANCO, ROSA, PAPEL
 
 TINTAS = {"negro": NEGRO, "blanco": BLANCO, "zafiro": ZAFIRO, "ambar": AMBAR,
-          "crema": CREMA, "rosa": "#f8ccce", "auto": "currentColor"}
-FONDOS = {"ambar": AMBAR, "negro": NEGRO, "blanco": BLANCO, "ninguno": None}
+          "crema": CREMA, "rosa": ROSA, "papel": PAPEL,
+          "auto": "currentColor"}
+FONDOS = {"ambar": AMBAR, "negro": NEGRO, "blanco": BLANCO,
+          "papel": PAPEL, "ninguno": None}
 FUENTE = "FuturaStd, Helvetica Neue, Helvetica, Arial, sans-serif"
 
 from espiral import espiral as _espiral_pts, polilinea, U as W
@@ -206,11 +205,11 @@ def exportar():
 
 
 GROUNDS = [
-    ("b-blanco", "blanco", "#ffffff", ["negro", "zafiro"]),
-    ("b-negro",  "negro",  "#171513", ["ambar", "blanco", "crema"]),
-    ("b-ambar",  "ámbar",  "#ffb923", ["negro"]),
-    ("b-rosa",   "rosa",   "#f8ccce", ["zafiro", "negro"]),
-    ("b-zafiro", "zafiro", "#332f8a", ["ambar", "crema"]),
+    ("b-papel",  "papel",  PAPEL,  ["negro", "zafiro"]),
+    ("b-negro",  "negro",  NEGRO,  ["ambar", "blanco", "crema"]),
+    ("b-ambar",  "ámbar",  AMBAR,  ["negro"]),
+    ("b-rosa",   "rosa",   ROSA,   ["zafiro", "negro"]),
+    ("b-zafiro", "zafiro", ZAFIRO, ["ambar", "crema"]),
 ]
 
 

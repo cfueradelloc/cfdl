@@ -42,12 +42,18 @@
 
         /* C.F.D.L. Design Tokens — saturated Colorplan subset (matches the live site) */
         :root {
-            --bg:      #f8ccce; /* Candy Pink    */
-            --surface: #bbabd5; /* Lavender      */
-            --text:    #332f8a; /* Sapphire      */
-            --muted:   #857c75; /* Smoke         */
-            --border:  #c8b8d8; /* lavender-pink */
-            --accent:  #fde700; /* Factory Yellow */
+            /* content/paleta/ es la fuente. No copiar valores nuevos aquí:
+               generarlos con «python3 paleta.py --css». */
+            --bg:        #fdf5eb; /* papel          */
+            --surface:   #f1e7db; /* hueso          */
+            --text:      #171513; /* tinta          */
+            --muted:     #6a625a; /* humo           */
+            --border:    #e0d6ca; /* filete         */
+            --rule:      #e0d6ca; /* filete         */
+            --accent:    #ffb923; /* ámbar: rellenos */
+            --accent-fg: #714a00; /* ámbar oscurecido: texto y foco */
+            --band-bg:   #332f8a; /* zafiro         */
+            --band-fg:   #fff4d6; /* cera           */
         }
 
         * {
@@ -249,7 +255,7 @@
         }
 
         .button:hover {
-            background: #28247a;
+            background: #6a5da3;
             transform: translateY(-1px);
         }
 
@@ -274,7 +280,7 @@
         }
 
         .button.accent:hover {
-            background: #d4c200;
+            background: #714a00;
         }
 
         .button-row {
@@ -412,8 +418,8 @@
                 <div class="color-group">
                     <label>Secondary Color</label>
                     <div class="color-picker-container">
-                        <input type="color" id="color2" value="#0f0f0e" onchange="updateColor('color2', this.value)">
-                        <span class="color-value" id="color2-value">#0f0f0e</span>
+                        <input type="color" id="color2" value="#171513" onchange="updateColor('color2', this.value)">
+                        <span class="color-value" id="color2-value">#171513</span>
                     </div>
                 </div>
 
@@ -421,8 +427,8 @@
                 <div class="color-group">
                     <label>Accent Color</label>
                     <div class="color-picker-container">
-                        <input type="color" id="color3" value="#7870b8" onchange="updateColor('color3', this.value)">
-                        <span class="color-value" id="color3-value">#7870b8</span>
+                        <input type="color" id="color3" value="#332f8a" onchange="updateColor('color3', this.value)">
+                        <span class="color-value" id="color3-value">#332f8a</span>
                     </div>
                 </div>
             </div>
@@ -455,7 +461,7 @@
             flowSpeed: 0.5,
             noiseScale: 0.005,
             trailLength: 8,
-            colorPalette: ['#d97757', '#6a9bcc', '#788c5d']
+            colorPalette: ['#ffb923', '#332f8a', '#1b5033', '#004d5f', '#f8ccce']
         };
 
         let defaultParams = {...params}; // Store defaults for reset

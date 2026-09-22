@@ -9,9 +9,9 @@ quiera usarla.
 """
 import os
 from lockup import (firma, firma_nombre,
-                    AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA)
+                    AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA, ROSA, PAPEL)
 
-ROSA = "#f8ccce"   # Candy Pink — el --band-fg del propio sitio
+
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
@@ -136,7 +136,12 @@ def pagina():
              'PNG.</span></div></div></section>')
 
     with open(os.path.join(AQUI, "index.html"), "w", encoding="utf-8") as fh:
-        fh.write(PLANTILLA.replace("{cuerpo}", "".join(p)))
+        fh.write(PLANTILLA.replace("{cuerpo}", "".join(p))
+                          .replace("{papel}", PAPEL)
+                          .replace("{tinta}", NEGRO)
+                          .replace("{ambar}", AMBAR)
+                          .replace("{rosa}", ROSA)
+                          .replace("{zafiro}", ZAFIRO))
     print("página → content/marca/index.html")
 
 
@@ -148,12 +153,15 @@ PLANTILLA = """<!doctype html><html lang="es"><head><meta charset="utf-8">
   src:url('../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');
   font-display:block}
 :root{
-  --papel:#faf7f1; --papel2:#f2eee6; --tinta:#1b1713; --tinta2:#6d6459;
-  --tinta3:#9b9184; --linea:#e2dbcf;
+  /* Los de la marca vienen de content/paleta/ y los inyecta pagina(). */
+  --papel-marca:{papel}; --tinta-marca:{tinta}; --ambar-marca:{ambar};
+  --rosa-marca:{rosa}; --zafiro-marca:{zafiro};
+  --papel:#f1e7db; --papel2:#e0d6ca; --tinta:#171513; --tinta2:#6a625a;
+  --tinta3:#a89f96; --linea:#e0d6ca;
 }
 @media (prefers-color-scheme:dark){:root{
-  --papel:#141210; --papel2:#1d1a16; --tinta:#efe9e0; --tinta2:#a79d8f;
-  --tinta3:#7c7365; --linea:#2d2924;}}
+  --papel:#171513; --papel2:#6a5da3; --tinta:#fff4d6; --tinta2:#bbabd5;
+  --tinta3:#a89f96; --linea:#6a5da3;}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--papel);color:var(--tinta);
   font:400 16px/1.6 ui-sans-serif,system-ui,sans-serif}
@@ -170,7 +178,7 @@ h2 i{font-style:normal;color:var(--tinta3);opacity:.7;letter-spacing:.1em}
 .rej.sep{margin-top:26px}
 .f-liso .l{background:transparent;padding:0}
 .hero{text-align:center;padding:52px 0 44px}
-.hero .l{display:inline-block;line-height:0;background:#fff;padding:34px 44px}
+.hero .l{display:inline-block;line-height:0;background:var(--papel-marca);padding:34px 44px}
 .ph{color:var(--tinta2);font-size:14px;margin:20px 0 0}
 .rej{display:flex;flex-wrap:wrap;gap:22px;align-items:flex-start}
 .rej.abajo{align-items:flex-end}
@@ -179,13 +187,13 @@ figure .l{line-height:0;padding:16px 20px;display:block;border-radius:2px}
 figure.sq{width:60px}
 figure.sq .t{width:60px;height:60px;line-height:0;display:block;overflow:hidden}
 figure.sq .t svg{display:block;width:60px;height:60px}
-figure.sq .t.t-blanco{background:#fff} figure.sq .t.t-negro{background:#171513}
+figure.sq .t.t-blanco{background:var(--papel-marca)} figure.sq .t.t-negro{background:var(--tinta-marca)}
 figure.sq .circ{display:block;width:60px;height:60px}
 figcaption{font-size:11.5px;color:var(--tinta2);margin-top:10px;max-width:210px}
 figure.sq figcaption{max-width:120px}
-.f-blanco .l{background:#fff} .f-negro .l{background:#171513}
-.f-ambar .l{background:#ffb923} .f-rosa .l{background:#f8ccce}
-.f-zafiro .l{background:#332f8a}
+.f-blanco .l{background:var(--papel-marca)} .f-negro .l{background:var(--tinta-marca)}
+.f-ambar .l{background:var(--ambar-marca)} .f-rosa .l{background:var(--rosa-marca)}
+.f-zafiro .l{background:var(--zafiro-marca)}
 .circ{border-radius:50%;overflow:hidden;display:inline-block;line-height:0}
 .nota{font-size:13.5px;color:var(--tinta2);margin:24px 0 0;max-width:62ch}
 table.aj{border-collapse:collapse;font-size:14.5px}

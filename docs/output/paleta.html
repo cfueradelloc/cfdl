@@ -207,7 +207,7 @@
 
         .swatches-row {
             display: grid;
-            grid-template-columns: repeat(9, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
             gap: 8px;
         }
 
@@ -431,7 +431,7 @@
         <a class="back-link" href="../proyectos.html">← Archivo generativo</a>
         <div class="cfdl-tag">C.F.D.L.</div>
         <h1>Paleta</h1>
-        <div class="subtitle">9 colores. De Amarillo a Zafiro — con Fábrica como ancla.</div>
+        <div class="subtitle">Trece tonos: seis neutros que hacen el trabajo callado, cinco colores que hablan, dos para poner encima de lo oscuro — con el ámbar como ancla.</div>
 
         <div class="control-section">
             <h3>Combinaciones</h3>
@@ -443,8 +443,8 @@
             <div style="display:flex; flex-direction:column; gap:6px;">
                 <button class="button outline" onclick="selectAll()">Todas</button>
                 <button class="button outline" onclick="selectNone()">Ninguna</button>
-                <button class="button outline" onclick="selectWarm()">Cálidas</button>
-                <button class="button outline" onclick="selectCold()">Frías</button>
+                <button class="button outline" onclick="selectWarm()">Neutros</button>
+                <button class="button outline" onclick="selectCold()">Colores</button>
             </div>
         </div>
 
@@ -496,48 +496,54 @@
 <script>
 // ─── DATA ─────────────────────────────────────────────────────────────────────
 
+// La paleta única del colectivo. La fuente es content/paleta/ —
+// «python3 paleta.py» la lista. Esta copia se rehace desde ahí.
 const PALETTE = [
-    { id: 'amarillo',    name: 'Amarillo',    hex: '#fdf264', rgb: [253, 242, 100], temp: 'cálida',  anchor: false },
-    { id: 'fabrica',     name: 'Fábrica',     hex: '#fde700', rgb: [253, 231, 0],   temp: 'ancla',   anchor: true  },
-    { id: 'ocre',        name: 'Ocre',        hex: '#c8b900', rgb: [200, 185, 0],   temp: 'cálida',  anchor: false },
-    { id: 'caramelo',    name: 'Caramelo',    hex: '#f8ccce', rgb: [248, 204, 206], temp: 'cálida',  anchor: false },
-    { id: 'violeta',     name: 'Violeta',     hex: '#dcd5ef', rgb: [220, 213, 239], temp: 'fría',    anchor: false },
-    { id: 'lavanda',     name: 'Lavanda',     hex: '#bbabd5', rgb: [187, 171, 213], temp: 'fría',    anchor: false },
-    { id: 'amatista',    name: 'Amatista',    hex: '#8c82c3', rgb: [140, 130, 195], temp: 'fría',    anchor: false },
-    { id: 'zafiro2',     name: 'Zafiro claro',hex: '#504b9b', rgb: [80, 75, 155],   temp: 'fría',    anchor: false },
-    { id: 'zafiro',      name: 'Zafiro',      hex: '#332f8a', rgb: [51, 47, 138],   temp: 'fría',    anchor: false },
+    { id: 'papel',      name: 'papel',      hex: '#fdf5eb', rgb: [253, 245, 235], grupo: 'neutro', L: 97, anchor: false },
+    { id: 'hueso',      name: 'hueso',      hex: '#f1e7db', rgb: [241, 231, 219], grupo: 'neutro', L: 92, anchor: false },
+    { id: 'filete',     name: 'filete',     hex: '#e0d6ca', rgb: [224, 214, 202], grupo: 'neutro', L: 86, anchor: false },
+    { id: 'ceniza',     name: 'ceniza',     hex: '#a89f96', rgb: [168, 159, 150], grupo: 'neutro', L: 66, anchor: false },
+    { id: 'humo',       name: 'humo',       hex: '#6a625a', rgb: [106, 98, 90], grupo: 'neutro', L: 42, anchor: false },
+    { id: 'tinta',      name: 'tinta',      hex: '#171513', rgb: [23, 21, 19], grupo: 'neutro', L: 7, anchor: false },
+    { id: 'ambar',      name: 'ámbar',      hex: '#ffb923', rgb: [255, 185, 35], grupo: 'color', L: 80, anchor: true  },
+    { id: 'rosa',       name: 'rosa',       hex: '#f8ccce', rgb: [248, 204, 206], grupo: 'color', L: 86, anchor: false },
+    { id: 'zafiro',     name: 'zafiro',     hex: '#332f8a', rgb: [51, 47, 138], grupo: 'color', L: 25, anchor: false },
+    { id: 'moho',       name: 'moho',       hex: '#1b5033', rgb: [27, 80, 51], grupo: 'color', L: 30, anchor: false },
+    { id: 'naufrago',   name: 'náufrago',   hex: '#004d5f', rgb: [0, 77, 95], grupo: 'color', L: 30, anchor: false },
+    { id: 'cera',       name: 'cera',       hex: '#fff4d6', rgb: [255, 244, 214], grupo: 'sobre oscuro', L: 96, anchor: false },
+    { id: 'lavanda',    name: 'lavanda',    hex: '#bbabd5', rgb: [187, 171, 213], grupo: 'sobre oscuro', L: 73, anchor: false },
 ];
 
 const PRESETS = [
     {
-        name: 'Editorial',
-        desc: 'contraste nítido, acento amarillo',
-        ids: ['violeta', 'fabrica', 'zafiro'],
+        name: 'La firma',
+        desc: 'papel, tinta, y el ámbar de la marca',
+        ids: ['papel', 'tinta', 'ambar'],
     },
     {
-        name: 'Rosa y Violeta',
-        desc: 'caramelo, lavanda, profundidad',
-        ids: ['caramelo', 'lavanda', 'zafiro'],
+        name: 'La banda',
+        desc: 'zafiro con cera encima, ámbar de acento',
+        ids: ['zafiro', 'cera', 'ambar'],
     },
     {
-        name: 'Contraste',
-        desc: 'complementario dividido',
-        ids: ['fabrica', 'zafiro2', 'zafiro'],
+        name: 'La rampa',
+        desc: 'los seis neutros, que hacen el trabajo callado',
+        ids: ['papel', 'hueso', 'filete', 'ceniza', 'humo', 'tinta'],
     },
     {
-        name: 'Pastel',
-        desc: 'suave, luminoso, moderno',
-        ids: ['caramelo', 'violeta', 'amarillo'],
+        name: 'Los tres ciclos',
+        desc: 'rosa, moho y náufrago — una banda por ciclo',
+        ids: ['rosa', 'moho', 'naufrago'],
     },
     {
-        name: 'Escala cálida',
-        desc: 'toda la escala amarilla',
-        ids: ['amarillo', 'fabrica', 'ocre', 'caramelo'],
+        name: 'Los cinco colores',
+        desc: 'el colectivo y sus ciclos',
+        ids: ['ambar', 'zafiro', 'rosa', 'moho', 'naufrago'],
     },
     {
-        name: 'Escala fría',
-        desc: 'violeta a zafiro',
-        ids: ['violeta', 'lavanda', 'amatista', 'zafiro2', 'zafiro'],
+        name: 'Sobre oscuro',
+        desc: 'lo que se puede poner encima del zafiro',
+        ids: ['zafiro', 'cera', 'lavanda', 'ambar'],
     },
 ];
 
@@ -681,7 +687,8 @@ function showDetail(id) {
     document.getElementById('detail-swatch').style.background = color.hex;
     document.getElementById('detail-name').textContent = color.name;
     document.getElementById('detail-meta').textContent =
-        color.temp + (color.anchor ? ' · ancla de marca' : '');
+        color.grupo + ' · L*' + color.L +
+        (color.anchor ? ' · ancla de marca' : '');
 
     const [r, g, b] = color.rgb;
 
@@ -743,16 +750,16 @@ function selectNone() {
     renderPreviewBar();
 }
 
-function selectWarm() {
-    selected = new Set(PALETTE.filter(c => c.temp === 'cálida' || c.anchor).map(c => c.id));
+function selectWarm() {   // los seis neutros
+    selected = new Set(PALETTE.filter(c => c.grupo === 'neutro' || c.anchor).map(c => c.id));
     activePreset = null;
     highlightPreset(null);
     renderSwatches();
     renderPreviewBar();
 }
 
-function selectCold() {
-    selected = new Set(PALETTE.filter(c => c.temp === 'fría' || c.anchor).map(c => c.id));
+function selectCold() {   // los cinco colores
+    selected = new Set(PALETTE.filter(c => c.grupo === 'color' || c.anchor).map(c => c.id));
     activePreset = null;
     highlightPreset(null);
     renderSwatches();

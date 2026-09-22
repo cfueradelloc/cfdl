@@ -11,7 +11,7 @@ variación es un ajuste a ojo.
 """
 from espiral import espiral, U
 
-AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = "#ffb923","#171513","#332f8a","#ffffff","#fff4d6"
+from lockup import AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA, ROSA, PAPEL
 
 
 def pieza(P, N, M, gr, ink, giro=0, negativo=False, bg=None):

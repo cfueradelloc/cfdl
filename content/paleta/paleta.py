@@ -25,7 +25,12 @@ import os
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-sys.path.insert(0, AQUI)
+# APPEND, no insert(0). Hay un hoja.py aquí y otro en ../marca, y meter este
+# directorio al principio de la ruta hacía que «import hoja» desde marca.py
+# resolviera al de aquí: marca.py regeneraba la página de la paleta en vez de
+# la suya. El directorio del script que se está ejecutando tiene que ganar.
+if AQUI not in sys.path:
+    sys.path.append(AQUI)
 from color import (lch, contraste, nivel, distancia, salto_matiz,
                    desde_lch)
 

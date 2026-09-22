@@ -58,9 +58,31 @@ AV_EM    = _F.ancho(SIGLAS)       # 3.4800 — ancho de avance
 TINTA_EM = 3.2200                 # ancho de TINTA sin interletrado (medido)
 HUECOS   = 7                      # espacios entre los 8 signos
 
-AMBAR, NEGRO, ZAFIRO, BLANCO, CREMA = ("#ffb923","#171513","#332f8a",
-                                       "#ffffff","#fff4d6")
-ROSA = "#f8ccce"   # Candy Pink — el --band-fg de docs/assets/css/base.css
+# LOS COLORES VIENEN DE content/paleta/, no se declaran aquí. Estaban
+# repetidos en ocho archivos de este mismo directorio, cada uno con su copia:
+# los valores coincidían de milagro, y era cuestión de tiempo que dejaran de
+# hacerlo. Los nombres se conservan porque la marca los usa por todas partes.
+import os as _os
+import sys as _sys
+# APPEND, no insert(0): hay un hoja.py en este directorio Y otro en paleta/, y
+# poner paleta al principio de la ruta hacía que «import hoja» desde marca.py
+# resolviera al equivocado — marca.py regeneraba la página de la paleta en vez
+# de la suya. El directorio propio tiene que ganar.
+_sys.path.append(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
+                               "..", "paleta"))
+from paleta import HEX as _P                              # noqa: E402
+
+AMBAR  = _P["ámbar"]
+NEGRO  = _P["tinta"]
+ZAFIRO = _P["zafiro"]
+CREMA  = _P["cera"]
+ROSA   = _P["rosa"]
+PAPEL  = _P["papel"]
+# BLANCO no está en la paleta a propósito: el suelo del colectivo es el papel.
+# Se conserva porque un logotipo tiene que funcionar sobre el blanco de otro
+# —un dossier de prensa, el documento de un tercero— y eso no es decisión
+# nuestra. Las páginas de la marca usan PAPEL.
+BLANCO = "#ffffff"
 
 # INTERLETRADO CONSTANTE. Se derivó uno por densidad para igualar el gris,
 # pero eso era para cuando símbolo y siglas medían lo mismo. Con el pie a un
