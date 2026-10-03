@@ -174,13 +174,6 @@
         }
         .event-ciclo a { color: var(--muted); border-bottom: none; }
 
-        .event-empty {
-            padding: 24px 64px 32px;
-            font-family: 'MinionPro', serif;
-            font-size: 15px;
-            font-style: italic;
-            color: var(--muted);
-        }
         .event-ciclo a:hover { color: var(--accent-fg); }
 
         /* ── Ciclos ────────────────────────────────────────────────────────── */
@@ -219,7 +212,6 @@
             .event-type { display: none; }
             .event-detail { padding: 0 24px 22px 24px; }
             .ciclo-list { padding: 8px 24px 40px; }
-            .event-empty { padding: 20px 24px 28px; }
         }
     </style>
 </head>
@@ -249,7 +241,51 @@
         <div class="label-line"></div>
     </div>
 
-    <p class="event-empty">Sin fechas anunciadas.</p>
+    <ul class="event-list">
+
+        <li class="event-item">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">8</span>
+                        <span class="event-year">octubre 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Sesión del club</div>
+                        <div class="event-meta">Club de lectura — Librería La Perecquiana, Valladolid</div>
+                    </div>
+                    <div class="event-type">14.4</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Sesión de octubre de la temporada 26/27, trasladada al jueves 8. Para inscritos en el club.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">14</span>
+                        <span class="event-year">octubre 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">María Tinaut — «Representación y visibilidad butch en artes visuales»</div>
+                        <div class="event-meta">Conferencia — Librería La Perecquiana, Valladolid · 19:30</div>
+                    </div>
+                    <div class="event-type">La Magistral</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Vuelve el ciclo. La artista visual vallisoletana traza, a través de obras de épocas, estilos y orígenes diversos, cartografías y genealogías de la identidad <em>butch</em> o marimacho. Entrada libre — aportación consciente.</p>
+                    <p class="event-ciclo"><a href="#ciclo-la-magistral">→ Ciclo: La Magistral</a></p>
+                </div>
+            </details>
+        </li>
+
+    </ul>
 
 </section>
 
@@ -265,18 +301,79 @@
             <details>
                 <summary>
                     <div class="event-date">
-                        <span class="event-month">—</span>
-                        <span class="event-year">julio 2026</span>
+                        <span class="event-month">17</span>
+                        <span class="event-year">septiembre 2026</span>
                     </div>
                     <div class="event-info">
-                        <div class="event-title">Laura Casielles</div>
-                        <div class="event-meta">Lectura y cierre de temporada — Valladolid</div>
+                        <div class="event-title">Sani Ladan — «El latir de un continente»</div>
+                        <div class="event-meta">Charla de apertura — Librería La Perecquiana, Valladolid</div>
                     </div>
                     <div class="event-type">14.4</div>
                     <span class="event-toggle" aria-hidden="true"></span>
                 </summary>
                 <div class="event-detail">
-                    <p>La poeta Laura Casielles lee en voz alta para cerrar la temporada del club, con pinchada de música africana en Radial Valladolid.</p>
+                    <p>Apertura de la temporada 26/27 del club, con el autor en conversación con Rosauro Varo Cobos y Pablo Arconada: la historia, el pensamiento y las mujeres africanas, para resignificarlas desde su propia voz. Con el Observatorio de Estudios Africanos de la UVa y Umoya Valladolid.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">16</span>
+                        <span class="event-year">septiembre 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Bookcrossing en los autobuses</div>
+                        <div class="event-meta">Colaboración — AUVASA, Valladolid · hasta el 22</div>
+                    </div>
+                    <div class="event-type">Colaboración</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Durante la Semana Europea de la Movilidad, el colectivo colabora en la organización y dona libros escogidos en La Perecquiana, que viajan en las líneas 1, 2, 8 y C2 junto a otros cien de AUVASA.</p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">22</span>
+                        <span class="event-year">agosto 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Summer End Festival</div>
+                        <div class="event-meta">Festival, colaboración — La Baruva Chiringuito, Simancas</div>
+                    </div>
+                    <div class="event-type">Festival</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Despedida del verano con Francisco Nixon, Flácida Dominga, Bravo Maldonado, Maref, Sincorazón, Mr. Kitos y Javi Dosuna. Desde las 18:00, entrada gratuita.</p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">2</span>
+                        <span class="event-year">julio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Laura Casielles</div>
+                        <div class="event-meta">Recital y pinchada — Bar Musical Radial, Valladolid</div>
+                    </div>
+                    <div class="event-type">14.4</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Despedida de la primera temporada del club: recital poético de Laura Casielles, con versos de <em>Señales que hacemos en los mapas</em>, y pinchada de músicas africanas a cargo de Rosauro Varo Cobos y Stroszek68. Entrada libre.</p>
                     <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
                 </div>
             </details>
@@ -291,14 +388,54 @@
                     </div>
                     <div class="event-info">
                         <div class="event-title">Sesiones del club</div>
-                        <div class="event-meta">Club de lectura — La Perecquiana &amp; Observatorio de Estudios Africanos de la UVa, Valladolid</div>
+                        <div class="event-meta">Club de lectura — Librería La Perecquiana, Valladolid</div>
                     </div>
                     <div class="event-type">14.4</div>
                     <span class="event-toggle" aria-hidden="true"></span>
                 </summary>
                 <div class="event-detail">
-                    <p>Cinco sesiones del club de lectura tras la charla de apertura con Alfonso Armada: crónica, poesía, novela y ensayo sobre la mirada occidental hacia África.</p>
+                    <p>Novelas, ensayos, crónicas y novelas gráficas sobre la mirada occidental hacia África, tras la charla de apertura con Alfonso Armada. La última sesión, con Laura Casielles, sobre <em>Arena en los ojos</em>.</p>
                     <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">23</span>
+                        <span class="event-year">junio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">La Ciudad Encendida</div>
+                        <div class="event-meta">Ruta artística, Noche de San Juan — casco histórico, Córdoba</div>
+                    </div>
+                    <div class="event-type">Colaboración</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>La Red ARDE —más de setenta colectivos y creadores locales— recorre el casco histórico para exigir que la cultura deje de ser decoración. El colectivo, entre los convocantes.</p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">—</span>
+                        <span class="event-year">junio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">RPM Fanzine Dependiente</div>
+                        <div class="event-meta">Fanzine musical, colaboración — Valladolid</div>
+                    </div>
+                    <div class="event-type">Colaboración</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>El colectivo se suma a <em>Revoluciones por Minuto</em> (nº 02, <em>Promotores musicales</em>), junto a La Perecquiana, Bicoca Records, Colectivo Laika y Radial.</p>
                 </div>
             </details>
         </li>
@@ -421,7 +558,7 @@
                     <span class="event-toggle" aria-hidden="true"></span>
                 </summary>
                 <div class="event-detail">
-                    <p>Documental de José Antonio Torres y Antonio Manuel sobre la estancia de Federico García Lorca en Cuba en 1930, con coloquio posterior. En <a href="https://www.cinecasablanca.es/" target="_blank" rel="noopener">Cinemes Casablanca</a>.</p>
+                    <p>Documental de José Antonio Torres y Antonio Manuel sobre la estancia de Federico García Lorca en Cuba en 1930, con coloquio posterior a las 19:15. En <a href="https://www.cinecasablanca.es/" target="_blank" rel="noopener">Cines Casablanca</a>.</p>
                 </div>
             </details>
         </li>
@@ -566,11 +703,11 @@
         </div>
         <div class="ciclo" id="ciclo-14-4">
             <dt>14.4</dt>
-            <dd>Club de lectura cuyo nombre alude a los 14,4 km que separan Europa de África. Explora la relación de Occidente con el continente africano a través de textos ensayísticos, narrativos, poéticos y visuales. Con La Perecquiana y el <a href="https://uvaafrica.uva.es/" target="_blank" rel="noopener">Observatorio de Estudios Africanos de la UVa</a>.</dd>
+            <dd>Club de lectura cuyo nombre alude a los 14,4 km que separan Europa de África. Explora la relación de Occidente con el continente africano a través de textos ensayísticos, narrativos, poéticos y visuales. Con La Perecquiana, el <a href="https://uvaafrica.uva.es/" target="_blank" rel="noopener">Observatorio de Estudios Africanos de la UVa</a> y Umoya Valladolid. Segunda temporada (26/27): diez autoras y autores afrodescendientes y migrantes.</dd>
         </div>
         <div class="ciclo" id="ciclo-la-magistral">
             <dt>La Magistral</dt>
-            <dd>Tres conferencias que cruzan la literatura con otras expresiones y fuentes de conocimiento —periodismo, edición alternativa, crónica de la catástrofe—. Con La Perecquiana; entrada libre hasta completar aforo.</dd>
+            <dd>Conferencias que cruzan la literatura con otras expresiones y fuentes de conocimiento —filosofía, edición, estética, música, crónica de la catástrofe—. Una temporada de primavera y la vuelta en otoño. Con La Perecquiana; entrada libre hasta completar aforo.</dd>
         </div>
     </dl>
 </section>
