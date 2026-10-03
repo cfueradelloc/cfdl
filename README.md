@@ -22,11 +22,12 @@ images for [@cfueradelloc](https://www.instagram.com/cfueradelloc/)).
 
 ## Skills
 
-The `skills/` folder holds three Claude Code skills:
+The `skills/` folder holds four Claude Code skills:
 
 - **brand-content** — write or rewrite copy in the collective's voice, and convert images to its style.
 - **algorithmic-art** — build generative p5.js pieces with seeded randomness.
 - **instagram-post** — turn a calendar entry into an Instagram announcement and its caption.
+- **instagram-archive** — download everything @cfueradelloc has published into the Drive.
 
 To use one, point Claude Code at this `skills/` directory or copy a skill folder into your own
 project's `.claude/skills/`.

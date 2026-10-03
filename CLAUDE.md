@@ -26,7 +26,8 @@ The repo root separates **the served website** (`docs/`) from **project material
   `instagram/posts/*.json`, layout in `instagram/src/_shared.css`, see the `instagram-post` skill).
   Edit here, then reflect changes into the pages under `docs/`.
 - `skills/` — Claude Code skills (NOT served), each a folder with a `SKILL.md`: `brand-content/`
-  (+ `references/` for colorplan and manifesto sources), `algorithmic-art/` and `instagram-post/`.
+  (+ `references/` for colorplan and manifesto sources), `algorithmic-art/`, `instagram-post/` and
+  `instagram-archive/` (downloads @cfueradelloc into the Drive's `Instagram/`).
 - `README.md` — overview of the skills.
 
 ### Deployment
@@ -72,6 +73,8 @@ when you fall back to the connector instead of the local copy.
   English, Deutsch, Français, Português, Asturiano) and `Manifiesto/Fotos/`.
 - `Eventos/` — events such as *Almíbar Off*, *En Voz Alta*, *La Perecquiana*; posters
   (`Carteles/`) and an events calendar spreadsheet.
+- `Instagram/` — local archive of @cfueradelloc (posts, captions, metadata, `index.md`),
+  written by the `instagram-archive` skill. Not edited by hand.
 
 The repo is, in effect, the *published* surface; the Drive folder is the *source* of
 truth for raw content and assets.

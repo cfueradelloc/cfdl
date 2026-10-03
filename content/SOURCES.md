@@ -17,6 +17,7 @@ Raíz del Drive:
 | Manifiesto (`docs/manifiesto.html`) | `docs/assets/docs/Manifesto_Fuera_De_Lugar.pdf`, `docs/assets/images/` | `Contenido/Manifiesto/` — traducciones (ES/CA/EN/DE/FR/PT/AST) y `Manifiesto/Fotos/` |
 | Branding (logo, tipografía) | `docs/assets/logo/`, `docs/assets/fonts/` | `Branding/` — logo, favicon, fuentes |
 | Traducciones del manifiesto (referencia) | `skills/brand-content/references/manifesto/` | `Contenido/Manifiesto/` |
+| Archivo de Instagram | — (sólo en el Drive) | `Instagram/` — copia de lo publicado en @cfueradelloc, con `index.md`; la escribe la skill `instagram-archive` |
 | Instagram (@cfueradelloc) | `content/instagram/posts/*.json` → `content/instagram/out/*.png` | `Eventos/<ciclo>/Carteles/` — carteles anteriores; `Eventos/<ciclo>/<autor>/` — retratos y portadas |
 
 ## Cómo actualizar eventos
@@ -28,9 +29,14 @@ Raíz del Drive:
 Las imágenes se generan en `content/instagram/` (ver su README y la skill `instagram-post`).
 El calendario manda: primero la entrada en `calendario-eventos.md`, después el brief.
 
-## Pendiente
-- El perfil de Instagram [@cfueradelloc](https://www.instagram.com/cfueradelloc/) tiene
-  material (fechas, posts) que no se ha volcado aquí — requiere inicio de sesión. Ver las
-  notas ⚠️ «por confirmar» en `calendario-eventos.md`. Por eso las plantillas de
-  `content/instagram/` se dedujeron de los carteles del Drive y del CSS del sitio, no de
-  las publicaciones reales; deja capturas en `content/instagram/ref/` para afinarlas.
+## Archivo de Instagram
+Lo publicado en [@cfueradelloc](https://www.instagram.com/cfueradelloc/) se descarga en
+`Instagram/` del Drive con la skill `instagram-archive`
+(`skills/instagram-archive/scripts/archive.sh chrome`). Cotejar su `index.md` con
+`calendario-eventos.md` y resolver ahí las notas ⚠️ «por confirmar».
+
+Mientras Instagram bloquee la descarga automática, el archivo vigente son las **capturas**
+(`Instagram/Screenshot 2026-10-03 …png`, 34 publicaciones de jun 2025 a oct 2026); de ahí
+sale la revisión del calendario del 3 oct 2026. Las plantillas de
+`content/instagram/` se dedujeron de los carteles del Drive; las publicaciones reales del
+archivo sirven para afinarlas.
