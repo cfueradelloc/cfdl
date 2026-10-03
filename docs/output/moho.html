@@ -263,7 +263,7 @@
             border-radius: 4px;
             overflow: hidden;
             border: 1px solid var(--border);
-            background: #0a0a09;
+            background: #171513;
         }
 
         #canvas-container canvas {
@@ -394,46 +394,46 @@ setTimeout(() => { fontsReady = true; }, 5000);
 const PALETTES = {
     nocturno: {
         name: 'Nocturno',
-        dots: ['#332f8a','#504b9b','#8c82c3','#fde700'],
+        dots: ['#332f8a','#6a5da3','#9485cf','#ffb923'],
         stops: [
             [0.000, [12,  10,  35 ]],   // near-dark sapphire background
             [0.060, [51,  47,  138]],   // Sapphire — first traces
             [0.180, [80,  75,  155]],   // mid purple — growing edge
-            [0.330, [140, 130, 195]],   // light purple — dense mass
-            [0.480, [253, 231, 0  ]],   // Factory Yellow — hotspot
+            [0.330, [148, 133, 207]],   // light purple — dense mass
+            [0.480, [255, 185, 35 ]],   // ámbar — hotspot
         ],
     },
     salvia: {
         name: 'Salvia',
-        dots: ['#332f8a','#8c82c3','#dcd5ef','#fdf264'],
+        dots: ['#1b5033','#7ea48b','#b8e0c6','#ffd27a'],
         stops: [
             [0.000, [20,  8,   25 ]],
             [0.060, [51,  47,  138]],
-            [0.180, [140, 130, 195]],
-            [0.330, [220, 210, 235]],
-            [0.480, [253, 242, 100]],
+            [0.180, [126, 164, 139]],
+            [0.330, [184, 224, 198]],
+            [0.480, [255, 210, 122]],
         ],
     },
     calida: {
         name: 'Cálida',
-        dots: ['#64590c','#c8b900','#fdf264','#f8ccce'],
+        dots: ['#714a00','#c9a16f','#ffd27a','#ffd27a'],
         stops: [
             [0.000, [30,  24,  0  ]],
             [0.060, [100, 90,  0  ]],   // dark yellow
             [0.180, [200, 185, 0  ]],   // muted yellow
-            [0.330, [253, 242, 100]],   // light yellow
-            [0.480, [248, 204, 206]],   // Candy Pink hotspot
+            [0.330, [255, 210, 122]],   // light yellow
+            [0.480, [255, 210, 122]],   // Candy Pink hotspot
         ],
     },
     fria: {
         name: 'Fría',
-        dots: ['#332f8a','#504b9b','#bbabd5','#dcd5ef'],
+        dots: ['#004d5f','#517785','#7aa0af','#b5ddec'],
         stops: [
             [0.000, [8,   6,   30 ]],
             [0.060, [51,  47,  138]],
             [0.180, [80,  75,  155]],
-            [0.330, [187, 171, 213]],   // Lavender
-            [0.480, [220, 210, 235]],   // pale lavender
+            [0.330, [122, 160, 175]],   // Lavender
+            [0.480, [181, 221, 236]],   // pale lavender
         ],
     },
 };
@@ -445,6 +445,58 @@ const PRESETS = {
     liquen:  { F: 0.030, K: 0.057 }, // labyrinthine maze — lichen on rock
     coral:   { F: 0.058, K: 0.065 }, // branching coral / solitons
     manchas: { F: 0.035, K: 0.065 }, // self-replicating spots / mitosis
+    micelio: { F: 0.040, K: 0.060 }, // active worm-like filaments / mycelium
+};
+
+// ─── SIMULATION CONSTANTS ──────────────────────────────────────────────────
+const SW = 400, SH = 400;       // simulation grid dimensions
+const Du = 0.20, Dv = 0.10;     // diffusion coefficients (ratio 2:1 is canonical)
+const LUT_N   = 2048;           // color lookup table entries
+const LUT_VMAX = 0.55;          // V values above this are clamped to hotspot color
+
+// ─── GLOBAL STATE ──────────────────────────────────────────────────────────
+let params = {
+    seed:      Math.floor(Math.random() * 999999) + 1,
+    palette:   'nocturno',
+    preset:    'liquen',
+    F:         PRESETS.liquen.F,
+    K:         PRESETS.liquen.K,
+    numSpores: 8,
+    speed:     5,
+    sporeRain: true,
+};
+
+let uGrid, vGrid, uNext, vNext; // Float32Array simulation buffers
+let colorLUT = new Uint8Array(LUT_N * 3);
+let simImg;      // p5 image object for pixel rendering
+let pSketch;     // p5 instance reference
+let frame = 0;
+
+// ─── COLOR LOOKUP TABLE ────────────────────────────────────────────────────
+// Precompute color for every possible V value — avoids per-pixel branching.
+function buildLUT() {
+    const stops = PALETTES[params.palette].stops;
+    const n = stops.length;
+    for (let i = 0; i < LUT_N; i++) {
+        const v = (i / LUT_N) * LUT_VMAX;
+        let r = stops[0][1][0], g = stops[0][1][1], b = stops[0][1][2];
+        for (let s = 0; s < n - 1; s++) {
+            const v0 = stops[s][0], v1 = stops[s+1][0];
+            if (v >= v0 && v < v1) {
+                const t  = (v - v0) / (v1 - v0);
+                const c0 = stops[s][1], c1 = stops[s+1][1];
+                r = (c0[0] + (c1[0] - c0[0]) * t) | 0;
+                g = (c0[1] + (c1[1] - c0[1]) * t) | 0;
+                b = (c0[2] + (c1[2] - c0[2]) * t) | 0;
+                break;
+            }
+        }
+        if (v >= stops[n-1][0]) {
+            r = stops[n-1][1][0]; g = stops[n-1][1][1]; b = stops[n-1][1][2];
+        }
+        colorLUT[i*3]   = r;
+        colorLUT[i*3+1] = g;
+        colorLUT[i*3+2] = b;
     micelio: { F: 0.040, K: 0.060 }, // active worm-like filaments / mycelium
 };
 
