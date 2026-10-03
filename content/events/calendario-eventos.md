@@ -46,8 +46,11 @@ El colectivo participa como colaborador en esta edición del festival de música
 **15 may · La Magistral — Juan Navarro** *(viernes, 20:00)* — La Perecquiana
 *«La crónica del fuego: el periodismo y la literatura ante la catástrofe natural y política.»* Autor de *Los rescoldos de la culebra* (Libros del K.O.) sobre los incendios de la sierra de la Culebra (2022). → ciclo *La Magistral*.
 
-**hasta 10 jul · 14.4 — sesiones del club** — La Perecquiana
-5 sesiones adicionales del club de lectura *(fechas exactas no publicadas)*, con cierre de temporada en Radial Valladolid con una pinchada de música africana.
+**feb–jul · 14.4 — sesiones del club** — La Perecquiana
+5 sesiones del club de lectura tras la charla de apertura *(fechas exactas no publicadas)*. Temporada cerrada en julio. → ciclo *14.4*.
+
+**~3–6 jul · 14.4 — Laura Casielles (cierre de temporada)** — Valladolid
+Lectura de la poeta **Laura Casielles** como cierre de la temporada del club, con pinchada de música africana en Radial Valladolid. ⚠️ Fecha exacta y lugar por confirmar (fotos y vídeos en `Eventos/14.4/Laura Casielles/`, fechados 3–6 jul). → ciclo *14.4*.
 
 ---
 

@@ -12,7 +12,7 @@ Raíz del Drive:
 
 | Sección del sitio | Archivo(s) en el repo | Material original en el Drive |
 |---|---|---|
-| Eventos (`docs/eventos.html`) | `content/events/calendario-eventos.md` | `Eventos/<ciclo>/` — docs «Actividad», dosieres y `Carteles/` de cada ciclo (14.4, La Magistral, En Voz Alta, Libros del Baobab, Almíbar Off, Equinoccio Sound, Welcome Summer, Cines Casablanca, Salut Drets Acció) |
+| Eventos (`docs/eventos.html`) | `content/events/calendario-eventos.md` | `Eventos/<ciclo>/` — docs «Actividad», dosieres y `Carteles/` de cada ciclo (14.4, La Magistral, En Voz Alta, Libros del Baobab, Almíbar Off, Equinoccio Sound, Welcome Summer, Cines Casablanca, Salut Drets Acció). `Tragaluz/` sólo guarda el dossier de prensa de Vicente Navarro (sello El Tragaluz): archivo, no evento |
 | Galería (`docs/galeria.html`) | `docs/gallery/*.jpg` | `Eventos/En Voz Alta/<autor>/Fotos/` y demás `Fotos/` de cada evento |
 | Manifiesto (`docs/manifiesto.html`) | `docs/assets/docs/Manifesto_Fuera_De_Lugar.pdf`, `docs/assets/images/` | `Contenido/Manifiesto/` — traducciones (ES/CA/EN/DE/FR/PT/AST) y `Manifiesto/Fotos/` |
 | Branding (logo, tipografía) | `docs/assets/logo/`, `docs/assets/fonts/` | `Branding/` — logo, favicon, fuentes |

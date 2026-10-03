@@ -173,6 +173,14 @@
             color: var(--muted);
         }
         .event-ciclo a { color: var(--muted); border-bottom: none; }
+
+        .event-empty {
+            padding: 24px 64px 32px;
+            font-family: 'MinionPro', serif;
+            font-size: 15px;
+            font-style: italic;
+            color: var(--muted);
+        }
         .event-ciclo a:hover { color: var(--accent-fg); }
 
         /* ── Ciclos ────────────────────────────────────────────────────────── */
@@ -211,6 +219,7 @@
             .event-type { display: none; }
             .event-detail { padding: 0 24px 22px 24px; }
             .ciclo-list { padding: 8px 24px 40px; }
+            .event-empty { padding: 20px 24px 28px; }
         }
     </style>
 </head>
@@ -240,30 +249,8 @@
         <div class="label-line"></div>
     </div>
 
-    <ul class="event-list">
+    <p class="event-empty">Sin fechas anunciadas.</p>
 
-        <li class="event-item">
-            <details>
-                <summary>
-                    <div class="event-date">
-                        <span class="event-month">—</span>
-                        <span class="event-year">hasta julio 2026</span>
-                    </div>
-                    <div class="event-info">
-                        <div class="event-title">Sesiones del club</div>
-                        <div class="event-meta">Club de lectura — La Perecquiana &amp; Observatorio de Estudios Africanos de la UVa, Valladolid · fechas por anunciar</div>
-                    </div>
-                    <div class="event-type">14.4</div>
-                    <span class="event-toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="event-detail">
-                    <p>Cinco sesiones más del club de lectura, con cierre de temporada en Radial Valladolid y una pinchada de música africana. Fechas exactas por anunciar.</p>
-                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
-                </div>
-            </details>
-        </li>
-
-    </ul>
 </section>
 
 <section aria-label="Eventos pasados">
@@ -273,6 +260,48 @@
     </div>
 
     <ul class="event-list">
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">—</span>
+                        <span class="event-year">julio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Laura Casielles</div>
+                        <div class="event-meta">Lectura y cierre de temporada — Valladolid</div>
+                    </div>
+                    <div class="event-type">14.4</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>La poeta Laura Casielles lee en voz alta para cerrar la temporada del club, con pinchada de música africana en Radial Valladolid.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
+
+        <li class="event-item past">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">—</span>
+                        <span class="event-year">febrero–julio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Sesiones del club</div>
+                        <div class="event-meta">Club de lectura — La Perecquiana &amp; Observatorio de Estudios Africanos de la UVa, Valladolid</div>
+                    </div>
+                    <div class="event-type">14.4</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Cinco sesiones del club de lectura tras la charla de apertura con Alfonso Armada: crónica, poesía, novela y ensayo sobre la mirada occidental hacia África.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
 
         <li class="event-item past">
             <details>
