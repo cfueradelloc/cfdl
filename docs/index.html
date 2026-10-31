@@ -67,15 +67,38 @@
             isolation: isolate;
             overflow: hidden;
         }
-        .portada .fondo,
-        .portada .fondo img {
+        /* Fondos apilados. Uno a la vez: el siguiente entra en un fundido
+           largo (2,8 s) mientras el anterior sigue derivando debajo; cada
+           foto se acerca muy despacio en su propia dirección (20 s). Sólo
+           opacidad y transform: lo que el navegador anima sin coste. */
+        .portada .fondos {
             position: absolute;
             inset: 0;
+            z-index: -2;
+            overflow: hidden;
+        }
+        .portada .fondo {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 2.8s cubic-bezier(0.45, 0, 0.25, 1);
+        }
+        .portada .fondo.activa { opacity: 1; z-index: 1; }
+        .portada .fondo img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: 62% 50%;
-            z-index: -2;
+            object-position: var(--pos, 62% 50%);
+            transform: scale(1.06);
+            transform-origin: var(--origen, 60% 50%);
+        }
+        .portada .fondo.deriva img {
+            animation: deriva 20s cubic-bezier(0.33, 0, 0.35, 1) both;
+            will-change: transform;
+        }
+        @keyframes deriva {
+            from { transform: scale(1.04) translate3d(var(--x0, 0), var(--y0, 0), 0); }
+            to   { transform: scale(1.13) translate3d(var(--x1, 0), var(--y1, 0), 0); }
         }
         /* Velo negro desde la izquierda, desde abajo y una franja arriba (la
            barra se lee sobre la hoja ámbar); la hoja sigue encendida. */
@@ -87,7 +110,7 @@
             background:
                 linear-gradient(180deg, rgba(23,21,19,0.7) 0%, rgba(23,21,19,0) 180px),
                 linear-gradient(90deg, rgba(23,21,19,0.9) 0%, rgba(23,21,19,0.78) 42%, rgba(23,21,19,0.25) 72%, rgba(23,21,19,0.05) 90%),
-                linear-gradient(0deg, rgba(23,21,19,0.75) 0%, rgba(23,21,19,0) 55%);
+                linear-gradient(0deg, rgba(23,21,19,0.88) 0%, rgba(23,21,19,0.6) 22%, rgba(23,21,19,0) 52%);
         }
         .tesis { margin: 0; line-height: 0; color: var(--ambar); }
         .logo-grande { display: block; width: min(100%, 640px); height: auto; }
@@ -100,17 +123,22 @@
             color: var(--crema);
             text-wrap: pretty;
         }
-        /* La frase cambia sola, al azar: se funde y se desenfoca, y vuelve
-           con otra frase del manifiesto (script al final). */
-        .bajada .frase {
-            display: block;
-            transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s var(--ease-out);
-        }
-        .bajada .frase.fuera {
+        /* La frase cambia sola, al azar. La que se va se apaga entera; después,
+           la que llega aparece palabra a palabra en el mismo sitio (nunca se
+           pisan). Sólo opacidad, curvas lentas: nada se mueve ni se
+           desenfoca. */
+        .bajada { display: grid; }
+        .bajada .frase { grid-area: 1 / 1; }
+        .bajada .frase.sale {
             opacity: 0;
-            filter: blur(6px);
-            transform: translateY(6px);
+            transition: opacity 0.85s cubic-bezier(0.45, 0, 0.55, 1);
         }
+        .bajada .frase .w {
+            opacity: 0;
+            transition: opacity 1.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+            transition-delay: calc(0.95s + var(--i) * 55ms);
+        }
+        .bajada .frase.entra .w { opacity: 1; }
         .seguir {
             display: inline-block;
             margin-top: 28px;
@@ -124,58 +152,62 @@
         }
         .seguir:hover { color: var(--negro); background: var(--ambar); }
 
-        /* ── Último / próximo encuentro: crema y ámbar sobre zafiro ────────── */
-        .proximo {
+        /* ── Pie de la portada: el texto a la izquierda, el último encuentro
+           en la esquina, sobre la misma foto. Sin banda de color. ────────── */
+        .portada-pie {
             display: grid;
-            grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
-            gap: 24px clamp(24px, 4vw, 64px);
-            background: var(--zafiro);
+            grid-template-columns: minmax(0, 1fr) minmax(260px, 340px);
+            gap: 40px clamp(32px, 6vw, 96px);
+            align-items: end;
+        }
+        .proximo {
+            display: block;
             color: var(--crema);
-            padding-top: clamp(56px, 7vw, 104px);
-            padding-bottom: clamp(56px, 7vw, 104px);
             text-decoration: none;
+            border-top: 1px solid rgba(255, 244, 214, 0.55);
+            padding-top: 14px;
         }
         .proximo .p-label {
+            display: block;
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--ambar);
-            padding-top: 0.9em;
         }
         .proximo .p-fecha {
             display: block;
+            margin-top: 18px;
             font-family: 'MinionPro', serif;
-            font-size: clamp(44px, 6vw, 96px);
-            line-height: 1;
+            font-size: 22px;
+            line-height: 1.2;
             color: var(--ambar);
         }
         .proximo .p-title {
             display: block;
-            margin-top: 20px;
+            margin-top: 6px;
             font-family: 'MinionPro', serif;
-            font-size: clamp(26px, 2.8vw, 42px);
-            line-height: 1.15;
-            max-width: 30ch;
+            font-size: 22px;
+            line-height: 1.25;
         }
         .proximo .p-meta {
             display: block;
-            margin-top: 18px;
+            margin-top: 12px;
             font-size: var(--fs-label);
-            letter-spacing: 0.1em;
+            letter-spacing: 0.08em;
+            line-height: 1.6;
             text-transform: uppercase;
+            color: rgba(255, 244, 214, 0.85);
         }
         .proximo .p-ir {
             display: inline-block;
-            margin-top: 32px;
+            margin-top: 16px;
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--ambar);
-            border-bottom: 1px solid var(--ambar);
-            padding-bottom: 3px;
         }
         .proximo:hover .p-title { text-decoration: underline; text-decoration-color: var(--ambar);
-                                  text-decoration-thickness: 2px; text-underline-offset: 6px; }
+                                  text-decoration-thickness: 1px; text-underline-offset: 5px; }
 
         /* ── Índice tipográfico, sin imágenes ──────────────────────────────── */
         .indice { list-style: none; padding-top: clamp(64px, 8vw, 120px); }
@@ -212,12 +244,11 @@
         .indice a:hover { background: var(--ambar); }
 
         @media (max-width: 860px) {
-            .proximo, .indice a { grid-template-columns: 1fr; }
-            .proximo .p-label { padding-top: 0; }
+            .portada-pie, .indice a { grid-template-columns: 1fr; }
             .portada { padding-top: calc(68px + 24px); }
-            .portada .fondo img { object-position: 70% 50%; }
+            .portada .fondo img { object-position: var(--pos-movil, 70% 50%); }
             .portada::after {
-                background: linear-gradient(0deg, rgba(23,21,19,0.88) 0%, rgba(23,21,19,0.6) 50%, rgba(23,21,19,0.3) 100%);
+                background: linear-gradient(0deg, rgba(23,21,19,0.9) 0%, rgba(23,21,19,0.72) 55%, rgba(23,21,19,0.45) 100%);
             }
         }
     </style>
@@ -235,28 +266,42 @@
 </nav>
 <main>
     <section class="portada banda">
-        <picture class="fondo">
-            <source type="image/webp" srcset="assets/images/portada-1200.webp 1200w, assets/images/portada.webp 2400w" sizes="100vw">
-            <img src="assets/images/portada.jpg" srcset="assets/images/portada-1200.jpg 1200w, assets/images/portada.jpg 2400w" sizes="100vw"
-                 width="2400" height="1600" alt="El manifiesto impreso en papel ámbar, doblado, entre luz y sombra." fetchpriority="high">
-        </picture>
+        <div class="fondos">
+                    <picture class="fondo activa" style="--pos: 62% 50%; --origen: 70% 45%; --x0: 0; --y0: 0; --x1: -1.6%; --y1: -0.8%;">
+                <source type="image/webp" srcset="assets/images/portada-1200.webp 1200w, assets/images/portada.webp 2400w" sizes="100vw">
+                <img src="assets/images/portada.jpg" srcset="assets/images/portada-1200.jpg 1200w, assets/images/portada.jpg 2400w" sizes="100vw"
+                     width="2400" height="1600" alt="El manifiesto impreso en papel ámbar, doblado, entre luz y sombra." fetchpriority="high">
+            </picture>
+            <picture class="fondo" style="--pos: 55% 50%; --origen: 40% 55%; --x0: 1.2%; --y0: 0; --x1: -0.6%; --y1: -1%;">
+                <source type="image/webp" data-srcset="assets/images/portada-2-1200.webp 1200w, assets/images/portada-2.webp 2400w" sizes="100vw">
+                <img data-src="assets/images/portada-2.jpg" data-srcset="assets/images/portada-2-1200.jpg 1200w, assets/images/portada-2.jpg 2400w" sizes="100vw"
+                     width="2400" height="1600" alt="" decoding="async">
+            </picture>
+            <picture class="fondo" style="--pos: 60% 45%; --origen: 65% 40%; --x0: -0.8%; --y0: 0.6%; --x1: 0.8%; --y1: -0.8%;">
+                <source type="image/webp" data-srcset="assets/images/portada-3-1200.webp 1200w, assets/images/portada-3.webp 2400w" sizes="100vw">
+                <img data-src="assets/images/portada-3.jpg" data-srcset="assets/images/portada-3-1200.jpg 1200w, assets/images/portada-3.jpg 2400w" sizes="100vw"
+                     width="2400" height="1600" alt="" decoding="async">
+            </picture>
+        </div>
+        <div class="portada-pie">
         <div>
             <h1 class="tesis reveal"><span class="visually-hidden">C.F.D.L.</span><svg class="logo-linea logo-grande" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.89 100.00"><polyline points="0.000,0.500 99.500,0.500 99.500,99.500 0.500,99.500 0.500,4.500 95.500,4.500 95.500,95.500 4.500,95.500 4.500,8.500 91.500,8.500 91.500,91.500 8.500,91.500 8.500,12.500 87.500,12.500 87.500,87.500 12.500,87.500 12.500,16.500 83.500,16.500 83.500,83.500 16.500,83.500 16.500,20.500" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M165.613346 36.89792200000001C162.836464 34.82562200000001 159.76946 33.83091800000001 156.287996 33.83091800000001C147.33566000000002 33.83091800000001 139.999718 41.16686000000001 139.999718 50.119196C139.999718 58.988640000000004 147.459998 66.158798 156.287996 66.158798C159.603676 66.158798 162.919356 65.03975600000001 165.613346 63.09179400000001V58.78141000000001C163.126586 61.268170000000005 159.686568 62.926010000000005 156.163658 62.926010000000005C149.159284 62.926010000000005 143.48118200000002 56.874894000000005 143.48118200000002 49.99485800000001C143.48118200000002 43.114822000000004 149.117838 37.06370600000001 156.080766 37.06370600000001C159.686568 37.06370600000001 163.126586 38.638654 165.613346 41.20830600000001Z M183.02046600000003 61.516846C181.73564000000002 61.516846 180.69949000000003 62.55299600000001 180.69949000000003 63.796376C180.69949000000003 65.081202 181.73564000000002 66.158798 183.02046600000003 66.158798C184.305292 66.158798 185.34144200000003 65.081202 185.34144200000003 63.796376C185.34144200000003 62.55299600000001 184.305292 61.516846 183.02046600000003 61.516846Z M215.05802400000002 37.60250400000001V34.36971600000001H200.84204600000004V65.62H204.32351000000003V50.119196H214.726456V46.886408H204.32351000000003V37.60250400000001Z M226.78704200000004 61.516846C225.50221600000003 61.516846 224.46606600000004 62.55299600000001 224.46606600000004 63.796376C224.46606600000004 65.081202 225.50221600000003 66.158798 226.78704200000004 66.158798C228.07186800000002 66.158798 229.10801800000002 65.081202 229.10801800000002 63.796376C229.10801800000002 62.55299600000001 228.07186800000002 61.516846 226.78704200000004 61.516846Z M244.60862200000003 65.62H250.41106200000002C255.30169 65.62 259.03183 64.99831 262.76197 61.68263C266.20198800000003 58.615626000000006 267.859828 54.595364000000004 267.859828 50.03630400000001C267.859828 45.394352000000005 266.24343400000004 41.20830600000001 262.679078 38.14130200000001C258.990384 34.99140600000001 255.177352 34.36971600000001 250.493954 34.36971600000001H244.60862200000003ZM248.090086 62.387212000000005V37.60250400000001H250.61829200000003C254.30698600000002 37.60250400000001 257.456882 38.099856 260.316656 40.62806200000001C263.010646 42.99048400000001 264.37836400000003 46.430502000000004 264.37836400000003 49.99485800000001C264.37836400000003 53.476322 263.052092 56.750556 260.48244 59.154424000000006C257.62266600000004 61.848414000000005 254.43132400000002 62.387212000000005 250.61829200000003 62.387212000000005Z M284.230798 61.516846C282.945972 61.516846 281.909822 62.55299600000001 281.909822 63.796376C281.909822 65.081202 282.945972 66.158798 284.230798 66.158798C285.515624 66.158798 286.551774 65.081202 286.551774 63.796376C286.551774 62.55299600000001 285.515624 61.516846 284.230798 61.516846Z M305.533842 34.36971600000001H302.05237800000003V65.62H314.15461000000005V62.387212000000005H305.533842Z M329.116416 61.516846C327.83159 61.516846 326.79544000000004 62.55299600000001 326.79544000000004 63.796376C326.79544000000004 65.081202 327.83159 66.158798 329.116416 66.158798C330.401242 66.158798 331.43739200000005 65.081202 331.43739200000005 63.796376C331.43739200000005 62.55299600000001 330.401242 61.516846 329.116416 61.516846Z"/></svg></h1>
-            <p class="bajada reveal reveal-2" data-frases><span class="frase">Escogemos un mundo de ciudades recordadas, siempre en
+            <p class="bajada reveal reveal-2" data-frases><span class="frase entra">Escogemos un mundo de ciudades recordadas, siempre en
             construcción, en terrenos donde no deberían estar.</span></p>
             <a class="seguir reveal reveal-3" href="manifiesto.html">El manifiesto, entero →</a>
         </div>
+            <a class="proximo reveal reveal-3" href="eventos.html" data-proximo>
+                <span class="p-label" data-p-label>Último encuentro</span>
+                <span>
+                    <span class="p-fecha"><span data-p-day>14</span> <span data-p-month>octubre 2026</span></span>
+                    <span class="p-title" data-p-title>María Tinaut — «Representación y visibilidad butch en artes visuales»</span>
+                    <span class="p-meta" data-p-meta>Conferencia — Librería La Perecquiana, Valladolid · 19:30</span>
+                    <span class="p-ir">Agenda →</span>
+                </span>
+            </a>
+        </div>
     </section>
 
-    <a class="proximo banda" href="eventos.html" data-proximo>
-        <span class="p-label" data-p-label>Último encuentro</span>
-        <span>
-            <span class="p-fecha"><span data-p-day>14</span> <span data-p-month>octubre 2026</span></span>
-            <span class="p-title" data-p-title>María Tinaut — «Representación y visibilidad butch en artes visuales»</span>
-            <span class="p-meta" data-p-meta>Conferencia — Librería La Perecquiana, Valladolid · 19:30</span>
-            <span class="p-ir">Agenda →</span>
-        </span>
-    </a>
 
     <ul class="indice banda">
         <li><a href="manifiesto.html">
@@ -301,13 +346,15 @@
     }, { rootMargin: '-' + nav.offsetHeight + 'px 0px 0px 0px' }).observe(portada);
 })();
 
-/* Frases del manifiesto que se relevan al azar sobre la portada. La primera
-   es la que ya está en el HTML (y la única sin JS o con movimiento reducido).
-   La caja guarda la altura de la frase más larga: nada debajo salta. */
+/* La portada respira: cada 7 s cambia la frase del manifiesto, y cada dos
+   frases cambia también la foto (otra del manifiesto impreso), que entra en
+   un fundido largo y deriva muy despacio. Un solo reloj para las dos cosas.
+   Sin JS, o con movimiento reducido: la primera frase y la primera foto,
+   quietas. La caja de la frase guarda la altura de la más larga. */
 (function () {
     var p = document.querySelector('[data-frases]');
-    var span = p && p.querySelector('.frase');
-    if (!span) return;
+    var fondos = Array.prototype.slice.call(document.querySelectorAll('.portada .fondo'));
+    if (!p || !fondos.length) return;
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     var FRASES = [
@@ -330,13 +377,29 @@
         'Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono.',
         'La obra mejora siempre, de cualquiera de las maneras, si está fuera de lugar.'
     ];
-    var actual = 0, FADE = 900, CADA = 6500;
+    var CADA = 7000;          // una frase
+    var FOTO_CADA = 2;        // una foto cada dos frases
+    var frase = 0, foto = 0, tic = 0;
 
-    // Reserva la altura de la frase más larga con el ancho de ahora.
+    /* ── Frase ─────────────────────────────────────────────────────────── */
+    function palabras(texto) {
+        var span = document.createElement('span');
+        span.className = 'frase';
+        texto.split(' ').forEach(function (w, i) {
+            if (i) span.appendChild(document.createTextNode(' '));
+            var s = document.createElement('span');
+            s.className = 'w';
+            s.style.setProperty('--i', i);
+            s.textContent = w;
+            span.appendChild(s);
+        });
+        return span;
+    }
+
     function reservar() {
-        var sonda = span.cloneNode(false);
-        sonda.style.cssText = 'position:absolute;visibility:hidden;left:0;right:0;transition:none';
-        p.style.position = 'relative';
+        var sonda = document.createElement('span');
+        sonda.className = 'frase';
+        sonda.style.cssText = 'visibility:hidden;pointer-events:none';
         p.appendChild(sonda);
         var alto = 0;
         FRASES.forEach(function (f) { sonda.textContent = f; alto = Math.max(alto, sonda.offsetHeight); });
@@ -344,22 +407,64 @@
         p.style.minHeight = alto + 'px';
     }
 
-    function siguiente() {
-        if (document.hidden) return;
+    function otraFrase() {
         var n;
-        do { n = Math.floor(Math.random() * FRASES.length); } while (n === actual);
-        actual = n;
-        span.classList.add('fuera');
-        setTimeout(function () {
-            span.textContent = FRASES[n];
-            requestAnimationFrame(function () { span.classList.remove('fuera'); });
-        }, FADE);
+        do { n = Math.floor(Math.random() * FRASES.length); } while (n === frase);
+        frase = n;
+        var vieja = p.querySelector('.frase:not(.sale)');
+        var nueva = palabras(FRASES[n]);
+        p.appendChild(nueva);
+        if (vieja) {
+            vieja.classList.add('sale');
+            vieja.setAttribute('aria-hidden', 'true');
+            setTimeout(function () { vieja.remove(); }, 1000);
+        }
+        // Dos fotogramas: que el navegador pinte las palabras a 0 antes de subirlas.
+        requestAnimationFrame(function () { requestAnimationFrame(function () { nueva.classList.add('entra'); }); });
     }
 
+    /* ── Foto ──────────────────────────────────────────────────────────── */
+    function cargar(f) {
+        f.querySelectorAll('[data-srcset]').forEach(function (el) {
+            el.setAttribute('srcset', el.getAttribute('data-srcset'));
+            el.removeAttribute('data-srcset');
+        });
+        var img = f.querySelector('img[data-src]');
+        if (img) { img.src = img.getAttribute('data-src'); img.removeAttribute('data-src'); }
+    }
+
+    function derivar(f) {
+        f.classList.remove('deriva');
+        void f.offsetWidth;                 // reinicia la animación
+        f.classList.add('deriva');
+    }
+
+    function otraFoto() {
+        var siguiente = fondos[(foto + 1) % fondos.length];
+        var img = siguiente.querySelector('img');
+        if (!img.complete || !img.naturalWidth) return;   // aún no ha llegado: otra vuelta
+        var actual = fondos[foto];
+        foto = (foto + 1) % fondos.length;
+        derivar(siguiente);
+        siguiente.classList.add('activa');
+        actual.classList.remove('activa');
+        setTimeout(function () { actual.classList.remove('deriva'); }, 3000);
+    }
+
+    /* ── Reloj ─────────────────────────────────────────────────────────── */
+    function paso() {
+        if (document.hidden) return;
+        tic++;
+        otraFrase();
+        if (tic % FOTO_CADA === 0) otraFoto();
+    }
+
+    derivar(fondos[0]);
+    window.addEventListener('load', function () { fondos.slice(1).forEach(cargar); });
     var rt;
     window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(reservar, 200); });
     (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(reservar);
-    setInterval(siguiente, CADA);
+    setInterval(paso, CADA);
 })();
 </script>
 
