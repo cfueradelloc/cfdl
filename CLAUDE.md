@@ -4,120 +4,84 @@ Guidance for Claude Code when working in this repository.
 
 ## What this repo is
 
-`cfdl` is the static website **and** Claude Code skills collection for **C.F.D.L.**
-(Cooperativa / colectivo artístico — see <https://github.com/cfueradelloc>), an arts
-collective. The site is plain HTML deployed via GitHub Pages (`.nojekyll` present).
+The website and working tools of **C.F.D.L.** — *Colectivo Fuera de Lugar · Col·lectiu Fora de
+Lloc* (<https://github.com/cfueradelloc>), an arts collective: reading clubs, recitals, screenings,
+and a thread of generative art. Plain HTML, no build step, served by GitHub Pages.
 
-### Repo layout
-Four top-level folders, one job each: **`docs/`** is served, **`content/`** is the site's source of truth,
-**`studio/`** makes artwork, **`skills/`** holds Claude Code skills. Only `docs/` is published.
+## Layout
 
-- `docs/` — **the deployable website** (everything served). Contains:
-  - `index.html`, `manifiesto.html`, `proyectos.html`, `eventos.html`, `galeria.html` — site pages (Spanish).
-  - `assets/` — fonts (FuturaStd, MinionPro), `logo/` (favicon), `images/` (manifesto imagery),
-    `docs/` (downloadable manifesto PDF). Pages reference these via `assets/…`; `output/` pieces via `../assets/…`.
-  - `gallery/` — published image assets (e.g. the *En voz alta* photo series), used by `galeria.html`.
-  - `output/` — generative-art pieces (p5.js), one HTML each (`garganta.html`, `maleza.html`,
-    `moho.html`, `disgregacion.html`, `brujula.html`, `paleta.html`, `manifiesto-animado.html`).
-  - `.nojekyll` — disables Jekyll on the published site.
-- `content/` — **source of truth for updating the site** (NOT served): `events/calendario-eventos.md`
-  (canonical events list) and `SOURCES.md` (maps each site section → its raw material in Drive).
-  Edit here, then reflect changes into the pages under `docs/`. Nothing else lives here.
-- `studio/` — **generators whose output is artwork, not pages** (NOT served). Each folder has its own
-  `README.md`; scripts sit at its root, inputs in `assets/`, generated files in `src/` / `out/`.
-  Every `out/`, the photos and the sketches are **symlinks into Drive** (see *Gitignored repo material*).
-  - `tshirts/` — shirt mockups: `build_designs.py` → `src/*.html` → `render.sh` → `out/*.png`
-    (`out/transparent/` bare prints, `out/pdf/` print files).
-  - `instagram/` — 1080×1350 announcement images + captions for @cfueradelloc; briefs in
-    `posts/*.json`, layout in `src/_shared.css`, renders in `out/` (see the `instagram-post` skill).
-  - `brand/` — logo proposal (rectangular-spiral band); *proposal, not wired into the site yet*.
-  - `palette/` — the single palette (`paleta.py`); generates the CSS tokens Instagram uses.
-- `skills/` — Claude Code skills (NOT served), each a folder with a `SKILL.md`: `brand-content/`
-  (+ `references/` for colorplan and manifesto sources), `algorithmic-art/`, `instagram-post/` and
-  `instagram-archive/` (downloads @cfueradelloc into the Drive's `Instagram/`).
-- `scripts/` — repo tooling: `link-drive.sh` (links the Drive-hosted folders, see below).
-- `README.md` — overview of the skills.
+Four folders, one job each. Only `docs/` is published.
 
-### Deployment
-Classic **GitHub Pages**, deploy-from-branch — repo `github.com/cfueradelloc/cfdl`. The Pages
-**source is set to `/docs`** (Settings → Pages). The whole site lives under `docs/`, all
-links are relative, and `.nojekyll` sits inside `docs/`. If a custom domain (cfdl.site) is used,
-its `CNAME` file also belongs in `docs/`. The site no longer depends on the `skills/` path for any
-asset. If you move folders, update the references and re-run the grep in the verification below.
+| Folder | Job |
+|---|---|
+| `docs/` | **The website.** Pages (`index`, `manifiesto`, `eventos`, `proyectos`, `galeria`) at the root; `assets/` (css, js, fonts, logo, images, the manifesto PDF); `gallery/` (event photos + `sm/` thumbnails); `output/` (p5.js pieces, one self-contained HTML each). All links relative. |
+| `content/` | **Source of truth for the site** (not served): `events/calendario-eventos.md` and `SOURCES.md` (each site section → its raw material in Drive). Edit here first, then reflect into `docs/`. |
+| `studio/` | **Generators of artwork, not pages.** Each has a `README.md`; scripts at its root, inputs in `assets/`, generated files in `src/` and `out/`. `tshirts/` (shirt mockups: `build_designs.py` → `src/` → `render.sh` → `out/`), `instagram/` (1080×1350 posts + captions, see the `instagram-post` skill), `brand/` (logo proposal, not adopted yet), `palette/` (the single palette; `paleta.py` generates the tokens others import). |
+| `skills/` | Claude Code skills: `brand-content`, `algorithmic-art`, `instagram-post`, `instagram-archive`. |
 
-**Git workflow:** this is a solo project — **commit and push directly to `main`** (no PR/branch
-needed). The user has authorized direct pushes to `main`; pushing publishes the live site via Pages.
+`scripts/link-drive.sh` links the Drive-hosted folders (see below). `README.md` is the public overview.
 
-## Source material lives in Google Drive — use the LOCAL synced copy
+## Deployment & git
 
-The collective's working material (manifesto translations, branding assets, event
-posters, admin docs, photos) is **not** in this repo. It lives in Google Drive.
+- GitHub Pages, deploy from branch `main`, source **`/docs`** (repo `cfueradelloc/cfdl`).
+  `docs/.nojekyll` disables Jekyll. A custom-domain `CNAME` would also go in `docs/` (none today).
+- **Commit and push directly to `main`** — solo project, authorized by the user. Pushing publishes the site.
+- After moving or renaming anything, grep for the old path across the repo and fix every reference.
 
-**Drive synchronization matters to the user.** Default to the locally synced folder (it *is*
-Drive: whatever is written there syncs), and use the Google Drive connector whenever it is
-necessary (lookups by ID, files not yet downloaded, sharing).
+## Google Drive
 
-Full CFDL folder — Drive ID `1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo`
-(<https://drive.google.com/drive/folders/1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo>). Canonical local path:
+The collective's working material (manifesto translations, branding, posters, admin, photos) lives
+in Google Drive, not in the repo. **Synchronization with Drive matters to the user.**
 
-```
-/Users/mduranfrigola/Library/CloudStorage/GoogleDrive-miquelduranfrigola@gmail.com/My Drive/Documents/Writing/CFDL
-```
+- **Full CFDL folder** — ID `1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo`
+  (<https://drive.google.com/drive/folders/1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo>), synced locally (personal
+  account miquelduranfrigola@gmail.com) at:
+  ```
+  /Users/mduranfrigola/Library/CloudStorage/GoogleDrive-miquelduranfrigola@gmail.com/My Drive/Documents/Writing/CFDL
+  ```
+- **Default to the local path** — it *is* Drive; whatever is written there syncs. Use the **Google Drive
+  connector whenever it is necessary** (lookups by ID, files not yet downloaded, sharing). The connector
+  is authenticated as miquel@ersilia.io, where CFDL appears as a *shortcut*; resolve the original folder
+  ID if it returns the pointer instead of the contents. Say so when you use it.
+- Match a Drive ID to a local folder without the connector:
+  `xattr -p 'com.google.drivefs.item-id#S' <folder>`.
 
-This is synced from the **miquelduranfrigola@gmail.com** (personal) Google Drive.
-Reading/writing the local synced files is faster and is the user's preferred workflow,
-so **default to the local path above**.
+### Gitignored repo material → `CFDL/Contenido/GitHub`
 
-### Backup: Google Drive connector (MCP)
-A shortcut to the same CFDL folder also exists in the **miquel@ersilia.io** Drive, which
-is what the Google Drive *connector* (MCP) is authenticated against (the active session
-email). Use it whenever it is necessary — e.g. if the local sync is stale, missing, or the
-file hasn't downloaded yet. To match a Drive ID to a local folder without the connector:
-`xattr -p 'com.google.drivefs.item-id#S' <folder>`.
-Note: it points at a *shortcut*, so the connector may surface the shortcut pointer rather
-than the folder contents; resolving the original folder ID can help. Always tell the user
-when you fall back to the connector instead of the local copy.
+ID `1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5`
+(<https://drive.google.com/drive/folders/1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5>). Whatever the repo
+produces or needs but does not version lives here, at the same relative path; in the repo each such
+path is a **symlink into Drive**, listed in `.gitignore`. Generators write through the link and Drive
+syncs on its own. Currently: `studio/tshirts/out`, `studio/tshirts/assets/photos`,
+`studio/tshirts/assets/Manifesto_Fuera_De_Lugar.pdf`, `studio/instagram/out`,
+`studio/instagram/assets/{retratos,portadas}`, `studio/brand/{bocetos,png}`.
 
-### Gitignored repo material lives in Drive — `Contenido/GitHub`
-Whatever the repo produces or needs but does not version lives in **`CFDL/Contenido/GitHub`**
-(Drive ID `1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5`,
-<https://drive.google.com/drive/folders/1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5>), mirroring the repo's
-relative paths. In the repo those paths are **symlinks into Drive**, listed in `.gitignore`, so the
-generators write straight into Drive and it syncs on its own:
-`studio/tshirts/out`, `studio/tshirts/assets/photos`, `studio/tshirts/assets/Manifesto_Fuera_De_Lugar.pdf`,
-`studio/instagram/out`, `studio/instagram/assets/{retratos,portadas}`, `studio/brand/{bocetos,png}`.
-
-- On a fresh clone or a new machine, run **`scripts/link-drive.sh`** to recreate the links.
-- To send something new to Drive: add its path to `PATHS` in `scripts/link-drive.sh` and to
-  `.gitignore`, `git rm -r --cached` it, then run the script — it copies to Drive, verifies, and
-  only then replaces the local copy with a link.
-- Photos of real people and source material belong here, never in git (the repo is public).
+- Fresh clone or new machine: run **`scripts/link-drive.sh`**.
+- Moving something new to Drive: add it to `PATHS` in the script and to `.gitignore`,
+  `git rm -r --cached` it, run the script (it copies, verifies, and only then replaces with a link).
+- Photos of real people and raw source material go here, never in git — the repo is public.
 
 ### Drive folder structure (`…/Writing/CFDL`)
-- `Administracion/` — registration, tax (Agencia Tributaria), meeting notes (Reuniones).
-- `Branding/` — logo, favicon (PNG/PDF/JPEG), brand assets.
-- `Contenido/` — content, incl. `Manifiesto/` in many languages (Español, Català,
-  English, Deutsch, Français, Português, Asturiano) and `Manifiesto/Fotos/`, and `GitHub/`
-  (the repo's gitignored material, see above).
-- `Eventos/` — events such as *Almíbar Off*, *En Voz Alta*, *La Perecquiana*; posters
-  (`Carteles/`) and an events calendar spreadsheet.
-- `Instagram/` — local archive of @cfueradelloc (posts, captions, metadata, `index.md`),
-  written by the `instagram-archive` skill. Not edited by hand.
 
-The repo is, in effect, the *published* surface; the Drive folder is the *source* of
-truth for raw content and assets.
+- `Administracion/` — registration, tax (Agencia Tributaria), meeting notes (`Reuniones`).
+- `Branding/` — logo, favicon (PNG/PDF/JPEG), brand assets.
+- `Contenido/` — `Manifiesto/` (ES, CA, EN, DE, FR, PT, AST, plus `Fotos/`), `Proyectos/`,
+  `Miscelanea/`, and `GitHub/` (above).
+- `Eventos/` — per cycle (*Almíbar Off*, *En Voz Alta*, *La Perecquiana*…): posters in `Carteles/`,
+  portraits and covers per author, the events spreadsheet.
+- `Instagram/` — archive of @cfueradelloc written by the `instagram-archive` skill. Not edited by hand.
+- `Seleccion/` — selected event photos.
 
 ## Conventions
-- Site content is in **Spanish**; match existing tone and language on pages.
-- Generative-art pieces use **p5.js with seeded randomness** (see the `algorithmic-art`
-  skill) and live as self-contained HTML files in `output/`.
-- Keep new pages consistent with the existing plain-HTML, no-build-step approach.
-- **`content/events/calendario-eventos.md` is the single source of truth for events.**
-  `docs/eventos.html` is only a *rendering* of it. When updating the website's events page,
-  **read this markdown first** and derive the page from it — never invent or edit events
-  directly in the HTML. Keep the markdown current (chronological order, full dates, cycle
-  noted per entry); update it **first**, then reflect it into `docs/eventos.html` (one entry
-  per event, with its day; the cycle is a tag, not an entry; full month names).
+
+- Site copy is in **Spanish**; follow *Writing style* below.
+- Keep the plain-HTML, no-build-step approach. Generative pieces use **p5.js with seeded randomness**
+  (`algorithmic-art` skill) and live as self-contained HTML in `docs/output/`.
+- Colours come from `studio/palette/`; never hand-write a new hex.
+- **Events:** `content/events/calendario-eventos.md` is the single source of truth; `docs/eventos.html`
+  only renders it. Update the markdown first (chronological, full dates, cycle noted per entry), then
+  derive the page — one entry per event with its day, the cycle as a tag, full month names. Never
+  invent or edit events directly in the HTML.
 
 ## Writing style — C.F.D.L. voice
 
