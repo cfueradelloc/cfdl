@@ -16,7 +16,7 @@ Four folders, one job each. Only `docs/` is published.
 |---|---|
 | `docs/` | **The website.** Pages (`index`, `manifiesto`, `eventos`, `proyectos`, `galeria`) at the root; `assets/` (css, js, fonts, logo, images, the manifesto PDF); `gallery/` (event photos + `sm/` thumbnails); `output/` (p5.js pieces, one self-contained HTML each). All links relative. |
 | `content/` | **Source of truth for the site** (not served): `events/calendario-eventos.md` and `SOURCES.md` (each site section → its raw material in Drive). Edit here first, then reflect into `docs/`. |
-| `studio/` | **Generators of artwork, not pages.** Each has a `README.md`; scripts at its root, inputs in `assets/`, generated files in `src/` and `out/`. `tshirts/` (shirt mockups: `build_designs.py` → `src/` → `render.sh` → `out/`), `instagram/` (1080×1350 posts + captions, see the `instagram-post` skill), `brand/` (logo proposal, not adopted yet), `palette/` (the single palette; `paleta.py` generates the tokens others import). |
+| `studio/` | **Generators of artwork, not pages.** Each has a `README.md`; scripts at its root, inputs in `assets/`, generated files in `src/` and `out/`. `tshirts/` (shirt mockups: `build_designs.py` → `src/` → `render.sh` → `out/`), `instagram/` (1080×1350 posts + captions, see the `instagram-post` skill), `brand/` (logo system: `favicon-180.png`, «línea» and «nombre» lockups — used on the site, outlined in `docs/assets/logo/`), `palette/` (the single palette; `paleta.py` generates the tokens others import), `gallery/` (photo masters + `tratar.py`, the gallery's treatment and curation rules). |
 | `skills/` | Claude Code skills: `brand-content`, `algorithmic-art`, `instagram-post`, `instagram-archive`. |
 
 `scripts/link-drive.sh` links the Drive-hosted folders (see below). `README.md` is the public overview.
@@ -140,9 +140,30 @@ press. They extend, and take precedence over, the looser **Voice** note in
 - Very short (1–4 words), fragmentary and observational, **capitalized first letter** (the user's
   preference — never start lowercase), no final period: *"Entre libros", "Tomando la palabra",
   "La voz", "Pausa", "Escucha".* Followed by ` · ` and the event (*"La sala · La Magistral"*).
-- Gallery photos come from `Seleccion/` in Drive (see its `SELECCION.md`: colour treatment,
-  no near-duplicates) → `docs/gallery/` (1600 px) + `docs/gallery/sm/` (900 px, `.jpg` and
-  `.webp`) + one line in the `IMAGES` array and the `<noscript>` list of `docs/galeria.html`.
+- Gallery photos come from `Seleccion/` in Drive (see its `SELECCION.md`) → a master in
+  `studio/gallery/originales/` → `python3 studio/gallery/tratar.py <name>` writes
+  `docs/gallery/` (1600 px) + `docs/gallery/sm/` (900 px, `.jpg` and `.webp`) → one line in
+  the `IMAGES` array and the `<noscript>` list of `docs/galeria.html`. **Never edit or
+  re-export the web copies by hand; never treat already-treated files.** Full process and
+  log in `studio/gallery/README.md`.
+
+### Photo curation — non-negotiable
+Treat every picture as if for a professional publication (applies to the gallery, the home
+page and any page that shows photos):
+- **Never cut a head.** Not in the photo's own framing (a person sliced by the edge, a crown
+  out of frame → the photo does not go in) and not in the layout: show photos at their exact
+  aspect ratio, no `object-fit: cover` crops that touch people, no hover zoom. `w`/`h` in
+  `IMAGES` must match the real file.
+- **No redundancy.** From one event keep only shots with a distinct framing or moment; of
+  two near-identical frames keep the better one. Drop blurred (incl. motion blur on a face),
+  very dark, or badly lit shots the treatment can't rescue.
+- **Never two photos of the same event next to each other** — not side by side, not above
+  or below. The event is the text after ` · ` in the caption; write it identically every time.
+  `galeria.html` enforces this when it lays out rows and when a photo fades into another.
+- **Balanced, consistent tone** via `studio/gallery/tratar.py` (levels by luminance, gentle
+  midtones/contrast/saturation normalisation, output sharpening) — restrained, never dramatic.
+- Log every curation pass (what went out and why) in `studio/gallery/README.md` and in
+  `SELECCION.md` in Drive.
 
 ### Bilingualism
 - **Spanish is primary; Catalan is the co-equal second language** — the collective signs

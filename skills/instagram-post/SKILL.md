@@ -43,6 +43,9 @@ Google Drive, which currently does not serve bytes locally: copy them by hand in
 `studio/instagram/assets/retratos/` and check the collective may publish them. A
 type-only slide always beats a bad crop. Those gallery photos are 16:9, so leave
 `foto.forma` on its `banda` default rather than cropping a portrait out of a landscape.
+The collective's photo rules apply here too (see "Photo curation" in `CLAUDE.md` and
+`studio/gallery/README.md`): **never crop through a head**, no near-duplicate shots in one
+carousel, and use the treated copies in `docs/gallery/` — never re-treat them.
 
 **Logos.** `marca_cfdl` redraws the collective's own mark in SVG — the amber square with
 "C.F. / D.L." and the double rule whose corners deliberately don't meet. `logo` for the

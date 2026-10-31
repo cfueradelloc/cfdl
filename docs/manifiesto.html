@@ -26,23 +26,28 @@
     <script src="assets/js/site.js" defer></script>
     <style>
         /* ── Title block (page-specific) ──────────────────────────────────── */
+        /* Misma cabecera que Eventos y Galería: mismo aire arriba, mismo
+           antetítulo, mismo cuerpo y misma línea base del título. */
         .title-block {
-            padding: 72px max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))) 48px;
+            padding: clamp(40px, 5vw, 72px) max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))) 48px;
             border-bottom: 1px solid var(--rule);
         }
 
         .title-eyebrow {
             font-size: var(--fs-label);
-            letter-spacing: 0.24em;
+            letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--muted);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
+            margin-top: -1.6em;      /* dos líneas: la primera sube, la segunda
+                                        y el título quedan como en las demás */
         }
 
         .title-main {
             font-family: 'MinionPro', serif;
-            font-size: clamp(56px, 11vw, 160px);
-            line-height: 0.9;
+            font-size: var(--fs-display);
+            line-height: 0.92;
+            letter-spacing: -0.025em;
             font-weight: normal;
             font-style: italic;
             color: var(--text);
@@ -221,7 +226,7 @@
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 768px) {
-            .title-block { padding: 48px var(--gutter) 32px; }
+            .title-block { padding: clamp(40px, 5vw, 72px) var(--gutter) 32px; }
             .lang-nav { flex-wrap: wrap; }
             #shuffle-btn { margin-left: auto; }
             .manifesto-body { padding: 0 var(--gutter); }
@@ -244,7 +249,7 @@
 </nav>
 
 <div class="title-block">
-    <p class="title-eyebrow reveal">Colectivo Fuera de Lugar — Col·lectiu Fora de Lloc</p>
+    <p class="title-eyebrow reveal">Colectivo Fuera de Lugar —<br>Col·lectiu Fora de Lloc</p>
     <h1 class="title-main reveal reveal-2"><span id="title-word">Mani&shy;fiesto</span></h1>
     <p class="title-sub reveal reveal-3" id="title-sub">Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar</p>
 </div>

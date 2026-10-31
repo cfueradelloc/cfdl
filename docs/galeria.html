@@ -27,9 +27,10 @@
     <style>
         /* GALERÍA — crema sobre negro (theme-tinta), como Eventos. Filas
            justificadas: cada foto con su proporción, sin recortes, todas
-           a ras con 6 px de aire; las filas ocupan el ancho exacto. Cada
-           15 s la galería se baraja sola (como al pulsar «Barajar»), con un
-           fundido. Clic: la foto entera. */
+           a ras con 6 px de aire; las filas ocupan el ancho exacto. Se ve
+           una parte de la colección; el resto espera en reserva y, a ratos
+           irregulares, una foto se funde en otra de la reserva con la misma
+           proporción (y sin vecinas del mismo encuentro). Clic: la foto entera. */
 
         header::after { display: none; }
         header { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(20px, 2.5vw, 32px); }
@@ -58,8 +59,10 @@
         }
         .shuffle-btn:hover,
         .shuffle-btn:focus-visible { color: var(--text); border-bottom-color: var(--text); }
-        /* El antetítulo deja sitio a «Barajar»; en el móvil pasa a dos líneas. */
-        header .kicker { padding-right: 104px; }
+        /* El antetítulo va en dos líneas; la primera sube hacia el margen
+           superior, así la segunda —y el título— caen exactamente donde en
+           Eventos y Manifiesto. «Barajar» se alinea con la segunda. */
+        header .kicker { margin-top: -1.6em; padding-right: 104px; }
 
         /* ── Filas justificadas ────────────────────────────────────────────── */
         main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
@@ -74,14 +77,23 @@
             background: #0f0e0c;
             cursor: zoom-in;
         }
+        .foto { transition: opacity 0.7s cubic-bezier(0.45, 0, 0.25, 1); }
+        .foto.oculta { opacity: 0; }
+        .foto picture { display: block; width: 100%; height: 100%; }
+        /* La foto que llega se funde encima de la que se va: sin hueco. */
+        .foto .capa {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 1.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .foto .capa.entra { opacity: 1; }
         .foto img {
             display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 1.2s var(--ease-out);
         }
-        .foto:hover img { transform: scale(1.025); }
         .foto .pie {
             position: absolute;
             left: 0; right: 0; bottom: 0;
@@ -200,7 +212,7 @@
 </nav>
 
 <header>
-    <p class="kicker reveal">Encuentros, lecturas y proyecciones</p>
+    <p class="kicker reveal">Encuentros, lecturas<br>y proyecciones</p>
     <h1 class="section-title reveal reveal-2">Galería</h1>
     <button type="button" class="shuffle-btn reveal" id="shuffle" hidden>Barajar</button>
 </header>
@@ -214,61 +226,43 @@
     <div class="gallery-static">
         <figure><img src="gallery/banel-adama-1.jpg" alt="Banel &amp; Adama — tomando la palabra" width="1600" height="1067"><figcaption>Tomando la palabra · Banel &amp; Adama</figcaption></figure>
         <figure><img src="gallery/banel-adama-2.jpg" alt="Banel &amp; Adama — la voz" width="1600" height="1067"><figcaption>La voz · Banel &amp; Adama</figcaption></figure>
-        <figure><img src="gallery/banel-adama-3.jpg" alt="Banel &amp; Adama — dos voces" width="1600" height="1067"><figcaption>Dos voces · Banel &amp; Adama</figcaption></figure>
         <figure><img src="gallery/banel-adama-4.jpg" alt="Banel &amp; Adama — sala llena" width="1600" height="1067"><figcaption>Sala llena · Banel &amp; Adama</figcaption></figure>
         <figure><img src="gallery/welcome-summer-1.jpg" alt="Welcome Summer — en la librería" width="1600" height="900"><figcaption>En la librería · Welcome Summer</figcaption></figure>
-        <figure><img src="gallery/welcome-summer-2.jpg" alt="Welcome Summer — el círculo" width="1600" height="900"><figcaption>El círculo · Welcome Summer</figcaption></figure>
         <figure><img src="gallery/welcome-summer-3.jpg" alt="Welcome Summer — desde arriba" width="1600" height="900"><figcaption>Desde arriba · Welcome Summer</figcaption></figure>
-        <figure><img src="gallery/welcome-summer-4.jpg" alt="Welcome Summer — el sofá verde" width="900" height="1600"><figcaption>El sofá verde · Welcome Summer</figcaption></figure>
-        <figure><img src="gallery/welcome-summer-5.jpg" alt="Welcome Summer — leyendo" width="900" height="1600"><figcaption>Leyendo · Welcome Summer</figcaption></figure>
-        <figure><img src="gallery/welcome-summer-6.jpg" alt="Welcome Summer — la lectura" width="900" height="1600"><figcaption>La lectura · Welcome Summer</figcaption></figure>
         <figure><img src="gallery/welcome-summer-7.jpg" alt="Welcome Summer — los poetas" width="1200" height="1600"><figcaption>Los poetas · Welcome Summer</figcaption></figure>
         <figure><img src="gallery/envozalta-angela-1.jpg" alt="En voz alta — Ángela Mallén" width="1600" height="900"><figcaption>Ángela Mallén · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-angela-2.jpg" alt="En voz alta — en conversación" width="900" height="1600"><figcaption>En conversación · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-angela-3.jpg" alt="En voz alta — diálogo" width="1600" height="1320"><figcaption>Diálogo · En voz alta</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-4.jpg" alt="En voz alta — escucha" width="900" height="1600"><figcaption>Escucha · En voz alta</figcaption></figure>
-        <figure><img src="gallery/envozalta-angela-5.jpg" alt="En voz alta — desde la sala" width="900" height="1600"><figcaption>Desde la sala · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-angela-6.jpg" alt="En voz alta — en la calle" width="1600" height="900"><figcaption>En la calle · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-ana-1.jpg" alt="En voz alta — Ana Griott" width="1200" height="1600"><figcaption>Ana Griott · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-ana-2.jpg" alt="En voz alta — tres voces" width="1600" height="1200"><figcaption>Tres voces · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-ana-3.jpg" alt="En voz alta — el corro" width="1600" height="1200"><figcaption>El corro · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-pablo-1.jpg" alt="En voz alta — Pablo Martín" width="1600" height="1200"><figcaption>Pablo Martín · En voz alta</figcaption></figure>
-        <figure><img src="gallery/envozalta-pablo-2.jpg" alt="En voz alta — la lectura" width="1600" height="1200"><figcaption>La lectura · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-pablo-3.jpg" alt="En voz alta — el libro" width="1600" height="1200"><figcaption>El libro · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-pablo-4.jpg" alt="En voz alta — a solas" width="1600" height="1200"><figcaption>A solas · En voz alta</figcaption></figure>
         <figure><img src="gallery/envozalta-sala.jpg" alt="En voz alta — antes del encuentro" width="900" height="1600"><figcaption>Antes del encuentro · En voz alta</figcaption></figure>
         <figure><img src="gallery/magistral-juan-1.jpg" alt="La Magistral — Juan Navarro" width="1200" height="1600"><figcaption>Juan Navarro · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-juan-2.jpg" alt="La Magistral — entre voces" width="1600" height="900"><figcaption>Entre voces · La Magistral</figcaption></figure>
-        <figure><img src="gallery/magistral-juan-3.jpg" alt="La Magistral — el público" width="1600" height="1200"><figcaption>El público · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-juan-4.jpg" alt="La Magistral — escucha" width="1600" height="1200"><figcaption>Escucha · La Magistral</figcaption></figure>
-        <figure><img src="gallery/magistral-juan-5.jpg" alt="La Magistral — en el sofá" width="720" height="1600"><figcaption>En el sofá · La Magistral</figcaption></figure>
-        <figure><img src="gallery/magistral-juan-6.jpg" alt="La Magistral — lecturas" width="900" height="1600"><figcaption>Lecturas · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-juan-7.jpg" alt="La Magistral — la conversación" width="1600" height="900"><figcaption>La conversación · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-tinaut-1.jpg" alt="La Magistral — María Tinaut" width="1200" height="1600"><figcaption>María Tinaut · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-tinaut-2.jpg" alt="La Magistral — la charla" width="1600" height="1200"><figcaption>La charla · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-tinaut-3.jpg" alt="La Magistral — la sala" width="1600" height="1200"><figcaption>La sala · La Magistral</figcaption></figure>
-        <figure><img src="gallery/magistral-tinaut-4.jpg" alt="La Magistral — las imágenes" width="900" height="1600"><figcaption>Las imágenes · La Magistral</figcaption></figure>
-        <figure><img src="gallery/magistral-tinaut-5.jpg" alt="La Magistral — frente al público" width="1600" height="900"><figcaption>Frente al público · La Magistral</figcaption></figure>
         <figure><img src="gallery/magistral-tinaut-6.jpg" alt="La Magistral — a la escucha" width="900" height="1600"><figcaption>A la escucha · La Magistral</figcaption></figure>
         <figure><img src="gallery/14-4-laura-1.jpg" alt="14.4 — Laura Casielles" width="1200" height="1600"><figcaption>Laura Casielles · 14.4</figcaption></figure>
-        <figure><img src="gallery/14-4-laura-2.jpg" alt="14.4 — la última sesión" width="1600" height="900"><figcaption>La última sesión · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-laura-3.jpg" alt="14.4 — el club" width="1600" height="900"><figcaption>El club · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-laura-4.jpg" alt="14.4 — en Radial" width="1600" height="900"><figcaption>En Radial · 14.4</figcaption></figure>
-        <figure><img src="gallery/14-4-laura-5.jpg" alt="14.4 — ante la sala" width="1200" height="1600"><figcaption>Ante la sala · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-laura-6.jpg" alt="14.4 — la pinchada" width="1600" height="900"><figcaption>La pinchada · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-laura-7.jpg" alt="14.4 — Rosauro Varo y Laura Casielles" width="1200" height="1600"><figcaption>Rosauro Varo y Laura Casielles · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-sani-1.jpg" alt="14.4 — Sani Ladan" width="1200" height="1600"><figcaption>Sani Ladan · 14.4</figcaption></figure>
-        <figure><img src="gallery/14-4-sani-2.jpg" alt="14.4 — los tres" width="1600" height="1200"><figcaption>Los tres · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-sani-3.jpg" alt="14.4 — la librería llena" width="1600" height="1200"><figcaption>La librería llena · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-sani-4.jpg" alt="14.4 — de espaldas" width="1600" height="1200"><figcaption>De espaldas · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-sani-5.jpg" alt="14.4 — la dedicatoria" width="1600" height="1200"><figcaption>La dedicatoria · 14.4</figcaption></figure>
         <figure><img src="gallery/14-4-sani-6.jpg" alt="14.4 — tras la charla" width="1600" height="1200"><figcaption>Tras la charla · 14.4</figcaption></figure>
-        <figure><img src="gallery/lorca-habana-1.jpg" alt="Lorca en La Habana — a oscuras" width="1600" height="1200"><figcaption>A oscuras · Lorca en La Habana</figcaption></figure>
         <figure><img src="gallery/lorca-habana-2.jpg" alt="Lorca en La Habana — la proyección" width="1600" height="1200"><figcaption>La proyección · Lorca en La Habana</figcaption></figure>
         <figure><img src="gallery/lorca-habana-3.jpg" alt="Lorca en La Habana — ante el cartel" width="1600" height="1200"><figcaption>Ante el cartel · Lorca en La Habana</figcaption></figure>
         <figure><img src="gallery/manifiesto-1.jpg" alt="Manifiesto — luz y sombra" width="1600" height="1066"><figcaption>Luz y sombra · Manifiesto</figcaption></figure>
         <figure><img src="gallery/manifiesto-2.jpg" alt="Manifiesto — desplegado" width="600" height="900"><figcaption>Desplegado · Manifiesto</figcaption></figure>
-        <figure><img src="gallery/manifiesto-3.jpg" alt="Manifiesto — los pliegues" width="1600" height="1067"><figcaption>Los pliegues · Manifiesto</figcaption></figure>
         <figure><img src="gallery/manifiesto-4.jpg" alt="Manifiesto — primera edición" width="1600" height="1067"><figcaption>Primera edición · Manifiesto</figcaption></figure>
     </div>
 </noscript>
@@ -306,61 +300,43 @@
     var IMAGES = [
         { src: "gallery/banel-adama-1.jpg", alt: "Banel & Adama — tomando la palabra", cap: "Tomando la palabra · Banel & Adama", w: 1600, h: 1067 },
         { src: "gallery/banel-adama-2.jpg", alt: "Banel & Adama — la voz", cap: "La voz · Banel & Adama", w: 1600, h: 1067 },
-        { src: "gallery/banel-adama-3.jpg", alt: "Banel & Adama — dos voces", cap: "Dos voces · Banel & Adama", w: 1600, h: 1067 },
         { src: "gallery/banel-adama-4.jpg", alt: "Banel & Adama — sala llena", cap: "Sala llena · Banel & Adama", w: 1600, h: 1067 },
         { src: "gallery/welcome-summer-1.jpg", alt: "Welcome Summer — en la librería", cap: "En la librería · Welcome Summer", w: 1600, h: 900 },
-        { src: "gallery/welcome-summer-2.jpg", alt: "Welcome Summer — el círculo", cap: "El círculo · Welcome Summer", w: 1600, h: 900 },
         { src: "gallery/welcome-summer-3.jpg", alt: "Welcome Summer — desde arriba", cap: "Desde arriba · Welcome Summer", w: 1600, h: 900 },
-        { src: "gallery/welcome-summer-4.jpg", alt: "Welcome Summer — el sofá verde", cap: "El sofá verde · Welcome Summer", w: 900, h: 1600 },
-        { src: "gallery/welcome-summer-5.jpg", alt: "Welcome Summer — leyendo", cap: "Leyendo · Welcome Summer", w: 900, h: 1600 },
-        { src: "gallery/welcome-summer-6.jpg", alt: "Welcome Summer — la lectura", cap: "La lectura · Welcome Summer", w: 900, h: 1600 },
         { src: "gallery/welcome-summer-7.jpg", alt: "Welcome Summer — los poetas", cap: "Los poetas · Welcome Summer", w: 1200, h: 1600 },
         { src: "gallery/envozalta-angela-1.jpg", alt: "En voz alta — Ángela Mallén", cap: "Ángela Mallén · En voz alta", w: 1600, h: 900 },
         { src: "gallery/envozalta-angela-2.jpg", alt: "En voz alta — en conversación", cap: "En conversación · En voz alta", w: 900, h: 1600 },
         { src: "gallery/envozalta-angela-3.jpg", alt: "En voz alta — diálogo", cap: "Diálogo · En voz alta", w: 1600, h: 1320 },
-        { src: "gallery/envozalta-angela-4.jpg", alt: "En voz alta — escucha", cap: "Escucha · En voz alta", w: 900, h: 1600 },
-        { src: "gallery/envozalta-angela-5.jpg", alt: "En voz alta — desde la sala", cap: "Desde la sala · En voz alta", w: 900, h: 1600 },
         { src: "gallery/envozalta-angela-6.jpg", alt: "En voz alta — en la calle", cap: "En la calle · En voz alta", w: 1600, h: 900 },
         { src: "gallery/envozalta-ana-1.jpg", alt: "En voz alta — Ana Griott", cap: "Ana Griott · En voz alta", w: 1200, h: 1600 },
         { src: "gallery/envozalta-ana-2.jpg", alt: "En voz alta — tres voces", cap: "Tres voces · En voz alta", w: 1600, h: 1200 },
         { src: "gallery/envozalta-ana-3.jpg", alt: "En voz alta — el corro", cap: "El corro · En voz alta", w: 1600, h: 1200 },
         { src: "gallery/envozalta-pablo-1.jpg", alt: "En voz alta — Pablo Martín", cap: "Pablo Martín · En voz alta", w: 1600, h: 1200 },
-        { src: "gallery/envozalta-pablo-2.jpg", alt: "En voz alta — la lectura", cap: "La lectura · En voz alta", w: 1600, h: 1200 },
         { src: "gallery/envozalta-pablo-3.jpg", alt: "En voz alta — el libro", cap: "El libro · En voz alta", w: 1600, h: 1200 },
         { src: "gallery/envozalta-pablo-4.jpg", alt: "En voz alta — a solas", cap: "A solas · En voz alta", w: 1600, h: 1200 },
         { src: "gallery/envozalta-sala.jpg", alt: "En voz alta — antes del encuentro", cap: "Antes del encuentro · En voz alta", w: 900, h: 1600 },
         { src: "gallery/magistral-juan-1.jpg", alt: "La Magistral — Juan Navarro", cap: "Juan Navarro · La Magistral", w: 1200, h: 1600 },
         { src: "gallery/magistral-juan-2.jpg", alt: "La Magistral — entre voces", cap: "Entre voces · La Magistral", w: 1600, h: 900 },
-        { src: "gallery/magistral-juan-3.jpg", alt: "La Magistral — el público", cap: "El público · La Magistral", w: 1600, h: 1200 },
         { src: "gallery/magistral-juan-4.jpg", alt: "La Magistral — escucha", cap: "Escucha · La Magistral", w: 1600, h: 1200 },
-        { src: "gallery/magistral-juan-5.jpg", alt: "La Magistral — en el sofá", cap: "En el sofá · La Magistral", w: 720, h: 1600 },
-        { src: "gallery/magistral-juan-6.jpg", alt: "La Magistral — lecturas", cap: "Lecturas · La Magistral", w: 900, h: 1600 },
         { src: "gallery/magistral-juan-7.jpg", alt: "La Magistral — la conversación", cap: "La conversación · La Magistral", w: 1600, h: 900 },
         { src: "gallery/magistral-tinaut-1.jpg", alt: "La Magistral — María Tinaut", cap: "María Tinaut · La Magistral", w: 1200, h: 1600 },
         { src: "gallery/magistral-tinaut-2.jpg", alt: "La Magistral — la charla", cap: "La charla · La Magistral", w: 1600, h: 1200 },
         { src: "gallery/magistral-tinaut-3.jpg", alt: "La Magistral — la sala", cap: "La sala · La Magistral", w: 1600, h: 1200 },
-        { src: "gallery/magistral-tinaut-4.jpg", alt: "La Magistral — las imágenes", cap: "Las imágenes · La Magistral", w: 900, h: 1600 },
-        { src: "gallery/magistral-tinaut-5.jpg", alt: "La Magistral — frente al público", cap: "Frente al público · La Magistral", w: 1600, h: 900 },
         { src: "gallery/magistral-tinaut-6.jpg", alt: "La Magistral — a la escucha", cap: "A la escucha · La Magistral", w: 900, h: 1600 },
         { src: "gallery/14-4-laura-1.jpg", alt: "14.4 — Laura Casielles", cap: "Laura Casielles · 14.4", w: 1200, h: 1600 },
-        { src: "gallery/14-4-laura-2.jpg", alt: "14.4 — la última sesión", cap: "La última sesión · 14.4", w: 1600, h: 900 },
         { src: "gallery/14-4-laura-3.jpg", alt: "14.4 — el club", cap: "El club · 14.4", w: 1600, h: 900 },
         { src: "gallery/14-4-laura-4.jpg", alt: "14.4 — en Radial", cap: "En Radial · 14.4", w: 1600, h: 900 },
-        { src: "gallery/14-4-laura-5.jpg", alt: "14.4 — ante la sala", cap: "Ante la sala · 14.4", w: 1200, h: 1600 },
         { src: "gallery/14-4-laura-6.jpg", alt: "14.4 — la pinchada", cap: "La pinchada · 14.4", w: 1600, h: 900 },
         { src: "gallery/14-4-laura-7.jpg", alt: "14.4 — Rosauro Varo y Laura Casielles", cap: "Rosauro Varo y Laura Casielles · 14.4", w: 1200, h: 1600 },
         { src: "gallery/14-4-sani-1.jpg", alt: "14.4 — Sani Ladan", cap: "Sani Ladan · 14.4", w: 1200, h: 1600 },
-        { src: "gallery/14-4-sani-2.jpg", alt: "14.4 — los tres", cap: "Los tres · 14.4", w: 1600, h: 1200 },
         { src: "gallery/14-4-sani-3.jpg", alt: "14.4 — la librería llena", cap: "La librería llena · 14.4", w: 1600, h: 1200 },
         { src: "gallery/14-4-sani-4.jpg", alt: "14.4 — de espaldas", cap: "De espaldas · 14.4", w: 1600, h: 1200 },
         { src: "gallery/14-4-sani-5.jpg", alt: "14.4 — la dedicatoria", cap: "La dedicatoria · 14.4", w: 1600, h: 1200 },
         { src: "gallery/14-4-sani-6.jpg", alt: "14.4 — tras la charla", cap: "Tras la charla · 14.4", w: 1600, h: 1200 },
-        { src: "gallery/lorca-habana-1.jpg", alt: "Lorca en La Habana — a oscuras", cap: "A oscuras · Lorca en La Habana", w: 1600, h: 1200 },
         { src: "gallery/lorca-habana-2.jpg", alt: "Lorca en La Habana — la proyección", cap: "La proyección · Lorca en La Habana", w: 1600, h: 1200 },
         { src: "gallery/lorca-habana-3.jpg", alt: "Lorca en La Habana — ante el cartel", cap: "Ante el cartel · Lorca en La Habana", w: 1600, h: 1200 },
         { src: "gallery/manifiesto-1.jpg", alt: "Manifiesto — luz y sombra", cap: "Luz y sombra · Manifiesto", w: 1600, h: 1066 },
         { src: "gallery/manifiesto-2.jpg", alt: "Manifiesto — desplegado", cap: "Desplegado · Manifiesto", w: 600, h: 900 },
-        { src: "gallery/manifiesto-3.jpg", alt: "Manifiesto — los pliegues", cap: "Los pliegues · Manifiesto", w: 1600, h: 1067 },
         { src: "gallery/manifiesto-4.jpg", alt: "Manifiesto — primera edición", cap: "Primera edición · Manifiesto", w: 1600, h: 1067 }
     ];
 
@@ -371,7 +347,6 @@
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var GAP = 6;
-    var CADA = 15000;           // se baraja sola cada 15 s
 
     function sm(src, ext) { return src.replace("gallery/", "gallery/sm/").replace(/\.jpg$/, ext || ".jpg"); }
     function ratio(i) { return IMAGES[i].w / IMAGES[i].h; }
@@ -381,7 +356,7 @@
         }
         return a;
     }
-    var orden = barajar(IMAGES.map(function (_, i) { return i; }));
+    var orden = IMAGES.map(function (_, i) { return i; });
 
     /* ── Filas justificadas ─────────────────────────────────────────────── */
     function altoObjetivo() {
@@ -421,48 +396,235 @@
         return a;
     }
 
-    function componer() {
-        var W = root.clientWidth;
-        if (!W) return;
-        var H = altoObjetivo();
-        var frag = document.createDocumentFragment();
-        var fila = [], suma = 0;
+    /* Reparte un orden en filas justificadas. Devuelve la geometría (sin
+       tocar el DOM): sirve para pintar y para comprobar vecinos. */
+    function repartir(ord, W, H) {
+        var filas = [], fila = [], suma = 0;
         function cerrar(ultima) {
             var hueco = GAP * (fila.length - 1);
             var h = (W - hueco) / suma;
-            var div = document.createElement("div");
-            div.className = "fila";
             if (ultima && h > H) h = H;          // la última fila no se estira
+            var x = 0, celdas = [];
             fila.forEach(function (i) {
-                var a = pieza(i);
-                a.style.height = h.toFixed(2) + "px";
-                if (ultima) a.style.width = (ratio(i) * h).toFixed(2) + "px";
-                else a.style.flex = ratio(i) + " 1 0px"; // reparte el ancho exacto
-                div.appendChild(a);
+                var w = ratio(i) * h;
+                celdas.push({ i: i, x0: x, x1: x + w });
+                x += w + GAP;
             });
-            frag.appendChild(div);
+            filas.push({ h: h, ultima: ultima, celdas: celdas });
             fila = []; suma = 0;
         }
-        orden.forEach(function (i) {
+        ord.forEach(function (i) {
             fila.push(i);
             suma += ratio(i);
             if (suma * H + GAP * (fila.length - 1) >= W) cerrar(false);
         });
         if (fila.length) cerrar(true);
+        return filas;
+    }
+
+    var reserva = [];          // fotos que no se ven ahora; entran poco a poco
+    var VISIBLE = 0.6;         // fracción de la colección a la vista
+
+    function componer(cascada) {
+        var W = root.clientWidth;
+        if (!W) return;
+        var filas = repartir(orden, W, altoObjetivo());
+        var meta = Math.ceil(IMAGES.length * VISIBLE), vistas = 0, k = 0;
+        while (k < filas.length && vistas < meta) { vistas += filas[k].celdas.length; k++; }
+        if (k === filas.length - 1 && filas[k].ultima) k++;   // no dejar una fila suelta
+        var frag = document.createDocumentFragment();
+        filas.slice(0, k).forEach(function (f) {
+            var div = document.createElement("div");
+            div.className = "fila";
+            f.celdas.forEach(function (c) {
+                var a = pieza(c.i);
+                a.style.height = f.h.toFixed(2) + "px";
+                if (f.ultima) a.style.width = (c.x1 - c.x0).toFixed(2) + "px";
+                else a.style.flex = ratio(c.i) + " 1 0px"; // reparte el ancho exacto
+                if (cascada) {
+                    a.classList.add("oculta");
+                    setTimeout(function () { a.classList.remove("oculta"); }, 60 + Math.random() * 700);
+                }
+                div.appendChild(a);
+            });
+            frag.appendChild(div);
+        });
+        reserva = [];
+        filas.slice(k).forEach(function (f) { f.celdas.forEach(function (c) { reserva.push(c.i); }); });
         root.innerHTML = "";
         root.appendChild(frag);
     }
 
-    /* ── Barajar (a mano y solo) ────────────────────────────────────────── */
-    var pausa = false;
-    root.addEventListener("mouseenter", function () { pausa = true; });
-    root.addEventListener("mouseleave", function () { pausa = false; });
+    /* ── Orden: nunca dos fotos del mismo encuentro juntas ──────────────────
+       Ni una al lado de otra ni una encima de otra. Se construye el orden
+       fila a fila evitando esos vecinos, se reparte de verdad en filas y se
+       cuentan los choques (a los lados y en la fila de arriba, si se
+       solapan). Se repite hasta dar con un reparto sin ninguno. */
+    function evento(i) {
+        var c = IMAGES[i].cap;
+        return c.slice(c.lastIndexOf(" · ") + 3);
+    }
 
+    /* Construye las filas una a una: en cada hueco sólo entran fotos cuyo
+       encuentro no sea el de su vecina de la izquierda ni el de alguna foto
+       de la fila de arriba que quede encima (posición estimada a la altura
+       objetivo). Entre las válidas, se prefiere el encuentro con más fotos
+       pendientes, para no atascarse al final. */
+    function secuencia(W, H) {
+        var resto = barajar(IMAGES.map(function (_, i) { return i; }));
+        var cuenta = {};
+        resto.forEach(function (i) { cuenta[evento(i)] = (cuenta[evento(i)] || 0) + 1; });
+        var sale = [], arriba = [];
+        while (resto.length) {
+            var fila = [], x = 0, suma = 0;
+            while (resto.length) {
+                var izq = fila.length ? evento(fila[fila.length - 1].i) : null;
+                var libre = function (i) {
+                    var e = evento(i), x1 = x + ratio(i) * H;
+                    if (e === izq) return false;
+                    return !arriba.some(function (d) { return d.e === e && d.x0 < x1 && x < d.x1; });
+                };
+                var ok = resto.filter(libre);
+                if (!ok.length) ok = resto.filter(function (i) { return evento(i) !== izq; });
+                if (!ok.length) ok = resto;
+                var max = Math.max.apply(null, ok.map(function (i) { return cuenta[evento(i)]; }));
+                var top = ok.filter(function (i) { return cuenta[evento(i)] >= max - 1; });
+                var el = top[Math.floor(Math.random() * top.length)];
+                resto.splice(resto.indexOf(el), 1);
+                cuenta[evento(el)]--;
+                fila.push({ i: el, x0: x, x1: x + ratio(el) * H, e: evento(el) });
+                x += ratio(el) * H + GAP;
+                suma += ratio(el);
+                if (suma * H + GAP * (fila.length - 1) >= W) break;
+            }
+            // posiciones reales de la fila cerrada, para la siguiente
+            var h = Math.min(H, (W - GAP * (fila.length - 1)) / suma), xx = 0;
+            arriba = fila.map(function (c) {
+                var w = ratio(c.i) * h, d = { e: c.e, x0: xx, x1: xx + w };
+                xx += w + GAP;
+                return d;
+            });
+            fila.forEach(function (c) { sale.push(c.i); });
+        }
+        return sale;
+    }
+
+    function choques(filas) {
+        var n = 0;
+        filas.forEach(function (f, k) {
+            f.celdas.forEach(function (c, j) {
+                if (j && evento(f.celdas[j - 1].i) === evento(c.i)) n++;
+                if (k) filas[k - 1].celdas.forEach(function (d) {
+                    if (d.x0 < c.x1 - 1 && c.x0 < d.x1 - 1 && evento(d.i) === evento(c.i)) n++;
+                });
+            });
+        });
+        return n;
+    }
+
+    function ordenar() {
+        var W = root.clientWidth || 1200, H = altoObjetivo();
+        var mejor = null, menos = Infinity;
+        for (var t = 0; t < 400 && menos > 0; t++) {
+            var o = secuencia(W, H);
+            var n = choques(repartir(o, W, H));
+            if (n < menos) { menos = n; mejor = o; }
+        }
+        return mejor;
+    }
+
+    /* ── Barajar: las fotos se van y vuelven una a una, escalonadas ──────── */
     function rebarajar() {
-        orden = barajar(orden);
-        if (reduce) { componer(); return; }
-        root.classList.add("baraja");
-        setTimeout(function () { componer(); root.classList.remove("baraja"); }, 800);
+        if (reduce) { orden = ordenar(); componer(false); return; }
+        var fotos = root.querySelectorAll(".foto");
+        Array.prototype.forEach.call(fotos, function (a) {
+            setTimeout(function () { a.classList.add("oculta"); }, Math.random() * 350);
+        });
+        setTimeout(function () { orden = ordenar(); componer(true); }, 1100);
+    }
+
+    /* ── Relevo: a ratos, una foto se funde en otra de la reserva ─────────
+       Sólo entra una foto de la misma proporción (±2 %: nada se recorta) y
+       de un encuentro distinto al de sus vecinas (a los lados, encima y
+       debajo). La foto bajo el ratón no cambia; tampoco con el visor abierto,
+       la pestaña oculta o movimiento reducido. */
+    var recientes = [];
+
+    function vecinosEventos(a) {
+        var r = a.getBoundingClientRect(), ev = [];
+        var fila = a.parentNode, filas = Array.prototype.slice.call(root.children), k = filas.indexOf(fila);
+        if (a.previousElementSibling) ev.push(evento(+a.previousElementSibling.dataset.i));
+        if (a.nextElementSibling) ev.push(evento(+a.nextElementSibling.dataset.i));
+        [filas[k - 1], filas[k + 1]].forEach(function (f) {
+            if (!f) return;
+            Array.prototype.forEach.call(f.children, function (b) {
+                var q = b.getBoundingClientRect();
+                if (q.left < r.right - 1 && r.left < q.right - 1) ev.push(evento(+b.dataset.i));
+            });
+        });
+        return ev;
+    }
+
+    function relevo() {
+        if (document.hidden || (visor && visor.open) || !reserva.length) return;
+        var fotos = Array.prototype.filter.call(root.querySelectorAll(".foto"), function (a) {
+            return !a.matches(":hover") && !a.querySelector(".capa") && recientes.indexOf(a) === -1;
+        });
+        barajar(fotos);
+        for (var n = 0; n < fotos.length; n++) {
+            var a = fotos[n], viejo = +a.dataset.i, rv = ratio(viejo);
+            var prohibidos = vecinosEventos(a);
+            var cand = reserva.filter(function (i) {
+                return Math.abs(ratio(i) - rv) / rv < 0.02 && prohibidos.indexOf(evento(i)) === -1;
+            });
+            if (!cand.length) continue;
+            var nuevo = cand[Math.floor(Math.random() * cand.length)];
+            fundir(a, viejo, nuevo);
+            return;
+        }
+    }
+
+    function fundir(a, viejo, nuevo) {
+        reserva.splice(reserva.indexOf(nuevo), 1);
+        reserva.push(viejo);
+        var pv = orden.indexOf(viejo), pn = orden.indexOf(nuevo);
+        orden[pv] = nuevo; orden[pn] = viejo;
+
+        recientes.push(a);
+        if (recientes.length > 4) recientes.shift();
+
+        var im = IMAGES[nuevo];
+        var capa = document.createElement("picture");
+        capa.className = "capa";
+        var src = document.createElement("source");
+        src.type = "image/webp";
+        src.srcset = sm(im.src, ".webp");
+        var img = document.createElement("img");
+        img.alt = "";
+        img.src = sm(im.src);
+        capa.appendChild(src);
+        capa.appendChild(img);
+        a.insertBefore(capa, a.querySelector(".pie"));
+        var listo = img.decode ? img.decode().catch(function () {}) : Promise.resolve();
+        listo.then(function () {
+            requestAnimationFrame(function () { capa.classList.add("entra"); });
+            setTimeout(function () {
+                // la capa pasa a ser la foto; la vieja se retira
+                var vieja = a.querySelector("picture:not(.capa)");
+                if (vieja) vieja.remove();
+                capa.classList.remove("capa", "entra");
+                a.dataset.i = nuevo;
+                a.href = im.src;
+                a.setAttribute("aria-label", im.alt);
+                img.alt = im.alt;
+                a.querySelector(".pie").textContent = im.cap;
+            }, 1900);
+        });
+    }
+
+    function latido() {
+        relevo();
+        setTimeout(latido, 1600 + Math.random() * 1600);   // ritmo irregular
     }
 
     /* ── El visor ───────────────────────────────────────────────────────── */
@@ -516,24 +678,21 @@
     }
 
     /* ── Arranque ───────────────────────────────────────────────────────── */
-    componer();
+    orden = ordenar();
+    componer(!reduce);
 
     if (btn) {
         btn.hidden = false;
         btn.addEventListener("click", rebarajar);
     }
 
-    // Cada 15 s, la galería entera se baraja sola, como al pulsar «Barajar».
-    if (!reduce) setInterval(function () {
-        if (pausa || document.hidden || (visor && visor.open)) return;
-        rebarajar();
-    }, CADA);
+    if (!reduce) setTimeout(latido, 2600);
 
     var ultimoAncho = root.clientWidth, rt;
     window.addEventListener("resize", function () {
         clearTimeout(rt);
         rt = setTimeout(function () {
-            if (root.clientWidth !== ultimoAncho) { ultimoAncho = root.clientWidth; componer(); }
+            if (root.clientWidth !== ultimoAncho) { ultimoAncho = root.clientWidth; orden = ordenar(); componer(false); }
         }, 150);
     });
 })();
