@@ -46,3 +46,6 @@ Chrome headless en paralelo, perfiles aislados) que escribe en `out/`. `prep_pho
 - `assets/` — entradas: fuentes, fotos del manifiesto, la camiseta base, el PDF del manifiesto.
 - `src/` — HTML generado, uno por diseño (no editar a mano).
 - `out/` — los PNG renderizados y el vídeo; `out/transparent/` las estampas sin camiseta; `out/pdf/` los archivos de imprenta.
+
+`out/`, `assets/photos/` y el PDF del manifiesto no están en git: viven en Drive
+(`CFDL/Contenido/GitHub/studio/tshirts/`) y aquí son enlaces — los crea `scripts/link-drive.sh`.

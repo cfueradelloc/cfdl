@@ -7,3 +7,14 @@ studio/instagram/src/*.html
 studio/instagram/src/_sizes.txt
 
 __pycache__/
+
+# Vive en Google Drive (CFDL/Contenido/GitHub); en el repo son enlaces.
+# Los crea scripts/link-drive.sh — ver CLAUDE.md.
+studio/tshirts/out
+studio/tshirts/assets/photos
+studio/tshirts/assets/Manifesto_Fuera_De_Lugar.pdf
+studio/instagram/out
+studio/instagram/assets/retratos
+studio/instagram/assets/portadas
+studio/brand/bocetos
+studio/brand/png

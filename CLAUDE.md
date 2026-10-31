@@ -25,6 +25,7 @@ Four top-level folders, one job each: **`docs/`** is served, **`content/`** is t
   Edit here, then reflect changes into the pages under `docs/`. Nothing else lives here.
 - `studio/` — **generators whose output is artwork, not pages** (NOT served). Each folder has its own
   `README.md`; scripts sit at its root, inputs in `assets/`, generated files in `src/` / `out/`.
+  Every `out/`, the photos and the sketches are **symlinks into Drive** (see *Gitignored repo material*).
   - `tshirts/` — shirt mockups: `build_designs.py` → `src/*.html` → `render.sh` → `out/*.png`
     (`out/transparent/` bare prints, `out/pdf/` print files).
   - `instagram/` — 1080×1350 announcement images + captions for @cfueradelloc; briefs in
@@ -34,6 +35,7 @@ Four top-level folders, one job each: **`docs/`** is served, **`content/`** is t
 - `skills/` — Claude Code skills (NOT served), each a folder with a `SKILL.md`: `brand-content/`
   (+ `references/` for colorplan and manifesto sources), `algorithmic-art/`, `instagram-post/` and
   `instagram-archive/` (downloads @cfueradelloc into the Drive's `Instagram/`).
+- `scripts/` — repo tooling: `link-drive.sh` (links the Drive-hosted folders, see below).
 - `README.md` — overview of the skills.
 
 ### Deployment
@@ -51,9 +53,12 @@ needed). The user has authorized direct pushes to `main`; pushing publishes the 
 The collective's working material (manifesto translations, branding assets, event
 posters, admin docs, photos) is **not** in this repo. It lives in Google Drive.
 
-**Always access it through the locally synced folder, NOT via the MCP/connector.**
+**Drive synchronization matters to the user.** Default to the locally synced folder (it *is*
+Drive: whatever is written there syncs), and use the Google Drive connector whenever it is
+necessary (lookups by ID, files not yet downloaded, sharing).
 
-Canonical local path:
+Full CFDL folder — Drive ID `1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo`
+(<https://drive.google.com/drive/folders/1uC9dE92peUs_G2lHoZCsJz3cjdPj9cHo>). Canonical local path:
 
 ```
 /Users/mduranfrigola/Library/CloudStorage/GoogleDrive-miquelduranfrigola@gmail.com/My Drive/Documents/Writing/CFDL
@@ -66,17 +71,34 @@ so **default to the local path above**.
 ### Backup: Google Drive connector (MCP)
 A shortcut to the same CFDL folder also exists in the **miquel@ersilia.io** Drive, which
 is what the Google Drive *connector* (MCP) is authenticated against (the active session
-email). Use the connector **only as a fallback** — e.g. if the local sync is stale,
-missing, or the file hasn't downloaded yet — and prefer it for read-only lookups.
+email). Use it whenever it is necessary — e.g. if the local sync is stale, missing, or the
+file hasn't downloaded yet. To match a Drive ID to a local folder without the connector:
+`xattr -p 'com.google.drivefs.item-id#S' <folder>`.
 Note: it points at a *shortcut*, so the connector may surface the shortcut pointer rather
 than the folder contents; resolving the original folder ID can help. Always tell the user
 when you fall back to the connector instead of the local copy.
+
+### Gitignored repo material lives in Drive — `Contenido/GitHub`
+Whatever the repo produces or needs but does not version lives in **`CFDL/Contenido/GitHub`**
+(Drive ID `1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5`,
+<https://drive.google.com/drive/folders/1EVYkA-xXSs8MvOCG6Lb829JxtX6RQZX5>), mirroring the repo's
+relative paths. In the repo those paths are **symlinks into Drive**, listed in `.gitignore`, so the
+generators write straight into Drive and it syncs on its own:
+`studio/tshirts/out`, `studio/tshirts/assets/photos`, `studio/tshirts/assets/Manifesto_Fuera_De_Lugar.pdf`,
+`studio/instagram/out`, `studio/instagram/assets/{retratos,portadas}`, `studio/brand/{bocetos,png}`.
+
+- On a fresh clone or a new machine, run **`scripts/link-drive.sh`** to recreate the links.
+- To send something new to Drive: add its path to `PATHS` in `scripts/link-drive.sh` and to
+  `.gitignore`, `git rm -r --cached` it, then run the script — it copies to Drive, verifies, and
+  only then replaces the local copy with a link.
+- Photos of real people and source material belong here, never in git (the repo is public).
 
 ### Drive folder structure (`…/Writing/CFDL`)
 - `Administracion/` — registration, tax (Agencia Tributaria), meeting notes (Reuniones).
 - `Branding/` — logo, favicon (PNG/PDF/JPEG), brand assets.
 - `Contenido/` — content, incl. `Manifiesto/` in many languages (Español, Català,
-  English, Deutsch, Français, Português, Asturiano) and `Manifiesto/Fotos/`.
+  English, Deutsch, Français, Português, Asturiano) and `Manifiesto/Fotos/`, and `GitHub/`
+  (the repo's gitignored material, see above).
 - `Eventos/` — events such as *Almíbar Off*, *En Voz Alta*, *La Perecquiana*; posters
   (`Carteles/`) and an events calendar spreadsheet.
 - `Instagram/` — local archive of @cfueradelloc (posts, captions, metadata, `index.md`),

@@ -23,6 +23,9 @@ A hand-written static site (plain HTML, no build step), served from `docs/` with
   `instagram/` (announcement images for [@cfueradelloc](https://www.instagram.com/cfueradelloc/)),
   `brand/` (a logo proposal) and `palette/` (the collective's single colour palette).
 - `skills/` — Claude Code skills, below.
+- `scripts/link-drive.sh` — renders, photos and sketches are not in git: they live in the
+  collective's Google Drive (`CFDL/Contenido/GitHub`) and appear in the repo as symlinks.
+  Run this script after cloning to recreate them.
 
 ## Skills
 
