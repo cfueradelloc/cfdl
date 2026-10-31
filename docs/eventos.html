@@ -27,6 +27,11 @@
     <style>
         main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
         header::after { display: none; }
+        /* Menos aire arriba y abajo: la agenda empieza enseguida y el pie
+           llega sin un vacío negro delante. */
+        header { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(20px, 2.5vw, 32px); }
+        footer { margin-top: clamp(48px, 5vw, 72px); padding-top: clamp(28px, 3vw, 40px); padding-bottom: clamp(28px, 3vw, 40px);
+                 border-top: 1px solid var(--border); }
 
         /* ── Section label (page-specific) ─────────────────────────────────── */
         .section-label {
@@ -191,7 +196,7 @@
         }
 
         /* ── Ciclos ────────────────────────────────────────────────────────── */
-        .ciclo-list { padding: 8px 0 48px; }
+        .ciclo-list { padding: 8px 0 0; }
 
         .ciclo {
             padding: 24px 0;
@@ -225,7 +230,7 @@
             .event-item summary { grid-template-columns: 64px 1fr 22px; gap: 0 16px; padding: 20px 0; }
             .event-type { display: none; }
             .event-detail { padding: 0 0 22px; }
-            .ciclo-list { padding: 8px 0 40px; }
+            .ciclo-list { padding: 8px 0 0; }
         }
     </style>
 </head>
