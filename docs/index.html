@@ -36,8 +36,8 @@
 
         /* ── Portada: la fotografía de fondo ───────────────────────────────── */
         /* ── La barra, sobre la foto: sin fondo, en crema. Una sola cabecera.
-           Sin JS se va con la portada al bajar; con JS queda fija y recupera
-           su papel en cuanto la portada sale de debajo (ver el script final). */
+           Sin JS se va con la portada al bajar; con JS queda fija, siempre
+           transparente (ver el script final). */
         .site-nav.sobre-foto {
             position: absolute;
             left: 0;
@@ -47,11 +47,24 @@
             transition: background-color var(--ease), border-color var(--ease);
         }
         .site-nav.sobre-foto.fija { position: fixed; }
-        .site-nav.sobre-foto:not(.solida) .nav-brand,
-        .site-nav.sobre-foto:not(.solida) .nav-links a,
-        .site-nav.sobre-foto:not(.solida) .nav-toggle { color: var(--crema); }
-        .site-nav.sobre-foto:not(.solida) .nav-toggle { border-bottom-color: var(--crema); }
-        .site-nav.sobre-foto.solida { background: var(--bg); border-bottom-color: var(--border); }
+        .site-nav.sobre-foto .nav-brand,
+        .site-nav.sobre-foto .nav-links a,
+        .site-nav.sobre-foto .nav-toggle { color: var(--crema); }
+        .site-nav.sobre-foto .nav-toggle { border-bottom-color: var(--crema); }
+        /* Siempre transparente. Pasada la foto, un velo negro que se desvanece
+           hacia abajo: sobre el negro del índice no se ve, pero el texto que
+           sube por debajo no se cruza con la barra. */
+        .site-nav.sobre-foto::before {
+            content: '';
+            position: absolute;
+            inset: 0 0 -32px 0;
+            z-index: -1;
+            background: linear-gradient(180deg, rgb(23,21,19) 0%, rgb(23,21,19) 72%, rgba(23,21,19,0) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .site-nav.sobre-foto.solida::before { opacity: 1; }
 
         .portada {
             position: relative;
@@ -370,8 +383,9 @@
 </footer>
 
 <script>
-/* La barra queda fija sobre la portada, transparente; al salir la portada de
-   debajo de ella recupera el papel. Sin IntersectionObserver no se fija. */
+/* La barra queda fija y transparente; al salir la portada de debajo de ella
+   gana un velo negro difuminado (nunca blanco). Sin IntersectionObserver no
+   se fija. */
 (function () {
     var nav = document.querySelector('.site-nav.sobre-foto');
     var portada = document.querySelector('.portada');
