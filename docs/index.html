@@ -22,66 +22,72 @@
     <link rel="stylesheet" href="assets/css/base.css">
     <script>document.documentElement.classList.add('js')</script>
     <script src="assets/js/site.js" defer></script>
+    <script src="assets/js/campo.js" defer></script>
     <style>
-        /* La portada consume los tokens y las fuentes de base.css y se queda
-           con su propia retícula. Antes era una pantalla partida por la mitad:
-           medio lienzo de zafiro sosteniendo dos líneas de texto, y enfrente
-           cuatro filas idénticas de una palabra cada una. Decía el nombre del
-           colectivo y nada más. Ahora abre con lo que el colectivo ES —una
-           frase del manifiesto y la hoja impresa— y cada sección declara lo
-           que contiene. */
-
-        /* La cabecera es la COMPARTIDA de base.css (.site-nav): la portada
-           traía una propia —zafiro, 48 px de sangrado, otros cuerpos— y al
-           pasar de una página a otra la barra saltaba. Una sola cabecera. */
+        /* PORTADA — fuera de lugar. Una pantalla entera para la tesis, cada
+           línea desplazada por su cuenta, sobre un campo de maleza que crece
+           y se marchita (campo.js). Debajo, la cinta de antítesis, el próximo
+           encuentro, y las cuatro secciones como hojas sueltas, torcidas,
+           montadas unas sobre otras. Bajo 760 px todo vuelve a una columna
+           legible y sólo queda una inclinación leve. */
 
         /* ── Apertura ──────────────────────────────────────────────────────── */
         .apertura {
+            position: relative;
+            min-height: calc(100svh - 56px);
             display: grid;
-            grid-template-columns: 1.15fr 0.85fr;
-            gap: 56px;
-            align-items: center;
-            padding: 56px var(--gutter);
-            max-width: 1320px;
-            margin: 0 auto;
+            grid-template-rows: auto 1fr auto;
+            padding: clamp(28px, 4vw, 56px) var(--gutter) clamp(56px, 7vw, 96px);
+            overflow: hidden;
+            isolation: isolate;
+        }
+        .campo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
         }
         .ante {
-            font-family: 'FuturaStd', sans-serif;
             font-size: var(--fs-label);
-            letter-spacing: 0.22em;
+            letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--muted);
         }
         .tesis {
+            align-self: center;
             font-family: 'MinionPro', serif;
             font-style: italic;
             font-weight: normal;
-            font-size: clamp(38px, 5.4vw, 74px);
-            line-height: 1.06;
-            /* La cursiva del serif entra con prosa izquierdo: sin este empujón
-               la «C» arranca un par de píxeles a la derecha del antetítulo. */
-            margin: 18px 0 0 -0.035em;
-            text-wrap: balance;
+            font-size: clamp(54px, 11.5vw, 196px);
+            line-height: 0.86;
+            letter-spacing: -0.025em;
+            margin: clamp(28px, 5vw, 64px) 0;
+            position: relative;
+            z-index: 2;
         }
-        .bajada {
-            max-width: 46ch;
-            margin: 26px 0 0;
-            color: var(--muted);
-            font-size: 16px;
-            line-height: 1.66;
+        /* Cada línea, a su aire. */
+        .tesis span { display: block; }
+        .tesis span:nth-child(2) { margin-left: 16vw; }
+        .tesis span:nth-child(3) { margin-left: 5vw; }
+        .tesis em { font-style: inherit; color: var(--accent-fg); }
+
+        .hoja {
+            position: absolute;
+            right: calc(var(--gutter) + 2vw);
+            top: clamp(40px, 9vh, 110px);
+            width: clamp(170px, 21vw, 330px);
+            margin: 0;
+            z-index: 1;
+            transform: rotate(var(--r, 3.5deg));
+            transition: transform 0.6s var(--ease-out);
         }
-        .filete-ambar { width: 58px; height: 4px; background: var(--accent); margin: 30px 0 0; }
-        .hoja { margin: 0; }
-        /* La foto original es 2:3. A esa altura estiraba la fila y dejaba un
-           palmo de hueco muerto bajo el filete. Se recorta a 4:5.
-           El recorte va en un MARCO y no en la propia imagen: «aspect-ratio»
-           sobre un elemento reemplazado pierde contra el «height: auto» que
-           base.css le da a todas las imágenes, y la foto seguía saliendo
-           entera. Sobre un div normal no hay pelea. */
+        .hoja:hover { transform: rotate(0deg) scale(1.02); }
         .hoja .marco {
             aspect-ratio: 4 / 5;
             overflow: hidden;
-            border-radius: var(--radius);
+            box-shadow: 0 18px 40px -18px rgba(23, 21, 19, 0.45);
         }
         .hoja .marco img {
             width: 100%;
@@ -91,86 +97,223 @@
             display: block;
         }
         .hoja figcaption {
-            font-family: 'FuturaStd', sans-serif;
             font-size: var(--fs-label);
-            letter-spacing: 0.18em;
+            letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--muted);
             margin-top: 12px;
         }
 
-        /* ── Las cuatro secciones ──────────────────────────────────────────── */
-        /* Sin tarjetas: un filete arriba y nada más. El colectivo publica una
-           hoja doblada, no una aplicación. */
-        .secciones {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0 56px;
-            max-width: 1320px;
-            margin: 0 auto;
-            padding: 0 var(--gutter) 80px;
+        .pie-apertura {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 24px 48px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
         }
-        .seccion {
-            display: block;
-            text-decoration: none;
+        .bajada {
+            max-width: 46ch;
+            font-size: var(--fs-body);
+            line-height: 1.66;
             color: var(--text);
-            border-top: 1px solid var(--border);
-            padding: 26px 0 30px;
-            transition: border-color var(--ease);
+            margin-left: 34vw;
+            /* Un velo de papel bajo la letra: la maleza no se come la lectura. */
+            background: color-mix(in srgb, var(--bg) 82%, transparent);
+            box-shadow: 0 0 24px 18px color-mix(in srgb, var(--bg) 82%, transparent);
         }
-        .seccion:hover { border-top-color: var(--accent); }
-        .seccion .cuenta {
-            font-family: 'FuturaStd', sans-serif;
+        .semilla {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
             font-size: var(--fs-label);
-            letter-spacing: 0.2em;
+            letter-spacing: var(--track);
             text-transform: uppercase;
             color: var(--muted);
         }
-        .seccion h2 {
+        .semilla button {
+            font: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            color: var(--muted);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 7px 14px 6px;
+            cursor: pointer;
+            transition: color var(--ease), border-color var(--ease);
+        }
+        .semilla button:hover { color: var(--text); border-color: var(--accent); }
+
+        /* ── Próximo ───────────────────────────────────────────────────────── */
+        .proximo {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 8px clamp(20px, 4vw, 56px);
+            margin: clamp(56px, 7vw, 96px) var(--gutter) 0;
+            padding: 26px 0;
+            border-top: 1px solid var(--text);
+            border-bottom: 1px solid var(--border);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .proximo .p-label {
+            grid-column: 1 / -1;
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .proximo.is-next .p-label { color: var(--accent-fg); }
+        .proximo .p-fecha { display: flex; align-items: baseline; gap: 12px; }
+        .proximo .p-day {
+            font-family: 'MinionPro', serif;
+            font-style: italic;
+            font-size: clamp(56px, 8vw, 112px);
+            line-height: 0.9;
+        }
+        .proximo .p-month {
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--muted);
+            max-width: 9ch;
+        }
+        .proximo .p-title {
+            font-family: 'MinionPro', serif;
+            font-style: italic;
+            font-size: var(--fs-h3);
+            line-height: 1.2;
+        }
+        .proximo .p-meta {
+            margin-top: 6px;
+            font-size: var(--fs-label);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .proximo .p-ir {
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding-bottom: 2px;
+            border-bottom: 1px solid var(--accent);
+            transition: color var(--ease);
+        }
+        .proximo:hover .p-ir { color: var(--accent-fg); }
+        .proximo:hover .p-title { color: var(--accent-fg); }
+
+        /* ── Las cuatro hojas sueltas ──────────────────────────────────────── */
+        .hojas {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            column-gap: clamp(16px, 2vw, 28px);
+            padding: clamp(64px, 8vw, 120px) var(--gutter) clamp(80px, 10vw, 160px);
+        }
+        .suelta {
+            position: relative;
+            display: block;
+            text-decoration: none;
+            color: var(--text);
+            background: var(--bg);
+            padding: 14px 14px 24px;
+            box-shadow: 0 1px 0 var(--border), 0 24px 50px -30px rgba(23, 21, 19, 0.5);
+            transform: translate(var(--dx, 0), var(--dy, 0)) rotate(var(--r, 0deg));
+            transition: transform 0.55s var(--ease-out), box-shadow 0.55s var(--ease-out);
+            z-index: 1;
+            align-self: start;
+        }
+        .suelta:hover,
+        .suelta:focus-visible {
+            transform: translate(0, -6px) rotate(0deg);
+            box-shadow: 0 1px 0 var(--border), 0 34px 60px -28px rgba(23, 21, 19, 0.55);
+            z-index: 5;
+        }
+        .suelta .vista {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            background: var(--surface);
+        }
+        .suelta .vista img,
+        .suelta .vista canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 1.2s var(--ease-out);
+        }
+        .suelta:hover .vista img { transform: scale(1.04); }
+        .suelta .texto { padding: 18px 6px 0; }
+        .suelta .cuenta {
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .suelta h2 {
             font-family: 'MinionPro', serif;
             font-style: italic;
             font-weight: normal;
-            font-size: clamp(26px, 3vw, 38px);
-            line-height: 1.12;
+            font-size: var(--fs-h2);
+            line-height: 0.95;
             margin: 8px 0 0;
             transition: color var(--ease);
         }
-        .seccion:hover h2 { color: var(--accent-fg); }
-        .seccion p {
-            margin: 10px 0 0;
+        .suelta:hover h2 { color: var(--accent-fg); }
+        .suelta p {
+            margin: 12px 0 0;
             color: var(--muted);
-            font-size: 14.5px;
+            font-size: var(--fs-small);
             line-height: 1.6;
             max-width: 42ch;
         }
 
-        /* ── Pie ───────────────────────────────────────────────────────────── */
-        footer {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-            padding: 24px var(--gutter);
-            background: var(--band-bg);
-            border-top: 1px solid var(--band-rule);
-        }
-        footer p, footer a {
-            font-size: var(--fs-label);
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--band-muted);
-            text-decoration: none;
-            transition: color var(--ease);
-        }
-        footer a:hover { color: var(--band-fg); }
+        /* Composición: ninguna hoja en su sitio, todas se pisan un poco. */
+        .s-manifiesto { grid-column: 1 / span 5;  grid-row: 1; --r: -2.2deg; }
+        .s-eventos    { grid-column: 7 / span 4;  grid-row: 1; margin-top: 110px; --r: 1.6deg; }
+        .s-proyectos  { grid-column: 3 / span 4;  grid-row: 2; margin-top: -70px; --r: -1deg; z-index: 2; }
+        .s-galeria    { grid-column: 8 / span 4;  grid-row: 2; margin-top: 30px;  --r: 2.6deg; }
+        .s-proyectos .vista { aspect-ratio: 1 / 1; background: var(--band-bg); }
+        .s-galeria .vista   { aspect-ratio: 4 / 5; }
 
-        @media (max-width: 900px) {
-            .apertura { grid-template-columns: 1fr; gap: 40px; padding: 44px var(--gutter) 40px; }
-            .hoja { max-width: 340px; }
-            .secciones { grid-template-columns: 1fr; gap: 0; padding: 0 var(--gutter) 56px; }
-            .ante { letter-spacing: 0.16em; }
-            footer { padding: 20px var(--gutter); flex-direction: row; gap: 12px; text-align: left; }
+        /* ── Pie ───────────────────────────────────────────────────────────── */
+        footer { padding: 24px var(--gutter); }
+
+        @media (max-width: 1100px) {
+            .s-manifiesto { grid-column: 1 / span 6; }
+            .s-eventos    { grid-column: 7 / span 6; margin-top: 90px; }
+            .s-proyectos  { grid-column: 2 / span 5; margin-top: 40px; }
+            .s-galeria    { grid-column: 7 / span 5; margin-top: 90px; }
+            .bajada { margin-left: 22vw; }
+        }
+
+        @media (max-width: 760px) {
+            .apertura { min-height: 0; grid-template-rows: auto; padding-top: 32px; }
+            .tesis { font-size: clamp(50px, 15vw, 88px); margin: 22px 0 0; }
+            .tesis span:nth-child(2) { margin-left: 12vw; }
+            .tesis span:nth-child(3) { margin-left: 3vw; }
+            /* La hoja impresa entra torcida, montada sobre la tesis. */
+            .hoja {
+                position: relative;
+                right: auto; top: auto;
+                width: 58%;
+                margin: 18px 0 0 auto;
+                z-index: 1;
+            }
+            .bajada { margin-left: 0; margin-top: 32px; }
+            .pie-apertura { flex-direction: column; align-items: flex-start; }
+            .semilla { align-items: flex-start; }
+            .proximo { grid-template-columns: 1fr; }
+            .proximo .p-ir { justify-self: start; }
+            .hojas { grid-template-columns: 1fr; row-gap: 44px; }
+            .hojas .suelta { grid-column: 1; grid-row: auto; margin-top: 0; }
+            .hojas .suelta:nth-child(odd)  { margin-right: 6%; }
+            .hojas .suelta:nth-child(even) { margin-left: 6%; }
         }
     </style>
 </head>
@@ -189,48 +332,135 @@
 
 <main>
     <section class="apertura">
-        <div>
-            <div class="ante reveal">Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</div>
-            <h1 class="tesis reveal reveal-2">Crear donde no alcance ninguna raíz.</h1>
+        <canvas class="campo" data-campo data-campo-tone="papel" aria-hidden="true"></canvas>
+
+        <div class="ante reveal">Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</div>
+
+        <h1 class="tesis reveal reveal-2">
+            <span>Crear donde</span>
+            <span>no alcance</span>
+            <span>ninguna <em>raíz.</em></span>
+        </h1>
+
+        <figure class="hoja reveal reveal-3" data-scatter="4">
+            <div class="marco">
+                <picture>
+                    <source type="image/webp" srcset="gallery/sm/manifiesto-2.webp">
+                    <img src="gallery/sm/manifiesto-2.jpg" width="600" height="900"
+                         alt="El manifiesto impreso en papel ámbar, doblado en acordeón y sostenido con las dos manos.">
+                </picture>
+            </div>
+            <figcaption>El manifiesto, doblado — de donde sale el ámbar</figcaption>
+        </figure>
+
+        <div class="pie-apertura">
             <p class="bajada reveal reveal-3">Escogemos un mundo de ciudades recordadas,
             siempre en construcción, en terrenos donde no deberían estar. Reivindicamos el
             exilio y el destierro, la creación como una solicitud de asilo, el viaje como
             acto frustrante e improductivo.</p>
-            <div class="filete-ambar reveal reveal-3"></div>
-        </div>
-        <figure class="hoja reveal reveal-3">
-            <div class="marco">
-                <img src="gallery/manifiesto-2.jpg" width="600" height="900"
-                     alt="El manifiesto impreso en papel ámbar, doblado en acordeón y sostenido con las dos manos.">
+            <div class="semilla">
+                <span>Maleza — semilla <span data-campo-seed>0000</span></span>
+                <button type="button" data-campo-toggle hidden>ruido de fondo — sí</button>
             </div>
-            <figcaption>El manifiesto, doblado — de donde sale el ámbar</figcaption>
-        </figure>
+        </div>
     </section>
 
-    <div class="secciones">
-        <a class="seccion" href="manifiesto.html">
-            <span class="cuenta">seis lenguas</span>
-            <h2>Manifiesto</h2>
-            <p>Cambiante y nunca cumplido. En español, català, english, français,
-            português y asturianu.</p>
+    <div class="cinta">
+        <div class="cinta-pista">
+            <ul class="cinta-grupo">
+                <li>marca blanca</li>
+                <li>esperanza voraz</li>
+                <li>nostalgia atroz</li>
+                <li>la fractura profiláctica</li>
+                <li>resucitar en vida</li>
+                <li>la libertad perdida a posta</li>
+                <li>brújula sin imán</li>
+                <li>la creación como trastorno</li>
+                <li>lo atópico</li>
+                <li>la llegada del moho</li>
+                <li>garganta sin fondo</li>
+                <li>la ofuscación como forma de claridad</li>
+            </ul>
+            <ul class="cinta-grupo" aria-hidden="true">
+                <li>marca blanca</li>
+                <li>esperanza voraz</li>
+                <li>nostalgia atroz</li>
+                <li>la fractura profiláctica</li>
+                <li>resucitar en vida</li>
+                <li>la libertad perdida a posta</li>
+                <li>brújula sin imán</li>
+                <li>la creación como trastorno</li>
+                <li>lo atópico</li>
+                <li>la llegada del moho</li>
+                <li>garganta sin fondo</li>
+                <li>la ofuscación como forma de claridad</li>
+            </ul>
+        </div>
+    </div>
+
+    <a class="proximo" href="eventos.html" data-proximo>
+        <span class="p-label" data-p-label>Último encuentro</span>
+        <span class="p-fecha">
+            <span class="p-day" data-p-day>14</span>
+            <span class="p-month" data-p-month>octubre 2026</span>
+        </span>
+        <span class="p-info">
+            <span class="p-title" data-p-title>María Tinaut — «Representación y visibilidad butch en artes visuales»</span><br>
+            <span class="p-meta" data-p-meta>Conferencia — Librería La Perecquiana, Valladolid · 19:30</span>
+        </span>
+        <span class="p-ir">Agenda →</span>
+    </a>
+
+    <div class="hojas">
+        <a class="suelta s-manifiesto" href="manifiesto.html" data-scatter="2.6">
+            <div class="vista">
+                <picture>
+                    <source type="image/webp" srcset="gallery/sm/manifiesto-3.webp">
+                    <img src="gallery/sm/manifiesto-3.jpg" width="900" height="600" loading="lazy" alt="">
+                </picture>
+            </div>
+            <div class="texto">
+                <span class="cuenta">seis lenguas</span>
+                <h2>Manifiesto</h2>
+                <p>Cambiante y nunca cumplido. En español, català, english, français,
+                português y asturianu.</p>
+            </div>
         </a>
-        <a class="seccion" href="eventos.html">
-            <span class="cuenta">veintiún encuentros — 2025 y 2026</span>
-            <h2>Eventos</h2>
-            <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con
-            La Perecquiana en Valladolid; poesía en el Almíbar de Córdoba.</p>
+        <a class="suelta s-eventos" href="eventos.html" data-scatter="2.2">
+            <div class="vista">
+                <picture>
+                    <source type="image/webp" srcset="gallery/sm/envozalta-angela-1.webp">
+                    <img src="gallery/sm/envozalta-angela-1.jpg" width="900" height="506" loading="lazy" alt="">
+                </picture>
+            </div>
+            <div class="texto">
+                <span class="cuenta">veintiún encuentros — 2025 y 2026</span>
+                <h2>Eventos</h2>
+                <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con
+                La Perecquiana en Valladolid; poesía en el Almíbar de Córdoba.</p>
+            </div>
         </a>
-        <a class="seccion" href="proyectos.html">
-            <span class="cuenta">siete piezas generativas</span>
-            <h2>Proyectos</h2>
-            <p>Brújula sin imán, Maleza, La llegada del moho, Garganta sin fondo, Ante la
-            síntesis la disgregación — títulos sacados del propio manifiesto.</p>
+        <a class="suelta s-proyectos" href="proyectos.html" data-scatter="2">
+            <div class="vista">
+                <canvas data-campo data-campo-tone="zafiro" aria-hidden="true"></canvas>
+            </div>
+            <div class="texto">
+                <span class="cuenta">siete piezas generativas</span>
+                <h2>Proyectos</h2>
+                <p>Brújula sin imán, Maleza, La llegada del moho, Garganta sin fondo, Ante la
+                síntesis la disgregación — títulos sacados del propio manifiesto.</p>
+            </div>
         </a>
-        <a class="seccion" href="galeria.html">
-            <span class="cuenta">cuarenta y seis fotografías</span>
-            <h2>Galería</h2>
-            <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz
-            alta, el manifiesto pasando de mano en mano.</p>
+        <a class="suelta s-galeria" href="galeria.html" data-scatter="3">
+            <div class="vista">
+                <img src="gallery/sm/welcome-summer-5.jpg" width="506" height="900" loading="lazy" alt="" data-galeria-azar>
+            </div>
+            <div class="texto">
+                <span class="cuenta">cuarenta y seis fotografías</span>
+                <h2>Galería</h2>
+                <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz
+                alta, el manifiesto pasando de mano en mano.</p>
+            </div>
         </a>
     </div>
 </main>
@@ -242,6 +472,18 @@
         · <a href="https://github.com/cfueradelloc" target="_blank" rel="noopener">GitHub</a>
     </p>
 </footer>
+
+<script>
+    // La hoja de la galería: cada visita, otra fotografía vertical.
+    (function () {
+        var img = document.querySelector("[data-galeria-azar]");
+        if (!img) return;
+        var pool = ["welcome-summer-5", "welcome-summer-7", "envozalta-ana-1", "magistral-juan-1",
+                    "14-4-laura-1", "14-4-laura-7", "envozalta-angela-4", "welcome-summer-4"];
+        var pick = pool[Math.floor(Math.random() * pool.length)];
+        img.src = "gallery/sm/" + pick + ".jpg";
+    })();
+</script>
 
 </body>
 </html>

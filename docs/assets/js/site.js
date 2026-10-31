@@ -9,6 +9,13 @@
     var root = document.documentElement;
     root.classList.add("js");
 
+    // Hoy, en hora local, como AAAA-MM-DD (comparable con data-date).
+    function today() {
+        var d = new Date();
+        return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") +
+            "-" + String(d.getDate()).padStart(2, "0");
+    }
+
     /* ── Menú a pantalla completa ───────────────────────────────────────── */
     /* Se construye a partir de .nav-links, así el marcado de las cinco
        páginas no se duplica. */
@@ -97,16 +104,13 @@
         var past = document.querySelector("[data-events='past']");
         if (!upcoming || !past) return;
 
-        var now = new Date();
-        var today = now.getFullYear() + "-" +
-            String(now.getMonth() + 1).padStart(2, "0") + "-" +
-            String(now.getDate()).padStart(2, "0");
+        var now = today();
 
         var items = Array.prototype.slice.call(
             document.querySelectorAll(".event-item[data-date]"));
         var up = [], down = [];
         items.forEach(function (li) {
-            ((li.dataset.end || li.dataset.date) >= today ? up : down).push(li);
+            ((li.dataset.end || li.dataset.date) >= now ? up : down).push(li);
         });
         up.sort(function (a, b) { return a.dataset.date < b.dataset.date ? -1 : 1; });
         down.sort(function (a, b) { return a.dataset.date > b.dataset.date ? -1 : 1; });
@@ -118,6 +122,49 @@
         if (empty) empty.hidden = up.length > 0;
     }
 
+    /* ── Desorden con medida ────────────────────────────────────────────── */
+    /* data-scatter="2.5" → giro al azar entre −2,5° y +2,5°, y un pequeño
+       desplazamiento. Cada visita, otra composición; nunca rota. El CSS
+       trae valores por defecto, así que sin JS también está torcido. */
+    function scatter() {
+        Array.prototype.forEach.call(document.querySelectorAll("[data-scatter]"), function (el) {
+            var max = parseFloat(el.getAttribute("data-scatter")) || 2;
+            el.style.setProperty("--r", ((Math.random() * 2 - 1) * max).toFixed(2) + "deg");
+            el.style.setProperty("--dx", ((Math.random() * 2 - 1) * 14).toFixed(1) + "px");
+            el.style.setProperty("--dy", ((Math.random() * 2 - 1) * 14).toFixed(1) + "px");
+        });
+    }
+
+    /* ── Portada: el próximo encuentro (o el último) ────────────────────── */
+    /* Lee eventos.html —la página que ya es la representación del calendario—
+       y rellena [data-proximo]. El marcado estático trae el último conocido. */
+    function fillProximo() {
+        var box = document.querySelector("[data-proximo]");
+        if (!box || !window.fetch || !window.DOMParser) return;
+        fetch("eventos.html").then(function (r) { return r.ok ? r.text() : null; }).then(function (html) {
+            if (!html) return;
+            var doc = new DOMParser().parseFromString(html, "text/html");
+            var items = Array.prototype.slice.call(doc.querySelectorAll(".event-item[data-date]"));
+            if (!items.length) return;
+            var now = today();
+            var up = items.filter(function (li) { return (li.dataset.end || li.dataset.date) >= now; })
+                .sort(function (a, b) { return a.dataset.date < b.dataset.date ? -1 : 1; });
+            var past = items.filter(function (li) { return (li.dataset.end || li.dataset.date) < now; })
+                .sort(function (a, b) { return a.dataset.date > b.dataset.date ? -1 : 1; });
+            var li = up[0] || past[0];
+            var txt = function (sel) { var n = li.querySelector(sel); return n ? n.textContent.trim() : ""; };
+            var set = function (sel, v) { var n = box.querySelector(sel); if (n) n.textContent = v; };
+            set("[data-p-label]", up.length ? "Próximo" : "Último encuentro");
+            set("[data-p-day]", txt(".event-month"));
+            set("[data-p-month]", txt(".event-year"));
+            set("[data-p-title]", txt(".event-title"));
+            set("[data-p-meta]", txt(".event-meta"));
+            box.classList.toggle("is-next", up.length > 0);
+        }).catch(function () { /* sin red o desde file://: queda lo estático */ });
+    }
+
     buildMenu();
     splitEvents();
+    scatter();
+    fillProximo();
 })();

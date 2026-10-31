@@ -24,7 +24,7 @@
 
 /* ── Reset ─────────────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: clip; }
 img { max-width: 100%; height: auto; }
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
@@ -343,6 +343,53 @@ footer a {
 
 footer a:hover { color: var(--band-fg); }
 
+/* ── Cinta (ticker) ────────────────────────────────────────────────────── */
+/* Una banda de antítesis del manifiesto que pasa despacio. Sólo CSS: el
+   contenido va dos veces y la pista se desplaza la mitad. Declarativa,
+   nunca una llamada a la acción. Con movimiento reducido, quieta. */
+.cinta {
+    background: var(--band-bg);
+    color: var(--band-fg);
+    border-top: 1px solid var(--band-rule);
+    border-bottom: 1px solid var(--band-rule);
+    overflow: hidden;
+    padding: 16px 0 14px;
+    /* La cinta tampoco va recta. */
+    transform: rotate(-1.2deg) scale(1.02);
+    position: relative;
+    z-index: 3;
+}
+.cinta-pista {
+    display: flex;
+    width: max-content;
+    animation: cfdl-cinta 70s linear infinite;
+}
+.cinta:hover .cinta-pista { animation-play-state: paused; }
+.cinta-grupo {
+    display: flex;
+    flex-shrink: 0;
+    list-style: none;
+}
+.cinta-grupo li {
+    font-family: 'MinionPro', serif;
+    font-style: italic;
+    font-size: clamp(22px, 2.6vw, 38px);
+    line-height: 1.2;
+    white-space: nowrap;
+    padding-right: 0.9em;
+}
+.cinta-grupo li::after {
+    content: '';
+    display: inline-block;
+    width: 0.32em;
+    height: 0.32em;
+    margin-left: 0.9em;
+    background: var(--accent);
+    transform: translateY(-0.18em) rotate(45deg);
+}
+.cinta-grupo li:nth-child(3n+2) { color: var(--accent); }
+@keyframes cfdl-cinta { to { transform: translateX(-50%); } }
+
 /* ── Accessibility ─────────────────────────────────────────────────────── */
 :focus-visible {
     outline: 2px solid var(--accent-fg);
@@ -398,6 +445,11 @@ footer :focus-visible,
     }
     .reveal, .reveal-2, .reveal-3 { animation: none; }
     @view-transition { navigation: none; }
+    /* La cinta, quieta y envolviendo: se lee entera, sin la copia. */
+    .cinta-pista { animation: none; width: auto; flex-wrap: wrap; padding: 0 var(--gutter); }
+    .cinta-grupo { flex-wrap: wrap; flex-shrink: 1; }
+    .cinta-grupo li { white-space: normal; }
+    .cinta-grupo[aria-hidden="true"] { display: none; }
 }
 
 /* ── Responsive (shared chrome) ────────────────────────────────────────── */
