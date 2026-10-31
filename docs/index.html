@@ -240,28 +240,21 @@
             padding-top: clamp(8px, 1.5vw, 24px);
             padding-bottom: clamp(56px, 7vw, 104px);
         }
-        /* Tres columnas iguales sobre un mismo filete: etiqueta y flecha en
-           una línea, el título debajo, la descripción debajo. Alineado por
-           construcción — mismo arranque arriba, mismo margen a la izquierda,
-           sin depender de lo que mida cada título. */
-        .indice ol {
-            list-style: none;
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 48px clamp(24px, 3vw, 48px);
-        }
-        .indice li { border-top: 1px solid rgba(255, 244, 214, 0.28); }
+        /* Una fila por sección, sobre la retícula del sitio: la cifra en la
+           columna del margen (como las fechas de Eventos), el título en la
+           segunda línea (+124 px, como los títulos de Eventos y el texto del
+           manifiesto), la descripción en una columna fija y la flecha al
+           margen derecho. Todo sobre la primera línea base de cada celda. */
+        .indice ol { list-style: none; border-top: 1px solid rgba(255, 244, 214, 0.28); }
+        .indice li { border-bottom: 1px solid rgba(255, 244, 214, 0.28); }
         .indice a {
-            display: block;
-            padding: 18px 0 8px;
+            display: grid;
+            grid-template-columns: 92px minmax(0, 1fr) minmax(0, 34ch) 24px;
+            column-gap: 32px;
+            align-items: baseline;
+            padding: clamp(24px, 2.6vw, 36px) 0;
             color: var(--crema);
             text-decoration: none;
-        }
-        .indice .cab {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
         }
         .indice .num {
             font-size: var(--fs-label);
@@ -270,25 +263,22 @@
             color: var(--ambar);
         }
         .indice h2 {
-            margin-top: clamp(28px, 3vw, 44px);
             font-family: 'MinionPro', serif;
             font-weight: normal;
             font-size: clamp(40px, 4vw, 60px);
-            line-height: 1;
+            line-height: 1.05;
             letter-spacing: -0.015em;
             transition: color 0.35s var(--ease-out);
         }
         .indice .desc {
-            margin-top: 16px;
             font-family: 'MinionPro', serif;
             font-size: 19px;
             line-height: 1.5;
-            max-width: 32ch;
             color: rgba(255, 244, 214, 0.78);
         }
         .indice .flecha {
+            justify-self: end;
             font-size: 16px;
-            line-height: 1;
             color: var(--ambar);
             transition: transform 0.45s var(--ease-out);
         }
@@ -303,7 +293,10 @@
 
         @media (max-width: 860px) {
             .portada-pie { grid-template-columns: 1fr; }
-            .indice ol { grid-template-columns: 1fr; gap: 40px; }
+            .indice a { grid-template-columns: minmax(0, 1fr) 24px; row-gap: 10px; }
+            .indice .num { grid-column: 1 / -1; }
+            .indice .desc { grid-column: 1; grid-row: 3; }
+            .indice .flecha { grid-column: 2; grid-row: 2; }
             .portada { padding-top: calc(68px + 24px); }
             .portada .fondo img { object-position: var(--pos-movil, 70% 50%); }
             .portada::after {
@@ -365,19 +358,22 @@
     <section class="indice banda" aria-label="Secciones">
         <ol>
             <li><a href="manifiesto.html">
-                <span class="cab"><span class="num">01</span><span class="flecha" aria-hidden="true">→</span></span>
+                <span class="num">01</span>
                 <h2>Manifiesto</h2>
                 <p class="desc">Cambiante y nunca cumplido. En español, català, english, français, português y asturianu.</p>
+                <span class="flecha" aria-hidden="true">→</span>
             </a></li>
             <li><a href="eventos.html">
-                <span class="cab"><span class="num">02</span><span class="flecha" aria-hidden="true">→</span></span>
+                <span class="num">02</span>
                 <h2>Eventos</h2>
                 <p class="desc">Los ciclos En voz alta, La Magistral y 14.4, con La Perecquiana en Valladolid.</p>
+                <span class="flecha" aria-hidden="true">→</span>
             </a></li>
             <li><a href="galeria.html">
-                <span class="cab"><span class="num">03</span><span class="flecha" aria-hidden="true">→</span></span>
+                <span class="num">03</span>
                 <h2>Galería</h2>
                 <p class="desc">Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz alta.</p>
+                <span class="flecha" aria-hidden="true">→</span>
             </a></li>
         </ol>
     </section>
