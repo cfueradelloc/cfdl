@@ -74,17 +74,41 @@ img { max-width: 100%; height: auto; display: block; }
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Esquema invertido — <body class="theme-dark"> (manifiesto): crema sobre zafiro. */
+/* Esquema invertido — <body class="theme-dark"> (manifiesto): crema sobre
+   zafiro, y nada más. Sin ámbar: el azul y el naranja, juntos y a plena
+   tinta, se pelean. La jerarquía la dan el tamaño y la intensidad de la
+   crema, no un segundo color. */
 body.theme-dark {
     --bg:      var(--zafiro);
     --surface: var(--zafiro);
     --text:    var(--crema);
-    --muted:   var(--ambar);
-    --border:  rgba(255, 244, 214, 0.35);
-    --rule:    rgba(255, 244, 214, 0.35);
-    --accent:    var(--ambar);
-    --accent-fg: var(--ambar);
+    --muted:   rgba(255, 244, 214, 0.66);
+    --border:  rgba(255, 244, 214, 0.28);
+    --rule:    rgba(255, 244, 214, 0.28);
+    --accent:    var(--crema);
+    --accent-fg: var(--crema);
 }
+.theme-dark ::selection { background: var(--crema); color: var(--zafiro); }
+.theme-dark .nav-links a:hover,
+.theme-dark .nav-links a[aria-current="page"] { border-bottom-color: var(--crema); }
+.theme-dark footer,
+.theme-dark footer p,
+.theme-dark footer a,
+.theme-dark .footer-brand { color: var(--crema); }
+.theme-dark footer a:hover { border-bottom-color: var(--crema); }
+.theme-dark :focus-visible { outline-color: var(--crema); }
+/* El menú móvil, también en zafiro. */
+.theme-dark .menu,
+.theme-dark .menu::backdrop { background: var(--zafiro); color: var(--crema); }
+.theme-dark .menu .nav-brand,
+.theme-dark .menu-links a,
+.theme-dark .menu-foot,
+.theme-dark .menu-foot a,
+.theme-dark .menu-close { color: var(--crema); }
+.theme-dark .menu-head,
+.theme-dark .menu-links li { border-color: rgba(255, 244, 214, 0.28); }
+.theme-dark .menu-close { border-bottom-color: var(--crema); }
+.theme-dark .menu-links a[aria-current="page"] { color: rgba(255, 244, 214, 0.66); }
 
 /* ── Body ──────────────────────────────────────────────────────────────── */
 body {
@@ -331,7 +355,7 @@ footer a:hover { border-bottom-color: var(--ambar); }
     outline: 2px solid var(--negro);
     outline-offset: 3px;
 }
-footer :focus-visible, .theme-dark :focus-visible { outline-color: var(--ambar); }
+footer :focus-visible { outline-color: var(--ambar); }
 .visually-hidden {
     position: absolute !important;
     width: 1px; height: 1px;
