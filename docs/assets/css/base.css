@@ -74,11 +74,12 @@ img { max-width: 100%; height: auto; display: block; }
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Esquema invertido — <body class="theme-dark"> (manifiesto): crema sobre
-   zafiro, y nada más. Sin ámbar: el azul y el naranja, juntos y a plena
+/* Esquemas de una sola tinta: crema sobre zafiro (<body class="theme-dark">,
+   el manifiesto) o crema sobre negro (<body class="theme-tinta">, eventos). Sin ámbar: el azul y el naranja, juntos y a plena
    tinta, se pelean. La jerarquía la dan el tamaño y la intensidad de la
    crema, no un segundo color. */
-body.theme-dark {
+body.theme-dark,
+body.theme-tinta {
     --bg:      var(--zafiro);
     --surface: var(--zafiro);
     --text:    var(--crema);
@@ -88,27 +89,28 @@ body.theme-dark {
     --accent:    var(--crema);
     --accent-fg: var(--crema);
 }
-.theme-dark ::selection { background: var(--crema); color: var(--zafiro); }
-.theme-dark .nav-links a:hover,
-.theme-dark .nav-links a[aria-current="page"] { border-bottom-color: var(--crema); }
-.theme-dark footer,
-.theme-dark footer p,
-.theme-dark footer a,
-.theme-dark .footer-brand { color: var(--crema); }
-.theme-dark footer a:hover { border-bottom-color: var(--crema); }
-.theme-dark :focus-visible { outline-color: var(--crema); }
-/* El menú móvil, también en zafiro. */
-.theme-dark .menu,
-.theme-dark .menu::backdrop { background: var(--zafiro); color: var(--crema); }
-.theme-dark .menu .nav-brand,
-.theme-dark .menu-links a,
-.theme-dark .menu-foot,
-.theme-dark .menu-foot a,
-.theme-dark .menu-close { color: var(--crema); }
-.theme-dark .menu-head,
-.theme-dark .menu-links li { border-color: rgba(255, 244, 214, 0.28); }
-.theme-dark .menu-close { border-bottom-color: var(--crema); }
-.theme-dark .menu-links a[aria-current="page"] { color: rgba(255, 244, 214, 0.66); }
+:is(.theme-dark, .theme-tinta) ::selection { background: var(--crema); color: var(--bg); }
+:is(.theme-dark, .theme-tinta) .nav-links a:hover,
+:is(.theme-dark, .theme-tinta) .nav-links a[aria-current="page"] { border-bottom-color: var(--crema); }
+:is(.theme-dark, .theme-tinta) footer,
+:is(.theme-dark, .theme-tinta) footer p,
+:is(.theme-dark, .theme-tinta) footer a,
+:is(.theme-dark, .theme-tinta) .footer-brand { color: var(--crema); }
+:is(.theme-dark, .theme-tinta) footer a:hover { border-bottom-color: var(--crema); }
+:is(.theme-dark, .theme-tinta) :focus-visible { outline-color: var(--crema); }
+/* El menú móvil, del color de la página. */
+:is(.theme-dark, .theme-tinta) .menu,
+:is(.theme-dark, .theme-tinta) .menu::backdrop { background: var(--bg); color: var(--crema); }
+:is(.theme-dark, .theme-tinta) .menu .nav-brand,
+:is(.theme-dark, .theme-tinta) .menu-links a,
+:is(.theme-dark, .theme-tinta) .menu-foot,
+:is(.theme-dark, .theme-tinta) .menu-foot a,
+:is(.theme-dark, .theme-tinta) .menu-close { color: var(--crema); }
+:is(.theme-dark, .theme-tinta) .menu-head,
+:is(.theme-dark, .theme-tinta) .menu-links li { border-color: rgba(255, 244, 214, 0.28); }
+:is(.theme-dark, .theme-tinta) .menu-close { border-bottom-color: var(--crema); }
+:is(.theme-dark, .theme-tinta) .menu-links a[aria-current="page"] { color: rgba(255, 244, 214, 0.66); }
+body.theme-tinta { --bg: var(--negro); --surface: var(--negro); }
 
 /* ── Body ──────────────────────────────────────────────────────────────── */
 body {
