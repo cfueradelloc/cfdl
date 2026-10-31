@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Galería</title>
     <meta name="description" content="Imágenes de los encuentros, lecturas y proyecciones del C.F.D.L. — En voz alta, La Magistral, Welcome Summer, Banel & Adama, Lorca en La Habana.">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#171513">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
@@ -25,123 +25,166 @@
     <script>document.documentElement.classList.add('js')</script>
     <script src="assets/js/site.js" defer></script>
     <style>
-        /* ── Shuffle control — icon, anchored in the header band ───────────── */
-        header { position: relative; }
+        /* GALERÍA — crema sobre negro (theme-tinta), como Eventos. Filas
+           justificadas: cada foto con su proporción, sin recortes, todas
+           a ras con 6 px de aire; las filas ocupan el ancho exacto. Las
+           fotos se intercambian solas de dos en dos (sólo entre formatos
+           parecidos, así la retícula no salta). Clic: la foto entera. */
 
+        header::after { display: none; }
+        header { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(20px, 2.5vw, 32px); }
+        footer { margin-top: clamp(40px, 5vw, 72px); padding-top: clamp(28px, 3vw, 40px); padding-bottom: clamp(28px, 3vw, 40px);
+                 border-top: 1px solid var(--border); }
+
+        /* ── Barajar ───────────────────────────────────────────────────────── */
         .shuffle-btn {
             position: absolute;
-            top: auto;
-            bottom: clamp(40px, 5vw, 64px);
             right: var(--gutter);
-            width: 42px;
-            height: 42px;
+            bottom: clamp(20px, 2.5vw, 32px);
+            width: 40px;
+            height: 40px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
+            background: none;
             border: 1px solid var(--border);
             border-radius: 50%;
             color: var(--muted);
             cursor: pointer;
-            transition: color var(--ease), background var(--ease),
-                        border-color var(--ease), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: color var(--ease), border-color var(--ease), transform 0.6s var(--ease-out);
         }
-
-        .shuffle-btn svg { width: 18px; height: 18px; display: block; }
-
+        .shuffle-btn svg { width: 17px; height: 17px; display: block; }
         .shuffle-btn:hover,
-        .shuffle-btn:focus-visible {
-            color: var(--bg);
-            background: var(--text);
-            border-color: var(--text);
-            outline: none;
-        }
+        .shuffle-btn:focus-visible { color: var(--text); border-color: var(--text); }
 
-        @media (max-width: 700px) {
-            .shuffle-btn { top: auto; bottom: clamp(40px, 5vw, 64px); right: var(--gutter); width: 38px; height: 38px; }
-        }
-
-        /* ── Stochastic collage — large, generous tiles ────────────────────── */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-auto-rows: 320px;
-            grid-auto-flow: dense;
-            gap: 14px;
-            max-width: var(--max);
-            margin: 0 auto;
-            padding: clamp(32px, 4vw, 56px) var(--gutter) 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .gallery figure {
+        /* ── Filas justificadas ────────────────────────────────────────────── */
+        main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+        .galeria { transition: opacity 0.5s ease; }
+        .galeria.baraja { opacity: 0; }
+        .fila { display: flex; gap: 6px; margin-bottom: 6px; }
+        .foto {
             position: relative;
-            margin: 0;
+            display: block;
+            min-width: 0;
             overflow: hidden;
-            grid-column: span 1;
-            grid-row: span 1;
-            opacity: 1;
-            transition: opacity 0.8s ease;
+            background: #0f0e0c;
+            cursor: zoom-in;
         }
-
-        .gallery figure.tall { grid-row: span 2; }
-        .gallery figure.wide { grid-column: span 2; }
-        .gallery figure.big  { grid-column: span 2; grid-row: span 2; }
-
-        .gallery figure img {
+        .foto img {
+            display: block;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
+            transition: opacity 1.1s cubic-bezier(0.45, 0, 0.25, 1), transform 1.2s var(--ease-out);
         }
-
-        .gallery figure figcaption {
+        .foto.cambia img { opacity: 0; }
+        .foto:hover img { transform: scale(1.025); }
+        .foto .pie {
             position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            padding: 28px 14px 12px;
-            font-size: var(--fs-label);
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #fff;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.62));
+            left: 0; right: 0; bottom: 0;
+            padding: 36px 12px 10px;
+            font-family: 'MinionPro', serif;
+            font-size: 16px;
+            line-height: 1.3;
+            color: var(--crema);
+            background: linear-gradient(transparent, rgba(15, 14, 12, 0.75));
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
         }
+        .foto:hover .pie,
+        .foto:focus-visible .pie { opacity: 1; }
+        .foto:focus-visible { outline: 2px solid var(--crema); outline-offset: 2px; }
 
-        .gallery figure:hover figcaption,
-        .gallery figure:focus-within figcaption { opacity: 1; }
-
-        @media (hover: none) {
-            .gallery figure figcaption { opacity: 1; }
-        }
-
-        @media (max-width: 900px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 260px; gap: 12px; }
-        }
-
-        @media (max-width: 520px) {
-            .gallery { grid-auto-rows: 200px; gap: 10px; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .gallery, .gallery figure, .gallery figure figcaption { transition: none; }
-        }
-
-        /* ── No-JS fallback (simple masonry of all images) ─────────────────── */
-        .gallery-static { columns: 3; column-gap: 14px; padding: 32px; }
-        .gallery-static figure { break-inside: avoid; margin: 0 0 14px; }
+        /* ── Sin JS: columnas sencillas ────────────────────────────────────── */
+        .gallery-static { columns: 3; column-gap: 6px; }
+        .gallery-static figure { break-inside: avoid; margin: 0 0 6px; }
         .gallery-static figure img { width: 100%; height: auto; display: block; }
-        .gallery-static figcaption {
-            font-size: var(--fs-label); letter-spacing: 0.1em; text-transform: uppercase;
-            color: var(--muted); padding: 6px 2px 0;
-        }
+        .gallery-static figcaption { font-family: 'MinionPro', serif; font-size: 15px; color: var(--muted); padding: 6px 0 8px; }
         @media (max-width: 900px) { .gallery-static { columns: 2; } }
-        @media (max-width: 520px) { .gallery-static { columns: 1; padding: 16px; } }
+
+        /* ── El visor: la foto entera ──────────────────────────────────────── */
+        .visor {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            max-height: none;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            background: rgba(15, 14, 12, 0.97);
+            color: var(--crema);
+        }
+        .visor[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+        .visor::backdrop { background: rgba(15, 14, 12, 0.97); }
+        .visor-cab {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px var(--gutter);
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .visor-cerrar {
+            font: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            color: var(--crema);
+            background: none;
+            border: 0;
+            border-bottom: 1px solid var(--crema);
+            padding: 4px 0;
+            cursor: pointer;
+        }
+        .visor-marco {
+            position: relative;
+            min-height: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 clamp(16px, 7vw, 120px);
+        }
+        .visor-marco img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: opacity 0.45s ease;
+        }
+        .visor-marco img.carga { opacity: 0; }
+        .visor-prev,
+        .visor-next {
+            position: absolute;
+            top: 0; bottom: 0;
+            width: clamp(48px, 7vw, 120px);
+            background: none;
+            border: 0;
+            color: var(--crema);
+            font-size: 22px;
+            opacity: 0.55;
+            cursor: pointer;
+            transition: opacity var(--ease);
+        }
+        .visor-prev { left: 0; }
+        .visor-next { right: 0; }
+        .visor-prev:hover, .visor-next:hover,
+        .visor-prev:focus-visible, .visor-next:focus-visible { opacity: 1; }
+        .visor-pie {
+            padding: 16px var(--gutter) 24px;
+            font-family: 'MinionPro', serif;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        @media (max-width: 700px) {
+            .visor-prev, .visor-next { display: none; }   /* en el móvil, deslizar */
+        }
     </style>
 </head>
-<body>
+<body class="theme-tinta">
 
 <nav class="site-nav">
     <a class="nav-brand" href="index.html" aria-label="C.F.D.L. — inicio"><svg class="logo-linea" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.89 100.00"><polyline points="1.235,2.469 98.765,2.469 98.765,98.765 2.469,98.765 2.469,9.877 91.358,9.877 91.358,91.358 9.877,91.358 9.877,17.284 83.951,17.284 83.951,83.951 17.284,83.951 17.284,24.691" fill="none" stroke="currentColor" stroke-width="2.469" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M165.613346 36.89792200000001C162.836464 34.82562200000001 159.76946 33.83091800000001 156.287996 33.83091800000001C147.33566000000002 33.83091800000001 139.999718 41.16686000000001 139.999718 50.119196C139.999718 58.988640000000004 147.459998 66.158798 156.287996 66.158798C159.603676 66.158798 162.919356 65.03975600000001 165.613346 63.09179400000001V58.78141000000001C163.126586 61.268170000000005 159.686568 62.926010000000005 156.163658 62.926010000000005C149.159284 62.926010000000005 143.48118200000002 56.874894000000005 143.48118200000002 49.99485800000001C143.48118200000002 43.114822000000004 149.117838 37.06370600000001 156.080766 37.06370600000001C159.686568 37.06370600000001 163.126586 38.638654 165.613346 41.20830600000001Z M183.02046600000003 61.516846C181.73564000000002 61.516846 180.69949000000003 62.55299600000001 180.69949000000003 63.796376C180.69949000000003 65.081202 181.73564000000002 66.158798 183.02046600000003 66.158798C184.305292 66.158798 185.34144200000003 65.081202 185.34144200000003 63.796376C185.34144200000003 62.55299600000001 184.305292 61.516846 183.02046600000003 61.516846Z M215.05802400000002 37.60250400000001V34.36971600000001H200.84204600000004V65.62H204.32351000000003V50.119196H214.726456V46.886408H204.32351000000003V37.60250400000001Z M226.78704200000004 61.516846C225.50221600000003 61.516846 224.46606600000004 62.55299600000001 224.46606600000004 63.796376C224.46606600000004 65.081202 225.50221600000003 66.158798 226.78704200000004 66.158798C228.07186800000002 66.158798 229.10801800000002 65.081202 229.10801800000002 63.796376C229.10801800000002 62.55299600000001 228.07186800000002 61.516846 226.78704200000004 61.516846Z M244.60862200000003 65.62H250.41106200000002C255.30169 65.62 259.03183 64.99831 262.76197 61.68263C266.20198800000003 58.615626000000006 267.859828 54.595364000000004 267.859828 50.03630400000001C267.859828 45.394352000000005 266.24343400000004 41.20830600000001 262.679078 38.14130200000001C258.990384 34.99140600000001 255.177352 34.36971600000001 250.493954 34.36971600000001H244.60862200000003ZM248.090086 62.387212000000005V37.60250400000001H250.61829200000003C254.30698600000002 37.60250400000001 257.456882 38.099856 260.316656 40.62806200000001C263.010646 42.99048400000001 264.37836400000003 46.430502000000004 264.37836400000003 49.99485800000001C264.37836400000003 53.476322 263.052092 56.750556 260.48244 59.154424000000006C257.62266600000004 61.848414000000005 254.43132400000002 62.387212000000005 250.61829200000003 62.387212000000005Z M284.230798 61.516846C282.945972 61.516846 281.909822 62.55299600000001 281.909822 63.796376C281.909822 65.081202 282.945972 66.158798 284.230798 66.158798C285.515624 66.158798 286.551774 65.081202 286.551774 63.796376C286.551774 62.55299600000001 285.515624 61.516846 284.230798 61.516846Z M305.533842 34.36971600000001H302.05237800000003V65.62H314.15461000000005V62.387212000000005H305.533842Z M329.116416 61.516846C327.83159 61.516846 326.79544000000004 62.55299600000001 326.79544000000004 63.796376C326.79544000000004 65.081202 327.83159 66.158798 329.116416 66.158798C330.401242 66.158798 331.43739200000005 65.081202 331.43739200000005 63.796376C331.43739200000005 62.55299600000001 330.401242 61.516846 329.116416 61.516846Z"/></svg></a>
@@ -169,8 +212,8 @@
 
 <main>
 
-<!-- JS fills this with a random subset; the collage reshuffles on reload, on «barajar», and rotates on its own. -->
-<div class="gallery" id="gallery" aria-live="off"></div>
+<!-- JS compone filas justificadas con todas las fotos, en orden aleatorio. -->
+<div class="galeria" id="galeria"></div>
 
 <noscript>
     <div class="gallery-static">
@@ -225,6 +268,16 @@
 
 </main>
 
+<dialog class="visor" id="visor" aria-label="Fotografía">
+    <div class="visor-cab"><span class="visor-cuenta"></span><button type="button" class="visor-cerrar">Cerrar</button></div>
+    <div class="visor-marco">
+        <button type="button" class="visor-prev" aria-label="Anterior">←</button>
+        <img alt="">
+        <button type="button" class="visor-next" aria-label="Siguiente">→</button>
+    </div>
+    <p class="visor-pie"></p>
+</dialog>
+
 <footer>
     <div class="footer-brand">
         <svg class="logo-nombre" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.71 100.00"><polyline points="0.000,0.500 99.500,0.500 99.500,99.500 0.500,99.500 0.500,4.500 95.500,4.500 95.500,95.500 4.500,95.500 4.500,8.500 91.500,8.500 91.500,91.500 8.500,91.500 8.500,12.500 87.500,12.500 87.500,87.500 12.500,87.500 12.500,16.500 83.500,16.500 83.500,83.500 16.500,83.500 16.500,20.500" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M158.013999 7.819742999999999C156.06101600000002 6.3622929999999975 153.90399000000002 5.662716999999997 151.455474 5.662716999999997C145.15929 5.662716999999997 139.999917 10.82209 139.999917 17.118274C139.999917 23.35616 145.24673700000002 28.398937 151.455474 28.398937C153.787394 28.398937 156.119314 27.611914 158.013999 26.241910999999998V23.210414999999998C156.265059 24.959355 153.845692 26.125315 151.368027 26.125315C146.441846 26.125315 142.44843300000002 21.869560999999997 142.44843300000002 17.030827C142.44843300000002 12.192092999999998 146.412697 7.936339 151.309729 7.936339C153.845692 7.936339 156.265059 9.044000999999998 158.013999 10.851239Z M176.87305200000003 5.662716999999997C170.60601700000004 5.662716999999997 165.41749500000003 10.763791999999999 165.41749500000003 17.059976C165.41749500000003 23.385309 170.60601700000004 28.398937 176.87305200000003 28.398937C183.14008700000002 28.398937 188.32860900000003 23.385309 188.32860900000003 17.059976C188.32860900000003 10.763791999999999 183.14008700000002 5.662716999999997 176.87305200000003 5.662716999999997ZM176.87305200000003 7.936339C181.91582900000003 7.936339 185.88009300000002 12.046347999999998 185.88009300000002 17.030827C185.88009300000002 21.986157 181.85753100000002 26.125315 176.87305200000003 26.125315C171.88857300000004 26.125315 167.86601100000001 21.986157 167.86601100000001 17.030827C167.86601100000001 12.046347999999998 171.83027500000003 7.936339 176.87305200000003 7.936339Z M198.472111 6.041653999999998H196.02359500000003V28.02H204.53510300000002V25.746378H198.472111Z M211.32647000000003 28.02H222.72372900000002V25.746378H213.774986V17.118274H222.46138800000003V14.844651999999998H213.774986V8.315275999999997H222.72372900000002V6.041653999999998H211.32647000000003Z M248.02471100000002 7.819742999999999C246.07172800000004 6.3622929999999975 243.91470200000003 5.662716999999997 241.46618600000002 5.662716999999997C235.170002 5.662716999999997 230.01062900000002 10.82209 230.01062900000002 17.118274C230.01062900000002 23.35616 235.25744900000004 28.398937 241.46618600000002 28.398937C243.79810600000002 28.398937 246.13002600000002 27.611914 248.02471100000002 26.241910999999998V23.210414999999998C246.27577100000002 24.959355 243.85640400000003 26.125315 241.37873900000002 26.125315C236.452558 26.125315 232.45914500000003 21.869560999999997 232.45914500000003 17.030827C232.45914500000003 12.192092999999998 236.42340900000002 7.936339 241.32044100000002 7.936339C243.85640400000003 7.936339 246.27577100000002 9.044000999999998 248.02471100000002 10.851239Z M262.365669 8.315275999999997H267.72908500000005V6.041653999999998H254.61203500000005V8.315275999999997H259.91715300000004V28.02H262.365669Z M277.114713 6.041653999999998H274.666197V28.02H277.114713Z M286.558639 6.041653999999998H283.90608000000003L292.82567400000005 29.331705L301.745268 6.041653999999998H299.092709L292.82567400000005 22.802329Z M318.855381 5.662716999999997C312.588346 5.662716999999997 307.399824 10.763791999999999 307.399824 17.059976C307.399824 23.385309 312.588346 28.398937 318.855381 28.398937C325.12241600000004 28.398937 330.310938 23.385309 330.310938 17.059976C330.310938 10.763791999999999 325.12241600000004 5.662716999999997 318.855381 5.662716999999997ZM318.855381 7.936339C323.898158 7.936339 327.86242200000004 12.046347999999998 327.86242200000004 17.030827C327.86242200000004 21.986157 323.83986000000004 26.125315 318.855381 26.125315C313.870902 26.125315 309.84834 21.986157 309.84834 17.030827C309.84834 12.046347999999998 313.812604 7.936339 318.855381 7.936339Z M149.99843099999998 41.282275999999996V39.00865399999999H140.000324V60.986999999999995H142.44884V50.085274H149.765239V47.811651999999995H142.44884V41.282275999999996Z M160.695764 39.00865399999999H158.24724799999998V52.766982C158.24724799999998 55.273796 158.48044 57.285076999999994 160.404274 59.121463999999996C161.89087299999997 60.578914 164.01874999999998 61.365936999999995 166.088329 61.365936999999995C168.303653 61.365936999999995 170.489828 60.49146699999999 172.005576 58.859123C173.754516 57.05188499999999 173.92941 55.157199999999996 173.92941 52.766982V39.00865399999999H171.48089399999998V52.096554999999995C171.48089399999998 53.816345999999996 171.56834099999998 55.740179999999995 170.402381 57.139331999999996C169.38216599999998 58.363589999999995 167.662375 59.09231499999999 166.088329 59.09231499999999C164.485134 59.09231499999999 162.619598 58.334441 161.657681 56.99358699999999C160.637466 55.594435 160.695764 53.728899 160.695764 52.096554999999995Z M182.644611 60.986999999999995H194.04187V58.71337799999999H185.09312699999998V50.085274H193.779529V47.811651999999995H185.09312699999998V41.282275999999996H194.04187V39.00865399999999H182.644611Z M205.03069299999999 41.282275999999996H205.75941799999998C208.703467 41.282275999999996 211.35602599999999 41.63206399999999 211.35602599999999 45.246539999999996C211.35602599999999 48.656972999999994 208.55772199999998 49.18165499999999 205.788567 49.18165499999999H205.03069299999999ZM205.03069299999999 51.338680999999994H205.642822L212.288794 60.986999999999995H215.29114099999998L208.295381 51.134637999999995C211.67666499999999 50.84314799999999 213.804542 48.452929999999995 213.804542 45.071645999999994C213.804542 40.116316 209.92772499999998 39.00865399999999 205.75941799999998 39.00865399999999H202.582177V60.986999999999995H205.03069299999999Z M235.43275 54.74911399999999 238.027011 60.986999999999995H240.737868L230.856357 37.959289999999996L220.712505 60.986999999999995H223.394213L226.046772 54.74911399999999ZM234.470833 52.475491999999996H227.037838L230.798059 43.67249399999999Z  M260.849978 60.986999999999995H264.930838C268.37042 60.986999999999995 270.99383 60.549764999999994 273.61724000000004 58.217845C276.036607 56.060818999999995 277.202567 53.233366 277.202567 50.02697599999999C277.202567 46.762288 276.065756 43.81823899999999 273.558942 41.66121299999999C270.96468100000004 39.445888999999994 268.282973 39.00865399999999 264.98913600000003 39.00865399999999H260.849978ZM263.298494 58.71337799999999V41.282275999999996H265.076583C267.670844 41.282275999999996 269.886168 41.63206399999999 271.897449 43.410152999999994C273.79213400000003 45.071645999999994 274.754051 47.491012999999995 274.754051 49.997826999999994C274.754051 52.446343 273.821283 54.74911399999999 272.014045 56.439755999999996C270.002764 58.334441 267.758291 58.71337799999999 265.076583 58.71337799999999Z M284.985 60.986999999999995H296.382259V58.71337799999999H287.433516V50.085274H296.119918V47.811651999999995H287.433516V41.282275999999996H296.382259V39.00865399999999H284.985Z M142.44884 71.97565399999999H140.000324V93.954H148.511832V91.68037799999999H142.44884Z M157.693417 71.97565399999999H155.244901V85.733982C155.244901 88.24079599999999 155.478093 90.252077 157.401927 92.08846399999999C158.88852599999998 93.545914 161.016403 94.33293699999999 163.085982 94.33293699999999C165.301306 94.33293699999999 167.487481 93.458467 169.003229 91.826123C170.752169 90.018885 170.927063 88.12419999999999 170.927063 85.733982V71.97565399999999H168.478547V85.063555C168.478547 86.783346 168.565994 88.70718 167.400034 90.106332C166.379819 91.33058999999999 164.660028 92.059315 163.085982 92.059315C161.482787 92.059315 159.617251 91.301441 158.655334 89.96058699999999C157.635119 88.56143499999999 157.693417 86.695899 157.693417 85.063555Z M190.92292700000002 82.90652899999999V85.180151H197.452303C197.452303 89.261011 193.429741 92.059315 189.611222 92.059315C187.308451 92.059315 184.976531 90.864206 183.373336 89.261011C181.740992 87.59951799999999 180.808224 85.384194 180.808224 83.052274C180.808224 78.096944 184.772488 73.870339 189.786116 73.870339C193.021655 73.870339 195.49932 75.415236 197.335707 78.009497L199.113796 76.34800399999999C196.781876 73.316508 193.662933 71.59671699999998 189.815265 71.59671699999998C183.489932 71.59671699999998 178.359708 76.726941 178.359708 83.023125C178.359708 89.20271299999999 183.489932 94.33293699999999 189.66952 94.33293699999999C192.730165 94.33293699999999 195.79081 92.992083 197.80209100000002 90.660163C199.81337200000002 88.32824299999999 200.13401100000002 85.87972699999999 200.075713 82.90652899999999Z M220.596259 87.71611399999999 223.19052 93.954H225.901377L216.019866 70.92629L205.876014 93.954H208.557722L211.210281 87.71611399999999ZM219.634342 85.44249199999999H212.201347L215.961568 76.63949399999998Z M235.112111 74.249276H235.840836C238.784885 74.249276 241.437444 74.599064 241.437444 78.21354C241.437444 81.62397299999999 238.63914 82.14865499999999 235.869985 82.14865499999999H235.112111ZM235.112111 84.30568099999999H235.72424L242.370212 93.954H245.372559L238.376799 84.101638C241.758083 83.810148 243.88596 81.41993 243.88596 78.038646C243.88596 73.083316 240.009143 71.97565399999999 235.840836 71.97565399999999H232.66359500000002V93.954H235.112111Z"/></svg>
@@ -240,8 +293,9 @@
 (function () {
     "use strict";
 
-    // Pool — single place to maintain. Add a photo: drop it in gallery/ and add an entry.
-    // cap = short fragment + " · " + the event it comes from.
+    // Fotos — un solo sitio que mantener. Para añadir una: el archivo en
+    // gallery/ (y su copia de 900 px en gallery/sm/, .jpg y .webp) y una línea
+    // aquí. cap = fragmento breve + " · " + el encuentro.
     var IMAGES = [
         { src: "gallery/banel-adama-1.jpg", alt: "Banel & Adama — tomando la palabra", cap: "tomando la palabra · Banel & Adama", w: 1600, h: 1067 },
         { src: "gallery/banel-adama-2.jpg", alt: "Banel & Adama — la voz", cap: "la voz · Banel & Adama", w: 1600, h: 1067 },
@@ -291,151 +345,209 @@
         { src: "gallery/manifiesto-4.jpg", alt: "Manifiesto — primera edición", cap: "primera edición · Manifiesto", w: 1600, h: 1067 }
     ];
 
-    var gallery = document.getElementById("gallery");
-    var shuffleBtn = document.getElementById("shuffle");
-    if (!gallery) return;
+    var root = document.getElementById("galeria");
+    var btn = document.getElementById("shuffle");
+    var visor = document.getElementById("visor");
+    if (!root) return;
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var seen = {};            // srcs surfaced since the last pool reset (biases toward unseen)
-    var paused = false;       // pause auto-rotate on hover
+    var GAP = 6;
+    var CADA = 4500;            // un intercambio cada 4,5 s
+    var FUNDIDO = 1100;         // ms, igual que la transición del CSS
 
-    function shuffle(a) {
+    function sm(src, ext) { return src.replace("gallery/", "gallery/sm/").replace(/\.jpg$/, ext || ".jpg"); }
+    function ratio(i) { return IMAGES[i].w / IMAGES[i].h; }
+    function barajar(a) {
         for (var i = a.length - 1; i > 0; i--) {
-            var j = Math.floor(Math.random() * (i + 1));
-            var t = a[i]; a[i] = a[j]; a[j] = t;
+            var j = Math.floor(Math.random() * (i + 1)), t = a[i]; a[i] = a[j]; a[j] = t;
         }
         return a;
     }
+    var orden = barajar(IMAGES.map(function (_, i) { return i; }));
 
-    // At least 12 images shown; bigger tiles → fewer columns.
-    function layout() {
-        if (window.innerWidth <= 900) return { cols: 2, k: 12 };
-        return { cols: 3, k: 15 };
+    /* ── Filas justificadas ─────────────────────────────────────────────── */
+    function altoObjetivo() {
+        var w = window.innerWidth;
+        return w < 560 ? 150 : w < 1000 ? 220 : 290;
     }
 
-    // Pick k images, preferring ones not yet seen so repeated reshuffles cycle through all.
-    function pickSet(k) {
-        var pool = IMAGES.filter(function (im) { return !seen[im.src]; });
-        if (pool.length < k) { seen = {}; pool = IMAGES.slice(); }
-        shuffle(pool);
-        var chosen = pool.slice(0, k);
-        chosen.forEach(function (im) { seen[im.src] = true; });
-        return chosen;
+    function rellenar(a, i) {
+        var im = IMAGES[i];
+        a.dataset.i = i;
+        a.href = im.src;
+        a.setAttribute("aria-label", im.alt);
+        a.querySelector("source").srcset = sm(im.src, ".webp");
+        var img = a.querySelector("img");
+        img.src = sm(im.src);
+        img.alt = im.alt;
+        a.querySelector(".pie").textContent = im.cap;
     }
 
-    // Pick one image not currently displayed (and ideally not recently seen).
-    function pickOne(exclude) {
-        var pool = IMAGES.filter(function (im) { return exclude.indexOf(im.src) === -1 && !seen[im.src]; });
-        if (!pool.length) pool = IMAGES.filter(function (im) { return exclude.indexOf(im.src) === -1; });
-        if (!pool.length) return null;
-        var im = pool[Math.floor(Math.random() * pool.length)];
-        seen[im.src] = true;
-        return im;
-    }
-
-    function sizeClass(im, cols, bigOK) {
-        var portrait = im.h > im.w * 1.15;
-        var landscape = im.w > im.h * 1.15;
-        var r = Math.random();
-        if (cols >= 3) {
-            if (portrait)  return r < 0.5 ? "tall" : "";
-            if (landscape) return (bigOK && r < 0.18) ? "big" : (r < 0.5 ? "wide" : "");
-            return (bigOK && r < 0.22) ? "big" : "";
-        }
-        // 2 columns
-        if (portrait)  return r < 0.42 ? "tall" : "";
-        if (landscape) return r < 0.22 ? "wide" : "";
-        return "";
-    }
-
-    function makeFigure(im, cls) {
-        var fig = document.createElement("figure");
-        if (cls) fig.className = cls;
-        fig.dataset.src = im.src;
+    function pieza(i) {
+        var a = document.createElement("a");
+        a.className = "foto";
+        var pic = document.createElement("picture");
+        var src = document.createElement("source");
+        src.type = "image/webp";
         var img = document.createElement("img");
-        img.src = im.src; img.alt = im.alt;
-        img.width = im.w; img.height = im.h;
-        img.loading = "lazy"; img.decoding = "async";
-        var cap = document.createElement("figcaption");
-        cap.textContent = im.cap;
-        fig.appendChild(img);
-        fig.appendChild(cap);
-        return fig;
+        img.loading = "lazy";
+        img.decoding = "async";
+        pic.appendChild(src);
+        pic.appendChild(img);
+        var pie = document.createElement("span");
+        pie.className = "pie";
+        pie.setAttribute("aria-hidden", "true");
+        a.appendChild(pic);
+        a.appendChild(pie);
+        rellenar(a, i);
+        return a;
     }
 
-    function render(list) {
-        var cols = layout().cols;
-        var bigLeft = 2; // cap oversized tiles per render
+    function componer() {
+        var W = root.clientWidth;
+        if (!W) return;
+        var H = altoObjetivo();
         var frag = document.createDocumentFragment();
-        list.forEach(function (im) {
-            var cls = sizeClass(im, cols, bigLeft > 0);
-            if (cls === "big") bigLeft--;
-            frag.appendChild(makeFigure(im, cls));
+        var fila = [], suma = 0;
+        function cerrar(ultima) {
+            var hueco = GAP * (fila.length - 1);
+            var h = (W - hueco) / suma;
+            var div = document.createElement("div");
+            div.className = "fila";
+            if (ultima && h > H) h = H;          // la última fila no se estira
+            fila.forEach(function (i) {
+                var a = pieza(i);
+                a.style.height = h.toFixed(2) + "px";
+                if (ultima) a.style.width = (ratio(i) * h).toFixed(2) + "px";
+                else a.style.flex = ratio(i) + " 1 0px"; // reparte el ancho exacto
+                div.appendChild(a);
+            });
+            frag.appendChild(div);
+            fila = []; suma = 0;
+        }
+        orden.forEach(function (i) {
+            fila.push(i);
+            suma += ratio(i);
+            if (suma * H + GAP * (fila.length - 1) >= W) cerrar(false);
         });
-        gallery.innerHTML = "";
-        gallery.appendChild(frag);
+        if (fila.length) cerrar(true);
+        root.innerHTML = "";
+        root.appendChild(frag);
     }
 
-    function currentSrcs() {
-        return Array.prototype.map.call(gallery.children, function (f) { return f.dataset.src; });
+    /* ── Intercambio automático ─────────────────────────────────────────── */
+    var pausa = false;
+    root.addEventListener("mouseenter", function () { pausa = true; });
+    root.addEventListener("mouseleave", function () { pausa = false; });
+
+    function decodificar(a) {
+        var img = a.querySelector("img");
+        return img.decode ? img.decode().catch(function () {}) : Promise.resolve();
     }
 
-    // «barajar» — full fresh set with a cross-fade.
-    function reshuffle() {
-        var k = layout().k;
-        if (reduce) { render(pickSet(k)); return; }
-        gallery.style.opacity = "0";
-        window.setTimeout(function () {
-            render(pickSet(k));
-            gallery.style.opacity = "1";
-        }, 400);
+    function intercambio() {
+        if (reduce || pausa || document.hidden || (visor && visor.open)) return;
+        var fotos = Array.prototype.slice.call(root.querySelectorAll(".foto"));
+        if (fotos.length < 2) return;
+        for (var n = 0; n < 24; n++) {
+            var a = fotos[Math.floor(Math.random() * fotos.length)];
+            var ra = ratio(+a.dataset.i);
+            var parecidas = fotos.filter(function (b) {
+                return b !== a && Math.abs(ratio(+b.dataset.i) - ra) / ra < 0.12;
+            });
+            if (!parecidas.length) continue;
+            var b = parecidas[Math.floor(Math.random() * parecidas.length)];
+            var ia = +a.dataset.i, ib = +b.dataset.i;
+            a.classList.add("cambia");
+            b.classList.add("cambia");
+            setTimeout(function () {
+                rellenar(a, ib);
+                rellenar(b, ia);
+                var pa = orden.indexOf(ia), pb = orden.indexOf(ib);
+                orden[pa] = ib; orden[pb] = ia;
+                Promise.all([decodificar(a), decodificar(b)]).then(function () {
+                    a.classList.remove("cambia");
+                    b.classList.remove("cambia");
+                });
+            }, FUNDIDO);
+            return;
+        }
     }
 
-    // Auto-rotate — swap a single tile in place with a slow fade.
-    function swapOne() {
-        if (reduce || paused || document.hidden) return;
-        var figs = gallery.children;
-        if (!figs.length) return;
-        var slot = figs[Math.floor(Math.random() * figs.length)];
-        var im = pickOne(currentSrcs());
-        if (!im) return;
-        slot.style.opacity = "0";
-        window.setTimeout(function () {
-            var img = slot.querySelector("img");
-            var cap = slot.querySelector("figcaption");
-            img.src = im.src; img.alt = im.alt; img.width = im.w; img.height = im.h;
-            cap.textContent = im.cap;
-            slot.dataset.src = im.src;
-            window.requestAnimationFrame(function () { slot.style.opacity = "1"; });
-        }, 850);
-    }
+    /* ── El visor ───────────────────────────────────────────────────────── */
+    if (visor && typeof visor.showModal === "function") {
+        var vImg = visor.querySelector(".visor-marco img");
+        var vPie = visor.querySelector(".visor-pie");
+        var vCuenta = visor.querySelector(".visor-cuenta");
+        var actual = 0;
+        var pad = function (n) { return (n < 10 ? "0" : "") + n; };
 
-    // Init
-    render(pickSet(layout().k));
+        var mostrar = function (p) {
+            actual = (p + orden.length) % orden.length;
+            var im = IMAGES[orden[actual]];
+            vImg.classList.add("carga");
+            var pre = new Image();
+            pre.onload = pre.onerror = function () {
+                vImg.src = im.src;
+                vImg.alt = im.alt;
+                requestAnimationFrame(function () { vImg.classList.remove("carga"); });
+            };
+            pre.src = im.src;
+            vPie.textContent = im.cap;
+            vCuenta.textContent = pad(actual + 1) + " / " + pad(orden.length);
+        };
 
-    if (shuffleBtn) {
-        shuffleBtn.hidden = false;
-        var spin = 0;
-        shuffleBtn.addEventListener("click", function () {
-            spin += 1;
-            shuffleBtn.style.transform = "rotate(" + (spin * 180) + "deg)";
-            reshuffle();
+        root.addEventListener("click", function (e) {
+            var a = e.target.closest(".foto");
+            if (!a || e.metaKey || e.ctrlKey || e.shiftKey) return;
+            e.preventDefault();
+            mostrar(orden.indexOf(+a.dataset.i));
+            visor.showModal();
+        });
+        visor.querySelector(".visor-prev").addEventListener("click", function () { mostrar(actual - 1); });
+        visor.querySelector(".visor-next").addEventListener("click", function () { mostrar(actual + 1); });
+        visor.querySelector(".visor-cerrar").addEventListener("click", function () { visor.close(); });
+        visor.querySelector(".visor-marco").addEventListener("click", function (e) {
+            if (e.target === this) visor.close();       // clic fuera de la foto
+        });
+        visor.addEventListener("keydown", function (e) {
+            if (e.key === "ArrowLeft") { e.preventDefault(); mostrar(actual - 1); }
+            if (e.key === "ArrowRight") { e.preventDefault(); mostrar(actual + 1); }
+        });
+        var x0 = null;
+        visor.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+        visor.addEventListener("touchend", function (e) {
+            if (x0 === null) return;
+            var dx = e.changedTouches[0].clientX - x0;
+            if (Math.abs(dx) > 50) mostrar(actual + (dx < 0 ? 1 : -1));
+            x0 = null;
         });
     }
 
-    gallery.addEventListener("mouseenter", function () { paused = true; });
-    gallery.addEventListener("mouseleave", function () { paused = false; });
+    /* ── Arranque ───────────────────────────────────────────────────────── */
+    componer();
 
-    if (!reduce) window.setInterval(swapOne, 6000);
+    if (btn) {
+        btn.hidden = false;
+        var giro = 0;
+        btn.addEventListener("click", function () {
+            giro += 1;
+            btn.style.transform = "rotate(" + (giro * 180) + "deg)";
+            orden = barajar(orden);
+            if (reduce) { componer(); return; }
+            root.classList.add("baraja");
+            setTimeout(function () { componer(); root.classList.remove("baraja"); }, 500);
+        });
+    }
 
-    // Re-render when the breakpoint (column count) changes.
-    var lastCols = layout().cols, t;
+    if (!reduce) setInterval(intercambio, CADA);
+
+    var ultimoAncho = root.clientWidth, rt;
     window.addEventListener("resize", function () {
-        window.clearTimeout(t);
-        t = window.setTimeout(function () {
-            var c = layout().cols;
-            if (c !== lastCols) { lastCols = c; render(pickSet(layout().k)); }
-        }, 200);
+        clearTimeout(rt);
+        rt = setTimeout(function () {
+            if (root.clientWidth !== ultimoAncho) { ultimoAncho = root.clientWidth; componer(); }
+        }, 150);
     });
 })();
 </script>

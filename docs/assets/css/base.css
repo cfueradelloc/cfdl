@@ -185,7 +185,7 @@ body {
     border-bottom: 1px solid transparent;
     transition: color var(--ease), border-color var(--ease);
 }
-.nav-links a { padding: 4px 0 3px; border-bottom-width: 3px; }
+.nav-links a { padding: 4px 0 3px; }   /* un solo grosor de línea en todo el sitio: 1 px */
 .nav-links a:hover { border-bottom-color: var(--ambar); }
 .nav-links a.active,
 .nav-links a[aria-current="page"] { border-bottom-color: var(--ambar); }
