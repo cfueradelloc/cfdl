@@ -52,7 +52,8 @@ vuelve a pasar sobre los másteres — nunca sobre lo ya tratado.
   proporción** (±2 %) y de un encuentro distinto al de sus vecinas. La foto
   bajo el ratón no cambia; tampoco con el visor abierto, la pestaña oculta o
   movimiento reducido.
-- «Barajar»: las fotos se van y vuelven escalonadas, con un orden nuevo.
+- «Barajar» (a mano, y sola cada 40 s): cada foto se va en su momento y el
+  orden nuevo vuelve foto a foto — nunca todas a la vez.
 - Clic: el visor, con la foto entera (1600 px), su pie y «07 / 40»; flechas,
   teclado, deslizar y Esc.
 
