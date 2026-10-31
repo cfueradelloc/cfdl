@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>La llegada del moho — C.F.D.L.</title>
-    <link rel="icon" type="image/svg+xml" href="../assets/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="../assets/logo/favicon-180.png">
+    <link rel="apple-touch-icon" href="../assets/logo/favicon-180.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/MinionPro-Regular.otf" crossorigin>
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/FuturaStd-Book.otf" crossorigin>
     <link rel="stylesheet" href="../assets/css/viewer.css">
+    <script src="../assets/js/viewer.js"></script>
     <style>
         @font-face {
             font-family: 'FuturaStd';
@@ -309,7 +312,7 @@
         <div class="cfdl-tag">C.F.D.L.</div>
         <h1>La llegada<br>del moho</h1>
         <p class="subtitle">
-            "Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono."
+            «Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono.»
         </p>
 
         <!-- Pattern preset -->
@@ -445,58 +448,6 @@ const PRESETS = {
     liquen:  { F: 0.030, K: 0.057 }, // labyrinthine maze — lichen on rock
     coral:   { F: 0.058, K: 0.065 }, // branching coral / solitons
     manchas: { F: 0.035, K: 0.065 }, // self-replicating spots / mitosis
-    micelio: { F: 0.040, K: 0.060 }, // active worm-like filaments / mycelium
-};
-
-// ─── SIMULATION CONSTANTS ──────────────────────────────────────────────────
-const SW = 400, SH = 400;       // simulation grid dimensions
-const Du = 0.20, Dv = 0.10;     // diffusion coefficients (ratio 2:1 is canonical)
-const LUT_N   = 2048;           // color lookup table entries
-const LUT_VMAX = 0.55;          // V values above this are clamped to hotspot color
-
-// ─── GLOBAL STATE ──────────────────────────────────────────────────────────
-let params = {
-    seed:      Math.floor(Math.random() * 999999) + 1,
-    palette:   'nocturno',
-    preset:    'liquen',
-    F:         PRESETS.liquen.F,
-    K:         PRESETS.liquen.K,
-    numSpores: 8,
-    speed:     5,
-    sporeRain: true,
-};
-
-let uGrid, vGrid, uNext, vNext; // Float32Array simulation buffers
-let colorLUT = new Uint8Array(LUT_N * 3);
-let simImg;      // p5 image object for pixel rendering
-let pSketch;     // p5 instance reference
-let frame = 0;
-
-// ─── COLOR LOOKUP TABLE ────────────────────────────────────────────────────
-// Precompute color for every possible V value — avoids per-pixel branching.
-function buildLUT() {
-    const stops = PALETTES[params.palette].stops;
-    const n = stops.length;
-    for (let i = 0; i < LUT_N; i++) {
-        const v = (i / LUT_N) * LUT_VMAX;
-        let r = stops[0][1][0], g = stops[0][1][1], b = stops[0][1][2];
-        for (let s = 0; s < n - 1; s++) {
-            const v0 = stops[s][0], v1 = stops[s+1][0];
-            if (v >= v0 && v < v1) {
-                const t  = (v - v0) / (v1 - v0);
-                const c0 = stops[s][1], c1 = stops[s+1][1];
-                r = (c0[0] + (c1[0] - c0[0]) * t) | 0;
-                g = (c0[1] + (c1[1] - c0[1]) * t) | 0;
-                b = (c0[2] + (c1[2] - c0[2]) * t) | 0;
-                break;
-            }
-        }
-        if (v >= stops[n-1][0]) {
-            r = stops[n-1][1][0]; g = stops[n-1][1][1]; b = stops[n-1][1][2];
-        }
-        colorLUT[i*3]   = r;
-        colorLUT[i*3+1] = g;
-        colorLUT[i*3+2] = b;
     micelio: { F: 0.040, K: 0.060 }, // active worm-like filaments / mycelium
 };
 
@@ -686,9 +637,10 @@ new p5(function(p) {
     pSketch = p;
 
     p.setup = function() {
-        const availW = window.innerWidth  - 280 - 80;
-        const availH = window.innerHeight - 48;
-        const sz = Math.max(Math.min(availW, availH, 900), 380);
+        const visor  = document.documentElement.classList.contains('visor');
+        const availW = window.innerWidth  - (visor ? 48 : 280 + 80);
+        const availH = window.innerHeight - (visor ? 120 : 48);
+        const sz = Math.max(Math.min(availW, availH, 1000), visor ? 280 : 380);
 
         const cnv = p.createCanvas(sz, sz);
         cnv.parent('sketch');

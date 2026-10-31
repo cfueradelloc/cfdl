@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Proyectos</title>
     <meta name="description" content="Archivo generativo del C.F.D.L. — interpretaciones visuales del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
-    <meta name="theme-color" content="#332f8a">
+    <meta name="theme-color" content="#fdf5eb">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
@@ -17,107 +17,82 @@
     <meta name="twitter:title" content="C.F.D.L. — Archivo generativo">
     <meta name="twitter:description" content="Piezas generativas producidas a partir del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
-    <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="assets/logo/favicon-180.png">
+    <link rel="apple-touch-icon" href="assets/logo/favicon-180.png">
     <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
     <script>document.documentElement.classList.add('js')</script>
     <script src="assets/js/site.js" defer></script>
     <style>
-        /* ── Piece list (page-specific) ────────────────────────────────────── */
-        .piece-list { list-style: none; }
-
-        .piece-item { border-bottom: 1px solid var(--border); }
-
-        .piece-link {
+        /* El archivo: una retícula recta de fotogramas. Cada imagen es un
+           fotograma exportado del propio lienzo de la pieza. */
+        .archivo {
+            list-style: none;
             display: grid;
-            grid-template-columns: 48px 1fr auto;
-            align-items: start;
-            gap: 0 32px;
-            padding: 36px var(--gutter);
-            border-left: 3px solid transparent;
-            text-decoration: none;
-            color: inherit;
-            transition: background var(--ease), border-color var(--ease);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: clamp(48px, 5vw, 80px) clamp(20px, 2.4vw, 36px);
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: clamp(48px, 6vw, 88px) var(--gutter) 0;
         }
-
-        .piece-link:hover {
-            background: var(--surface);
-            border-left-color: var(--accent);
+        .pieza { display: block; text-decoration: none; color: var(--text); }
+        .pieza .vista {
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            background: #0c0a23;
         }
-
-        .piece-link:hover .piece-arrow {
-            transform: translateX(4px);
-            color: var(--accent-fg);
+        .pieza .vista img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s var(--ease-out);
         }
-
-        .piece-num {
+        .pieza:hover .vista img { transform: scale(1.03); }
+        .pieza .vista.paleta { display: flex; }
+        .pieza .vista.paleta span { flex: 1; transition: flex var(--ease) var(--ease-out); }
+        .pieza:hover .vista.paleta span:nth-child(7) { flex: 3; }
+        .pieza .num {
+            display: block;
+            margin-top: 20px;
             font-size: var(--fs-label);
-            letter-spacing: 0.1em;
-            color: var(--accent-fg);
-            opacity: 0.7;
-            padding-top: 5px;
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--muted);
         }
-
-        .piece-title {
+        .pieza h2 {
             font-family: 'MinionPro', serif;
-            font-size: 22px;
-            font-weight: normal;
-            line-height: 1.25;
-            margin-bottom: 6px;
-        }
-
-        .piece-fragment {
-            font-family: 'MinionPro', serif;
-            font-size: 13px;
             font-style: italic;
-            color: var(--muted);
-            margin-bottom: 10px;
+            font-weight: normal;
+            font-size: var(--fs-h3);
+            line-height: 1.2;
+            margin-top: 6px;
+            transition: color var(--ease);
+        }
+        .pieza:hover h2 { color: var(--accent-fg); }
+        .pieza .frag {
+            font-family: 'MinionPro', serif;
+            font-size: 16px;
             line-height: 1.5;
-        }
-
-        .piece-body { min-width: 0; }
-
-        .piece-desc {
-            overflow-wrap: anywhere;
-            font-size: var(--fs-label);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
             color: var(--muted);
+            margin-top: 8px;
         }
-
-        .piece-tag {
-            display: inline-block;
+        .pieza .meta {
             font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
-            border: 1px solid var(--border);
-            padding: 2px 7px;
-            border-radius: var(--radius);
-            margin-left: 10px;
-            vertical-align: middle;
+            margin-top: 12px;
+            line-height: 1.6;
         }
-
-        .piece-arrow {
-            font-size: 18px;
-            color: var(--accent-fg);
-            opacity: 0.5;
-            padding-top: 4px;
-            transition: transform var(--ease), color var(--ease), opacity var(--ease);
-            align-self: center;
-        }
-
-        .piece-link:hover .piece-arrow { opacity: 1; }
-
-        @media (max-width: 700px) {
-            .piece-link { padding: 28px var(--gutter); grid-template-columns: 36px 1fr auto; gap: 0 16px; }
-        }
+        @media (max-width: 1000px) { .archivo { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 560px)  { .archivo { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <nav class="site-nav">
-    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <a class="nav-brand" href="index.html" aria-label="C.F.D.L. — inicio"><img src="assets/logo/favicon-180.png" width="44" height="44" alt=""><span class="nav-brand-name">C.F.D.L.</span></a>
     <div class="nav-links">
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
@@ -128,105 +103,85 @@
 </nav>
 
 <header>
-    <p class="kicker reveal">C.F.D.L.</p>
+    <p class="kicker reveal">Proyectos</p>
     <h1 class="section-title reveal reveal-2">Archivo generativo</h1>
-    <p class="section-subtitle reveal reveal-3">Piezas generativas producidas a partir del manifiesto de C.F.D.L.
-        Cada archivo es una interpretación visual de un fragmento —
-        sistemas que crecen, se fracturan, derivan y se pierden.</p>
+    <p class="section-subtitle reveal reveal-3">Piezas generativas producidas a partir del manifiesto: cada una,
+        la interpretación de un fragmento — sistemas que crecen, se fracturan, derivan y se pierden.</p>
 </header>
 
 <main>
-<ul class="piece-list">
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/manifiesto-animado.html">
-            <span class="piece-num">01</span>
-            <div class="piece-body">
-                <div class="piece-title">Manifiesto animado</div>
-                <div class="piece-fragment">«fuera de lugar — siempre en algún otro lugar»</div>
-                <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+<ul class="archivo">
+    <li>
+        <a class="pieza" href="output/manifiesto-animado.html">
+            <div class="vista"><img src="assets/thumbs/manifiesto-animado.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">01</span>
+            <h2>Manifiesto animado</h2>
+            <p class="frag">«fuera de lugar — siempre en algún otro lugar»</p>
+            <p class="meta">Texto generativo — sistema de partículas tipográficas</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/maleza.html">
-            <span class="piece-num">02</span>
-            <div class="piece-body">
-                <div class="piece-title">Maleza</div>
-                <div class="piece-fragment">«al mirar atrás, encontrar un camino lleno de maleza»</div>
-                <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/maleza.html">
+            <div class="vista"><img src="assets/thumbs/maleza.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">02</span>
+            <h2>Maleza</h2>
+            <p class="frag">«al mirar atrás, encontrar un camino lleno de maleza»</p>
+            <p class="meta">Campo vectorial — ruido curl con tres especies de partículas</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/brujula.html">
-            <span class="piece-num">03</span>
-            <div class="piece-body">
-                <div class="piece-title">Brújula sin su imán</div>
-                <div class="piece-fragment">«Navegar quitándole a la brújula su imán»</div>
-                <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/brujula.html">
+            <div class="vista"><img src="assets/thumbs/brujula.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">03</span>
+            <h2>Brújula sin su imán</h2>
+            <p class="frag">«Navegar quitándole a la brújula su imán»</p>
+            <p class="meta">Dipolo magnético errante — campo de partículas y agujas</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/moho.html">
-            <span class="piece-num">04</span>
-            <div class="piece-body">
-                <div class="piece-title">La llegada del moho</div>
-                <div class="piece-fragment">«Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono»</div>
-                <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/moho.html">
+            <div class="vista"><img src="assets/thumbs/moho.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">04</span>
+            <h2>La llegada del moho</h2>
+            <p class="frag">«Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono»</p>
+            <p class="meta">Reacción-difusión Gray-Scott — colonización química</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/disgregacion.html">
-            <span class="piece-num">05</span>
-            <div class="piece-body">
-                <div class="piece-title">Ante la síntesis, la disgregación</div>
-                <div class="piece-fragment">«Y ante la síntesis, la disgregación»</div>
-                <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/disgregacion.html">
+            <div class="vista"><img src="assets/thumbs/disgregacion.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">05</span>
+            <h2>Ante la síntesis, la disgregación</h2>
+            <p class="frag">«Y ante la síntesis, la disgregación»</p>
+            <p class="meta">Sistema de partículas — cristalización y fractura cíclica</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/garganta.html">
-            <span class="piece-num">06</span>
-            <div class="piece-body">
-                <div class="piece-title">Garganta sin fondo</div>
-                <div class="piece-fragment">«el malestar de asomarse a una garganta sin fondo»</div>
-                <div class="piece-desc">Vórtice de partículas — espiral sin retorno</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/garganta.html">
+            <div class="vista"><img src="assets/thumbs/garganta.jpg" width="900" height="900" loading="lazy" alt=""></div>
+            <span class="num">06</span>
+            <h2>Garganta sin fondo</h2>
+            <p class="frag">«el malestar de asomarse a una garganta sin fondo»</p>
+            <p class="meta">Vórtice de partículas — espiral sin retorno</p>
         </a>
     </li>
-
-    <li class="piece-item">
-        <a class="piece-link" href="output/paleta.html">
-            <span class="piece-num">07</span>
-            <div class="piece-body">
-                <div class="piece-title">Paleta cromática<span class="piece-tag">Referencia</span></div>
-                <div class="piece-fragment">«9 colores — de Cera a Medianoche»</div>
-                <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
-            </div>
-            <span class="piece-arrow" aria-hidden="true">→</span>
+    <li>
+        <a class="pieza" href="output/paleta.html">
+            <div class="vista paleta" aria-hidden="true"><span style="background:#fdf5eb"></span><span style="background:#f1e7db"></span><span style="background:#e0d6ca"></span><span style="background:#a89f96"></span><span style="background:#6a625a"></span><span style="background:#171513"></span><span style="background:#ffb923"></span><span style="background:#f8ccce"></span><span style="background:#332f8a"></span><span style="background:#1b5033"></span><span style="background:#004d5f"></span><span style="background:#fff4d6"></span><span style="background:#bbabd5"></span></div>
+            <span class="num">07 — referencia</span>
+            <h2>Paleta cromática</h2>
+            <p class="frag">«trece tonos, con el ámbar como ancla»</p>
+            <p class="meta">Paleta C.F.D.L. — explorador interactivo</p>
         </a>
     </li>
-
 </ul>
 </main>
 
 <footer>
-    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <div class="footer-brand">
+        <img src="assets/logo/favicon-180.png" width="36" height="36" alt="">
+        <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    </div>
     <p>
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
         · <a href="https://github.com/cfueradelloc" target="_blank" rel="noopener">GitHub</a>

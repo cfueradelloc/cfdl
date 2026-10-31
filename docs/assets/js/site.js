@@ -122,19 +122,6 @@
         if (empty) empty.hidden = up.length > 0;
     }
 
-    /* ── Desorden con medida ────────────────────────────────────────────── */
-    /* data-scatter="2.5" → giro al azar entre −2,5° y +2,5°, y un pequeño
-       desplazamiento. Cada visita, otra composición; nunca rota. El CSS
-       trae valores por defecto, así que sin JS también está torcido. */
-    function scatter() {
-        Array.prototype.forEach.call(document.querySelectorAll("[data-scatter]"), function (el) {
-            var max = parseFloat(el.getAttribute("data-scatter")) || 2;
-            el.style.setProperty("--r", ((Math.random() * 2 - 1) * max).toFixed(2) + "deg");
-            el.style.setProperty("--dx", ((Math.random() * 2 - 1) * 14).toFixed(1) + "px");
-            el.style.setProperty("--dy", ((Math.random() * 2 - 1) * 14).toFixed(1) + "px");
-        });
-    }
-
     /* ── Portada: el próximo encuentro (o el último) ────────────────────── */
     /* Lee eventos.html —la página que ya es la representación del calendario—
        y rellena [data-proximo]. El marcado estático trae el último conocido. */
@@ -165,6 +152,5 @@
 
     buildMenu();
     splitEvents();
-    scatter();
     fillProximo();
 })();

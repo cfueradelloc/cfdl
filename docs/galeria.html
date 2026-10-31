@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Galería</title>
     <meta name="description" content="Imágenes de los encuentros, lecturas y proyecciones del C.F.D.L. — En voz alta, La Magistral, Welcome Summer, Banel & Adama, Lorca en La Habana.">
-    <meta name="theme-color" content="#332f8a">
+    <meta name="theme-color" content="#fdf5eb">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
@@ -17,7 +17,9 @@
     <meta name="twitter:title" content="C.F.D.L. — Galería">
     <meta name="twitter:description" content="Encuentros, lecturas y proyecciones del C.F.D.L. en imágenes.">
     <meta name="twitter:image" content="https://cfdl.site/gallery/welcome-summer-2.jpg">
-    <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="assets/logo/favicon-180.png">
+    <link rel="apple-touch-icon" href="assets/logo/favicon-180.png">
     <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
     <script>document.documentElement.classList.add('js')</script>
@@ -28,7 +30,8 @@
 
         .shuffle-btn {
             position: absolute;
-            top: clamp(48px, 9vw, 120px);
+            top: auto;
+            bottom: clamp(40px, 5vw, 64px);
             right: var(--gutter);
             width: 42px;
             height: 42px;
@@ -36,9 +39,9 @@
             align-items: center;
             justify-content: center;
             background: transparent;
-            border: 1px solid var(--band-rule);
+            border: 1px solid var(--border);
             border-radius: 50%;
-            color: var(--band-muted);
+            color: var(--muted);
             cursor: pointer;
             transition: color var(--ease), background var(--ease),
                         border-color var(--ease), transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -48,9 +51,9 @@
 
         .shuffle-btn:hover,
         .shuffle-btn:focus-visible {
-            color: var(--band-bg);
-            background: var(--accent);
-            border-color: var(--accent);
+            color: var(--bg);
+            background: var(--text);
+            border-color: var(--text);
             outline: none;
         }
 
@@ -65,7 +68,9 @@
             grid-auto-rows: 320px;
             grid-auto-flow: dense;
             gap: 14px;
-            padding: 32px;
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: clamp(32px, 4vw, 56px) var(--gutter) 0;
             transition: opacity 0.4s ease;
         }
 
@@ -113,11 +118,11 @@
         }
 
         @media (max-width: 900px) {
-            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 260px; gap: 12px; padding: 20px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 260px; gap: 12px; }
         }
 
         @media (max-width: 520px) {
-            .gallery { grid-auto-rows: 200px; gap: 10px; padding: 14px; }
+            .gallery { grid-auto-rows: 200px; gap: 10px; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -139,7 +144,7 @@
 <body>
 
 <nav class="site-nav">
-    <a class="nav-brand" href="index.html">C.F.D.L.</a>
+    <a class="nav-brand" href="index.html" aria-label="C.F.D.L. — inicio"><img src="assets/logo/favicon-180.png" width="44" height="44" alt=""><span class="nav-brand-name">C.F.D.L.</span></a>
     <div class="nav-links">
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
@@ -150,8 +155,8 @@
 </nav>
 
 <header>
-    <p class="kicker reveal">C.F.D.L.</p>
-    <h1 class="section-title reveal reveal-2">Galería</h1>
+    <p class="kicker reveal">Galería</p>
+    <h1 class="section-title reveal reveal-2">Las sesiones, tal como ocurrieron</h1>
     <p class="section-subtitle reveal reveal-3">Encuentros, lecturas y proyecciones</p>
     <button type="button" class="shuffle-btn reveal reveal-3" id="shuffle" hidden aria-label="Barajar las imágenes" title="Barajar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -223,7 +228,10 @@
 </main>
 
 <footer>
-    <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    <div class="footer-brand">
+        <img src="assets/logo/favicon-180.png" width="36" height="36" alt="">
+        <p>Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
+    </div>
     <p>
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc</a>
         · <a href="https://github.com/cfueradelloc" target="_blank" rel="noopener">GitHub</a>

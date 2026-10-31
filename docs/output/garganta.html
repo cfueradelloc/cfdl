@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Garganta sin fondo — C.F.D.L.</title>
-    <link rel="icon" type="image/svg+xml" href="../assets/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="../assets/logo/favicon-180.png">
+    <link rel="apple-touch-icon" href="../assets/logo/favicon-180.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.7.0/p5.min.js"></script>
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/MinionPro-Regular.otf" crossorigin>
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/FuturaStd-Book.otf" crossorigin>
     <link rel="stylesheet" href="../assets/css/viewer.css">
+    <script src="../assets/js/viewer.js"></script>
     <style>
         @font-face {
             font-family: 'FuturaStd';
@@ -264,7 +267,7 @@
         <div class="cfdl-tag">C.F.D.L.</div>
         <h1>Garganta<br>sin fondo</h1>
         <p class="subtitle">
-            "el malestar de asomarse<br>a una garganta sin fondo."
+            «el malestar de asomarse<br>a una garganta sin fondo.»
         </p>
 
         <div class="phase-indicator">
@@ -449,9 +452,10 @@ const buildSketch = (p) => {
     }
 
     function initCanvas() {
-        const availW = window.innerWidth  - 280 - 80;
-        const availH = window.innerHeight - 48;
-        const sz = Math.max(Math.min(availW, availH, 900), 380);
+        const visor  = document.documentElement.classList.contains('visor');
+        const availW = window.innerWidth  - (visor ? 48 : 280 + 80);
+        const availH = window.innerHeight - (visor ? 120 : 48);
+        const sz = Math.max(Math.min(availW, availH, 1000), visor ? 280 : 380);
         W = sz; H = sz;
         document.getElementById('canvas-container').style.width  = sz + 'px';
         document.getElementById('canvas-container').style.height = sz + 'px';

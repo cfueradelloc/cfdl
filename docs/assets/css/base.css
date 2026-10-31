@@ -4,6 +4,10 @@
    eventos, galeria). No build step: this file is linked directly.
    NOTE: url() resolves relative to THIS file (docs/assets/css/), so font and
    asset paths are ../fonts/… etc.
+
+   Dirección: sobria. Papel, tinta, mucho aire, una retícula recta. El color
+   lo pone el logotipo —el cuadrado ámbar— y casi nada más. Minion en cursiva
+   para los títulos, Futura para todo lo demás.
    ========================================================================== */
 
 /* ── Fonts ─────────────────────────────────────────────────────────────── */
@@ -24,60 +28,56 @@
 
 /* ── Reset ─────────────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; overflow-x: clip; }
-img { max-width: 100%; height: auto; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+img { max-width: 100%; height: auto; display: block; }
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
 :root {
-    /* Paleta única — content/paleta/. El suelo es el papel; el zafiro es la banda. */
     --bg:      #fdf5eb;   /* papel   — fondo de página            */
-    --surface: #f1e7db;   /* hueso   — superficies, tarjetas      */
+    --surface: #f1e7db;   /* hueso   — superficies                */
     --text:    #171513;   /* tinta   — cuerpo                     */
     --muted:   #6a625a;   /* humo    — secundario (5,6:1)         */
     --border:  #e0d6ca;   /* filete  — bordes y separadores       */
     --rule:    #e0d6ca;
 
-    /* EL ACENTO VA EN DOS. El ámbar sobre papel da 1,59:1: relleno y marca
-       grande, nunca texto. --accent-fg (7,25:1) es el que lleva letra. */
+    /* El ámbar sobre papel da 1,59:1: relleno y marca, nunca texto.
+       --accent-fg (7,25:1) es el que lleva letra. */
     --accent:    #ffb923;
     --accent-fg: #714a00;
 
-    /* Banda oscura — cabecera, pie, menú, y cualquier cromo sobre el zafiro. */
+    /* Zafiro — sólo el manifiesto, que es su página. */
     --band-bg:    #332f8a;
     --band-fg:    #fff4d6;
     --band-muted: #bbabd5;
     --band-rule:  #6a5da3;
 
-    /* ESCALA. Antes las etiquetas iban a 9–10 px: ilegibles en un móvil.
-       Ninguna letra del sitio baja ya de --fs-label. */
+    /* Escala. Ninguna letra del sitio baja de --fs-label. */
     --fs-label:   12px;
-    --fs-small:   14px;
-    --fs-body:    clamp(16px, 0.35vw + 14.6px, 19px);
-    --fs-h3:      clamp(22px, 2.2vw, 30px);
-    --fs-h2:      clamp(34px, 5.2vw, 72px);
-    --fs-display: clamp(64px, 14vw, 210px);
-    --track:      0.16em;   /* tracking de etiquetas en mayúsculas */
+    --fs-small:   15px;
+    --fs-body:    17px;
+    --fs-h3:      clamp(22px, 2vw, 28px);
+    --fs-h2:      clamp(30px, 3.4vw, 44px);
+    --fs-display: clamp(46px, 7vw, 104px);
+    --track:      0.16em;
 
-    /* Márgenes laterales — 20 px en un teléfono, 56 px en escritorio. */
-    --gutter: clamp(20px, 4.2vw, 56px);
+    --gutter: clamp(20px, 5vw, 72px);
+    --max:    1360px;
 
-    /* Shape & motion */
-    --radius: 2px;
-    --ease:   0.18s;
+    --radius: 0;
+    --ease:   0.2s;
     --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Inverted scheme — opt-in via <body class="theme-dark"> (manifiesto). */
+/* Esquema invertido — <body class="theme-dark"> (manifiesto). */
 body.theme-dark {
     --bg:      #332f8a;
     --surface: #6a5da3;
     --text:    #fff4d6;
     --muted:   #bbabd5;
-    --border:  #6a5da3;
-    --rule:    #6a5da3;
-    /* Sobre el zafiro el ámbar SÍ lleva texto: 6,38:1. */
+    --border:  #4c4596;
+    --rule:    #4c4596;
     --accent:    #ffb923;
-    --accent-fg: #ffb923;
+    --accent-fg: #ffb923;   /* sobre zafiro el ámbar sí lleva texto: 6,38:1 */
 }
 
 /* ── Body ──────────────────────────────────────────────────────────────── */
@@ -88,61 +88,71 @@ body {
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
 }
 
 ::selection { background: var(--accent); color: #171513; }
 
-/* Etiqueta: la voz de las meta-líneas, los pies, la navegación. */
+.wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+}
+
 .label {
-    font-family: 'FuturaStd', sans-serif;
     font-size: var(--fs-label);
     letter-spacing: var(--track);
     text-transform: uppercase;
     color: var(--muted);
 }
 
-/* ── Nav (shared sticky top bar) ───────────────────────────────────────── */
+/* ── Nav ───────────────────────────────────────────────────────────────── */
 .site-nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    min-height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
+    min-height: 76px;
     padding: 0 var(--gutter);
-    background: var(--bg);
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border);
     view-transition-name: site-nav;
 }
 
+/* La marca: el monograma en espiral (studio/brand, favicon-180.png). */
 .nav-brand {
-    font-size: 15px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
     color: var(--text);
     text-decoration: none;
-    white-space: nowrap;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
+    text-transform: uppercase;
 }
-/* El punto final se cae de la línea: la marca, también fuera de lugar. */
-.nav-brand::after {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    margin-left: 6px;
-    background: var(--accent);
-    transform: translateY(-7px) rotate(12deg);
-    transition: transform 0.5s var(--ease-out);
+.nav-brand img,
+.nav-brand .logo {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
 }
-.nav-brand:hover::after { transform: translateY(2px) rotate(57deg); }
+/* El lockup «línea» de la marca: el monograma y las siglas, espaciadas. */
+.nav-brand .nav-brand-name {
+    font-size: 14px;
+    letter-spacing: 0.32em;
+    color: var(--text);
+}
 
 .nav-links {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px 30px;
+    gap: 6px 34px;
 }
 
 .nav-links a {
@@ -151,17 +161,15 @@ body {
     text-transform: uppercase;
     color: var(--muted);
     text-decoration: none;
-    padding: 6px 0;
+    padding: 4px 0;
     border-bottom: 1px solid transparent;
     transition: color var(--ease), border-color var(--ease);
 }
-
 .nav-links a:hover { color: var(--text); }
-
 .nav-links a.active,
 .nav-links a[aria-current="page"] {
     color: var(--text);
-    border-bottom-color: var(--accent);
+    border-bottom-color: var(--text);
 }
 
 /* Botón «Menú» — lo crea site.js; sin JS no existe y la barra envuelve. */
@@ -173,13 +181,11 @@ body {
     text-transform: uppercase;
     color: var(--text);
     background: none;
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 9px 16px 8px;
+    border: 0;
+    border-bottom: 1px solid var(--text);
+    padding: 4px 0;
     cursor: pointer;
-    transition: background var(--ease), border-color var(--ease);
 }
-.nav-toggle:hover { background: var(--accent); border-color: var(--accent); color: #171513; }
 
 /* ── Menú a pantalla completa (móvil) ──────────────────────────────────── */
 .menu {
@@ -190,104 +196,91 @@ body {
     height: 100%;
     max-height: none;
     margin: 0;
-    padding: 0 var(--gutter) 40px;
+    padding: 0 var(--gutter) 32px;
     border: none;
-    background: var(--band-bg);
-    color: var(--band-fg);
+    background: var(--bg);
+    color: var(--text);
     overflow-y: auto;
 }
 .menu[open] { display: flex; flex-direction: column; }
-.menu::backdrop { background: var(--band-bg); }
+.menu::backdrop { background: var(--bg); }
 
 .menu-head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 56px;
-    border-bottom: 1px solid var(--band-rule);
+    min-height: 76px;
+    border-bottom: 1px solid var(--border);
 }
-.menu-head .nav-brand { color: var(--band-fg); }
 .menu-close {
     font: inherit;
     font-size: var(--fs-label);
     letter-spacing: var(--track);
     text-transform: uppercase;
-    color: var(--band-fg);
+    color: var(--text);
     background: none;
-    border: 1px solid var(--band-rule);
-    border-radius: 999px;
-    padding: 9px 16px 8px;
+    border: 0;
+    border-bottom: 1px solid var(--text);
+    padding: 4px 0;
     cursor: pointer;
 }
-.menu-close:hover { background: var(--accent); border-color: var(--accent); color: #171513; }
 
 .menu-links {
     list-style: none;
-    margin-top: auto;
-    padding: 48px 0 32px;
+    padding: 40px 0 32px;
 }
-.menu-links li { border-bottom: 1px solid var(--band-rule); }
+.menu-links li { border-bottom: 1px solid var(--border); }
 .menu-links a {
     display: block;
-    padding: 10px 0 6px;
+    padding: 14px 0 10px;
     font-family: 'MinionPro', serif;
     font-style: italic;
-    font-size: clamp(44px, 13vw, 88px);
-    line-height: 1.05;
-    color: var(--band-fg);
+    font-size: clamp(36px, 10vw, 56px);
+    line-height: 1.1;
+    color: var(--text);
     text-decoration: none;
-    transition: color var(--ease), transform 0.4s var(--ease-out);
 }
-/* Cada entrada, desplazada a su manera — ninguna en su sitio. */
-.menu-links li:nth-child(1) a { padding-left: 0; }
-.menu-links li:nth-child(2) a { padding-left: 14%; }
-.menu-links li:nth-child(3) a { padding-left: 5%; }
-.menu-links li:nth-child(4) a { padding-left: 22%; }
-.menu-links a:hover,
-.menu-links a[aria-current="page"] { color: var(--accent); }
-.menu-links a:hover { transform: translateX(10px); }
+.menu-links a[aria-current="page"] { color: var(--muted); }
 
 .menu-foot {
+    margin-top: auto;
     font-size: var(--fs-label);
     letter-spacing: var(--track);
     text-transform: uppercase;
-    color: var(--band-muted);
+    color: var(--muted);
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 12px;
+    flex-direction: column;
+    gap: 10px;
 }
-.menu-foot a { color: var(--band-muted); text-decoration: none; }
-.menu-foot a:hover { color: var(--accent); }
+.menu-foot a { color: var(--muted); text-decoration: none; }
 
-/* Entrada del menú */
-@keyframes cfdl-menu-in {
-    from { opacity: 0; transform: translateY(24px) rotate(-1.2deg); }
-    to   { opacity: 1; transform: none; }
-}
-.menu[open] .menu-links li { animation: cfdl-menu-in 0.6s var(--ease-out) both; }
-.menu[open] .menu-links li:nth-child(2) { animation-delay: 0.05s; }
-.menu[open] .menu-links li:nth-child(3) { animation-delay: 0.10s; }
-.menu[open] .menu-links li:nth-child(4) { animation-delay: 0.15s; }
+@keyframes cfdl-fade { from { opacity: 0; } to { opacity: 1; } }
+.menu[open] { animation: cfdl-fade 0.25s ease both; }
 
-/* ── Header band (section pages) ───────────────────────────────────────── */
-/* Antes: banda de zafiro con un título de 32 px — una plantilla. Ahora el
-   título es el cartel: enorme, en cursiva, y empujado fuera de su columna. */
+/* ── Cabecera de sección ───────────────────────────────────────────────── */
+/* Sin banda: el título sobre el papel, y un filete debajo. */
 header {
     position: relative;
-    padding: clamp(48px, 9vw, 120px) var(--gutter) clamp(36px, 5vw, 64px);
-    background: var(--band-bg);
-    border-bottom: 1px solid var(--band-rule);
-    overflow: hidden;
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: clamp(64px, 10vw, 136px) var(--gutter) clamp(40px, 5vw, 64px);
+}
+header::after {
+    content: '';
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 0;
+    height: 1px;
+    background: var(--border);
 }
 
 .kicker {
-    font-family: 'FuturaStd', sans-serif;
     font-size: var(--fs-label);
     letter-spacing: var(--track);
     text-transform: uppercase;
-    color: var(--band-muted);
-    margin-bottom: 10px;
+    color: var(--muted);
+    margin-bottom: 18px;
 }
 
 .section-title {
@@ -295,111 +288,66 @@ header {
     font-style: italic;
     font-weight: normal;
     font-size: var(--fs-display);
-    line-height: 0.86;
-    letter-spacing: -0.02em;
-    color: var(--band-fg);
-    /* Fuera de la retícula: arranca una columna y pico más allá del margen. */
-    margin-left: clamp(0px, 7vw, 120px);
+    line-height: 1;
+    letter-spacing: -0.015em;
+    color: var(--text);
     view-transition-name: page-title;
 }
 
 .section-subtitle {
     font-family: 'MinionPro', serif;
-    font-size: clamp(17px, 1.6vw, 22px);
-    line-height: 1.5;
-    color: var(--band-muted);
-    font-style: italic;
-    margin-top: clamp(20px, 3vw, 36px);
-    max-width: 34ch;
-    /* …y la bajada se cuelga del lado opuesto. */
-    margin-left: auto;
-    margin-right: clamp(0px, 6vw, 96px);
+    font-size: clamp(18px, 1.5vw, 21px);
+    line-height: 1.55;
+    color: var(--muted);
+    margin-top: 24px;
+    max-width: 46ch;
 }
 
-/* ── Footer band (section pages) ───────────────────────────────────────── */
+/* ── Pie ───────────────────────────────────────────────────────────────── */
 footer {
-    padding: 40px var(--gutter);
+    max-width: var(--max);
+    margin: clamp(64px, 8vw, 120px) auto 0;
+    padding: 40px var(--gutter) 48px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px 24px;
-    background: var(--band-bg);
-    border-top: 1px solid var(--band-rule);
+    gap: 20px 32px;
+    position: relative;
 }
-
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: var(--gutter);
+    right: var(--gutter);
+    height: 1px;
+    background: var(--border);
+}
 footer p {
     font-size: var(--fs-label);
     letter-spacing: var(--track);
     text-transform: uppercase;
-    color: var(--band-muted);
+    color: var(--muted);
 }
-
 footer a {
-    color: var(--band-muted);
+    color: var(--muted);
     text-decoration: none;
     transition: color var(--ease);
 }
-
-footer a:hover { color: var(--band-fg); }
-
-/* ── Cinta (ticker) ────────────────────────────────────────────────────── */
-/* Una banda de antítesis del manifiesto que pasa despacio. Sólo CSS: el
-   contenido va dos veces y la pista se desplaza la mitad. Declarativa,
-   nunca una llamada a la acción. Con movimiento reducido, quieta. */
-.cinta {
-    background: var(--band-bg);
-    color: var(--band-fg);
-    border-top: 1px solid var(--band-rule);
-    border-bottom: 1px solid var(--band-rule);
-    overflow: hidden;
-    padding: 16px 0 14px;
-    /* La cinta tampoco va recta. */
-    transform: rotate(-1.2deg) scale(1.02);
-    position: relative;
-    z-index: 3;
-}
-.cinta-pista {
+footer a:hover { color: var(--text); }
+.footer-brand {
     display: flex;
-    width: max-content;
-    animation: cfdl-cinta 70s linear infinite;
+    align-items: center;
+    gap: 16px;
 }
-.cinta:hover .cinta-pista { animation-play-state: paused; }
-.cinta-grupo {
-    display: flex;
-    flex-shrink: 0;
-    list-style: none;
-}
-.cinta-grupo li {
-    font-family: 'MinionPro', serif;
-    font-style: italic;
-    font-size: clamp(22px, 2.6vw, 38px);
-    line-height: 1.2;
-    white-space: nowrap;
-    padding-right: 0.9em;
-}
-.cinta-grupo li::after {
-    content: '';
-    display: inline-block;
-    width: 0.32em;
-    height: 0.32em;
-    margin-left: 0.9em;
-    background: var(--accent);
-    transform: translateY(-0.18em) rotate(45deg);
-}
-.cinta-grupo li:nth-child(3n+2) { color: var(--accent); }
-@keyframes cfdl-cinta { to { transform: translateX(-50%); } }
+.footer-brand img { width: 36px; height: 36px; }
 
 /* ── Accessibility ─────────────────────────────────────────────────────── */
 :focus-visible {
     outline: 2px solid var(--accent-fg);
     outline-offset: 3px;
-    border-radius: 1px;
 }
-header :focus-visible,
-footer :focus-visible,
-.menu :focus-visible { outline-color: var(--accent); }
-
 .visually-hidden {
     position: absolute !important;
     width: 1px; height: 1px;
@@ -408,32 +356,19 @@ footer :focus-visible,
     white-space: nowrap;
 }
 
-/* ── Page-load reveal (gated by reduced-motion below) ──────────────────── */
+/* ── Entrada de página ─────────────────────────────────────────────────── */
 @keyframes cfdl-rise {
-    from { opacity: 0; transform: translateY(14px); }
+    from { opacity: 0; transform: translateY(8px); }
     to   { opacity: 1; transform: none; }
 }
-.reveal {
-    animation: cfdl-rise 0.8s var(--ease-out) both;
-}
-.reveal-2 { animation-delay: 0.08s; }
-.reveal-3 { animation-delay: 0.16s; }
+.reveal { animation: cfdl-rise 0.9s var(--ease-out) both; }
+.reveal-2 { animation-delay: 0.06s; }
+.reveal-3 { animation-delay: 0.12s; }
 
-/* ── Transiciones entre páginas ────────────────────────────────────────── */
-/* View Transitions entre documentos: sólo CSS. La página que se va se
-   desplaza y se tuerce un grado; la que llega sube. Quien no lo soporte,
-   navega como siempre. */
+/* ── Transiciones entre páginas (sólo un fundido) ──────────────────────── */
 @view-transition { navigation: auto; }
-
-@keyframes cfdl-vt-out {
-    to { opacity: 0; transform: translateY(-18px) rotate(-0.6deg); }
-}
-@keyframes cfdl-vt-in {
-    from { opacity: 0; transform: translateY(26px) rotate(0.5deg); }
-}
-::view-transition-old(root) { animation: cfdl-vt-out 0.28s ease-in both; }
-::view-transition-new(root) { animation: cfdl-vt-in 0.5s var(--ease-out) both; }
-::view-transition-group(page-title) { animation-duration: 0.55s; animation-timing-function: var(--ease-out); }
+::view-transition-old(root),
+::view-transition-new(root) { animation-duration: 0.3s; }
 
 /* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -445,22 +380,15 @@ footer :focus-visible,
     }
     .reveal, .reveal-2, .reveal-3 { animation: none; }
     @view-transition { navigation: none; }
-    /* La cinta, quieta y envolviendo: se lee entera, sin la copia. */
-    .cinta-pista { animation: none; width: auto; flex-wrap: wrap; padding: 0 var(--gutter); }
-    .cinta-grupo { flex-wrap: wrap; flex-shrink: 1; }
-    .cinta-grupo li { white-space: normal; }
-    .cinta-grupo[aria-hidden="true"] { display: none; }
 }
 
 /* ── Responsive (shared chrome) ────────────────────────────────────────── */
 @media (max-width: 760px) {
-    /* Con JS: los enlaces se esconden y aparece «Menú». Sin JS: la barra
-       envuelve en dos filas, como antes, pero sin desbordar. */
     .js .nav-links { display: none; }
     .js .nav-toggle { display: inline-block; }
-    .site-nav { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+    .site-nav { flex-wrap: wrap; padding-top: 12px; padding-bottom: 12px; min-height: 68px; }
+    .nav-brand img, .nav-brand .logo { width: 40px; height: 40px; }
     .nav-links { gap: 4px 18px; }
-    .section-title { margin-left: 0; }
-    .section-subtitle { margin-right: 0; max-width: 30ch; }
+    .menu-head { min-height: 68px; }
     footer { flex-direction: column; align-items: flex-start; }
 }

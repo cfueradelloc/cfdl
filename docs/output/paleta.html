@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paleta — C.F.D.L.</title>
-    <link rel="icon" type="image/svg+xml" href="../assets/logo/CFDL_favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/logo/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="../assets/logo/favicon-180.png">
+    <link rel="apple-touch-icon" href="../assets/logo/favicon-180.png">
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/MinionPro-Regular.otf" crossorigin>
     <link rel="preload" as="font" type="font/otf" href="../assets/fonts/FuturaStd-Book.otf" crossorigin>
     <link rel="stylesheet" href="../assets/css/viewer.css">
+    <script src="../assets/js/viewer.js"></script>
     <style>
         @font-face {
             font-family: 'FuturaStd';
@@ -743,7 +746,7 @@ function selectAll() {
 
 function selectNone() {
     // Always keep anchor selected
-    selected = new Set(['citrina']);
+    selected = new Set(['ambar']);
     activePreset = null;
     highlightPreset(null);
     renderSwatches();
