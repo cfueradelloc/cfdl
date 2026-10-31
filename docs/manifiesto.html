@@ -72,6 +72,7 @@
             border-left: 1px solid var(--rule);
             border-top: 2px solid transparent;
             cursor: pointer;
+            text-align: center;
             transition: color 0.15s, border-color 0.15s;
         }
 
@@ -618,6 +619,25 @@
             body.remove();
         });
     });
+
+    // «Aleatorio» y «Restablecer» miden distinto: el botón toma siempre el
+    // ancho de la más larga, así su filete izquierdo no se mueve.
+    (function () {
+        const btn = document.getElementById('shuffle-btn');
+        if (!btn) return;
+        function fijar() {
+            btn.style.minWidth = '';
+            const actual = btn.textContent;
+            let ancho = 0;
+            ['Aleatorio', 'Restablecer'].forEach(t => {
+                btn.textContent = t;
+                ancho = Math.max(ancho, btn.getBoundingClientRect().width);
+            });
+            btn.textContent = actual;
+            btn.style.minWidth = Math.ceil(ancho) + 'px';
+        }
+        (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(fijar);
+    })();
 
     let isShuffled = false;
 
