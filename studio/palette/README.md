@@ -1,4 +1,4 @@
-# `content/paleta/` — una sola paleta
+# `studio/palette/` — una sola paleta
 
 **Propuesta.** El sitio, Instagram, las camisetas y la marca siguen con lo suyo:
 aquí no se cablea nada. Lo que hay que mirar está en
@@ -101,7 +101,7 @@ python3 color.py <hex> [<hex>] mide un color, o un par
 `--verificar` recorre las **31 parejas** que el sistema necesita: 27 de texto a
 4,5:1 y 4 de interfaz a 3:1. Sale con código distinto de cero si alguna cae, para
 que la paleta no se degrade en silencio — la misma disciplina de
-`content/instagram/render.sh`.
+`studio/instagram/render.sh`.
 
 ### Dos avisos que salen de la medición
 

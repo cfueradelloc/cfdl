@@ -9,7 +9,7 @@ description: Generate or rewrite content in C.F.D.L.'s voice and visual identity
 
 **Name:** C.F.D.L. — Colectivo Fuera de Lugar (ES) / Col·lectiu Fora de Lloc (CA)
 
-**Brand colors (as shipped):** one palette, thirteen tones — six neutrals, five colours, two for use on dark. Ámbar `#ffb923` and Zafiro `#332f8a` carry the identity; the ground is Papel `#fdf5eb`. **`content/paleta/` is the single source of truth** — `python3 paleta.py` lists it, `--verificar` checks the contrasts, `--css` emits the tokens. Never hand-write a hex; read it from there. See *Visual Output Standards* below.
+**Brand colors (as shipped):** one palette, thirteen tones — six neutrals, five colours, two for use on dark. Ámbar `#ffb923` and Zafiro `#332f8a` carry the identity; the ground is Papel `#fdf5eb`. **`studio/palette/` is the single source of truth** — `python3 paleta.py` lists it, `--verificar` checks the contrasts, `--css` emits the tokens. Never hand-write a hex; read it from there. See *Visual Output Standards* below.
 
 **Typography:**
 - Primary: Futura Std Book — `assets/fonts/FuturaStd-Book.otf`
@@ -61,7 +61,7 @@ rewriting any Spanish copy.** The key themes and avoid-list below feed that voic
 
 ## The Palette
 
-**Source of truth: `content/paleta/`.** Do not copy these values into new code — import
+**Source of truth: `studio/palette/`.** Do not copy these values into new code — import
 them (`from paleta import HEX`) or generate the tokens (`python3 paleta.py --css`). They
 used to live in eleven places at once, which is how the collective ended up with two
 palettes that did not speak to each other.
@@ -120,10 +120,10 @@ Inspired by the design language of Frieze, e-flux, Mousse, MoMA, Tate, and MACBA
 
 ### Design tokens
 
-The live identity is the single palette in `content/paleta/`. These are the exact tokens
+The live identity is the single palette in `studio/palette/`. These are the exact tokens
 shipped on the site and in every `docs/output/` piece; the shared source is
 `docs/assets/css/base.css` (site) and `viewer.css` (pieces), both of which take their
-values from `content/paleta/`.
+values from `studio/palette/`.
 
 ```css
 --bg:        #fdf5eb;   /* papel   — page background                  */

@@ -18,7 +18,7 @@ Raíz del Drive:
 | Branding (logo, tipografía) | `docs/assets/logo/`, `docs/assets/fonts/` | `Branding/` — logo, favicon, fuentes |
 | Traducciones del manifiesto (referencia) | `skills/brand-content/references/manifesto/` | `Contenido/Manifiesto/` |
 | Archivo de Instagram | — (sólo en el Drive) | `Instagram/` — copia de lo publicado en @cfueradelloc, con `index.md`; la escribe la skill `instagram-archive` |
-| Instagram (@cfueradelloc) | `content/instagram/posts/*.json` → `content/instagram/out/*.png` | `Eventos/<ciclo>/Carteles/` — carteles anteriores; `Eventos/<ciclo>/<autor>/` — retratos y portadas |
+| Instagram (@cfueradelloc) | `studio/instagram/posts/*.json` → `studio/instagram/out/*.png` | `Eventos/<ciclo>/Carteles/` — carteles anteriores; `Eventos/<ciclo>/<autor>/` — retratos y portadas |
 
 ## Cómo actualizar eventos
 1. Edita `content/events/calendario-eventos.md` (la lista canónica).
@@ -26,7 +26,7 @@ Raíz del Drive:
 3. Si añades fotos, colócalas en `docs/gallery/` y enlázalas desde `docs/galeria.html`.
 
 ## Cómo anunciar en Instagram
-Las imágenes se generan en `content/instagram/` (ver su README y la skill `instagram-post`).
+Las imágenes se generan en `studio/instagram/` (ver su README y la skill `instagram-post`).
 El calendario manda: primero la entrada en `calendario-eventos.md`, después el brief.
 
 ## Archivo de Instagram
@@ -38,5 +38,5 @@ Lo publicado en [@cfueradelloc](https://www.instagram.com/cfueradelloc/) se desc
 Mientras Instagram bloquee la descarga automática, el archivo vigente son las **capturas**
 (`Instagram/Screenshot 2026-10-03 …png`, 34 publicaciones de jun 2025 a oct 2026); de ahí
 sale la revisión del calendario del 3 oct 2026. Las plantillas de
-`content/instagram/` se dedujeron de los carteles del Drive; las publicaciones reales del
+`studio/instagram/` se dedujeron de los carteles del Drive; las publicaciones reales del
 archivo sirven para afinarlas.

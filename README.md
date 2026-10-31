@@ -15,10 +15,14 @@ A hand-written static site (plain HTML, no build step), served from `docs/` with
 - **Proyectos** — generative pieces made with p5.js.
 - **Galería** — photographs from the events.
 
-The raw material behind the site (events calendar, source notes) lives in `content/`; the fonts,
-logo and images it serves live in `docs/assets/`. `content/` also holds two generators that
-produce artwork rather than pages: `tshirts/` (shirt mockups) and `instagram/` (announcement
-images for [@cfueradelloc](https://www.instagram.com/cfueradelloc/)).
+## Repository layout
+
+- `docs/` — the site itself, the only folder that gets published.
+- `content/` — the raw material behind the site: the events calendar and a map of sources in Drive.
+- `studio/` — generators that produce artwork rather than pages: `tshirts/` (shirt mockups),
+  `instagram/` (announcement images for [@cfueradelloc](https://www.instagram.com/cfueradelloc/)),
+  `brand/` (a logo proposal) and `palette/` (the collective's single colour palette).
+- `skills/` — Claude Code skills, below.
 
 ## Skills
 

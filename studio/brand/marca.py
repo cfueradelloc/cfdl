@@ -29,7 +29,7 @@ import os, sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
-# De lockup, que a su vez los toma de content/paleta/. Una sola fuente.
+# De lockup, que a su vez los toma de studio/palette/. Una sola fuente.
 from lockup import AMBAR, NEGRO, ZAFIRO, CREMA, BLANCO, ROSA, PAPEL
 
 TINTAS = {"negro": NEGRO, "blanco": BLANCO, "zafiro": ZAFIRO, "ambar": AMBAR,
@@ -46,7 +46,7 @@ RATIO_HOJA = 0.571          # medido sobre la hoja impresa
 
 # LA BANDA DEL MARGEN. En la hoja impresa el texto vive en los márgenes y el
 # centro queda vacío: el colectivo está fuera de lugar, en los bordes. Medido
-# sobre el original (svg_espiral_frame en content/tshirts): trazo 1, hueco 4,
+# sobre el original (svg_espiral_frame en studio/tshirts): trazo 1, hueco 4,
 # siete anillos — la banda ocupa ~18 % de cada lado y deja ~65 % en blanco.
 # El aire entre vueltas es CUATRO VECES el grosor, no igual.
 #
@@ -201,7 +201,7 @@ def exportar():
         with open(os.path.join(d, f"cfdl-{pieza}-{dens}-{fondo}-{tinta}.svg"),
                   "w", encoding="utf-8") as fh:
             fh.write(svg(pieza, fondo, tinta, dens))
-    print(f"{len(COMBOS)} SVG → content/marca/svg/")
+    print(f"{len(COMBOS)} SVG → studio/brand/svg/")
 
 
 GROUNDS = [

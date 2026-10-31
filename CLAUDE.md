@@ -9,7 +9,8 @@ Guidance for Claude Code when working in this repository.
 collective. The site is plain HTML deployed via GitHub Pages (`.nojekyll` present).
 
 ### Repo layout
-The repo root separates **the served website** (`docs/`) from **project material** (`content/`, `skills/`).
+Four top-level folders, one job each: **`docs/`** is served, **`content/`** is the site's source of truth,
+**`studio/`** makes artwork, **`skills/`** holds Claude Code skills. Only `docs/` is published.
 
 - `docs/` — **the deployable website** (everything served). Contains:
   - `index.html`, `manifiesto.html`, `proyectos.html`, `eventos.html`, `galeria.html` — site pages (Spanish).
@@ -21,10 +22,15 @@ The repo root separates **the served website** (`docs/`) from **project material
   - `.nojekyll` — disables Jekyll on the published site.
 - `content/` — **source of truth for updating the site** (NOT served): `events/calendario-eventos.md`
   (canonical events list) and `SOURCES.md` (maps each site section → its raw material in Drive).
-  Also two generators whose output is artwork, not pages: `tshirts/` (shirt mockups) and
-  `instagram/` (1080×1350 announcement images + captions for @cfueradelloc; briefs in
-  `instagram/posts/*.json`, layout in `instagram/src/_shared.css`, see the `instagram-post` skill).
-  Edit here, then reflect changes into the pages under `docs/`.
+  Edit here, then reflect changes into the pages under `docs/`. Nothing else lives here.
+- `studio/` — **generators whose output is artwork, not pages** (NOT served). Each folder has its own
+  `README.md`; scripts sit at its root, inputs in `assets/`, generated files in `src/` / `out/`.
+  - `tshirts/` — shirt mockups: `build_designs.py` → `src/*.html` → `render.sh` → `out/*.png`
+    (`out/transparent/` bare prints, `out/pdf/` print files).
+  - `instagram/` — 1080×1350 announcement images + captions for @cfueradelloc; briefs in
+    `posts/*.json`, layout in `src/_shared.css`, renders in `out/` (see the `instagram-post` skill).
+  - `brand/` — logo proposal (rectangular-spiral band); *proposal, not wired into the site yet*.
+  - `palette/` — the single palette (`paleta.py`); generates the CSS tokens Instagram uses.
 - `skills/` — Claude Code skills (NOT served), each a folder with a `SKILL.md`: `brand-content/`
   (+ `references/` for colorplan and manifesto sources), `algorithmic-art/`, `instagram-post/` and
   `instagram-archive/` (downloads @cfueradelloc into the Drive's `Instagram/`).

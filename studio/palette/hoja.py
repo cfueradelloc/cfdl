@@ -11,9 +11,9 @@ import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 # Aquí sí va primero el propio directorio: este script quiere SU hoja, y de
-# ../marca sólo necesita lockup, que no colisiona con nada.
+# ../brand sólo necesita lockup, que no colisiona con nada.
 sys.path.insert(0, AQUI)
-sys.path.append(os.path.join(AQUI, "..", "marca"))
+sys.path.append(os.path.join(AQUI, "..", "brand"))
 
 from color import lch, contraste, nivel, distancia, salto_matiz, desde_lch
 from paleta import (PALETA, HEX, GRUPOS, ROLES, CICLOS, PAREJAS,
@@ -280,7 +280,7 @@ def s_prueba():
         f'<div class="mq" style="background:{P["zafiro"]}">{marca_a}</div>'
         f'<div class="mq" style="background:{P["tinta"]}">{marca_a}</div>'
         '</div><p class="pie">La marca real, importada de '
-        '<code>content/marca/lockup.py</code>, sobre los seis fondos que la '
+        '<code>studio/brand/lockup.py</code>, sobre los seis fondos que la '
         'paleta permite. No es una maqueta.</p></div></section>')
 
 
@@ -387,7 +387,7 @@ def pagina():
     mal = verificar(ruidoso=False)
     # las parejas de los tonos también cuentan: tres por tono
     t = len(PAREJAS) + len(PAREJAS_UI) + 3 * len(TONOS)
-    print(f"página → content/paleta/index.html   "
+    print(f"página → studio/palette/index.html   "
           f"({len(PALETA)} tonos · {t - mal} de {t} parejas pasan)")
     return mal
 
@@ -570,7 +570,7 @@ PLANTILLA = """<!doctype html><html lang="es"><head><meta charset="utf-8">
   <p><code>python3 paleta.py</code> lista los tonos ·
      <code>python3 paleta.py --verificar</code> comprueba los contrastes ·
      <code>python3 hoja.py</code> rehace esta página ·
-     <a href="../marca/index.html">la marca</a></p>
+     <a href="../brand/index.html">la marca</a></p>
 </footer>
 
 </div></body></html>

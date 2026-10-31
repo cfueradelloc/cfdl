@@ -25,7 +25,7 @@ import os
 import sys
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-# APPEND, no insert(0). Hay un hoja.py aquí y otro en ../marca, y meter este
+# APPEND, no insert(0). Hay un hoja.py aquí y otro en ../brand, y meter este
 # directorio al principio de la ruta hacía que «import hoja» desde marca.py
 # resolviera al de aquí: marca.py regeneraba la página de la paleta en vez de
 # la suya. El directorio del script que se está ejecutando tiene que ganar.
@@ -130,7 +130,7 @@ CICLOS = [
 
 # ── LAS PAREJAS OBLIGATORIAS ───────────────────────────────────────────────
 # Si una de éstas baja de 4,5:1 la paleta está rota, y --verificar lo dice con
-# código de salida. Es la misma disciplina de content/instagram/render.sh: que
+# código de salida. Es la misma disciplina de studio/instagram/render.sh: que
 # el fallo se note, en vez de degradarse en silencio.
 PAREJAS = [
     ("tinta", "papel"), ("humo", "papel"), ("zafiro", "papel"),
@@ -256,7 +256,7 @@ def css():
     """El bloque de tokens, para que lo escriba quien lo necesite en vez de
     mantenerlo a mano en dos sitios. Instagram tenía los suyos repetidos en el
     CSS y en Python, y era cuestión de tiempo que divergieran."""
-    L = ["/* GENERADO por content/paleta/paleta.py — no editar a mano.",
+    L = ["/* GENERADO por studio/palette/paleta.py — no editar a mano.",
          "   Se rehace con: python3 paleta.py --css */",
          ":root {"]
     for n, h, _, _, _ in PALETA:

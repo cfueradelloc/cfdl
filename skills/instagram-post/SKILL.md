@@ -4,7 +4,7 @@ description: Create an Instagram post for C.F.D.L. — an event, a cycle, a remi
 ---
 
 Turns an event into **an image and a text** — a post is always both — using
-`content/instagram/`. The script is deterministic; the judgement is yours.
+`studio/instagram/`. The script is deterministic; the judgement is yours.
 
 ## 1. Get the facts from the calendar, not from memory
 
@@ -16,10 +16,10 @@ not know about is how the two drift apart. `--verificar` warns but never auto-fi
 
 ## 2. Decide the shape before writing any JSON
 
-**Template** — eleven, listed with their block caps in `content/instagram/README.md`:
+**Template** — eleven, listed with their block caps in `studio/instagram/README.md`:
 `evento`, `ciclo`, `recordatorio`, `cita`, `portada`, `retrato`, `programa`, `datos`,
 `resumen`, `pieza`, `numero`. One runnable example of each lives in
-`content/instagram/ejemplos/` — read those before inventing anything.
+`studio/instagram/ejemplos/` — read those before inventing anything.
 
 **How many slides.** One for a reminder or a quote. Three for an event: `portada` or
 `evento`, then the text on `"superficie": "oscuro"`, then the practical details. Four for
@@ -35,12 +35,12 @@ the band is. `ámbar` and `zafiro` belong to the collective; `rosa`, `moho` and 
 are the three cycles (En voz alta, Noches íntimas, La Magistral). Pick the cycle's tono
 when the piece belongs to a cycle, `zafiro` otherwise. The old `theme` key and the names
 `pink`/`citrine` still resolve, to `rosa` and `ámbar`. Tokens are generated from
-`content/paleta/` — never hand-write a hex into a brief.
+`studio/palette/` — never hand-write a hex into a brief.
 
 **Photo.** `docs/gallery/*.jpg` is already published and safe — reference it as
 `docs/gallery/<file>.jpg` (paths are resolved from the repo root). Author portraits are in
 Google Drive, which currently does not serve bytes locally: copy them by hand into
-`content/instagram/assets/retratos/` and check the collective may publish them. A
+`studio/instagram/assets/retratos/` and check the collective may publish them. A
 type-only slide always beats a bad crop. Those gallery photos are 16:9, so leave
 `foto.forma` on its `banda` default rather than cropping a portrait out of a landscape.
 
@@ -55,7 +55,7 @@ Two or three at most — they count against the slide's block cap.
 
 ## 3. Write the brief
 
-One JSON file in `content/instagram/posts/`, named `AAAA-MM-DD-slug.json`.
+One JSON file in `studio/instagram/posts/`, named `AAAA-MM-DD-slug.json`.
 `posts/_ejemplo.json` lists every key. `plantilla` is the only required key in a slide;
 everything else draws only if present, so omit rather than empty-string.
 
@@ -77,7 +77,7 @@ then the practical block. Hashtags are off by default and should stay off.
 ## 5. Build, render, look
 
 ```bash
-cd content/instagram
+cd studio/instagram
 python3 build_posts.py --lint --verificar --indice
 bash render.sh
 open out/index.html
@@ -95,7 +95,7 @@ Show the user the PNG **and** the caption text. Both, every time.
 
 ## 6. Tuning is CSS, never Python
 
-Layout lives in `content/instagram/src/_shared.css`. `open src/<id>-01.html` in a normal
+Layout lives in `studio/instagram/src/_shared.css`. `open src/<id>-01.html` in a normal
 Chrome tab — it is 1:1 — and edit that stylesheet in DevTools. `build_posts.py` emits
 structure and data-driven custom properties; putting design decisions in it would mean a
 regenerate-and-rerender cycle for every nudge.

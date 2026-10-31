@@ -58,7 +58,7 @@ AV_EM    = _F.ancho(SIGLAS)       # 3.4800 — ancho de avance
 TINTA_EM = 3.2200                 # ancho de TINTA sin interletrado (medido)
 HUECOS   = 7                      # espacios entre los 8 signos
 
-# LOS COLORES VIENEN DE content/paleta/, no se declaran aquí. Estaban
+# LOS COLORES VIENEN DE studio/palette/, no se declaran aquí. Estaban
 # repetidos en ocho archivos de este mismo directorio, cada uno con su copia:
 # los valores coincidían de milagro, y era cuestión de tiempo que dejaran de
 # hacerlo. Los nombres se conservan porque la marca los usa por todas partes.
@@ -69,7 +69,7 @@ import sys as _sys
 # resolviera al equivocado — marca.py regeneraba la página de la paleta en vez
 # de la suya. El directorio propio tiene que ganar.
 _sys.path.append(_os.path.join(_os.path.dirname(_os.path.abspath(__file__)),
-                               "..", "paleta"))
+                               "..", "palette"))
 from paleta import HEX as _P                              # noqa: E402
 
 AMBAR  = _P["ámbar"]

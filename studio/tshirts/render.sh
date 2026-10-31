@@ -25,7 +25,7 @@ lane() {
       --disable-features=Translate,OptimizationHints,MediaRouter \
       --user-data-dir="$prof" \
       --force-device-scale-factor=2 --window-size=1200,800 \
-      --screenshot="$PWD/$base.png" "file://$PWD/$f" >/dev/null 2>&1 &
+      --screenshot="$PWD/out/$base.png" "file://$PWD/$f" >/dev/null 2>&1 &
     pid=$!
     ( sleep 14; kill -9 $pid 2>/dev/null ) >/dev/null 2>&1 &
     killer=$!
@@ -42,4 +42,4 @@ for ((L=0; L<LANES; L++)); do
   lane "$L" "${shard[@]}" &
 done
 wait
-echo "RENDER_DONE $(ls [0-9]*.png 2>/dev/null | wc -l)"
+echo "RENDER_DONE $(ls out/[0-9]*.png 2>/dev/null | wc -l)"

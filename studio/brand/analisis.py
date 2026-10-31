@@ -166,4 +166,4 @@ def pagina():
       'Si el verde no cae sobre el cruce azul, la marca se ve descolgada aunque la '
       'caja cuadre.</p>' + "".join(filas))
     open("analisis.html", "w", encoding="utf-8").write(doc)
-    print("análisis → content/marca/analisis.html")
+    print("análisis → studio/brand/analisis.html")

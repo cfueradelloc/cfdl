@@ -3,7 +3,7 @@
 .claude/settings.local.json
 
 # HTML generado del módulo de Instagram (src/_shared.css sí se versiona)
-content/instagram/src/*.html
-content/instagram/src/_sizes.txt
+studio/instagram/src/*.html
+studio/instagram/src/_sizes.txt
 
 __pycache__/

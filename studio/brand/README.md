@@ -16,7 +16,7 @@ La marca es esa banda. Fina, pegada al borde, con el **65 % del centro en
 blanco**. No hacía falta inventarle un símbolo al colectivo: ya tenía uno, y
 está impreso.
 
-Medido sobre el original (`svg_espiral_frame` en `content/tshirts/build_designs.py`,
+Medido sobre el original (`svg_espiral_frame` en `studio/tshirts/build_designs.py`,
 medido a su vez sobre la hoja): **trazo 1, hueco 4, siete anillos**, proporción
 0.571. El aire entre vueltas es **cuatro veces** el grosor, no igual — eso es lo
 que la hace una banda de texto y no una greca.
@@ -164,5 +164,5 @@ bocetos/           las rondas descartadas, como registro
 | zafiro | `#332f8a` | la tinta de la web |
 | crema | `#fff4d6` | sobre negro, cuando el ámbar pesa demasiado |
 
-Ojo: el `#e9ad51` de `content/tshirts/` es otra cosa — la aproximación al papel
+Ojo: el `#e9ad51` de `studio/tshirts/` es otra cosa — la aproximación al papel
 Colorplan Citrine, un punto más apagada.

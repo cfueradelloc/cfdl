@@ -38,7 +38,7 @@ FORMATOS = {"feed": (1080, 1350), "cuadrado": (1080, 1080), "historia": (1080, 1
 FMT_ALIAS = {"4:5": "feed", "1:1": "cuadrado", "9:16": "historia",
              "story": "historia", "square": "cuadrado", "post": "feed"}
 
-# LA PALETA VIENE DE content/paleta/, no se redeclara aquí. Antes había un
+# LA PALETA VIENE DE studio/palette/, no se redeclara aquí. Antes había un
 # THEMES con los dos duotonos y un bloque .tema-* en _shared.css con los mismos
 # valores: dos copias de lo mismo esperando a divergir.
 #
@@ -46,7 +46,7 @@ FMT_ALIAS = {"4:5": "feed", "1:1": "cuadrado", "9:16": "historia",
 # Reemplaza a los dos temas enteros: el suelo es siempre el papel, y lo que
 # cambia es de quién es la banda.
 sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                             "..", "paleta"))
+                             "..", "palette"))
 from paleta import TONOS, HEX as PALETA_HEX, clave as _clave   # noqa: E402
 
 TONO_DEF = "zafiro"
@@ -121,13 +121,13 @@ def ruta(p):
     escribe un brief tenga que contar cuántos `../` hacen falta.
     """
     if p.startswith(("http://", "https://", "data:")): return p
-    if p.startswith(("docs/", "content/", "skills/")): return "../../../" + p
+    if p.startswith(("docs/", "content/", "studio/", "skills/")): return "../../../" + p
     return "../" + p.lstrip("./")
 
 
 def ruta_abs(p):
     if p.startswith(("http://", "https://", "data:")): return None
-    if p.startswith(("docs/", "content/", "skills/")): return os.path.join(RAIZ, p)
+    if p.startswith(("docs/", "content/", "studio/", "skills/")): return os.path.join(RAIZ, p)
     return os.path.join(HERE, p.lstrip("./"))
 
 

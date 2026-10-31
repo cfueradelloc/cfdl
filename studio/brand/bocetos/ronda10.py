@@ -7,7 +7,7 @@ dejar un hueco pequeño. Es lo contrario de lo que significa: en la hoja
 impresa el texto vive en los MÁRGENES y el centro queda VACÍO — el colectivo
 está fuera de lugar, en los bordes.
 
-Medido sobre el original (svg_espiral_frame en content/tshirts): trazo 1, hueco
+Medido sobre el original (svg_espiral_frame en studio/tshirts): trazo 1, hueco
 4, siete anillos. La banda ocupa ~15 % de cada lado y deja el ~70 % central en
 blanco. El hueco entre vueltas es CUATRO VECES el grosor, no igual.
 

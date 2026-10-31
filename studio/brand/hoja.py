@@ -142,7 +142,7 @@ def pagina():
                           .replace("{ambar}", AMBAR)
                           .replace("{rosa}", ROSA)
                           .replace("{zafiro}", ZAFIRO))
-    print("página → content/marca/index.html")
+    print("página → studio/brand/index.html")
 
 
 PLANTILLA = """<!doctype html><html lang="es"><head><meta charset="utf-8">
@@ -153,7 +153,7 @@ PLANTILLA = """<!doctype html><html lang="es"><head><meta charset="utf-8">
   src:url('../../docs/assets/fonts/FuturaStd-Book.otf') format('opentype');
   font-display:block}
 :root{
-  /* Los de la marca vienen de content/paleta/ y los inyecta pagina(). */
+  /* Los de la marca vienen de studio/palette/ y los inyecta pagina(). */
   --papel-marca:{papel}; --tinta-marca:{tinta}; --ambar-marca:{ambar};
   --rosa-marca:{rosa}; --zafiro-marca:{zafiro};
   --papel:#f1e7db; --papel2:#e0d6ca; --tinta:#171513; --tinta2:#6a625a;

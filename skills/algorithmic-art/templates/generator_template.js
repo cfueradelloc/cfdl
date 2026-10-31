@@ -31,7 +31,7 @@ let params = {
     // - Colors: palette arrays
 
     seed: 12345,
-    // colorPalette: an array of C.F.D.L. colours. The source is content/paleta/ —
+    // colorPalette: an array of C.F.D.L. colours. The source is studio/palette/ —
     // «python3 paleta.py» lists them. Do NOT reach for the Anthropic palette
     // (#d97757 / #6a9bcc / #788c5d): brand-content forbids it expressly, and this
     // template used to ship it as the default.

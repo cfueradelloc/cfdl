@@ -5,7 +5,7 @@
    pestaña normal de Chrome (es 1:1, 1080×1350), DevTools, edita este archivo.
 
    Lienzo: 1080×1350 px CSS a factor de escala 1 → PNG exacto de 1080×1350.
-   Las rutas url() se resuelven desde ESTE archivo (content/instagram/src/).
+   Las rutas url() se resuelven desde ESTE archivo (studio/instagram/src/).
    ========================================================================== */
 
 /* ── Tipografías ───────────────────────────────────────────────────────────
@@ -81,8 +81,8 @@
    cambia de una pieza a otra es de quién es la banda: ámbar y zafiro son del
    colectivo, y rosa, moho y náufrago son los tres ciclos.
 
-   Los tokens viven en _paleta.css, que GENERA content/paleta/paleta.py:
-       cd ../paleta && python3 paleta.py --css > ../instagram/src/_paleta.css
+   Los tokens viven en _paleta.css, que GENERA studio/palette/paleta.py:
+       cd ../palette && python3 paleta.py --css > ../instagram/src/_paleta.css
    Antes estaban aquí Y en el THEMES de build_posts.py, dos copias de lo mismo
    esperando a divergir. Ahora la fuente es una y los derivados —el secundario
    de cada banda, su filete— se calculan buscando el contraste, no a ojo. */

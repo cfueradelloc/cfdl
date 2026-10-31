@@ -39,4 +39,10 @@ rosas, tinta rosa, acentos). Citrina (ámbar/negro) y amatista para variedad. Si
 
 ## Reproducir
 `python3 build_designs.py` (genera `src/NN-*.html`) y `bash render.sh` (PNG 2×, 2400×1600,
-Chrome headless en paralelo, perfiles aislados). `prep_photos.py` trata las fotos del manifiesto.
+Chrome headless en paralelo, perfiles aislados) que escribe en `out/`. `prep_photos.py` trata las fotos del manifiesto.
+
+## Estructura
+- `build_designs.py`, `render.sh`, `prep_photos.py` — los generadores.
+- `assets/` — entradas: fuentes, fotos del manifiesto, la camiseta base, el PDF del manifiesto.
+- `src/` — HTML generado, uno por diseño (no editar a mano).
+- `out/` — los PNG renderizados y el vídeo; `out/transparent/` las estampas sin camiseta; `out/pdf/` los archivos de imprenta.

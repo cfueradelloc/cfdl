@@ -3,7 +3,7 @@
 Genera las publicaciones de [@cfueradelloc](https://www.instagram.com/cfueradelloc/) a
 partir de datos estructurados, en la identidad del colectivo.
 
-Mismo método que `content/tshirts/`: un emisor en Python de sólo biblioteca estándar
+Mismo método que `studio/tshirts/`: un emisor en Python de sólo biblioteca estándar
 escribe `src/*.html`, y `render.sh` los fotografía con Chrome sin cabeza. Sin paso de
 compilación, sin dependencias.
 
@@ -152,8 +152,8 @@ Dos cosas distintas:
   Ahora el suelo es siempre el papel y lo que cambia es **de quién es la banda**:
   `ámbar` y `zafiro` son del colectivo; `rosa`, `moho` y `náufrago` son los tres ciclos.
   Los nombres viejos siguen valiendo — `pink` resuelve a `rosa` y `citrine` a `ámbar`.
-- **Los tokens los genera `content/paleta/`**, no se escriben aquí:
-  `cd ../paleta && python3 paleta.py --css > ../instagram/src/_paleta.css`. Antes vivían
+- **Los tokens los genera `studio/palette/`**, no se escriben aquí:
+  `cd ../palette && python3 paleta.py --css > ../instagram/src/_paleta.css`. Antes vivían
   en `_shared.css` **y** en un `THEMES` de `build_posts.py`: dos copias de lo mismo
   esperando a divergir. El secundario y el filete de cada banda no se eligen a ojo — se
   derivan del propio tono buscando el desplazamiento de claridad más pequeño que alcanza
