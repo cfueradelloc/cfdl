@@ -18,18 +18,19 @@
     <meta name="twitter:description" content="Manifiesto cambiante y nunca cumplido del Colectivo Fuera de Lugar.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="assets/js/site.js" defer></script>
     <style>
         /* ── Title block (page-specific) ──────────────────────────────────── */
         .title-block {
-            padding: 72px 40px 48px;
+            padding: 72px var(--gutter) 48px;
             border-bottom: 1px solid var(--rule);
         }
 
         .title-eyebrow {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.24em;
             text-transform: uppercase;
             color: var(--muted);
@@ -60,7 +61,7 @@
             margin-left: auto;
             padding: 14px 24px 16px;
             font-family: 'FuturaStd', sans-serif;
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--muted);
@@ -84,7 +85,7 @@
 
         .lang-btn {
             padding: 14px 24px 16px;
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--muted);
@@ -109,7 +110,7 @@
         .manifesto-body {
             max-width: 860px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 var(--gutter);
         }
 
         .lang-content { display: none; }
@@ -124,7 +125,7 @@
         }
 
         .para-num {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.16em;
             color: var(--accent-fg);
             padding-top: 8px;
@@ -224,7 +225,7 @@
             width: 7px;
             height: 7px;
             border-radius: 50%;
-            background: rgba(248,204,206,0.55);
+            background: rgba(255,244,214,0.45);
             border: none;
             cursor: pointer;
             padding: 0;
@@ -235,7 +236,7 @@
 
         /* ── Caption strip ───────────────────────────────────────────────────── */
         .caption-strip {
-            padding: 20px 40px;
+            padding: 20px var(--gutter);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -243,14 +244,14 @@
         }
 
         .caption-strip span {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
         }
 
         .caption-strip a {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
@@ -267,7 +268,7 @@
 
         /* ── Footer (transparent, sits on the Sapphire ground) ─────────────── */
         footer {
-            padding: 28px 40px;
+            padding: 28px var(--gutter);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -276,7 +277,7 @@
         }
 
         footer p, footer a {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
@@ -288,17 +289,15 @@
 
         /* ── Responsive ──────────────────────────────────────────────────────── */
         @media (max-width: 768px) {
-            .site-nav { padding: 0 24px; }
-            .nav-links { gap: 16px; }
-            .title-block { padding: 48px 24px 32px; }
+            .title-block { padding: 48px var(--gutter) 32px; }
             .lang-nav { flex-wrap: wrap; }
             .lang-btn { padding: 14px 16px; }
             #shuffle-btn { margin-left: 0; }
-            .manifesto-body { padding: 0 24px; }
+            .manifesto-body { padding: 0 var(--gutter); }
             .para-block { grid-template-columns: 32px 1fr; gap: 0 16px; padding: 40px 0; }
             .slideshow { height: 52vw; }
-            .caption-strip { padding: 16px 24px; }
-            footer { padding: 20px 24px; flex-direction: column; gap: 8px; }
+            .caption-strip { padding: 16px var(--gutter); }
+            footer { padding: 20px var(--gutter); flex-direction: column; gap: 8px; }
         }
     </style>
 </head>

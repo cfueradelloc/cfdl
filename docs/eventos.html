@@ -18,13 +18,14 @@
     <meta name="twitter:description" content="Clubes de lectura, recitales, proyecciones y ciclos: lo que ocurre y lo que ya ocurrió.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="assets/js/site.js" defer></script>
     <style>
         /* ── Section label (page-specific) ─────────────────────────────────── */
         .section-label {
-            padding: 14px 64px;
+            padding: 14px var(--gutter);
             border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
@@ -32,7 +33,7 @@
         }
 
         .section-label h2 {
-            font-size: 9px;
+            font-size: var(--fs-label);
             font-weight: normal;
             letter-spacing: 0.22em;
             text-transform: uppercase;
@@ -60,7 +61,7 @@
             grid-template-columns: 92px 1fr auto 22px;
             align-items: center;
             gap: 0 32px;
-            padding: 24px 64px;
+            padding: 24px var(--gutter);
             cursor: pointer;
             list-style: none;
         }
@@ -83,7 +84,7 @@
 
         .event-year {
             display: block;
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
@@ -106,7 +107,7 @@
         .event-item.past .event-title { color: var(--muted); }
 
         .event-meta {
-            font-size: 10px;
+            font-size: var(--fs-label);
             letter-spacing: 0.07em;
             text-transform: uppercase;
             color: var(--muted);
@@ -114,7 +115,7 @@
         }
 
         .event-type {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             padding: 4px 9px;
@@ -144,7 +145,7 @@
         details[open] .event-toggle::after { content: '−'; }
 
         /* Revealed description */
-        .event-detail { padding: 0 64px 26px 188px; }
+        .event-detail { padding: 0 var(--gutter) 26px calc(var(--gutter) + 124px); }
 
         .event-detail p {
             font-family: 'MinionPro', serif;
@@ -167,7 +168,7 @@
             margin-top: 12px;
             font-family: 'FuturaStd', sans-serif;
             font-style: normal;
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--muted);
@@ -176,8 +177,17 @@
 
         .event-ciclo a:hover { color: var(--accent-fg); }
 
+        .event-empty {
+            padding: 32px var(--gutter);
+            font-family: 'MinionPro', serif;
+            font-style: italic;
+            font-size: var(--fs-h3);
+            color: var(--muted);
+            border-bottom: 1px solid var(--border);
+        }
+
         /* ── Ciclos ────────────────────────────────────────────────────────── */
-        .ciclo-list { padding: 8px 64px 48px; }
+        .ciclo-list { padding: 8px var(--gutter) 48px; }
 
         .ciclo {
             padding: 24px 0;
@@ -207,11 +217,11 @@
         .ciclo dd a:hover { color: var(--text); border-color: var(--accent); }
 
         @media (max-width: 700px) {
-            .section-label { padding: 12px 24px; }
-            .event-item summary { grid-template-columns: 64px 1fr 22px; gap: 0 16px; padding: 20px 24px; }
+            .section-label { padding: 12px var(--gutter); }
+            .event-item summary { grid-template-columns: 64px 1fr 22px; gap: 0 16px; padding: 20px var(--gutter); }
             .event-type { display: none; }
-            .event-detail { padding: 0 24px 22px 24px; }
-            .ciclo-list { padding: 8px 24px 40px; }
+            .event-detail { padding: 0 var(--gutter) 22px; }
+            .ciclo-list { padding: 8px var(--gutter) 40px; }
         }
     </style>
 </head>
@@ -241,30 +251,23 @@
         <div class="label-line"></div>
     </div>
 
-    <ul class="event-list">
+    <ul class="event-list" data-events="upcoming">
+        <li class="event-empty">Sin fecha anunciada — el próximo encuentro, siempre en algún otro lugar.</li>
 
-        <li class="event-item">
-            <details>
-                <summary>
-                    <div class="event-date">
-                        <span class="event-month">8</span>
-                        <span class="event-year">octubre 2026</span>
-                    </div>
-                    <div class="event-info">
-                        <div class="event-title">Sesión del club</div>
-                        <div class="event-meta">Club de lectura — Librería La Perecquiana, Valladolid</div>
-                    </div>
-                    <div class="event-type">14.4</div>
-                    <span class="event-toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="event-detail">
-                    <p>Sesión de octubre de la temporada 26/27, trasladada al jueves 8. Para inscritos en el club.</p>
-                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
-                </div>
-            </details>
-        </li>
 
-        <li class="event-item">
+
+    </ul>
+
+</section>
+
+<section aria-label="Eventos pasados">
+    <div class="section-label">
+        <h2>Pasados</h2>
+        <div class="label-line"></div>
+    </div>
+
+    <ul class="event-list" data-events="past">
+        <li class="event-item past" data-date="2026-10-14">
             <details>
                 <summary>
                     <div class="event-date">
@@ -284,20 +287,27 @@
                 </div>
             </details>
         </li>
-
-    </ul>
-
-</section>
-
-<section aria-label="Eventos pasados">
-    <div class="section-label">
-        <h2>Pasados</h2>
-        <div class="label-line"></div>
-    </div>
-
-    <ul class="event-list">
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-10-08">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">8</span>
+                        <span class="event-year">octubre 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Sesión del club</div>
+                        <div class="event-meta">Club de lectura — Librería La Perecquiana, Valladolid</div>
+                    </div>
+                    <div class="event-type">14.4</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>Sesión de octubre de la temporada 26/27, trasladada al jueves 8. Para inscritos en el club.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
+                </div>
+            </details>
+        </li>
+        <li class="event-item past" data-date="2026-09-17">
             <details>
                 <summary>
                     <div class="event-date">
@@ -317,8 +327,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-09-16" data-end="2026-09-22">
             <details>
                 <summary>
                     <div class="event-date">
@@ -337,8 +346,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-08-22">
             <details>
                 <summary>
                     <div class="event-date">
@@ -357,29 +365,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
-            <details>
-                <summary>
-                    <div class="event-date">
-                        <span class="event-month">2</span>
-                        <span class="event-year">julio 2026</span>
-                    </div>
-                    <div class="event-info">
-                        <div class="event-title">Laura Casielles</div>
-                        <div class="event-meta">Recital y pinchada — Bar Musical Radial, Valladolid</div>
-                    </div>
-                    <div class="event-type">14.4</div>
-                    <span class="event-toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="event-detail">
-                    <p>Despedida de la primera temporada del club: recital poético de Laura Casielles, con versos de <em>Señales que hacemos en los mapas</em>, y pinchada de músicas africanas a cargo de Rosauro Varo Cobos y Stroszek68. Entrada libre.</p>
-                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
-                </div>
-            </details>
-        </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-07-31">
             <details>
                 <summary>
                     <div class="event-date">
@@ -399,28 +385,27 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-07-02">
             <details>
                 <summary>
                     <div class="event-date">
-                        <span class="event-month">23</span>
-                        <span class="event-year">junio 2026</span>
+                        <span class="event-month">2</span>
+                        <span class="event-year">julio 2026</span>
                     </div>
                     <div class="event-info">
-                        <div class="event-title">La Ciudad Encendida</div>
-                        <div class="event-meta">Ruta artística, Noche de San Juan — casco histórico, Córdoba</div>
+                        <div class="event-title">Laura Casielles</div>
+                        <div class="event-meta">Recital y pinchada — Bar Musical Radial, Valladolid</div>
                     </div>
-                    <div class="event-type">Colaboración</div>
+                    <div class="event-type">14.4</div>
                     <span class="event-toggle" aria-hidden="true"></span>
                 </summary>
                 <div class="event-detail">
-                    <p>La Red ARDE —más de setenta colectivos y creadores locales— recorre el casco histórico para exigir que la cultura deje de ser decoración. El colectivo, entre los convocantes.</p>
+                    <p>Despedida de la primera temporada del club: recital poético de Laura Casielles, con versos de <em>Señales que hacemos en los mapas</em>, y pinchada de músicas africanas a cargo de Rosauro Varo Cobos y Stroszek68. Entrada libre.</p>
+                    <p class="event-ciclo"><a href="#ciclo-14-4">→ Ciclo: 14.4</a></p>
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-06-30">
             <details>
                 <summary>
                     <div class="event-date">
@@ -439,8 +424,45 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-06-23">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">23</span>
+                        <span class="event-year">junio 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">La Ciudad Encendida</div>
+                        <div class="event-meta">Ruta artística, Noche de San Juan — casco histórico, Córdoba</div>
+                    </div>
+                    <div class="event-type">Colaboración</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>La Red ARDE —más de setenta colectivos y creadores locales— recorre el casco histórico para exigir que la cultura deje de ser decoración. El colectivo, entre los convocantes.</p>
+                </div>
+            </details>
+        </li>
+        <li class="event-item past" data-date="2026-05-31">
+            <details>
+                <summary>
+                    <div class="event-date">
+                        <span class="event-month">—</span>
+                        <span class="event-year">abril–mayo 2026</span>
+                    </div>
+                    <div class="event-info">
+                        <div class="event-title">Equinoccio Sound</div>
+                        <div class="event-meta">Festival de música, colaboración — Madrid</div>
+                    </div>
+                    <div class="event-type">Festival</div>
+                    <span class="event-toggle" aria-hidden="true"></span>
+                </summary>
+                <div class="event-detail">
+                    <p>El colectivo participa como colaborador, aportando una mirada interdisciplinar a esta edición del festival de música electrónica. Fecha exacta sin publicar.</p>
+                </div>
+            </details>
+        </li>
+        <li class="event-item past" data-date="2026-05-15">
             <details>
                 <summary>
                     <div class="event-date">
@@ -460,28 +482,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
-            <details>
-                <summary>
-                    <div class="event-date">
-                        <span class="event-month">—</span>
-                        <span class="event-year">abril–mayo 2026</span>
-                    </div>
-                    <div class="event-info">
-                        <div class="event-title">Equinoccio Sound</div>
-                        <div class="event-meta">Festival de música, colaboración — Madrid</div>
-                    </div>
-                    <div class="event-type">Festival</div>
-                    <span class="event-toggle" aria-hidden="true"></span>
-                </summary>
-                <div class="event-detail">
-                    <p>El colectivo participa como colaborador, aportando una mirada interdisciplinar a esta edición del festival de música electrónica. Fecha exacta sin publicar.</p>
-                </div>
-            </details>
-        </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-04-24">
             <details>
                 <summary>
                     <div class="event-date">
@@ -500,8 +501,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-04-10">
             <details>
                 <summary>
                     <div class="event-date">
@@ -521,8 +521,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-03-13">
             <details>
                 <summary>
                     <div class="event-date">
@@ -542,8 +541,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-02-02">
             <details>
                 <summary>
                     <div class="event-date">
@@ -562,8 +560,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2026-01-20">
             <details>
                 <summary>
                     <div class="event-date">
@@ -583,8 +580,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2025-12-12">
             <details>
                 <summary>
                     <div class="event-date">
@@ -604,8 +600,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2025-11-13">
             <details>
                 <summary>
                     <div class="event-date">
@@ -625,8 +620,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2025-10-08">
             <details>
                 <summary>
                     <div class="event-date">
@@ -646,8 +640,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2025-06-19">
             <details>
                 <summary>
                     <div class="event-date">
@@ -666,8 +659,7 @@
                 </div>
             </details>
         </li>
-
-        <li class="event-item past">
+        <li class="event-item past" data-date="2025-06-19">
             <details>
                 <summary>
                     <div class="event-date">
@@ -686,6 +678,25 @@
                 </div>
             </details>
         </li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </ul>
 </section>

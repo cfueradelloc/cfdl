@@ -18,9 +18,10 @@
     <meta name="twitter:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="assets/js/site.js" defer></script>
     <style>
         /* La portada consume los tokens y las fuentes de base.css y se queda
            con su propia retícula. Antes era una pantalla partida por la mitad:
@@ -40,13 +41,13 @@
             grid-template-columns: 1.15fr 0.85fr;
             gap: 56px;
             align-items: center;
-            padding: 56px 40px 56px;
+            padding: 56px var(--gutter);
             max-width: 1320px;
             margin: 0 auto;
         }
         .ante {
             font-family: 'FuturaStd', sans-serif;
-            font-size: 10px;
+            font-size: var(--fs-label);
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--muted);
@@ -91,7 +92,7 @@
         }
         .hoja figcaption {
             font-family: 'FuturaStd', sans-serif;
-            font-size: 9.5px;
+            font-size: var(--fs-label);
             letter-spacing: 0.18em;
             text-transform: uppercase;
             color: var(--muted);
@@ -107,7 +108,7 @@
             gap: 0 56px;
             max-width: 1320px;
             margin: 0 auto;
-            padding: 0 40px 80px;
+            padding: 0 var(--gutter) 80px;
         }
         .seccion {
             display: block;
@@ -120,7 +121,7 @@
         .seccion:hover { border-top-color: var(--accent); }
         .seccion .cuenta {
             font-family: 'FuturaStd', sans-serif;
-            font-size: 10px;
+            font-size: var(--fs-label);
             letter-spacing: 0.2em;
             text-transform: uppercase;
             color: var(--muted);
@@ -150,12 +151,12 @@
             justify-content: space-between;
             gap: 20px;
             flex-wrap: wrap;
-            padding: 20px 40px;
+            padding: 24px var(--gutter);
             background: var(--band-bg);
             border-top: 1px solid var(--band-rule);
         }
         footer p, footer a {
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.12em;
             text-transform: uppercase;
             color: var(--band-muted);
@@ -165,11 +166,11 @@
         footer a:hover { color: var(--band-fg); }
 
         @media (max-width: 900px) {
-            .apertura { grid-template-columns: 1fr; gap: 40px; padding: 44px 24px 40px; }
+            .apertura { grid-template-columns: 1fr; gap: 40px; padding: 44px var(--gutter) 40px; }
             .hoja { max-width: 340px; }
-            .secciones { grid-template-columns: 1fr; gap: 0; padding: 0 24px 56px; }
+            .secciones { grid-template-columns: 1fr; gap: 0; padding: 0 var(--gutter) 56px; }
             .ante { letter-spacing: 0.16em; }
-            footer { padding: 18px 24px; flex-direction: row; gap: 12px; text-align: left; }
+            footer { padding: 20px var(--gutter); flex-direction: row; gap: 12px; text-align: left; }
         }
     </style>
 </head>
@@ -214,7 +215,7 @@
             português y asturianu.</p>
         </a>
         <a class="seccion" href="eventos.html">
-            <span class="cuenta">nueve encuentros — 2025 y 2026</span>
+            <span class="cuenta">veintiún encuentros — 2025 y 2026</span>
             <h2>Eventos</h2>
             <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con
             La Perecquiana en Valladolid; poesía en el Almíbar de Córdoba.</p>
@@ -226,7 +227,7 @@
             síntesis la disgregación — títulos sacados del propio manifiesto.</p>
         </a>
         <a class="seccion" href="galeria.html">
-            <span class="cuenta">treinta y nueve fotografías</span>
+            <span class="cuenta">cuarenta y seis fotografías</span>
             <h2>Galería</h2>
             <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz
             alta, el manifiesto pasando de mano en mano.</p>

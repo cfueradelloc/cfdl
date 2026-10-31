@@ -9,18 +9,19 @@
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
-    <meta property="og:title" content="C.F.D.L. — Archivo Generativo">
+    <meta property="og:title" content="C.F.D.L. — Archivo generativo">
     <meta property="og:description" content="Piezas generativas producidas a partir del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
     <meta property="og:url" content="https://cfdl.site/proyectos.html">
     <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="C.F.D.L. — Archivo Generativo">
+    <meta name="twitter:title" content="C.F.D.L. — Archivo generativo">
     <meta name="twitter:description" content="Piezas generativas producidas a partir del manifiesto: sistemas que crecen, se fracturan, derivan y se pierden.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="assets/js/site.js" defer></script>
     <style>
         /* ── Piece list (page-specific) ────────────────────────────────────── */
         .piece-list { list-style: none; }
@@ -32,7 +33,7 @@
             grid-template-columns: 48px 1fr auto;
             align-items: start;
             gap: 0 32px;
-            padding: 36px 64px;
+            padding: 36px var(--gutter);
             border-left: 3px solid transparent;
             text-decoration: none;
             color: inherit;
@@ -40,7 +41,7 @@
         }
 
         .piece-link:hover {
-            background: #f1e7db;
+            background: var(--surface);
             border-left-color: var(--accent);
         }
 
@@ -50,7 +51,7 @@
         }
 
         .piece-num {
-            font-size: 10px;
+            font-size: var(--fs-label);
             letter-spacing: 0.1em;
             color: var(--accent-fg);
             opacity: 0.7;
@@ -74,8 +75,11 @@
             line-height: 1.5;
         }
 
+        .piece-body { min-width: 0; }
+
         .piece-desc {
-            font-size: 10px;
+            overflow-wrap: anywhere;
+            font-size: var(--fs-label);
             letter-spacing: 0.08em;
             text-transform: uppercase;
             color: var(--muted);
@@ -83,7 +87,7 @@
 
         .piece-tag {
             display: inline-block;
-            font-size: 9px;
+            font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: var(--muted);
@@ -106,7 +110,7 @@
         .piece-link:hover .piece-arrow { opacity: 1; }
 
         @media (max-width: 700px) {
-            .piece-link { padding: 28px 24px; grid-template-columns: 36px 1fr auto; gap: 0 16px; }
+            .piece-link { padding: 28px var(--gutter); grid-template-columns: 36px 1fr auto; gap: 0 16px; }
         }
     </style>
 </head>
@@ -125,7 +129,7 @@
 
 <header>
     <p class="kicker reveal">C.F.D.L.</p>
-    <h1 class="section-title reveal reveal-2">Archivo Generativo</h1>
+    <h1 class="section-title reveal reveal-2">Archivo generativo</h1>
     <p class="section-subtitle reveal reveal-3">Piezas generativas producidas a partir del manifiesto de C.F.D.L.
         Cada archivo es una interpretación visual de un fragmento —
         sistemas que crecen, se fracturan, derivan y se pierden.</p>
@@ -139,7 +143,7 @@
             <span class="piece-num">01</span>
             <div class="piece-body">
                 <div class="piece-title">Manifiesto animado</div>
-                <div class="piece-fragment">"fuera de lugar — siempre en algún otro lugar"</div>
+                <div class="piece-fragment">«fuera de lugar — siempre en algún otro lugar»</div>
                 <div class="piece-desc">Texto generativo — sistema de partículas tipográficas</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -151,7 +155,7 @@
             <span class="piece-num">02</span>
             <div class="piece-body">
                 <div class="piece-title">Maleza</div>
-                <div class="piece-fragment">"al mirar atrás, encontrar un camino lleno de maleza"</div>
+                <div class="piece-fragment">«al mirar atrás, encontrar un camino lleno de maleza»</div>
                 <div class="piece-desc">Campo vectorial — ruido curl con tres especies de partículas</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -163,7 +167,7 @@
             <span class="piece-num">03</span>
             <div class="piece-body">
                 <div class="piece-title">Brújula sin su imán</div>
-                <div class="piece-fragment">"Navegar quitándole a la brújula su imán"</div>
+                <div class="piece-fragment">«Navegar quitándole a la brújula su imán»</div>
                 <div class="piece-desc">Dipolo magnético errante — campo de partículas y agujas</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -175,7 +179,7 @@
             <span class="piece-num">04</span>
             <div class="piece-body">
                 <div class="piece-title">La llegada del moho</div>
-                <div class="piece-fragment">"Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono"</div>
+                <div class="piece-fragment">«Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono»</div>
                 <div class="piece-desc">Reacción-difusión Gray-Scott — colonización química</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -187,7 +191,7 @@
             <span class="piece-num">05</span>
             <div class="piece-body">
                 <div class="piece-title">Ante la síntesis, la disgregación</div>
-                <div class="piece-fragment">"Y ante la síntesis, la disgregación"</div>
+                <div class="piece-fragment">«Y ante la síntesis, la disgregación»</div>
                 <div class="piece-desc">Sistema de partículas — cristalización y fractura cíclica</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -199,7 +203,7 @@
             <span class="piece-num">06</span>
             <div class="piece-body">
                 <div class="piece-title">Garganta sin fondo</div>
-                <div class="piece-fragment">"el malestar de asomarse a una garganta sin fondo"</div>
+                <div class="piece-fragment">«el malestar de asomarse a una garganta sin fondo»</div>
                 <div class="piece-desc">Vórtice de partículas — espiral sin retorno</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>
@@ -211,7 +215,7 @@
             <span class="piece-num">07</span>
             <div class="piece-body">
                 <div class="piece-title">Paleta cromática<span class="piece-tag">Referencia</span></div>
-                <div class="piece-fragment">"9 colores — de Cera a Medianoche"</div>
+                <div class="piece-fragment">«9 colores — de Cera a Medianoche»</div>
                 <div class="piece-desc">Paleta extendida C.F.D.L. — explorador interactivo</div>
             </div>
             <span class="piece-arrow" aria-hidden="true">→</span>

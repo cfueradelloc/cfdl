@@ -7,52 +7,64 @@
    ========================================================================== */
 
 /* ── Fonts ─────────────────────────────────────────────────────────────── */
+/* woff2 recortado a latín (ES, CA, FR, PT, AST, EN): Minion pasa de 218 KB
+   a 75 KB. El .otf queda de reserva y lo siguen usando las piezas output/. */
 @font-face {
     font-family: 'FuturaStd';
-    src: url('../fonts/FuturaStd-Book.otf') format('opentype');
+    src: url('../fonts/FuturaStd-Book.woff2') format('woff2'),
+         url('../fonts/FuturaStd-Book.otf') format('opentype');
     font-display: swap;
 }
 @font-face {
     font-family: 'MinionPro';
-    src: url('../fonts/MinionPro-Regular.otf') format('opentype');
+    src: url('../fonts/MinionPro-Regular.woff2') format('woff2'),
+         url('../fonts/MinionPro-Regular.otf') format('opentype');
     font-display: swap;
 }
 
 /* ── Reset ─────────────────────────────────────────────────────────────── */
 * { margin: 0; padding: 0; box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+img { max-width: 100%; height: auto; }
 
 /* ── Design tokens ─────────────────────────────────────────────────────── */
 :root {
-    /* Paleta única — content/paleta/. Antes había dos, la rosa aquí y la
-       citrina en brand-content, y ninguna de las dos aterrizaba donde la otra.
-       El suelo es el papel; el zafiro es la banda. */
+    /* Paleta única — content/paleta/. El suelo es el papel; el zafiro es la banda. */
     --bg:      #fdf5eb;   /* papel   — fondo de página            */
     --surface: #f1e7db;   /* hueso   — superficies, tarjetas      */
     --text:    #171513;   /* tinta   — cuerpo                     */
-    --muted:   #6a625a;   /* humo    — secundario. Antes #857c75, */
-                              /*           que daba 2,83:1 y no pasaba */
+    --muted:   #6a625a;   /* humo    — secundario (5,6:1)         */
     --border:  #e0d6ca;   /* filete  — bordes y separadores       */
-    --rule:    #e0d6ca;   /* filete  — se declaraba SÓLO en el     */
-                              /*           bloque oscuro, y tiene 9    */
-                              /*           consumidores en modo claro  */
+    --rule:    #e0d6ca;
 
-    /* EL ACENTO VA EN DOS. El ámbar sobre papel da 1,59:1: sirve de relleno y
-       de marca grande, no de texto ni de anillo de foco. --accent-fg es el
-       mismo ámbar oscurecido hasta 7,25:1, y es el que lleva letra.
-       Antes esto era Factory Yellow #fde700, que como texto sobre el fondo
-       rosa daba 1,14:1. */
-    --accent:    #ffb923; /* ámbar             — rellenos, filetes  */
-    --accent-fg: #714a00; /* ámbar oscurecido  — texto, foco      */
+    /* EL ACENTO VA EN DOS. El ámbar sobre papel da 1,59:1: relleno y marca
+       grande, nunca texto. --accent-fg (7,25:1) es el que lleva letra. */
+    --accent:    #ffb923;
+    --accent-fg: #714a00;
 
-    /* Banda oscura — cabecera, pie, y cualquier cromo sobre el zafiro. */
+    /* Banda oscura — cabecera, pie, menú, y cualquier cromo sobre el zafiro. */
     --band-bg:    #332f8a;
     --band-fg:    #fff4d6;
     --band-muted: #bbabd5;
     --band-rule:  #6a5da3;
 
+    /* ESCALA. Antes las etiquetas iban a 9–10 px: ilegibles en un móvil.
+       Ninguna letra del sitio baja ya de --fs-label. */
+    --fs-label:   12px;
+    --fs-small:   14px;
+    --fs-body:    clamp(16px, 0.35vw + 14.6px, 19px);
+    --fs-h3:      clamp(22px, 2.2vw, 30px);
+    --fs-h2:      clamp(34px, 5.2vw, 72px);
+    --fs-display: clamp(64px, 14vw, 210px);
+    --track:      0.16em;   /* tracking de etiquetas en mayúsculas */
+
+    /* Márgenes laterales — 20 px en un teléfono, 56 px en escritorio. */
+    --gutter: clamp(20px, 4.2vw, 56px);
+
     /* Shape & motion */
-    --radius: 3px;
-    --ease:   0.15s;
+    --radius: 2px;
+    --ease:   0.18s;
+    --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Inverted scheme — opt-in via <body class="theme-dark"> (manifiesto). */
@@ -62,18 +74,32 @@ body.theme-dark {
     --text:    #fff4d6;
     --muted:   #bbabd5;
     --border:  #6a5da3;
+    --rule:    #6a5da3;
     /* Sobre el zafiro el ámbar SÍ lleva texto: 6,38:1. */
     --accent:    #ffb923;
     --accent-fg: #ffb923;
-    --rule:    #6a5da3;
 }
 
 /* ── Body ──────────────────────────────────────────────────────────────── */
 body {
     font-family: 'FuturaStd', sans-serif;
+    font-size: var(--fs-body);
+    line-height: 1.6;
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
+    overflow-x: clip;
+}
+
+::selection { background: var(--accent); color: #171513; }
+
+/* Etiqueta: la voz de las meta-líneas, los pies, la navegación. */
+.label {
+    font-family: 'FuturaStd', sans-serif;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--muted);
 }
 
 /* ── Nav (shared sticky top bar) ───────────────────────────────────────── */
@@ -81,35 +107,53 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
-    height: 48px;
+    min-height: 56px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    gap: 24px;
+    padding: 0 var(--gutter);
     background: var(--bg);
     border-bottom: 1px solid var(--border);
+    view-transition-name: site-nav;
 }
 
 .nav-brand {
-    font-size: 10px;
-    letter-spacing: 0.2em;
+    font-size: 15px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text);
     text-decoration: none;
+    white-space: nowrap;
 }
+/* El punto final se cae de la línea: la marca, también fuera de lugar. */
+.nav-brand::after {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 6px;
+    background: var(--accent);
+    transform: translateY(-7px) rotate(12deg);
+    transition: transform 0.5s var(--ease-out);
+}
+.nav-brand:hover::after { transform: translateY(2px) rotate(57deg); }
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    flex-wrap: wrap;
+    gap: 8px 30px;
 }
 
 .nav-links a {
-    font-size: 10px;
-    letter-spacing: 0.12em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
     text-transform: uppercase;
     color: var(--muted);
     text-decoration: none;
-    transition: color var(--ease);
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: color var(--ease), border-color var(--ease);
 }
 
 .nav-links a:hover { color: var(--text); }
@@ -117,57 +161,176 @@ body {
 .nav-links a.active,
 .nav-links a[aria-current="page"] {
     color: var(--text);
-    border-bottom: 1px solid var(--text);
-    padding-bottom: 1px;
+    border-bottom-color: var(--accent);
 }
 
+/* Botón «Menú» — lo crea site.js; sin JS no existe y la barra envuelve. */
+.nav-toggle {
+    display: none;
+    font: inherit;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--text);
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 9px 16px 8px;
+    cursor: pointer;
+    transition: background var(--ease), border-color var(--ease);
+}
+.nav-toggle:hover { background: var(--accent); border-color: var(--accent); color: #171513; }
+
+/* ── Menú a pantalla completa (móvil) ──────────────────────────────────── */
+.menu {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    padding: 0 var(--gutter) 40px;
+    border: none;
+    background: var(--band-bg);
+    color: var(--band-fg);
+    overflow-y: auto;
+}
+.menu[open] { display: flex; flex-direction: column; }
+.menu::backdrop { background: var(--band-bg); }
+
+.menu-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    border-bottom: 1px solid var(--band-rule);
+}
+.menu-head .nav-brand { color: var(--band-fg); }
+.menu-close {
+    font: inherit;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--band-fg);
+    background: none;
+    border: 1px solid var(--band-rule);
+    border-radius: 999px;
+    padding: 9px 16px 8px;
+    cursor: pointer;
+}
+.menu-close:hover { background: var(--accent); border-color: var(--accent); color: #171513; }
+
+.menu-links {
+    list-style: none;
+    margin-top: auto;
+    padding: 48px 0 32px;
+}
+.menu-links li { border-bottom: 1px solid var(--band-rule); }
+.menu-links a {
+    display: block;
+    padding: 10px 0 6px;
+    font-family: 'MinionPro', serif;
+    font-style: italic;
+    font-size: clamp(44px, 13vw, 88px);
+    line-height: 1.05;
+    color: var(--band-fg);
+    text-decoration: none;
+    transition: color var(--ease), transform 0.4s var(--ease-out);
+}
+/* Cada entrada, desplazada a su manera — ninguna en su sitio. */
+.menu-links li:nth-child(1) a { padding-left: 0; }
+.menu-links li:nth-child(2) a { padding-left: 14%; }
+.menu-links li:nth-child(3) a { padding-left: 5%; }
+.menu-links li:nth-child(4) a { padding-left: 22%; }
+.menu-links a:hover,
+.menu-links a[aria-current="page"] { color: var(--accent); }
+.menu-links a:hover { transform: translateX(10px); }
+
+.menu-foot {
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
+    text-transform: uppercase;
+    color: var(--band-muted);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 12px;
+}
+.menu-foot a { color: var(--band-muted); text-decoration: none; }
+.menu-foot a:hover { color: var(--accent); }
+
+/* Entrada del menú */
+@keyframes cfdl-menu-in {
+    from { opacity: 0; transform: translateY(24px) rotate(-1.2deg); }
+    to   { opacity: 1; transform: none; }
+}
+.menu[open] .menu-links li { animation: cfdl-menu-in 0.6s var(--ease-out) both; }
+.menu[open] .menu-links li:nth-child(2) { animation-delay: 0.05s; }
+.menu[open] .menu-links li:nth-child(3) { animation-delay: 0.10s; }
+.menu[open] .menu-links li:nth-child(4) { animation-delay: 0.15s; }
+
 /* ── Header band (section pages) ───────────────────────────────────────── */
+/* Antes: banda de zafiro con un título de 32 px — una plantilla. Ahora el
+   título es el cartel: enorme, en cursiva, y empujado fuera de su columna. */
 header {
-    padding: 64px 64px 32px;
+    position: relative;
+    padding: clamp(48px, 9vw, 120px) var(--gutter) clamp(36px, 5vw, 64px);
     background: var(--band-bg);
     border-bottom: 1px solid var(--band-rule);
+    overflow: hidden;
 }
 
 .kicker {
     font-family: 'FuturaStd', sans-serif;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
     text-transform: uppercase;
     color: var(--band-muted);
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 }
 
 .section-title {
     font-family: 'MinionPro', serif;
-    font-size: clamp(26px, 4.5vw, 32px);
-    line-height: 1.15;
-    color: var(--band-fg);
+    font-style: italic;
     font-weight: normal;
+    font-size: var(--fs-display);
+    line-height: 0.86;
+    letter-spacing: -0.02em;
+    color: var(--band-fg);
+    /* Fuera de la retícula: arranca una columna y pico más allá del margen. */
+    margin-left: clamp(0px, 7vw, 120px);
+    view-transition-name: page-title;
 }
 
 .section-subtitle {
     font-family: 'MinionPro', serif;
-    font-size: clamp(13px, 1.4vw, 14px);
-    line-height: 1.7;
+    font-size: clamp(17px, 1.6vw, 22px);
+    line-height: 1.5;
     color: var(--band-muted);
     font-style: italic;
-    margin-top: 12px;
-    max-width: 520px;
+    margin-top: clamp(20px, 3vw, 36px);
+    max-width: 34ch;
+    /* …y la bajada se cuelga del lado opuesto. */
+    margin-left: auto;
+    margin-right: clamp(0px, 6vw, 96px);
 }
 
 /* ── Footer band (section pages) ───────────────────────────────────────── */
 footer {
-    padding: 40px 64px;
+    padding: 40px var(--gutter);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px 24px;
     background: var(--band-bg);
     border-top: 1px solid var(--band-rule);
 }
 
 footer p {
-    font-size: 9px;
-    letter-spacing: 0.1em;
+    font-size: var(--fs-label);
+    letter-spacing: var(--track);
     text-transform: uppercase;
     color: var(--band-muted);
 }
@@ -178,27 +341,52 @@ footer a {
     transition: color var(--ease);
 }
 
-footer a:hover { color: var(--bg); }
+footer a:hover { color: var(--band-fg); }
 
 /* ── Accessibility ─────────────────────────────────────────────────────── */
 :focus-visible {
     outline: 2px solid var(--accent-fg);
-    outline-offset: 2px;
+    outline-offset: 3px;
     border-radius: 1px;
 }
-/* Don't show the ring for mouse clicks that land focus on non-interactive-ish
-   targets — :focus-visible already handles this; keep default for inputs. */
+header :focus-visible,
+footer :focus-visible,
+.menu :focus-visible { outline-color: var(--accent); }
+
+.visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
 
 /* ── Page-load reveal (gated by reduced-motion below) ──────────────────── */
 @keyframes cfdl-rise {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: none; }
 }
 .reveal {
-    animation: cfdl-rise 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: cfdl-rise 0.8s var(--ease-out) both;
 }
 .reveal-2 { animation-delay: 0.08s; }
 .reveal-3 { animation-delay: 0.16s; }
+
+/* ── Transiciones entre páginas ────────────────────────────────────────── */
+/* View Transitions entre documentos: sólo CSS. La página que se va se
+   desplaza y se tuerce un grado; la que llega sube. Quien no lo soporte,
+   navega como siempre. */
+@view-transition { navigation: auto; }
+
+@keyframes cfdl-vt-out {
+    to { opacity: 0; transform: translateY(-18px) rotate(-0.6deg); }
+}
+@keyframes cfdl-vt-in {
+    from { opacity: 0; transform: translateY(26px) rotate(0.5deg); }
+}
+::view-transition-old(root) { animation: cfdl-vt-out 0.28s ease-in both; }
+::view-transition-new(root) { animation: cfdl-vt-in 0.5s var(--ease-out) both; }
+::view-transition-group(page-title) { animation-duration: 0.55s; animation-timing-function: var(--ease-out); }
 
 /* ── Reduced motion ────────────────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
@@ -209,22 +397,18 @@ footer a:hover { color: var(--bg); }
         scroll-behavior: auto !important;
     }
     .reveal, .reveal-2, .reveal-3 { animation: none; }
+    @view-transition { navigation: none; }
 }
 
 /* ── Responsive (shared chrome) ────────────────────────────────────────── */
-@media (max-width: 700px) {
-    /* LA BARRA TIENE QUE ENVOLVER. Con cinco enlaces a 32 px de separación y
-       sin wrap, su ancho mínimo era ~500 px: a 390 px no desbordaba sólo la
-       barra, desbordaba EN HORIZONTAL LA PÁGINA ENTERA, las cinco. Medido:
-       80 px en manifiesto, proyectos y galería; 111 px en portada y eventos.
-       Y con la altura fija de 48 px, la segunda fila quedaba cortada. */
-    .site-nav {
-        height: auto;
-        flex-wrap: wrap;
-        gap: 6px 0;
-        padding: 10px 24px;
-    }
-    .nav-links { flex-wrap: wrap; gap: 10px 16px; }
-    header { padding: 40px 24px 24px; }
-    footer { padding: 32px 24px; flex-direction: column; gap: 12px; text-align: center; }
+@media (max-width: 760px) {
+    /* Con JS: los enlaces se esconden y aparece «Menú». Sin JS: la barra
+       envuelve en dos filas, como antes, pero sin desbordar. */
+    .js .nav-links { display: none; }
+    .js .nav-toggle { display: inline-block; }
+    .site-nav { flex-wrap: wrap; padding-top: 8px; padding-bottom: 8px; }
+    .nav-links { gap: 4px 18px; }
+    .section-title { margin-left: 0; }
+    .section-subtitle { margin-right: 0; max-width: 30ch; }
+    footer { flex-direction: column; align-items: flex-start; }
 }

@@ -18,17 +18,18 @@
     <meta name="twitter:description" content="Encuentros, lecturas y proyecciones del C.F.D.L. en imágenes.">
     <meta name="twitter:image" content="https://cfdl.site/gallery/welcome-summer-2.jpg">
     <link rel="icon" type="image/svg+xml" href="assets/logo/CFDL_favicon.svg">
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/MinionPro-Regular.otf" crossorigin>
-    <link rel="preload" as="font" type="font/otf" href="assets/fonts/FuturaStd-Book.otf" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
     <link rel="stylesheet" href="assets/css/base.css">
+    <script>document.documentElement.classList.add('js')</script>
+    <script src="assets/js/site.js" defer></script>
     <style>
         /* ── Shuffle control — icon, anchored in the header band ───────────── */
         header { position: relative; }
 
         .shuffle-btn {
             position: absolute;
-            top: 64px;
-            right: 64px;
+            top: clamp(48px, 9vw, 120px);
+            right: var(--gutter);
             width: 42px;
             height: 42px;
             display: inline-flex;
@@ -95,7 +96,7 @@
             right: 0;
             bottom: 0;
             padding: 28px 14px 12px;
-            font-size: 10px;
+            font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
             color: #fff;
@@ -128,7 +129,7 @@
         .gallery-static figure { break-inside: avoid; margin: 0 0 14px; }
         .gallery-static figure img { width: 100%; height: auto; display: block; }
         .gallery-static figcaption {
-            font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+            font-size: var(--fs-label); letter-spacing: 0.1em; text-transform: uppercase;
             color: var(--muted); padding: 6px 2px 0;
         }
         @media (max-width: 900px) { .gallery-static { columns: 2; } }
