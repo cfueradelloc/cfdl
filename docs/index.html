@@ -100,6 +100,17 @@
             color: var(--crema);
             text-wrap: pretty;
         }
+        /* La frase cambia sola, al azar: se funde y se desenfoca, y vuelve
+           con otra frase del manifiesto (script al final). */
+        .bajada .frase {
+            display: block;
+            transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s var(--ease-out);
+        }
+        .bajada .frase.fuera {
+            opacity: 0;
+            filter: blur(6px);
+            transform: translateY(6px);
+        }
         .seguir {
             display: inline-block;
             margin-top: 28px;
@@ -231,8 +242,8 @@
         </picture>
         <div>
             <h1 class="tesis reveal"><span class="visually-hidden">C.F.D.L.</span><svg class="logo-linea logo-grande" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.89 100.00"><polyline points="0.000,0.500 99.500,0.500 99.500,99.500 0.500,99.500 0.500,4.500 95.500,4.500 95.500,95.500 4.500,95.500 4.500,8.500 91.500,8.500 91.500,91.500 8.500,91.500 8.500,12.500 87.500,12.500 87.500,87.500 12.500,87.500 12.500,16.500 83.500,16.500 83.500,83.500 16.500,83.500 16.500,20.500" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M165.613346 36.89792200000001C162.836464 34.82562200000001 159.76946 33.83091800000001 156.287996 33.83091800000001C147.33566000000002 33.83091800000001 139.999718 41.16686000000001 139.999718 50.119196C139.999718 58.988640000000004 147.459998 66.158798 156.287996 66.158798C159.603676 66.158798 162.919356 65.03975600000001 165.613346 63.09179400000001V58.78141000000001C163.126586 61.268170000000005 159.686568 62.926010000000005 156.163658 62.926010000000005C149.159284 62.926010000000005 143.48118200000002 56.874894000000005 143.48118200000002 49.99485800000001C143.48118200000002 43.114822000000004 149.117838 37.06370600000001 156.080766 37.06370600000001C159.686568 37.06370600000001 163.126586 38.638654 165.613346 41.20830600000001Z M183.02046600000003 61.516846C181.73564000000002 61.516846 180.69949000000003 62.55299600000001 180.69949000000003 63.796376C180.69949000000003 65.081202 181.73564000000002 66.158798 183.02046600000003 66.158798C184.305292 66.158798 185.34144200000003 65.081202 185.34144200000003 63.796376C185.34144200000003 62.55299600000001 184.305292 61.516846 183.02046600000003 61.516846Z M215.05802400000002 37.60250400000001V34.36971600000001H200.84204600000004V65.62H204.32351000000003V50.119196H214.726456V46.886408H204.32351000000003V37.60250400000001Z M226.78704200000004 61.516846C225.50221600000003 61.516846 224.46606600000004 62.55299600000001 224.46606600000004 63.796376C224.46606600000004 65.081202 225.50221600000003 66.158798 226.78704200000004 66.158798C228.07186800000002 66.158798 229.10801800000002 65.081202 229.10801800000002 63.796376C229.10801800000002 62.55299600000001 228.07186800000002 61.516846 226.78704200000004 61.516846Z M244.60862200000003 65.62H250.41106200000002C255.30169 65.62 259.03183 64.99831 262.76197 61.68263C266.20198800000003 58.615626000000006 267.859828 54.595364000000004 267.859828 50.03630400000001C267.859828 45.394352000000005 266.24343400000004 41.20830600000001 262.679078 38.14130200000001C258.990384 34.99140600000001 255.177352 34.36971600000001 250.493954 34.36971600000001H244.60862200000003ZM248.090086 62.387212000000005V37.60250400000001H250.61829200000003C254.30698600000002 37.60250400000001 257.456882 38.099856 260.316656 40.62806200000001C263.010646 42.99048400000001 264.37836400000003 46.430502000000004 264.37836400000003 49.99485800000001C264.37836400000003 53.476322 263.052092 56.750556 260.48244 59.154424000000006C257.62266600000004 61.848414000000005 254.43132400000002 62.387212000000005 250.61829200000003 62.387212000000005Z M284.230798 61.516846C282.945972 61.516846 281.909822 62.55299600000001 281.909822 63.796376C281.909822 65.081202 282.945972 66.158798 284.230798 66.158798C285.515624 66.158798 286.551774 65.081202 286.551774 63.796376C286.551774 62.55299600000001 285.515624 61.516846 284.230798 61.516846Z M305.533842 34.36971600000001H302.05237800000003V65.62H314.15461000000005V62.387212000000005H305.533842Z M329.116416 61.516846C327.83159 61.516846 326.79544000000004 62.55299600000001 326.79544000000004 63.796376C326.79544000000004 65.081202 327.83159 66.158798 329.116416 66.158798C330.401242 66.158798 331.43739200000005 65.081202 331.43739200000005 63.796376C331.43739200000005 62.55299600000001 330.401242 61.516846 329.116416 61.516846Z"/></svg></h1>
-            <p class="bajada reveal reveal-2">Escogemos un mundo de ciudades recordadas, siempre en
-            construcción, en terrenos donde no deberían estar.</p>
+            <p class="bajada reveal reveal-2" data-frases><span class="frase">Escogemos un mundo de ciudades recordadas, siempre en
+            construcción, en terrenos donde no deberían estar.</span></p>
             <a class="seguir reveal reveal-3" href="manifiesto.html">El manifiesto, entero →</a>
         </div>
     </section>
@@ -288,6 +299,67 @@
     new IntersectionObserver(function (e) {
         nav.classList.toggle('solida', !e[0].isIntersecting);
     }, { rootMargin: '-' + nav.offsetHeight + 'px 0px 0px 0px' }).observe(portada);
+})();
+
+/* Frases del manifiesto que se relevan al azar sobre la portada. La primera
+   es la que ya está en el HTML (y la única sin JS o con movimiento reducido).
+   La caja guarda la altura de la frase más larga: nada debajo salta. */
+(function () {
+    var p = document.querySelector('[data-frases]');
+    var span = p && p.querySelector('.frase');
+    if (!span) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    var FRASES = [
+        'Escogemos un mundo de ciudades recordadas, siempre en construcción, en terrenos donde no deberían estar.',
+        'Reivindicamos el exilio y el destierro, la creación como una solicitud de asilo.',
+        'Navegar quitándole a la brújula su imán y, así, deambular hasta perder de vista lo inmutable.',
+        'Crear donde no alcance ninguna raíz.',
+        'No creamos para averiguar lo que somos sino para dejar de ser quien somos.',
+        'Buscamos la extenuación: de la palabra, de los recursos, de la energía corporal.',
+        'La creación como trastorno.',
+        'La inmadurez como propósito. La prótesis antes que la cura o la rehabilitación.',
+        'Aspiramos al producto deforme, siempre inacabado, de una idea.',
+        'Afrontamos el futuro con una esperanza voraz. El pasado lo contemplamos con una nostalgia atroz.',
+        'No hay creación sin amistad; tampoco hay amistad sin sufrimiento compartido.',
+        'Definir lo íntimo con pedazos de lo público.',
+        'Arte con aquello que el mar le entrega al náufrago.',
+        'Frente a la marca personal, la marca blanca.',
+        'Usamos lo atópico, antes que lo utópico o lo distópico. Y ante la síntesis, la disgregación.',
+        'Creamos para exponer en un museo que nunca llegaremos a visitar.',
+        'Construimos pensando en las ruinas, la llegada del moho, y su inevitable abandono.',
+        'La obra mejora siempre, de cualquiera de las maneras, si está fuera de lugar.'
+    ];
+    var actual = 0, FADE = 900, CADA = 6500;
+
+    // Reserva la altura de la frase más larga con el ancho de ahora.
+    function reservar() {
+        var sonda = span.cloneNode(false);
+        sonda.style.cssText = 'position:absolute;visibility:hidden;left:0;right:0;transition:none';
+        p.style.position = 'relative';
+        p.appendChild(sonda);
+        var alto = 0;
+        FRASES.forEach(function (f) { sonda.textContent = f; alto = Math.max(alto, sonda.offsetHeight); });
+        p.removeChild(sonda);
+        p.style.minHeight = alto + 'px';
+    }
+
+    function siguiente() {
+        if (document.hidden) return;
+        var n;
+        do { n = Math.floor(Math.random() * FRASES.length); } while (n === actual);
+        actual = n;
+        span.classList.add('fuera');
+        setTimeout(function () {
+            span.textContent = FRASES[n];
+            requestAnimationFrame(function () { span.classList.remove('fuera'); });
+        }, FADE);
+    }
+
+    var rt;
+    window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(reservar, 200); });
+    (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(reservar);
+    setInterval(siguiente, CADA);
 })();
 </script>
 
