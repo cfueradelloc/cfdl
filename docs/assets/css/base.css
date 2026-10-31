@@ -151,7 +151,9 @@ body {
     justify-content: space-between;
     gap: 24px;
     min-height: 76px;
-    padding: 0 var(--gutter);
+    /* El mismo borde que todo lo demás: en pantallas de más de 1440 px la
+       barra no se va al canto, se alinea con la columna del contenido. */
+    padding: 0 max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
     background: var(--bg);
     border-bottom: 1px solid var(--border);
     view-transition-name: site-nav;

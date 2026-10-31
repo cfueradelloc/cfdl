@@ -58,7 +58,7 @@
         }
 
         @media (max-width: 700px) {
-            .shuffle-btn { top: 40px; right: 24px; width: 38px; height: 38px; }
+            .shuffle-btn { top: auto; bottom: clamp(40px, 5vw, 64px); right: var(--gutter); width: 38px; height: 38px; }
         }
 
         /* ── Stochastic collage — large, generous tiles ────────────────────── */
@@ -154,9 +154,8 @@
 </nav>
 
 <header>
-    <p class="kicker reveal">Galería</p>
-    <h1 class="section-title reveal reveal-2">Las sesiones, tal como ocurrieron</h1>
-    <p class="section-subtitle reveal reveal-3">Encuentros, lecturas y proyecciones</p>
+    <p class="kicker reveal">Encuentros, lecturas y proyecciones</p>
+    <h1 class="section-title reveal reveal-2">Galería</h1>
     <button type="button" class="shuffle-btn reveal reveal-3" id="shuffle" hidden aria-label="Barajar las imágenes" title="Barajar">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
             <path d="M16 3h5v5"/>

@@ -27,7 +27,7 @@
     <style>
         /* ── Title block (page-specific) ──────────────────────────────────── */
         .title-block {
-            padding: 72px var(--gutter) 48px;
+            padding: 72px max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))) 48px;
             border-bottom: 1px solid var(--rule);
         }
 
@@ -61,7 +61,7 @@
         /* ── Order bar ───────────────────────────────────────────────────────── */
         #shuffle-btn {
             margin-left: auto;
-            padding: 14px 24px 16px;
+            padding: 16px 0 14px;
             font-family: 'FuturaStd', sans-serif;
             font-size: var(--fs-label);
             letter-spacing: 0.2em;
@@ -69,49 +69,50 @@
             color: var(--muted);
             background: none;
             border: none;
-            border-left: 1px solid var(--rule);
-            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
-            text-align: center;
+            text-align: right;
             transition: color 0.15s, border-color 0.15s;
         }
 
         #shuffle-btn:hover { color: var(--text); }
-        #shuffle-btn.active { color: var(--accent-fg); border-top-color: var(--accent-fg); }
+        #shuffle-btn.active { color: var(--text); border-bottom-color: var(--text); }
 
         /* ── Language nav ────────────────────────────────────────────────────── */
+        /* Pestañas sin cajas: texto alineado al margen, subrayado al activo. */
         .lang-nav {
             display: flex;
-            gap: 0;
+            align-items: flex-end;
+            gap: 0 clamp(20px, 2.4vw, 32px);
+            padding: 0 max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
             border-bottom: 1px solid var(--rule);
         }
 
         .lang-btn {
-            padding: 14px 24px 16px;
+            padding: 16px 0 14px;
             font-size: var(--fs-label);
             letter-spacing: 0.22em;
             text-transform: uppercase;
             color: var(--muted);
             background: none;
             border: none;
-            border-right: 1px solid var(--rule);
-            border-top: 2px solid transparent;
+            border-bottom: 2px solid transparent;
             cursor: pointer;
             transition: color 0.15s, border-color 0.15s;
         }
 
-        .lang-btn:last-child { border-right: none; }
-
         .lang-btn:hover { color: var(--text); }
 
         .lang-btn.active {
-            color: var(--accent-fg);
-            border-top-color: var(--accent-fg);
+            color: var(--text);
+            border-bottom-color: var(--text);
         }
 
         /* ── Manifesto text ──────────────────────────────────────────────────── */
+        /* El texto en la retícula del sitio: la cifra en el margen y el texto
+           en la misma línea vertical que los títulos de Eventos (+124 px). */
         .manifesto-body {
-            max-width: 860px;
+            max-width: var(--max);
             margin: 0 auto;
             padding: 0 var(--gutter);
         }
@@ -121,7 +122,7 @@
 
         .para-block {
             display: grid;
-            grid-template-columns: 48px 1fr;
+            grid-template-columns: 92px minmax(0, 40em);
             gap: 0 32px;
             padding: 56px 0;
             border-bottom: 1px solid var(--rule);
@@ -131,8 +132,7 @@
             font-size: var(--fs-label);
             letter-spacing: 0.16em;
             color: var(--accent-fg);
-            padding-top: 8px;
-            text-align: right;
+            padding-top: 0.75em;
         }
 
         .para-text {
@@ -168,7 +168,7 @@
 
         /* ── Caption strip ───────────────────────────────────────────────────── */
         .caption-strip {
-            padding: 20px var(--gutter);
+            padding: 20px max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -200,7 +200,7 @@
 
         /* ── Footer (transparent, sits on the Sapphire ground) ─────────────── */
         footer {
-            padding: 28px var(--gutter);
+            padding: 28px max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -223,10 +223,9 @@
         @media (max-width: 768px) {
             .title-block { padding: 48px var(--gutter) 32px; }
             .lang-nav { flex-wrap: wrap; }
-            .lang-btn { padding: 14px 16px; }
-            #shuffle-btn { margin-left: 0; }
+            #shuffle-btn { margin-left: auto; }
             .manifesto-body { padding: 0 var(--gutter); }
-            .para-block { grid-template-columns: 32px 1fr; gap: 0 16px; padding: 40px 0; }
+            .para-block { grid-template-columns: 32px minmax(0, 1fr); gap: 0 16px; padding: 40px 0; }
             .caption-strip { padding: 16px var(--gutter); }
             footer { padding: 20px var(--gutter); flex-direction: column; gap: 8px; }
         }
