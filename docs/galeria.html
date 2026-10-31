@@ -27,39 +27,43 @@
     <style>
         /* GALERÍA — crema sobre negro (theme-tinta), como Eventos. Filas
            justificadas: cada foto con su proporción, sin recortes, todas
-           a ras con 6 px de aire; las filas ocupan el ancho exacto. Las
-           fotos se intercambian solas de dos en dos (sólo entre formatos
-           parecidos, así la retícula no salta). Clic: la foto entera. */
+           a ras con 6 px de aire; las filas ocupan el ancho exacto. Cada
+           15 s la galería se baraja sola (como al pulsar «Barajar»), con un
+           fundido. Clic: la foto entera. */
 
         header::after { display: none; }
         header { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(20px, 2.5vw, 32px); }
         footer { margin-top: clamp(40px, 5vw, 72px); padding-top: clamp(28px, 3vw, 40px); padding-bottom: clamp(28px, 3vw, 40px);
                  border-top: 1px solid var(--border); }
 
-        /* ── Barajar ───────────────────────────────────────────────────────── */
+        /* ── Barajar: una etiqueta de texto en la línea del antetítulo, al
+           margen derecho (como «Aleatorio» en el manifiesto). ─────────── */
+        header { position: relative; }
         .shuffle-btn {
             position: absolute;
+            top: clamp(40px, 5vw, 72px);           /* = padding-top del header */
             right: var(--gutter);
-            bottom: clamp(20px, 2.5vw, 32px);
-            width: 40px;
-            height: 40px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: none;
-            border: 1px solid var(--border);
-            border-radius: 50%;
+            padding: 0 0 1px;
+            font: inherit;
+            font-size: var(--fs-label);
+            line-height: 1.6;                      /* = la del antetítulo */
+            letter-spacing: var(--track);
+            text-transform: uppercase;
             color: var(--muted);
+            background: none;
+            border: 0;
+            border-bottom: 1px solid transparent;
             cursor: pointer;
-            transition: color var(--ease), border-color var(--ease), transform 0.6s var(--ease-out);
+            transition: color var(--ease), border-color var(--ease);
         }
-        .shuffle-btn svg { width: 17px; height: 17px; display: block; }
         .shuffle-btn:hover,
-        .shuffle-btn:focus-visible { color: var(--text); border-color: var(--text); }
+        .shuffle-btn:focus-visible { color: var(--text); border-bottom-color: var(--text); }
+        /* El antetítulo deja sitio a «Barajar»; en el móvil pasa a dos líneas. */
+        header .kicker { padding-right: 104px; }
 
         /* ── Filas justificadas ────────────────────────────────────────────── */
         main { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
-        .galeria { transition: opacity 0.5s ease; }
+        .galeria { transition: opacity 0.8s cubic-bezier(0.45, 0, 0.25, 1); }
         .galeria.baraja { opacity: 0; }
         .fila { display: flex; gap: 6px; margin-bottom: 6px; }
         .foto {
@@ -75,9 +79,8 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: opacity 1.1s cubic-bezier(0.45, 0, 0.25, 1), transform 1.2s var(--ease-out);
+            transition: transform 1.2s var(--ease-out);
         }
-        .foto.cambia img { opacity: 0; }
         .foto:hover img { transform: scale(1.025); }
         .foto .pie {
             position: absolute;
@@ -199,15 +202,7 @@
 <header>
     <p class="kicker reveal">Encuentros, lecturas y proyecciones</p>
     <h1 class="section-title reveal reveal-2">Galería</h1>
-    <button type="button" class="shuffle-btn reveal reveal-3" id="shuffle" hidden aria-label="Barajar las imágenes" title="Barajar">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M16 3h5v5"/>
-            <path d="M4 20 21 3"/>
-            <path d="M21 16v5h-5"/>
-            <path d="M15 15l6 6"/>
-            <path d="M4 4l5 5"/>
-        </svg>
-    </button>
+    <button type="button" class="shuffle-btn reveal" id="shuffle" hidden>Barajar</button>
 </header>
 
 <main>
@@ -376,8 +371,7 @@
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var GAP = 6;
-    var CADA = 4500;            // un intercambio cada 4,5 s
-    var FUNDIDO = 1100;         // ms, igual que la transición del CSS
+    var CADA = 15000;           // se baraja sola cada 15 s
 
     function sm(src, ext) { return src.replace("gallery/", "gallery/sm/").replace(/\.jpg$/, ext || ".jpg"); }
     function ratio(i) { return IMAGES[i].w / IMAGES[i].h; }
@@ -459,43 +453,16 @@
         root.appendChild(frag);
     }
 
-    /* ── Intercambio automático ─────────────────────────────────────────── */
+    /* ── Barajar (a mano y solo) ────────────────────────────────────────── */
     var pausa = false;
     root.addEventListener("mouseenter", function () { pausa = true; });
     root.addEventListener("mouseleave", function () { pausa = false; });
 
-    function decodificar(a) {
-        var img = a.querySelector("img");
-        return img.decode ? img.decode().catch(function () {}) : Promise.resolve();
-    }
-
-    function intercambio() {
-        if (reduce || pausa || document.hidden || (visor && visor.open)) return;
-        var fotos = Array.prototype.slice.call(root.querySelectorAll(".foto"));
-        if (fotos.length < 2) return;
-        for (var n = 0; n < 24; n++) {
-            var a = fotos[Math.floor(Math.random() * fotos.length)];
-            var ra = ratio(+a.dataset.i);
-            var parecidas = fotos.filter(function (b) {
-                return b !== a && Math.abs(ratio(+b.dataset.i) - ra) / ra < 0.12;
-            });
-            if (!parecidas.length) continue;
-            var b = parecidas[Math.floor(Math.random() * parecidas.length)];
-            var ia = +a.dataset.i, ib = +b.dataset.i;
-            a.classList.add("cambia");
-            b.classList.add("cambia");
-            setTimeout(function () {
-                rellenar(a, ib);
-                rellenar(b, ia);
-                var pa = orden.indexOf(ia), pb = orden.indexOf(ib);
-                orden[pa] = ib; orden[pb] = ia;
-                Promise.all([decodificar(a), decodificar(b)]).then(function () {
-                    a.classList.remove("cambia");
-                    b.classList.remove("cambia");
-                });
-            }, FUNDIDO);
-            return;
-        }
+    function rebarajar() {
+        orden = barajar(orden);
+        if (reduce) { componer(); return; }
+        root.classList.add("baraja");
+        setTimeout(function () { componer(); root.classList.remove("baraja"); }, 800);
     }
 
     /* ── El visor ───────────────────────────────────────────────────────── */
@@ -553,18 +520,14 @@
 
     if (btn) {
         btn.hidden = false;
-        var giro = 0;
-        btn.addEventListener("click", function () {
-            giro += 1;
-            btn.style.transform = "rotate(" + (giro * 180) + "deg)";
-            orden = barajar(orden);
-            if (reduce) { componer(); return; }
-            root.classList.add("baraja");
-            setTimeout(function () { componer(); root.classList.remove("baraja"); }, 500);
-        });
+        btn.addEventListener("click", rebarajar);
     }
 
-    if (!reduce) setInterval(intercambio, CADA);
+    // Cada 15 s, la galería entera se baraja sola, como al pulsar «Barajar».
+    if (!reduce) setInterval(function () {
+        if (pausa || document.hidden || (visor && visor.open)) return;
+        rebarajar();
+    }, CADA);
 
     var ultimoAncho = root.clientWidth, rt;
     window.addEventListener("resize", function () {
