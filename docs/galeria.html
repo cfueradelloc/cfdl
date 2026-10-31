@@ -30,7 +30,8 @@
            a ras con 6 px de aire; las filas ocupan el ancho exacto. Se ve
            una parte de la colección; el resto espera en reserva y, a ratos
            irregulares, una foto se funde en otra de la reserva con la misma
-           proporción (y sin vecinas del mismo encuentro). Clic: la foto entera. */
+           proporción (y sin vecinas del mismo encuentro). Cada 40 s se baraja
+           sola: las fotos se van y vuelven escalonadas. Clic: la foto entera. */
 
         header::after { display: none; }
         header { padding-top: clamp(40px, 5vw, 72px); padding-bottom: clamp(20px, 2.5vw, 32px); }
@@ -77,7 +78,7 @@
             background: #0f0e0c;
             cursor: zoom-in;
         }
-        .foto { transition: opacity 0.7s cubic-bezier(0.45, 0, 0.25, 1); }
+        .foto { transition: opacity 0.9s cubic-bezier(0.45, 0, 0.25, 1); }
         .foto.oculta { opacity: 0; }
         .foto picture { display: block; width: 100%; height: 100%; }
         /* La foto que llega se funde encima de la que se va: sin hueco. */
@@ -422,6 +423,7 @@
         return filas;
     }
 
+    var SALIDA_OUT = 1200, SALIDA_IN = 1400, BARAJA_CADA = 40000;   // ms
     var reserva = [];          // fotos que no se ven ahora; entran poco a poco
     var VISIBLE = 0.6;         // fracción de la colección a la vista
 
@@ -443,7 +445,7 @@
                 else a.style.flex = ratio(c.i) + " 1 0px"; // reparte el ancho exacto
                 if (cascada) {
                     a.classList.add("oculta");
-                    setTimeout(function () { a.classList.remove("oculta"); }, 60 + Math.random() * 700);
+                    setTimeout(function () { a.classList.remove("oculta"); }, 80 + Math.random() * SALIDA_IN);
                 }
                 div.appendChild(a);
             });
@@ -534,13 +536,30 @@
     }
 
     /* ── Barajar: las fotos se van y vuelven una a una, escalonadas ──────── */
+    /* Barajar: cada foto se va en su momento (escalonadas en ~1,2 s), y el
+       orden nuevo vuelve igual, foto a foto (~1,4 s). Mientras dura, no hay
+       relevos sueltos. También se baraja sola cada BARAJA_CADA. */
+    var barajando = false;
+
     function rebarajar() {
         if (reduce) { orden = ordenar(); componer(false); return; }
+        if (barajando) return;
+        barajando = true;
         var fotos = root.querySelectorAll(".foto");
         Array.prototype.forEach.call(fotos, function (a) {
-            setTimeout(function () { a.classList.add("oculta"); }, Math.random() * 350);
+            setTimeout(function () { a.classList.add("oculta"); }, Math.random() * SALIDA_OUT);
         });
-        setTimeout(function () { orden = ordenar(); componer(true); }, 1100);
+        setTimeout(function () {
+            orden = ordenar();
+            componer(true);
+            setTimeout(function () { barajando = false; }, SALIDA_IN + 900);
+        }, SALIDA_OUT + 900);
+    }
+
+    function barajaSola() {
+        var encima = root.matches(":hover");
+        if (!document.hidden && !(visor && visor.open) && !encima) rebarajar();
+        setTimeout(barajaSola, BARAJA_CADA);
     }
 
     /* ── Relevo: a ratos, una foto se funde en otra de la reserva ─────────
@@ -566,7 +585,7 @@
     }
 
     function relevo() {
-        if (document.hidden || (visor && visor.open) || !reserva.length) return;
+        if (barajando || document.hidden || (visor && visor.open) || !reserva.length) return;
         var fotos = Array.prototype.filter.call(root.querySelectorAll(".foto"), function (a) {
             return !a.matches(":hover") && !a.querySelector(".capa") && recientes.indexOf(a) === -1;
         });
@@ -686,7 +705,10 @@
         btn.addEventListener("click", rebarajar);
     }
 
-    if (!reduce) setTimeout(latido, 2600);
+    if (!reduce) {
+        setTimeout(latido, 2600);
+        setTimeout(barajaSola, BARAJA_CADA);
+    }
 
     var ultimoAncho = root.clientWidth, rt;
     window.addEventListener("resize", function () {
