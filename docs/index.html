@@ -25,7 +25,7 @@
     <script>document.documentElement.classList.add('js')</script>
     <script src="assets/js/site.js" defer></script>
     <style>
-        /* PORTADA — sobria. La tesis a la izquierda, el logotipo a la derecha
+        /* PORTADA — sobria. Las siglas a la izquierda, el logotipo a la derecha
            (el único bloque de color de la página), el último encuentro en una
            línea, y las tres secciones como un índice de imágenes rectas. */
 
@@ -38,15 +38,15 @@
             padding-top: clamp(64px, 11vw, 160px);
             padding-bottom: clamp(64px, 9vw, 128px);
         }
+        /* Las siglas, en Futura y espaciadas — como en el logotipo y la barra. */
         .tesis {
-            font-family: 'MinionPro', serif;
-            font-style: italic;
+            font-family: 'FuturaStd', sans-serif;
             font-weight: normal;
-            font-size: var(--fs-display);
-            line-height: 1.02;
-            letter-spacing: -0.015em;
-            margin-top: 22px;
-            text-wrap: balance;
+            font-size: clamp(44px, 9vw, 136px);
+            line-height: 1;
+            letter-spacing: 0.12em;
+            margin: 22px -0.12em 0 -0.04em;
+            white-space: nowrap;
         }
         .bajada {
             max-width: 44ch;
@@ -207,7 +207,7 @@
     <section class="apertura wrap">
         <div>
             <p class="label reveal">Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
-            <h1 class="tesis reveal reveal-2">Crear donde no alcance ninguna raíz.</h1>
+            <h1 class="tesis reveal reveal-2">C.F.D.L.</h1>
             <p class="bajada reveal reveal-3">Escogemos un mundo de ciudades recordadas,
             siempre en construcción, en terrenos donde no deberían estar. Reivindicamos el
             exilio y el destierro, la creación como una solicitud de asilo, el viaje como
