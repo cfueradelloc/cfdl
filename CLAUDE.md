@@ -137,9 +137,12 @@ press. They extend, and take precedence over, the looser **Voice** note in
   E.g. *"Campo vectorial — ruido curl con tres especies de partículas".*
 
 ### Gallery captions
-- Very short (1–4 words), **lowercase**, fragmentary and observational, no final period:
-  *"entre libros", "tomando la palabra", "la voz", "pausa", "escucha".* Proper names keep
-  their capitals (*"Ángela Mallén"*).
+- Very short (1–4 words), fragmentary and observational, **capitalized first letter** (the user's
+  preference — never start lowercase), no final period: *"Entre libros", "Tomando la palabra",
+  "La voz", "Pausa", "Escucha".* Followed by ` · ` and the event (*"La sala · La Magistral"*).
+- Gallery photos come from `Seleccion/` in Drive (see its `SELECCION.md`: colour treatment,
+  no near-duplicates) → `docs/gallery/` (1600 px) + `docs/gallery/sm/` (900 px, `.jpg` and
+  `.webp`) + one line in the `IMAGES` array and the `<noscript>` list of `docs/galeria.html`.
 
 ### Bilingualism
 - **Spanish is primary; Catalan is the co-equal second language** — the collective signs
