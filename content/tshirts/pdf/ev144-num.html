@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>C.F.D.L. — 14,4 (print-ready)</title>
+<style>
+@font-face{
+  font-family:'FuturaStd';
+  src:url('../assets/fonts/FuturaStd-Book.otf') format('opentype');
+  font-weight:normal; font-style:normal; font-display:block;
+}
+@font-face{
+  font-family:'MinionPro';
+  src:url('../assets/fonts/MinionPro-Regular.otf') format('opentype');
+  font-weight:normal; font-style:normal; font-display:block;
+}
+:root{
+  --ink:#332f8a;        /* zafiro */
+  --accent:#fde700;     /* amarillo */
+  --serif:'MinionPro', Georgia, serif;
+  --sans:'FuturaStd','Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+@page{ size:A4 portrait; margin:0; }
+html,body{ width:210mm; height:297mm; }
+body{
+  display:flex; align-items:center; justify-content:center;
+  background:#ffffff;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+
+/* Artwork — isolated, centred on the page (both axes), proportions kept
+   from the approved mockup (413). Real print scale: «14,4» ≈ 35 mm tall. */
+.art{
+  text-align:center;
+  color:var(--ink);
+  width:max-content;
+}
+/* Spacing mirrors the approved 413 mockup exactly, scaled ×0.625 mm/px
+   (number 80px → 50mm). Kicker breathes above; subtitle hugs below. */
+.kicker{
+  font-family:var(--sans);
+  text-transform:uppercase;
+  letter-spacing:0.34em;
+  font-size:5.6mm;
+  line-height:1;
+  margin-bottom:8.3mm;
+  /* counter the trailing tracking so the block stays optically centred */
+  text-indent:0.34em;
+}
+.num{
+  font-family:var(--serif);
+  font-size:50mm;
+  line-height:0.88;
+}
+.line{
+  font-family:var(--serif);
+  font-style:italic;
+  font-size:7.5mm;
+  line-height:1.1;
+  margin-top:4.9mm;
+}
+.tag{
+  font-family:var(--sans);
+  font-size:4.7mm;
+  letter-spacing:0.14em;
+  opacity:0.5;
+  white-space:nowrap;
+  margin-top:10mm;
+}
+.tag .sep{ margin:0 0.5em; }
+</style></head>
+<body>
+  <div class="art">
+    <div class="kicker">C&nbsp;·&nbsp;F&nbsp;·&nbsp;D&nbsp;·&nbsp;L</div>
+    <div class="num">14,4</div>
+    <div class="line">km — entre dos orillas</div>
+    <div class="tag">@cfueradelloc<span class="sep">·</span>cfdl.site</div>
+  </div>
+</body></html>

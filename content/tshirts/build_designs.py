@@ -42,14 +42,14 @@ STYLE = """
 .verbs .hi{position:relative;display:inline-block}
 .verbs .hi::after{content:"";display:block;height:2.5px;background:var(--accent);width:100%;margin-top:2px}
 .sigla-grid{display:inline-grid;grid-template-columns:1fr 1fr;gap:0 .16em;font-family:var(--serif);color:var(--ink);line-height:1.04;text-align:center}
-/* balanced sigla monogram: equal fixed cells + centred content -> both rows are
-   identical width (concentric, no drift) and letters align on their centres
-   (C over D, F over L). Periods kept at the font's natural distance (no forced
-   kerning). translateX is a fixed optical-centring correction so the monogram's
-   ink centre lands on the same axis as the name below (the narrow F/L cells
-   would otherwise pull the ink slightly left of centre). Verified by pixel
-   measurement: monogram / name / shirt centreline agree to within ~1px. */
-.sig{display:inline-grid;grid-template-columns:1.0em 1.0em;justify-items:center;column-gap:.06em;row-gap:.08em;font-family:var(--serif);color:var(--ink);line-height:1;transform:translateX(.05em)}
+/* balanced sigla monogram: equal fixed cells, letters left-aligned (start) so
+   the vertical stems line up per column -- C over D AND F over L (centring would
+   misalign the F/L stems since those glyphs differ in width). Both rows are the
+   same fixed width -> concentric, no drift. Periods kept at the font's natural
+   distance (no forced kerning). translateX is a fixed optical-centring correction
+   so the monogram's ink centre lands on the same axis as the name below. Verified
+   by pixel measurement: monogram / name / shirt centreline agree to within ~2px. */
+.sig{display:inline-grid;grid-template-columns:1.0em 1.0em;justify-items:start;column-gap:.06em;row-gap:.08em;font-family:var(--serif);color:var(--ink);line-height:1;transform:translateX(.18em)}
 .sig .cell{white-space:nowrap}
 /* escaped period ("fuera de lugar" variant): the terminal dot renders as the
    third beat of the period rhythm -- one column-pitch (~.97em) right of its home
@@ -96,7 +96,7 @@ STYLE = """
 .smear div{font-family:var(--serif);font-style:italic;color:var(--ink)}
 .freedom span{font-family:var(--serif);font-style:italic;color:var(--ink);display:inline-block;margin:0 .12em;vertical-align:middle}
 .pinlabel{font-family:var(--sans);text-transform:uppercase;letter-spacing:0.2em;color:var(--ink)}
-.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt16{margin-top:16px}
+.mt6{margin-top:6px}.mt10{margin-top:10px}.mt14{margin-top:14px}.mt16{margin-top:16px}.mt18{margin-top:18px}
 """
 
 # ---- inline SVG motifs (palette-aware) ---------------------------------
@@ -140,6 +140,33 @@ def svg_espiral(s=120):
         a=math.radians(i); r=2+i*0.072
         pts.append(f"{75+r*math.cos(a):.1f},{75+r*math.sin(a):.1f}")
     return f'<svg class="gfx" width="{s}" height="{s}" viewBox="0 0 150 150"><polyline points="{" ".join(pts)}" style="stroke:var(--ink);fill:none;stroke-width:1.8"/><circle cx="75" cy="75" r="5" style="fill:var(--accent)"/></svg>'
+def svg_espiral_frame(w=96, aspect=0.571, loops=7, gap=4, stroke=1, end_frac=0.25):
+    # rectangular spiral reproduced from the manifesto sheet: the text winds inward as a
+    # nested-rectangle frame (measured outer W/H=0.571, 7 rings). Outline only, no fill,
+    # no centre dot -- the frame the text follows. The innermost pass is cut short: it draws
+    # its top edge, then turns down the right side end_frac of the way and terminates there.
+    # PIXEL-ACCURATE: authored in integer device px (render.sh renders at 2x) with
+    # shape-rendering:crispEdges, so EVERY line is the same width and EVERY gap between
+    # rings is the same distance -- no anti-alias drift. 1 viewBox unit == 1 device px.
+    S=2                                     # render.sh --force-device-scale-factor=2
+    VW=round(w*S); VH=round(VW/aspect)      # integer viewBox (device px)
+    o=stroke/2.0                            # centre a stroke-wide line inside the pixel grid
+    left,top,right,bottom = o, o, VW-o, VH-o
+    pts=[(left,top)]
+    for k in range(loops):
+        if right-left<=gap or bottom-top<=gap: break
+        pts.append((right,top))                           # top edge L->R
+        if k==loops-1:                                    # innermost pass: stop part-way down
+            pts.append((right, top+(bottom-top)*end_frac))#   the right side and terminate
+            break
+        pts+=[(right,bottom),(left,bottom)]               # right T->B, bottom R->L
+        top+=gap;  pts.append((left,top))                 # left edge up to new top
+        left+=gap; pts.append((left,top))                 # step inward, start next ring
+        right-=gap; bottom-=gap
+    d="M "+" L ".join(f"{x:g},{y:g}" for x,y in pts)
+    return (f'<svg class="gfx" width="{w}" height="{VH/S:g}" viewBox="0 0 {VW} {VH}">'
+            f'<path d="{d}" style="stroke:var(--ink);fill:none;stroke-width:{stroke};'
+            f'shape-rendering:crispEdges"/></svg>')
 def svg_emdash(s=150):
     return f'<svg class="gfx" width="{s}" height="{int(s*0.18)}" viewBox="0 0 220 40"><line x1="10" y1="20" x2="210" y2="20" style="stroke:var(--ink);stroke-width:4"/><circle cx="110" cy="20" r="6" style="fill:var(--accent)"/></svg>'
 def svg_acordeon(s=160):
@@ -173,7 +200,7 @@ def svg_mask(s=120):
 <circle cx="62" cy="20" r="4.5" style="fill:var(--accent)"/></svg>'''
 def svg_horizonline(s=150):
     return f'<svg class="gfx" width="{s}" height="{int(s*0.16)}" viewBox="0 0 200 32"><line x1="2" y1="22" x2="198" y2="22" style="stroke:var(--ink);stroke-width:2"/><circle cx="100" cy="22" r="5" style="fill:var(--accent)"/></svg>'
-MOTIF={"brujula":svg_brujula,"rings":svg_rings,"crack":svg_crack,"moho":svg_moho,"maleza":svg_maleza,"sintesis":svg_sintesis,"espiral":svg_espiral,"emdash":svg_emdash,"acordeon":svg_acordeon,"sawtooth":svg_sawtooth,"dogear":svg_dogear,"mask":svg_mask,"horizonline":svg_horizonline}
+MOTIF={"brujula":svg_brujula,"rings":svg_rings,"crack":svg_crack,"moho":svg_moho,"maleza":svg_maleza,"sintesis":svg_sintesis,"espiral":svg_espiral,"espiral-frame":svg_espiral_frame,"emdash":svg_emdash,"acordeon":svg_acordeon,"sawtooth":svg_sawtooth,"dogear":svg_dogear,"mask":svg_mask,"horizonline":svg_horizonline}
 
 def svg_stamp(center_lines, ring, fill=False, s=140):
     ground = '<circle cx="100" cy="100" r="95" style="fill:var(--field)"/>' if fill else ''
@@ -256,6 +283,17 @@ def stamp(center_lines, ring, fill=False, s=140):
     return svg_stamp(center_lines, ring, fill, s)+TAG
 def displace(l1, l2, size, dx=34, dy=-2):
     h=f'<div class="disp" style="font-size:{size}px"><div>{l1}</div><div class="l2" style="transform:translate({dx}px,{dy}px)">{l2}</div></div>'
+    return h+TAG
+def displace_lockup(l1, l2, size, sub_lines, off=0.38, dy=0.1):
+    """Two-word displaced hero (l1 over l2) + centred name lockup below. The two
+    words are staggered SYMMETRICALLY (l1 left, l2 right by equal off) so the pair
+    self-centres on the axis -- verified: hero bbox / name / shirt agree to ~2px.
+    off & dy are in em of the hero size."""
+    hero=(f'<div class="disp" style="font-size:{size}px">'
+          f'<div style="transform:translate(-{off}em,0)">{l1}</div>'
+          f'<div class="l2" style="transform:translate({off}em,{dy}em)">{l2}</div></div>')
+    name='<br>'.join(sub_lines)
+    h=hero+f'<div class="namecaps mt18" style="font-size:8px;letter-spacing:0.28em">{name}</div>'
     return h+TAG
 def concrete(kind, word, size, caption=None):
     if kind=="stretch":
@@ -895,6 +933,17 @@ add("ev144-sigla", "amatista",sigla_serif("C.F.D.L.", 44, sub="14,4 km — entre
 # the phantom third beat of the period rhythm. Kept as a separate design so the
 # clean cfdl-grid-name (043) stays intact.
 add("cfdl-grid-esc",  "zafiro",  sigla_grid_aligned(48, ["Colectivo", "Fuera de Lugar"], esc=True))
+
+# ---- lockup: marca / blanca displaced (staircase) + name ----------------
+add("marca-blanca-lockup", "zafiro", displace_lockup("marca", "blanca", 42, ["Colectivo", "Fuera de Lugar"]))
+
+# ---- espiral-manifiesto: the rectangular spiral the manifesto text traces --
+# Frame reproduced 1:1 from Manifesto_Fuera_De_Lugar.pdf (nested-rectangle spiral,
+# outer W/H=0.571, 7 rings). Outline only + name lockup below.
+add("gfx-espiral-manifiesto", "zafiro",
+    svg_espiral_frame() +
+    '<div class="namecaps mt16" style="font-size:8px;letter-spacing:0.28em">Colectivo<br>Fuera de Lugar</div>'
+    + TAG.replace('class="tag"', 'class="tag" style="opacity:1"'))   # solid ink, no faded tag
 
 # ---- emit --------------------------------------------------------------
 PAGE='''<!doctype html>
