@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Colectivo Fuera de Lugar</title>
-    <meta name="description" content="C.F.D.L. — Colectivo Fuera de Lugar / Col·lectiu Fora de Lloc. Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta name="description" content="C.F.D.L. — Colectivo Fuera de Lugar / Col·lectiu Fora de Lloc. Creación extemporánea, políglota y ubicua: manifiesto, eventos y galería.">
     <meta name="theme-color" content="#fdf5eb">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
     <meta property="og:title" content="C.F.D.L. — Colectivo Fuera de Lugar">
-    <meta property="og:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta property="og:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos y galería.">
     <meta property="og:url" content="https://cfdl.site/">
     <meta property="og:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="C.F.D.L. — Colectivo Fuera de Lugar">
-    <meta name="twitter:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos, proyectos y galería.">
+    <meta name="twitter:description" content="Creación extemporánea, políglota y ubicua: manifiesto, eventos y galería.">
     <meta name="twitter:image" content="https://cfdl.site/assets/images/Manifesto_Fuera_De_Lugar_02.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
     <link rel="icon" type="image/png" sizes="180x180" href="assets/logo/favicon-180.png">
@@ -27,7 +27,7 @@
     <style>
         /* PORTADA — sobria. La tesis a la izquierda, el logotipo a la derecha
            (el único bloque de color de la página), el último encuentro en una
-           línea, y las cuatro secciones como un índice de imágenes rectas. */
+           línea, y las tres secciones como un índice de imágenes rectas. */
 
         /* ── Apertura ──────────────────────────────────────────────────────── */
         .apertura {
@@ -133,7 +133,7 @@
         /* ── Índice ────────────────────────────────────────────────────────── */
         .indice {
             display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: clamp(20px, 2.4vw, 36px);
             padding-top: clamp(72px, 9vw, 128px);
         }
@@ -179,17 +179,14 @@
             line-height: 1.6;
         }
 
-        @media (max-width: 1000px) {
-            .indice { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 56px; }
-        }
         @media (max-width: 760px) {
             .apertura { grid-template-columns: 1fr; align-items: start; gap: 48px; }
             .marca { justify-self: start; max-width: 160px; order: -1; }
             .proximo { grid-template-columns: 1fr; gap: 10px; }
             .proximo .p-fecha { display: inline; margin-left: 10px; }
         }
-        @media (max-width: 520px) {
-            .indice { grid-template-columns: 1fr; }
+        @media (max-width: 760px) {
+            .indice { grid-template-columns: 1fr; row-gap: 56px; }
             .entrada .vista { aspect-ratio: 4 / 3; }
         }
     </style>
@@ -201,7 +198,6 @@
     <div class="nav-links">
         <a href="manifiesto.html">Manifiesto</a>
         <a href="eventos.html">Eventos</a>
-        <a href="proyectos.html">Proyectos</a>
         <a href="galeria.html">Galería</a>
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
     </div>
@@ -260,21 +256,12 @@
             <h2>Eventos</h2>
             <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con La Perecquiana en Valladolid.</p>
         </a>
-        <a class="entrada" href="proyectos.html">
-            <div class="vista">
-                <img src="assets/thumbs/moho.jpg" width="900" height="900" loading="lazy"
-                     alt="La llegada del moho — reacción-difusión en zafiro y lavanda.">
-            </div>
-            <span class="num">03 — siete piezas</span>
-            <h2>Proyectos</h2>
-            <p>Piezas generativas con títulos sacados del propio manifiesto.</p>
-        </a>
         <a class="entrada" href="galeria.html">
             <div class="vista">
                 <img src="gallery/sm/welcome-summer-5.jpg" width="506" height="900" loading="lazy"
                      alt="Una fotografía de los encuentros." data-galeria-azar>
             </div>
-            <span class="num">04 — cuarenta y seis fotografías</span>
+            <span class="num">03 — cuarenta y seis fotografías</span>
             <h2>Galería</h2>
             <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz alta.</p>
         </a>
