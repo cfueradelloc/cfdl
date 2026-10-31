@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C.F.D.L. — Colectivo Fuera de Lugar</title>
     <meta name="description" content="C.F.D.L. — Colectivo Fuera de Lugar / Col·lectiu Fora de Lloc. Creación extemporánea, políglota y ubicua: manifiesto, eventos y galería.">
-    <meta name="theme-color" content="#fdf5eb">
+    <meta name="theme-color" content="#171513">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="es_ES">
     <meta property="og:site_name" content="C.F.D.L.">
@@ -21,164 +21,185 @@
     <link rel="icon" type="image/png" sizes="180x180" href="assets/logo/favicon-180.png">
     <link rel="apple-touch-icon" href="assets/logo/favicon-180.png">
     <link rel="preload" as="font" type="font/woff2" href="assets/fonts/MinionPro-Regular.woff2" crossorigin>
+    <link rel="preload" as="image" type="image/webp" href="assets/images/portada.webp" imagesrcset="assets/images/portada-1200.webp 1200w, assets/images/portada.webp 2400w" imagesizes="100vw">
     <link rel="stylesheet" href="assets/css/base.css">
     <script>document.documentElement.classList.add('js')</script>
     <script src="assets/js/site.js" defer></script>
     <style>
-        /* PORTADA — sobria. La «línea» de la marca sobre ámbar, el último encuentro en una
-           línea, y las tres secciones como un índice de imágenes rectas. */
+        /* PORTADA — una sola fotografía, a sangre: el manifiesto impreso,
+           doblado, entre luz y sombra. Encima, la marca en ámbar y el arranque
+           del manifiesto en crema. Debajo, sin más imágenes: el último
+           encuentro sobre zafiro y un índice tipográfico. */
 
-        /* ── Apertura ──────────────────────────────────────────────────────── */
-        /* La «línea» de la marca (studio/brand) en grande, negro sobre ámbar:
-           el único bloque de color de la página. */
-        .apertura {
-            padding-top: clamp(48px, 8vw, 112px);
-            padding-bottom: clamp(64px, 9vw, 120px);
-        }
-        .panel {
-            margin-top: 20px;
-            background: var(--accent);
-            color: #171513;
-            padding: clamp(40px, 8vw, 128px) clamp(28px, 7vw, 112px);
-        }
-        .tesis { margin: 0; line-height: 0; }
-        .logo-grande { display: block; width: min(100%, 780px); height: auto; }
-        .pie {
+        .banda { padding-left: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter)));
+                 padding-right: max(var(--gutter), calc((100% - var(--max)) / 2 + var(--gutter))); }
+
+        /* ── Portada: la fotografía de fondo ───────────────────────────────── */
+        .portada {
+            position: relative;
+            min-height: calc(100svh - 76px);
             display: flex;
-            align-items: flex-end;
+            flex-direction: column;
             justify-content: space-between;
-            gap: 24px 64px;
+            gap: 48px;
+            padding-top: clamp(24px, 3vw, 40px);
+            padding-bottom: clamp(40px, 6vw, 88px);
+            color: var(--crema);
+            background: var(--negro);
+            isolation: isolate;
+            overflow: hidden;
+        }
+        .portada .fondo,
+        .portada .fondo img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: 62% 50%;
+            z-index: -2;
+        }
+        /* Velo negro desde la izquierda y desde abajo: la letra se lee, la hoja
+           ámbar sigue encendida a la derecha. */
+        .portada::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(90deg, rgba(23,21,19,0.9) 0%, rgba(23,21,19,0.78) 42%, rgba(23,21,19,0.25) 72%, rgba(23,21,19,0.05) 90%),
+                linear-gradient(0deg, rgba(23,21,19,0.75) 0%, rgba(23,21,19,0) 55%);
+        }
+        .portada-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
             flex-wrap: wrap;
-            margin-top: clamp(32px, 4vw, 48px);
-        }
-        .bajada {
-            max-width: 52ch;
-            color: var(--muted);
-            font-size: var(--fs-body);
-            line-height: 1.7;
-        }
-        .seguir {
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
-            color: var(--text);
-            text-decoration: none;
-            white-space: nowrap;
-            border-bottom: 1px solid var(--text);
-            padding-bottom: 3px;
-            transition: color var(--ease), border-color var(--ease);
+            padding-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 244, 214, 0.5);
         }
-        .seguir:hover { color: var(--accent-fg); border-color: var(--accent-fg); }
+        .tesis { margin: 0; line-height: 0; color: var(--ambar); }
+        .logo-grande { display: block; width: min(100%, 640px); height: auto; }
+        .bajada {
+            margin-top: clamp(28px, 3vw, 44px);
+            max-width: 34ch;
+            font-family: 'MinionPro', serif;
+            font-size: clamp(22px, 2.2vw, 32px);
+            line-height: 1.3;
+            color: var(--crema);
+            text-wrap: pretty;
+        }
+        .seguir {
+            display: inline-block;
+            margin-top: 28px;
+            font-size: var(--fs-label);
+            letter-spacing: var(--track);
+            text-transform: uppercase;
+            color: var(--ambar);
+            text-decoration: none;
+            border-bottom: 2px solid var(--ambar);
+            padding-bottom: 4px;
+        }
+        .seguir:hover { color: var(--negro); background: var(--ambar); }
 
-        /* ── Último / próximo encuentro ────────────────────────────────────── */
+        /* ── Último / próximo encuentro: crema y ámbar sobre zafiro ────────── */
         .proximo {
             display: grid;
-            grid-template-columns: minmax(140px, 2fr) minmax(0, 7fr) auto;
-            align-items: baseline;
-            gap: 12px clamp(24px, 4vw, 64px);
-            padding: 30px 0 28px;
-            border-top: 1px solid var(--text);
-            border-bottom: 1px solid var(--border);
+            grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+            gap: 24px clamp(24px, 4vw, 64px);
+            background: var(--zafiro);
+            color: var(--crema);
+            padding-top: clamp(56px, 7vw, 104px);
+            padding-bottom: clamp(56px, 7vw, 104px);
             text-decoration: none;
-            color: var(--text);
         }
         .proximo .p-label {
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
-            color: var(--muted);
+            color: var(--ambar);
+            padding-top: 0.9em;
         }
-        .proximo.is-next .p-label { color: var(--accent-fg); }
         .proximo .p-fecha {
             display: block;
-            margin-top: 6px;
             font-family: 'MinionPro', serif;
-            font-size: 20px;
-            color: var(--text);
-            text-transform: none;
-            letter-spacing: 0;
+            font-size: clamp(44px, 6vw, 96px);
+            line-height: 1;
+            color: var(--ambar);
         }
         .proximo .p-title {
+            display: block;
+            margin-top: 20px;
             font-family: 'MinionPro', serif;
-            font-style: italic;
-            font-size: var(--fs-h3);
-            line-height: 1.25;
+            font-size: clamp(26px, 2.8vw, 42px);
+            line-height: 1.15;
+            max-width: 30ch;
         }
         .proximo .p-meta {
             display: block;
-            margin-top: 8px;
+            margin-top: 18px;
             font-size: var(--fs-label);
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: var(--muted);
         }
         .proximo .p-ir {
+            display: inline-block;
+            margin-top: 32px;
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
-            white-space: nowrap;
-            color: var(--muted);
-            transition: color var(--ease);
+            color: var(--ambar);
+            border-bottom: 1px solid var(--ambar);
+            padding-bottom: 3px;
         }
-        .proximo:hover .p-ir,
-        .proximo:hover .p-title { color: var(--accent-fg); }
+        .proximo:hover .p-title { text-decoration: underline; text-decoration-color: var(--ambar);
+                                  text-decoration-thickness: 2px; text-underline-offset: 6px; }
 
-        /* ── Índice ────────────────────────────────────────────────────────── */
-        .indice {
+        /* ── Índice tipográfico, sin imágenes ──────────────────────────────── */
+        .indice { list-style: none; padding-top: clamp(64px, 8vw, 120px); }
+        .indice li { border-top: 1px solid var(--negro); }
+        .indice li:last-child { border-bottom: 1px solid var(--negro); }
+        .indice a {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: clamp(20px, 2.4vw, 36px);
-            padding-top: clamp(72px, 9vw, 128px);
-        }
-        .entrada {
-            display: block;
+            grid-template-columns: minmax(0, 3fr) minmax(0, 6fr) minmax(0, 3fr);
+            gap: 12px clamp(24px, 4vw, 64px);
+            align-items: baseline;
+            padding: clamp(20px, 2.4vw, 32px) 0;
             text-decoration: none;
-            color: var(--text);
+            color: var(--negro);
+            transition: background var(--ease);
         }
-        .entrada .vista {
-            aspect-ratio: 4 / 5;
-            overflow: hidden;
-            background: var(--surface);
-        }
-        .entrada .vista img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 1.2s var(--ease-out), opacity var(--ease);
-        }
-        .entrada:hover .vista img { transform: scale(1.03); }
-        .entrada .num {
-            display: block;
-            margin-top: 20px;
+        .indice .num {
             font-size: var(--fs-label);
             letter-spacing: var(--track);
             text-transform: uppercase;
-            color: var(--muted);
+            color: var(--zafiro);
         }
-        .entrada h2 {
+        .indice h2 {
             font-family: 'MinionPro', serif;
-            font-style: italic;
             font-weight: normal;
-            font-size: var(--fs-h2);
-            line-height: 1.05;
-            margin-top: 8px;
-            transition: color var(--ease);
+            font-size: clamp(44px, 6.4vw, 104px);
+            line-height: 0.95;
+            letter-spacing: -0.02em;
         }
-        .entrada:hover h2 { color: var(--accent-fg); }
-        .entrada p {
-            margin-top: 10px;
-            color: var(--muted);
-            font-size: var(--fs-small);
-            line-height: 1.6;
+        .indice p {
+            font-family: 'MinionPro', serif;
+            font-size: 19px;
+            line-height: 1.45;
         }
+        .indice a:hover { background: var(--ambar); }
 
-        @media (max-width: 760px) {
-            .proximo { grid-template-columns: 1fr; gap: 10px; }
-            .proximo .p-fecha { display: inline; margin-left: 10px; }
-        }
-        @media (max-width: 760px) {
-            .indice { grid-template-columns: 1fr; row-gap: 56px; }
-            .entrada .vista { aspect-ratio: 4 / 3; }
+        @media (max-width: 860px) {
+            .proximo, .indice a { grid-template-columns: 1fr; }
+            .proximo .p-label { padding-top: 0; }
+            .portada { min-height: calc(100svh - 68px); }
+            .portada .fondo img { object-position: 70% 50%; }
+            .portada::after {
+                background: linear-gradient(0deg, rgba(23,21,19,0.88) 0%, rgba(23,21,19,0.6) 50%, rgba(23,21,19,0.3) 100%);
+            }
         }
     </style>
 </head>
@@ -193,69 +214,52 @@
         <a href="https://instagram.com/cfueradelloc" target="_blank" rel="noopener">@cfueradelloc ↗</a>
     </div>
 </nav>
-
 <main>
-    <section class="apertura wrap">
-        <p class="label reveal">Colectivo Fuera de Lugar · Col·lectiu Fora de Lloc</p>
-        <div class="panel reveal reveal-2">
-            <h1 class="tesis"><span class="visually-hidden">C.F.D.L.</span><svg class="logo-linea logo-grande" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.89 100.00"><polyline points="0.000,0.500 99.500,0.500 99.500,99.500 0.500,99.500 0.500,4.500 95.500,4.500 95.500,95.500 4.500,95.500 4.500,8.500 91.500,8.500 91.500,91.500 8.500,91.500 8.500,12.500 87.500,12.500 87.500,87.500 12.500,87.500 12.500,16.500 83.500,16.500 83.500,83.500 16.500,83.500 16.500,20.500" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M165.613346 36.89792200000001C162.836464 34.82562200000001 159.76946 33.83091800000001 156.287996 33.83091800000001C147.33566000000002 33.83091800000001 139.999718 41.16686000000001 139.999718 50.119196C139.999718 58.988640000000004 147.459998 66.158798 156.287996 66.158798C159.603676 66.158798 162.919356 65.03975600000001 165.613346 63.09179400000001V58.78141000000001C163.126586 61.268170000000005 159.686568 62.926010000000005 156.163658 62.926010000000005C149.159284 62.926010000000005 143.48118200000002 56.874894000000005 143.48118200000002 49.99485800000001C143.48118200000002 43.114822000000004 149.117838 37.06370600000001 156.080766 37.06370600000001C159.686568 37.06370600000001 163.126586 38.638654 165.613346 41.20830600000001Z M183.02046600000003 61.516846C181.73564000000002 61.516846 180.69949000000003 62.55299600000001 180.69949000000003 63.796376C180.69949000000003 65.081202 181.73564000000002 66.158798 183.02046600000003 66.158798C184.305292 66.158798 185.34144200000003 65.081202 185.34144200000003 63.796376C185.34144200000003 62.55299600000001 184.305292 61.516846 183.02046600000003 61.516846Z M215.05802400000002 37.60250400000001V34.36971600000001H200.84204600000004V65.62H204.32351000000003V50.119196H214.726456V46.886408H204.32351000000003V37.60250400000001Z M226.78704200000004 61.516846C225.50221600000003 61.516846 224.46606600000004 62.55299600000001 224.46606600000004 63.796376C224.46606600000004 65.081202 225.50221600000003 66.158798 226.78704200000004 66.158798C228.07186800000002 66.158798 229.10801800000002 65.081202 229.10801800000002 63.796376C229.10801800000002 62.55299600000001 228.07186800000002 61.516846 226.78704200000004 61.516846Z M244.60862200000003 65.62H250.41106200000002C255.30169 65.62 259.03183 64.99831 262.76197 61.68263C266.20198800000003 58.615626000000006 267.859828 54.595364000000004 267.859828 50.03630400000001C267.859828 45.394352000000005 266.24343400000004 41.20830600000001 262.679078 38.14130200000001C258.990384 34.99140600000001 255.177352 34.36971600000001 250.493954 34.36971600000001H244.60862200000003ZM248.090086 62.387212000000005V37.60250400000001H250.61829200000003C254.30698600000002 37.60250400000001 257.456882 38.099856 260.316656 40.62806200000001C263.010646 42.99048400000001 264.37836400000003 46.430502000000004 264.37836400000003 49.99485800000001C264.37836400000003 53.476322 263.052092 56.750556 260.48244 59.154424000000006C257.62266600000004 61.848414000000005 254.43132400000002 62.387212000000005 250.61829200000003 62.387212000000005Z M284.230798 61.516846C282.945972 61.516846 281.909822 62.55299600000001 281.909822 63.796376C281.909822 65.081202 282.945972 66.158798 284.230798 66.158798C285.515624 66.158798 286.551774 65.081202 286.551774 63.796376C286.551774 62.55299600000001 285.515624 61.516846 284.230798 61.516846Z M305.533842 34.36971600000001H302.05237800000003V65.62H314.15461000000005V62.387212000000005H305.533842Z M329.116416 61.516846C327.83159 61.516846 326.79544000000004 62.55299600000001 326.79544000000004 63.796376C326.79544000000004 65.081202 327.83159 66.158798 329.116416 66.158798C330.401242 66.158798 331.43739200000005 65.081202 331.43739200000005 63.796376C331.43739200000005 62.55299600000001 330.401242 61.516846 329.116416 61.516846Z"/></svg></h1>
+    <section class="portada banda">
+        <picture class="fondo">
+            <source type="image/webp" srcset="assets/images/portada-1200.webp 1200w, assets/images/portada.webp 2400w" sizes="100vw">
+            <img src="assets/images/portada.jpg" srcset="assets/images/portada-1200.jpg 1200w, assets/images/portada.jpg 2400w" sizes="100vw"
+                 width="2400" height="1600" alt="El manifiesto impreso en papel ámbar, doblado, entre luz y sombra." fetchpriority="high">
+        </picture>
+        <div class="portada-top">
+            <span>Colectivo Fuera de Lugar</span>
+            <span>Col·lectiu Fora de Lloc</span>
         </div>
-        <div class="pie">
-            <p class="bajada reveal reveal-3">Escogemos un mundo de ciudades recordadas,
-            siempre en construcción, en terrenos donde no deberían estar. Reivindicamos el
-            exilio y el destierro, la creación como una solicitud de asilo, el viaje como
-            acto frustrante e improductivo.</p>
+        <div>
+            <h1 class="tesis reveal"><span class="visually-hidden">C.F.D.L.</span><svg class="logo-linea logo-grande" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 331.89 100.00"><polyline points="0.000,0.500 99.500,0.500 99.500,99.500 0.500,99.500 0.500,4.500 95.500,4.500 95.500,95.500 4.500,95.500 4.500,8.500 91.500,8.500 91.500,91.500 8.500,91.500 8.500,12.500 87.500,12.500 87.500,87.500 12.500,87.500 12.500,16.500 83.500,16.500 83.500,83.500 16.500,83.500 16.500,20.500" fill="none" stroke="currentColor" stroke-width="1" stroke-linejoin="miter" stroke-linecap="butt"/><path fill="currentColor" d="M165.613346 36.89792200000001C162.836464 34.82562200000001 159.76946 33.83091800000001 156.287996 33.83091800000001C147.33566000000002 33.83091800000001 139.999718 41.16686000000001 139.999718 50.119196C139.999718 58.988640000000004 147.459998 66.158798 156.287996 66.158798C159.603676 66.158798 162.919356 65.03975600000001 165.613346 63.09179400000001V58.78141000000001C163.126586 61.268170000000005 159.686568 62.926010000000005 156.163658 62.926010000000005C149.159284 62.926010000000005 143.48118200000002 56.874894000000005 143.48118200000002 49.99485800000001C143.48118200000002 43.114822000000004 149.117838 37.06370600000001 156.080766 37.06370600000001C159.686568 37.06370600000001 163.126586 38.638654 165.613346 41.20830600000001Z M183.02046600000003 61.516846C181.73564000000002 61.516846 180.69949000000003 62.55299600000001 180.69949000000003 63.796376C180.69949000000003 65.081202 181.73564000000002 66.158798 183.02046600000003 66.158798C184.305292 66.158798 185.34144200000003 65.081202 185.34144200000003 63.796376C185.34144200000003 62.55299600000001 184.305292 61.516846 183.02046600000003 61.516846Z M215.05802400000002 37.60250400000001V34.36971600000001H200.84204600000004V65.62H204.32351000000003V50.119196H214.726456V46.886408H204.32351000000003V37.60250400000001Z M226.78704200000004 61.516846C225.50221600000003 61.516846 224.46606600000004 62.55299600000001 224.46606600000004 63.796376C224.46606600000004 65.081202 225.50221600000003 66.158798 226.78704200000004 66.158798C228.07186800000002 66.158798 229.10801800000002 65.081202 229.10801800000002 63.796376C229.10801800000002 62.55299600000001 228.07186800000002 61.516846 226.78704200000004 61.516846Z M244.60862200000003 65.62H250.41106200000002C255.30169 65.62 259.03183 64.99831 262.76197 61.68263C266.20198800000003 58.615626000000006 267.859828 54.595364000000004 267.859828 50.03630400000001C267.859828 45.394352000000005 266.24343400000004 41.20830600000001 262.679078 38.14130200000001C258.990384 34.99140600000001 255.177352 34.36971600000001 250.493954 34.36971600000001H244.60862200000003ZM248.090086 62.387212000000005V37.60250400000001H250.61829200000003C254.30698600000002 37.60250400000001 257.456882 38.099856 260.316656 40.62806200000001C263.010646 42.99048400000001 264.37836400000003 46.430502000000004 264.37836400000003 49.99485800000001C264.37836400000003 53.476322 263.052092 56.750556 260.48244 59.154424000000006C257.62266600000004 61.848414000000005 254.43132400000002 62.387212000000005 250.61829200000003 62.387212000000005Z M284.230798 61.516846C282.945972 61.516846 281.909822 62.55299600000001 281.909822 63.796376C281.909822 65.081202 282.945972 66.158798 284.230798 66.158798C285.515624 66.158798 286.551774 65.081202 286.551774 63.796376C286.551774 62.55299600000001 285.515624 61.516846 284.230798 61.516846Z M305.533842 34.36971600000001H302.05237800000003V65.62H314.15461000000005V62.387212000000005H305.533842Z M329.116416 61.516846C327.83159 61.516846 326.79544000000004 62.55299600000001 326.79544000000004 63.796376C326.79544000000004 65.081202 327.83159 66.158798 329.116416 66.158798C330.401242 66.158798 331.43739200000005 65.081202 331.43739200000005 63.796376C331.43739200000005 62.55299600000001 330.401242 61.516846 329.116416 61.516846Z"/></svg></h1>
+            <p class="bajada reveal reveal-2">Escogemos un mundo de ciudades recordadas, siempre en
+            construcción, en terrenos donde no deberían estar.</p>
             <a class="seguir reveal reveal-3" href="manifiesto.html">El manifiesto, entero →</a>
         </div>
     </section>
 
-    <div class="wrap">
-        <a class="proximo" href="eventos.html" data-proximo>
-            <span class="p-label"><span data-p-label>Último encuentro</span>
-                <span class="p-fecha"><span data-p-day>14</span> <span data-p-month>octubre 2026</span></span></span>
-            <span class="p-info">
-                <span class="p-title" data-p-title>María Tinaut — «Representación y visibilidad butch en artes visuales»</span>
-                <span class="p-meta" data-p-meta>Conferencia — Librería La Perecquiana, Valladolid · 19:30</span>
-            </span>
+    <a class="proximo banda" href="eventos.html" data-proximo>
+        <span class="p-label" data-p-label>Último encuentro</span>
+        <span>
+            <span class="p-fecha"><span data-p-day>14</span> <span data-p-month>octubre 2026</span></span>
+            <span class="p-title" data-p-title>María Tinaut — «Representación y visibilidad butch en artes visuales»</span>
+            <span class="p-meta" data-p-meta>Conferencia — Librería La Perecquiana, Valladolid · 19:30</span>
             <span class="p-ir">Agenda →</span>
-        </a>
-    </div>
+        </span>
+    </a>
 
-    <div class="indice wrap">
-        <a class="entrada" href="manifiesto.html">
-            <div class="vista">
-                <picture>
-                    <source type="image/webp" srcset="gallery/sm/manifiesto-2.webp">
-                    <img src="gallery/sm/manifiesto-2.jpg" width="600" height="900" loading="lazy"
-                         alt="El manifiesto impreso en papel ámbar, doblado en acordeón.">
-                </picture>
-            </div>
+    <ul class="indice banda">
+        <li><a href="manifiesto.html">
             <span class="num">01 — seis lenguas</span>
             <h2>Manifiesto</h2>
             <p>Cambiante y nunca cumplido. En español, català, english, français, português y asturianu.</p>
-        </a>
-        <a class="entrada" href="eventos.html">
-            <div class="vista">
-                <picture>
-                    <source type="image/webp" srcset="gallery/sm/envozalta-angela-4.webp">
-                    <img src="gallery/sm/envozalta-angela-4.jpg" width="506" height="900" loading="lazy"
-                         alt="En voz alta — escucha.">
-                </picture>
-            </div>
+        </a></li>
+        <li><a href="eventos.html">
             <span class="num">02 — veintiún encuentros</span>
             <h2>Eventos</h2>
-            <p>Los ciclos <i>En voz alta</i>, <i>La Magistral</i> y <i>14.4</i>, con La Perecquiana en Valladolid.</p>
-        </a>
-        <a class="entrada" href="galeria.html">
-            <div class="vista">
-                <img src="gallery/sm/welcome-summer-5.jpg" width="506" height="900" loading="lazy"
-                     alt="Una fotografía de los encuentros." data-galeria-azar>
-            </div>
+            <p>Los ciclos En voz alta, La Magistral y 14.4, con La Perecquiana en Valladolid.</p>
+        </a></li>
+        <li><a href="galeria.html">
             <span class="num">03 — cuarenta y seis fotografías</span>
             <h2>Galería</h2>
             <p>Las sesiones tal como ocurrieron: librerías llenas, gente leyendo en voz alta.</p>
-        </a>
-    </div>
+        </a></li>
+    </ul>
 </main>
 
 <footer>
@@ -269,16 +273,6 @@
     </p>
 </footer>
 
-<script>
-    // La entrada de la galería: cada visita, otra fotografía vertical.
-    (function () {
-        var img = document.querySelector("[data-galeria-azar]");
-        if (!img) return;
-        var pool = ["welcome-summer-5", "welcome-summer-7", "envozalta-ana-1", "magistral-juan-1",
-                    "14-4-laura-1", "14-4-laura-7", "welcome-summer-4", "magistral-juan-6"];
-        img.src = "gallery/sm/" + pool[Math.floor(Math.random() * pool.length)] + ".jpg";
-    })();
-</script>
 
 </body>
 </html>
